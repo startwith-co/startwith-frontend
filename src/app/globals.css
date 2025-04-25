@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
@@ -16,6 +16,13 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+  }
+}
+
+@layer base {
+  button:not([disabled]),
+  [role='button']:not([disabled]) {
+    cursor: pointer;
   }
 }
 
