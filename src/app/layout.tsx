@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import AmplitudeContextProvider from '@/Amplitude';
+import SentryProvider from '@/Sentry';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="vsc-initialized">
         <AmplitudeContextProvider userId="">
-          {children}
+          <SentryProvider>{children}</SentryProvider>
         </AmplitudeContextProvider>
       </body>
     </html>
