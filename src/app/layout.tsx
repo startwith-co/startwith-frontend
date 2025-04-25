@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="vsc-initialized">
+      <body className="">
         <MSWProvider>
           <AmplitudeContextProvider userId="">
             {process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? (
