@@ -9,13 +9,9 @@
   "extends": [
     "airbnb",
     "airbnb-typescript",
-    "airbnb/hooks",
     "next/core-web-vitals",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended",
-    "prettier"
+    "prettier",
+    "plugin:storybook/recommended"
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",
@@ -23,6 +19,7 @@
     "@typescript-eslint/no-unused-vars": "warn",
     "react/jsx-props-no-spreading": "off",
     "no-console": "warn",
+    "react/button-has-type": "off",
     "prettier/prettier": [
       "error",
       {
@@ -30,7 +27,6 @@
       }
     ]
   },
-
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",

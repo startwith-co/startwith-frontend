@@ -13,7 +13,7 @@ const userInfo = { ...initialUserInfo };
 const userHandlers = [
   // 유저 정보 가져오기기
   http.get(`http://af/user`, () => {
-    return HttpResponse.json({
+    HttpResponse.json({
       data: {
         user: userInfo,
       },
