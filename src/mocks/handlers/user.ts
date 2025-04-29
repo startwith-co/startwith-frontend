@@ -12,8 +12,8 @@ const userInfo = { ...initialUserInfo };
 
 const userHandlers = [
   // 유저 정보 가져오기기
-  http.get(`http://af/user`, () => {
-    HttpResponse.json({
+  http.get(`/af/user`, () => {
+    return HttpResponse.json({
       data: {
         user: userInfo,
       },

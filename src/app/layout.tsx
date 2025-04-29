@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import AmplitudeContextProvider from '@/Amplitude';
 import SentryProvider from '@/Sentry';
-import MSWProvider from '@/MSWProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,15 +16,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="">
-        <MSWProvider>
-          <AmplitudeContextProvider userId="">
-            {process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? (
-              <> {children}</>
-            ) : (
-              <SentryProvider>{children}</SentryProvider>
-            )}
-          </AmplitudeContextProvider>
-        </MSWProvider>
+        <AmplitudeContextProvider userId="">
+          {process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? (
+            <> {children}</>
+          ) : (
+            <SentryProvider>{children}</SentryProvider>
+          )}
+        </AmplitudeContextProvider>
       </body>
     </html>
   );

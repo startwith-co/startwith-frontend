@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "*.config.js"
-  ],
+, "src/mocks/mockServer.ts"  ],
   "exclude": ["node_modules"]
 }
