@@ -127,3 +127,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+@theme {
+  --color-primary: rgba(91, 118, 255, 1);
+}
+
+html {
+  overflow-x: hidden;
+}
