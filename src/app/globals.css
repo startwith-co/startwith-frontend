@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -126,4 +126,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@theme {
+  --color-primary: rgba(91, 118, 255, 1);
+}
+
+html {
+  overflow-x: hidden;
 }
