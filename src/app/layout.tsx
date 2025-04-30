@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import AmplitudeContextProvider from '@/Amplitude';
-import SentryProvider from '@/Sentry';
+import AmplitudeContextProvider from './_providers/amplitude-provider';
+import SentryProvider from './_providers/sentry-provider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -14,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="">
+    <html lang="kr">
+      <body className="vsc-initialized">
         <AmplitudeContextProvider userId="">
           {process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? (
             <> {children}</>

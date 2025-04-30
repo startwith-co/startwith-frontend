@@ -2,7 +2,7 @@
 
 import React, { ReactNode } from 'react';
 import * as Sentry from '@sentry/nextjs';
-import SentryFallback from './components/SentryFallback';
+import SentryFallback from '@/shared/ui/sentry-fallback';
 
 type Props = {
   children: ReactNode;

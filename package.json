@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "mock": "concurrently -k -n \"🟦 NEXT,🟩 MOCK\" -c \"cyan.bold,green.bold\" \"next dev\" \"npx tsx watch ./src/mocks/mockServer.ts\"",
+    "mock": "concurrently -k -n \"🟦 NEXT,🟩 MOCK\" -c \"cyan.bold,green.bold\" \"next dev\" \"npx tsx watch src/app/mockServer.ts\"",
     "um": "concurrently -k -n \"🟦 NEXT,📘 STORYBOOK\" -c \"cyan.bold,magenta.bold\" \"next dev\" \"storybook dev -p 6006\"",
     "lint": "next lint",
     "lint:fix": "eslint ./**/*.{ts,tsx} --cache --fix",
