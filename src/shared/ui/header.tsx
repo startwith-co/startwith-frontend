@@ -23,7 +23,7 @@ export default function Header() {
           <Input
             type="search"
             placeholder="키워드를 검색해주세요."
-            className="h-[45px] w-[420px] rounded-3xl pl-10 shadow-sm"
+            className="h-[45px] w-[420px] rounded-3xl pl-10 text-black shadow-sm placeholder:text-black"
           />
           <button className="absolute top-1/2 right-3 flex size-[30px] -translate-y-1/2 transform items-center justify-center rounded-full bg-black p-1 text-center text-white">
             →
