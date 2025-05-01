@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage, AvatarFallback } from '@/shared/ui/avatar';
 import formatDate from '@/shared/lib/date-formatter';
 
-export default function ChatRoomCard({
+function ChatRoomCard({
   name,
   preview,
   img,
@@ -28,3 +28,5 @@ export default function ChatRoomCard({
     </div>
   );
 }
+
+export default ChatRoomCard;
