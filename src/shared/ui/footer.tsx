@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <div className="-translate-y-screen relative mb-[173px] flex flex-col gap-[143px]">
+    <div className="-translate-y-screen relative mb-20 flex flex-col gap-28">
       <ul className="border-[rgba(217, 217, 217, 1)] flex items-center justify-evenly border-y p-2.5 text-sm">
         <li>SOLU</li>
         <li>이용약관</li>
