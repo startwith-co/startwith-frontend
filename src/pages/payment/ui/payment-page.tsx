@@ -2,10 +2,11 @@ import { Avatar, AvatarImage } from '@/shared/ui/avatar';
 import { Button } from '@/shared/ui/button';
 import ComboboxDemo from '@/features/payment/combobox';
 import Input from '@/shared/ui/input';
+import Switch from '@/shared/ui/switch';
 
 export default function PaymentPage() {
   return (
-    <div className="mt-20 flex flex-col gap-12">
+    <div className="mt-20 mb-68 flex flex-col gap-12">
       <div className="grid grid-cols-[2fr_1fr] items-stretch gap-8">
         {/* 주문 내역 */}
         <div className="flex flex-col">
@@ -94,23 +95,63 @@ export default function PaymentPage() {
       </div>
 
       {/* SOLU 포인트/쿠폰 */}
-      <div className="text-lg font-semibold">SOLU 포인트/쿠폰</div>
-      <div className="flex w-full flex-col gap-3.5 rounded-md bg-white p-6 shadow-md">
-        <div className="grid grid-cols-[120px_347px] items-center">
-          <span>사용 가능한 쿠폰</span>
-          <ComboboxDemo />
-        </div>
-        <div className="grid grid-cols-[120px_347px] items-center">
-          <span>포인트 사용</span>
-          <div className="flex w-full items-center justify-between">
-            <Input type="number" className="w-[266px]" placeholder="250,000P" />
-            <Button asChild={false} className="h-9">
-              사용
-            </Button>
+      <div className="grid grid-cols-[2fr_1fr] gap-8">
+        <div>
+          <h2 className="text-lg font-semibold">SOLU 포인트/쿠폰</h2>
+          <div className="flex w-full flex-col gap-3.5 rounded-md bg-white p-6 shadow-md">
+            <div className="grid grid-cols-[120px_347px] items-center">
+              <span>사용 가능한 쿠폰</span>
+              <ComboboxDemo />
+            </div>
+            <div className="grid grid-cols-[120px_347px] items-center">
+              <span>포인트 사용</span>
+              <div className="flex w-full items-center justify-between">
+                <Input
+                  type="number"
+                  className="w-[266px]"
+                  placeholder="250,000P"
+                />
+                <Button asChild={false} className="h-9">
+                  사용
+                </Button>
+              </div>
+              <p className="col-start-2 mt-2.5 text-sm font-light text-[rgba(122,122,122,1)]">
+                사용가능한 포인트: 250,000P
+              </p>
+            </div>
           </div>
-          <p className="col-start-2 mt-2.5 text-sm font-light text-[rgba(122,122,122,1)]">
-            사용가능한 포인트: 250,000P
-          </p>
+        </div>
+      </div>
+      {/* 결제 방법 */}
+      <div className="grid grid-cols-[2fr_1fr] gap-8">
+        <div>
+          <h2 className="text-lg font-semibold">결제 방법</h2>
+          <div className="flex flex-col gap-4 rounded-md bg-white p-6 text-sm shadow-md">
+            <div className="flex flex-wrap gap-3.5">
+              <button className="hover:text-primary flex w-[166px] items-center justify-center rounded-md bg-[rgba(245,245,245,1)] py-5 hover:bg-white hover:font-bold hover:shadow-md">
+                실시간 계좌이체
+              </button>
+              <button className="hover:text-primary flex w-[166px] items-center justify-center rounded-md bg-[rgba(245,245,245,1)] py-5 hover:bg-white hover:font-bold hover:shadow-md">
+                실시간 계좌이체
+              </button>
+              <button className="hover:text-primary flex w-[166px] items-center justify-center rounded-md bg-[rgba(245,245,245,1)] py-5 hover:bg-white hover:font-bold hover:shadow-md">
+                실시간 계좌이체
+              </button>
+              <button className="hover:text-primary flex w-[166px] items-center justify-center rounded-md bg-[rgba(245,245,245,1)] py-5 hover:bg-white hover:font-bold hover:shadow-md">
+                실시간 계좌이체
+              </button>
+              <button className="hover:text-primary flex w-[166px] items-center justify-center rounded-md bg-[rgba(245,245,245,1)] py-5 hover:bg-white hover:font-bold hover:shadow-md">
+                실시간 계좌이체
+              </button>
+              <button className="hover:text-primary flex w-[166px] items-center justify-center rounded-md bg-[rgba(245,245,245,1)] py-5 hover:bg-white hover:font-bold hover:shadow-md">
+                실시간 계좌이체
+              </button>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <span>세금 계산서 발행 요청</span>
+              <Switch />
+            </div>
+          </div>
         </div>
       </div>
     </div>
