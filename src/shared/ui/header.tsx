@@ -2,13 +2,8 @@ import { FiBell, FiMail } from 'react-icons/fi';
 import { IoSearchOutline } from 'react-icons/io5';
 import { PiGlobe } from 'react-icons/pi';
 import Input from './input';
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from './dropdown-menu';
 import { Button } from './button';
+import Dropdown from './dropdown';
 
 export default function Header() {
   return (
@@ -31,21 +26,23 @@ export default function Header() {
         </div>
       </div>
       <div className="flex items-center gap-3.5 text-[12px]">
-        <Button variant="vendor" className="h-7 text-[12px]">
+        <Button asChild={false} variant="vendor" className="h-7 text-[12px]">
           밴더 전용 HOME
         </Button>
-        <Button variant="ghost" className="h-7 text-[12px]">
+        <Button asChild={false} variant="ghost" className="h-7 text-[12px]">
           <PiGlobe />
           <span className="font-normal">Language</span>
         </Button>
         <FiBell size={24} />
         <FiMail size={24} />
-        <DropdownMenu>
-          <DropdownMenuTrigger>name</DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>name</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Dropdown
+          buttonText="스타트윗"
+          items={[
+            {
+              label: '내 정보',
+            },
+          ]}
+        />
       </div>
     </header>
   );
