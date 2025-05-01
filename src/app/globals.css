@@ -135,3 +135,7 @@
 html {
   overflow-x: hidden;
 }
+
+th {
+  font-weight: inherit;
+}
