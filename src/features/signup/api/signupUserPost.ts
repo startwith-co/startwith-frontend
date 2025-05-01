@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { StateProps } from '../model/type';
 
 async function signupUserPost(
-  prevState: StateProps,
+  _prevState: StateProps,
   formData: FormData,
 ): Promise<StateProps> {
   const company = formData?.get('company') as string;
