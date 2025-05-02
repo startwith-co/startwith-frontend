@@ -8,10 +8,10 @@ import Dropdown from './dropdown';
 
 export default function Header() {
   return (
-    <header className="flex items-center justify-between pt-[35px]">
+    <header className="flex items-center justify-between px-4 pt-[35px] sm:px-8 md:px-16 lg:px-32 2xl:px-[300px]">
       <div className="flex items-center gap-8">
         <Link href="/">
-          <h1 className="text-primary ml-5 text-3xl font-bold">SOLU</h1>
+          <h1 className="text-primary text-3xl font-bold">SOLU</h1>
         </Link>
         <div className="relative">
           <IoSearchOutline
