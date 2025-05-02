@@ -3,12 +3,14 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { DropdownProps } from '@/shared/model/type';
+import cn from '@/lib/utils';
 
 export default function Dropdown({
   buttonText,
   items,
   buttonClassName = '',
   menuClassName = '',
+  divClassName = '',
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -27,7 +29,10 @@ export default function Dropdown({
   }, []);
 
   return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
+    <div
+      className={cn('relative inline-block text-left', divClassName)}
+      ref={dropdownRef}
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-1 rounded-md text-sm font-bold ${buttonClassName}`}
