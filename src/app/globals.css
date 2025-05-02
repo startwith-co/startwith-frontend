@@ -135,3 +135,21 @@
 html {
   overflow-x: hidden;
 }
+
+th {
+  font-weight: inherit;
+}
+
+@keyframes scrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+.scroll-marquee {
+  animation: scrollRight 40s linear infinite;
+  display: flex;
+  width: max-content;
+}
