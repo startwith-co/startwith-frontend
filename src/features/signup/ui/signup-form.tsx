@@ -8,7 +8,7 @@ interface SignupFormProps {
   buttonName: string;
   buttonProps: string;
   children: ReactNode;
-  action: (prevState: StateProps, formData: FormData) => Promise<StateProps>;
+  action: (prevState: void, formData: FormData) => Promise<void>;
 }
 
 function SignupForm({
@@ -17,18 +17,11 @@ function SignupForm({
   children,
   buttonProps,
 }: SignupFormProps) {
-  const [state, formAction] = useActionState(action, { errors: [] });
+  const [state, formAction] = useActionState(action, undefined);
   return (
     <form action={formAction} className="space-y-6">
       {children}
       <FormSubmit buttonName={buttonName} buttonProps={buttonProps} />
-      {state.errors && (
-        <ul className="text-sm text-red-500">
-          {state.errors.map((error) => (
-            <li key={error}>{error}</li>
-          ))}
-        </ul>
-      )}
     </form>
   );
 }
