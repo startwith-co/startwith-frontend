@@ -25,6 +25,7 @@ const buttonVariants = cva(
         vendor:
           ' bg-[linear-gradient(90deg,_#DBE8FF_0%,_#FEE9FF_100%)] rounded-3xl font-bold shadow-sm',
         home: 'bg-white text-black font-bold shadow-lg rounded-xl',
+        category: 'bg-[#DBE8FF] text-black',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',
