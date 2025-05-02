@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <header className="flex items-center justify-between pt-[35px]">
       <div className="flex items-center gap-8">
-        <h1 className="text-primary text-3xl font-bold">SOLU</h1>
+        <h1 className="text-primary ml-5 text-3xl font-bold">SOLU</h1>
         <div className="relative">
           <IoSearchOutline
             size={20}
@@ -25,7 +25,7 @@ export default function Header() {
           </button>
         </div>
       </div>
-      <div className="flex items-center gap-3.5 text-[12px]">
+      <div className="mr-5 flex items-center gap-3.5 text-[12px]">
         <Button asChild={false} variant="vendor" className="h-7 text-[12px]">
           밴더 전용 HOME
         </Button>
