@@ -1,6 +1,7 @@
 import { Button } from '@/shared/ui/button';
 import Dropdown from '@/shared/ui/dropdown';
 import Switch from '@/shared/ui/switch';
+import FilterCategoryDialog from './filter-category-dialog';
 
 export default function Sidebar() {
   return (
@@ -41,20 +42,10 @@ export default function Sidebar() {
             <Switch />
           </li>
           <li>
-            <Dropdown
-              buttonText="카테고리"
-              items={[]}
-              buttonClassName="font-normal w-full flex justify-between pr-3"
-              divClassName="w-full"
-            />
+            <FilterCategoryDialog name="카테고리" />
           </li>
           <li>
-            <Dropdown
-              buttonText="예산"
-              items={[]}
-              buttonClassName="font-normal w-full flex justify-between pr-3"
-              divClassName="w-full"
-            />
+            <FilterCategoryDialog name="예산" />
           </li>
         </ul>
         <div>
