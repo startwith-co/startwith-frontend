@@ -3,7 +3,7 @@ import MainSectionButtons from '@/features/home/ui/main-section-buttons';
 
 function HomePage() {
   return (
-    <section className="flex w-screen flex-col items-center overflow-x-hidden bg-gradient-to-t from-[#F4F8FF] to-[#F8F4FF]">
+    <section className="flex w-screen flex-col items-center bg-gradient-to-t from-[#F4F8FF] to-[#F8F4FF]">
       <h1 className="mt-20 text-xl">
         우리 기업을 위한 단 하나의 기업 솔루션 플랫폼,
         <span className="font-bold">SOLU</span>

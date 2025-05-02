@@ -1,6 +1,6 @@
 import Footer from '@/shared/ui/footer';
 import Header from '@/shared/ui/header';
-import ProfileSide from '@/features/my/ui/profile-side';
+import ProfileSide from '@/entities/my/ui/profile-side';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

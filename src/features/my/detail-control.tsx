@@ -8,7 +8,7 @@ function DetailControl() {
       <Dropdown
         buttonText="전체 상태"
         items={[{ label: 'ㄹㄹ' }, { label: 'ㄹㄹ' }, { label: 'ㄹㄹ' }]}
-        buttonClassName="bg-[#F9F9F9] h-[40px] w-[130px] pl-5 mt-5"
+        buttonClassName="bg-[#F9F9F9] h-[40px] w-[130px] pl-5"
         menuClassName=""
       />
       <div className="flex flex-row gap-x-2">
