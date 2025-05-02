@@ -7,4 +7,5 @@ export interface DropdownProps {
   items: DropdownItem[];
   buttonClassName?: string;
   menuClassName?: string;
+  divClassName?: string;
 }
