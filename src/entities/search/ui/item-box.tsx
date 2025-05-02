@@ -1,4 +1,5 @@
 import { IoIosStar } from 'react-icons/io';
+import Link from 'next/link';
 import ItemBoxProps from '../model/type';
 
 export default function ItemBox({
@@ -8,10 +9,10 @@ export default function ItemBox({
   company,
 }: ItemBoxProps) {
   return (
-    <div className="flex flex-col gap-5">
+    <Link href="/products/1" className="flex flex-col gap-5">
       <div className="h-56 w-full rounded-md bg-gray-200" />
       <div className="flex flex-col gap-1">
-        <span className="font-semibold">{name}</span>
+        <span className="font-bold">{name}</span>
         <span>{price}</span>
         <p className="flex items-center gap-1">
           <IoIosStar />
@@ -19,6 +20,6 @@ export default function ItemBox({
         </p>
         <span className="text-xs">{company}</span>
       </div>
-    </div>
+    </Link>
   );
 }
