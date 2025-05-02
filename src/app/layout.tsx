@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import localFont from 'next/font/local';
+import { ToastContainer } from 'react-toastify';
 import AmplitudeContextProvider from './_providers/amplitude-provider';
 import SentryProvider from './_providers/sentry-provider';
 
@@ -58,6 +59,18 @@ export default function RootLayout({
   return (
     <html lang="kr">
       <body className={`${PretendardFont.className}`}>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <AmplitudeContextProvider userId="">
           {process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? (
             <> {children}</>
