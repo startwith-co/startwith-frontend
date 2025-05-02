@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '@/shared/ui/input';
-import SignupForm from './signup-form';
-import signupVendorPost from '../api/signupVendorPost';
+import SignupForm from '@/shared/ui/signup-form';
+import signupVendorPost from '@/features/signup/api/signupVendorPost';
 
 const schema = z.object({
   company: z.string().min(1, '기업명 입력해주세요.'),
@@ -29,6 +29,7 @@ function SignupVendorForm() {
       action={signupVendorPost}
       buttonProps="bg-[#5B76FF] text-white"
       buttonName="솔루션 공급사로 파트너쉽 시작"
+      loadingText="신청 중.."
     >
       <div>
         <Input
