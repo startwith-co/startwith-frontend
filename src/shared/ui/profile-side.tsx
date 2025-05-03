@@ -22,7 +22,7 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
 
   return (
     <aside
-      className={`mr-5 flex h-auto w-[220px] flex-col items-center rounded-2xl p-2 pt-20 ${mode === 'user' ? 'bg-white' : 'border-2 border-[#404040] bg-[#212121]'} shadow-md`}
+      className={`mr-5 flex w-[220px] flex-col items-center rounded-2xl p-2 pt-20 ${mode === 'user' ? 'h-[400px] bg-white' : 'h-auto border-2 border-[#404040] bg-[#212121]'} shadow-md`}
     >
       <Avatar className="mb-2 flex size-30 rounded-full">
         <AvatarImage src="/image/image.png" />
