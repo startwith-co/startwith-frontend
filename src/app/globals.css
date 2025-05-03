@@ -130,6 +130,8 @@
 
 @theme {
   --color-primary: rgba(91, 118, 255, 1);
+  --color-accent: #395aff;
+  --color-light: #bdd2ff;
 }
 
 html {
