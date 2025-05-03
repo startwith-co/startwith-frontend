@@ -33,6 +33,7 @@ function EditVendorInfo() {
       buttonName="수정하기"
       buttonWrapperClassName="flex justify-center"
       loadingText="수정 중.."
+      loadingTextProps="text-white"
     >
       <div>
         <label htmlFor="company" className="text-sm text-[#A7A7A7]">

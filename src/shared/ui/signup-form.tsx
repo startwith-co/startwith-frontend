@@ -11,7 +11,21 @@ interface SignupFormProps {
   formProps?: string;
   buttonWrapperClassName?: string;
   loadingText?: string;
+  loadingTextProps?: string;
 }
+
+/**
+ *
+ * @param buttonName
+ * @param buttonProps
+ * @param children
+ * @param action
+ * @param formProps
+ * @param buttonWrapperClassName
+ * @param loadingText
+ * @param loadingTextProps
+ * @returns
+ */
 
 function SignupForm({
   action,
@@ -20,6 +34,7 @@ function SignupForm({
   buttonProps,
   formProps,
   loadingText,
+  loadingTextProps,
   buttonWrapperClassName = '',
 }: SignupFormProps) {
   const [state, formAction] = useActionState(action, undefined);
@@ -32,6 +47,7 @@ function SignupForm({
           buttonName={buttonName}
           buttonProps={buttonProps}
           loadingText={loadingText || '로딩 중'}
+          loadingTextProps={loadingTextProps}
         />
       </div>
     </form>
