@@ -12,7 +12,7 @@ export default function ProductDetail() {
           <li>BI</li>
         </ul>
         <div className="mt-12.5 grid grid-cols-[1fr_1.8fr] gap-12.5">
-          <div className="size-12 h-[210px] w-full rounded-md bg-gray-200" />
+          <div className="bg-box-gray size-12 h-[210px] w-full rounded-md" />
           <div className="flex flex-col">
             <span className="text-xl font-semibold">더비즈온</span>
             <p className="mt-8">
@@ -24,15 +24,15 @@ export default function ProductDetail() {
           </div>
         </div>
         <div className="mt-12.5 grid grid-cols-3 gap-16">
-          <div className="flex flex-col items-center justify-center gap-3.5 rounded-md bg-gray-300 p-4">
+          <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">
             <span className="text-lg font-semibold">가격</span>
             <span className="text-sm">2,000,000원/월(VAT 별도)~</span>
           </div>
-          <div className="flex flex-col items-center justify-center gap-3.5 rounded-md bg-gray-300 p-4">
+          <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">
             <span className="text-lg font-semibold">서비스 형태</span>
             <span className="text-sm">SaaS/구축형</span>
           </div>
-          <div className="flex flex-col items-center justify-center gap-3.5 rounded-md bg-gray-300 p-4">
+          <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">
             <span className="text-lg font-semibold">개발기간</span>
             <span className="text-sm">1개월 ~ 6개월</span>
           </div>
@@ -54,21 +54,21 @@ export default function ProductDetail() {
             </p>
           </div>
           <div className="ml-auto grid w-full max-w-[380px] grid-cols-3 gap-3">
-            <div className="flex flex-col items-center justify-center gap-3 rounded-md bg-gray-300 px-4.5 py-3.5">
+            <div className="bg-box-gray flex flex-col items-center justify-center gap-3 rounded-md px-4.5 py-3.5">
               <span className="text-sm">총 거래 건수</span>
               <span className="text-lg font-semibold">100건</span>
             </div>
-            <div className="flex flex-col items-center justify-center gap-3 rounded-md bg-gray-300 px-4.5 py-3.5">
+            <div className="bg-box-gray flex flex-col items-center justify-center gap-3 rounded-md px-4.5 py-3.5">
               <span className="text-sm">만족도</span>
               <span className="text-lg font-semibold">100%</span>
             </div>
-            <div className="flex flex-col items-center justify-center gap-3 rounded-md bg-gray-300 px-4.5 py-3.5">
+            <div className="bg-box-gray flex flex-col items-center justify-center gap-3 rounded-md px-4.5 py-3.5">
               <span className="text-sm">고객사</span>
               <span className="text-lg font-semibold">100곳</span>
             </div>
           </div>
         </div>
-        <div className="h-[210px] w-full rounded-md bg-gray-200" />
+        <div className="bg-box-gray h-[210px] w-full rounded-md" />
       </WhiteBox>
     </>
   );

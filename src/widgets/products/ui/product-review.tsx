@@ -16,19 +16,19 @@ export default function ProductsReview() {
       <div className="flex flex-col gap-6.5">
         <span className="text-xl font-bold">솔루션 도입 성과</span>
         <div className="flex gap-7.5">
-          <div className="flex flex-col items-center justify-center rounded-md bg-gray-300 px-7.5 py-[17.5px]">
+          <div className="bg-box-gray flex flex-col items-center justify-center rounded-md px-7.5 py-[17.5px]">
             <span>업무효율</span>
             <span className="text-accent text-lg font-semibold">60% 상승</span>
           </div>
-          <div className="flex flex-col items-center justify-center rounded-md bg-gray-300 px-7.5 py-[17.5px]">
+          <div className="bg-box-gray flex flex-col items-center justify-center rounded-md px-7.5 py-[17.5px]">
             <span>업무효율</span>
             <span className="text-accent text-lg font-semibold">60% 상승</span>
           </div>
-          <div className="flex flex-col items-center justify-center rounded-md bg-gray-300 px-7.5 py-[17.5px]">
+          <div className="bg-box-gray flex flex-col items-center justify-center rounded-md px-7.5 py-[17.5px]">
             <span>업무효율</span>
             <span className="text-accent text-lg font-semibold">60% 상승</span>
           </div>
-          <div className="flex flex-col items-center justify-center rounded-md bg-gray-300 px-7.5 py-[17.5px]">
+          <div className="bg-box-gray flex flex-col items-center justify-center rounded-md px-7.5 py-[17.5px]">
             <span>업무효율</span>
             <span className="text-accent text-lg font-semibold">60% 상승</span>
           </div>
@@ -37,13 +37,13 @@ export default function ProductsReview() {
       <div className="flex flex-col gap-6.5">
         <span className="text-xl font-bold">솔루션 적용 태그</span>
         <div className="flex gap-7.5">
-          <span className="flex h-[55px] w-[157px] items-center justify-center rounded-md bg-gray-300">
+          <span className="bg-box-gray flex h-[55px] w-[157px] items-center justify-center rounded-md">
             재무/회계 특화
           </span>
-          <span className="flex h-[55px] w-[157px] items-center justify-center rounded-md bg-gray-300">
+          <span className="bg-box-gray flex h-[55px] w-[157px] items-center justify-center rounded-md">
             커스터마이징
           </span>
-          <span className="flex h-[55px] w-[157px] items-center justify-center rounded-md bg-gray-300">
+          <span className="bg-box-gray flex h-[55px] w-[157px] items-center justify-center rounded-md">
             분석/리포트 제공
           </span>
         </div>
@@ -56,7 +56,7 @@ export default function ProductsReview() {
       </div>
       <div className="flex flex-col">
         <span className="mb-6.5 text-xl font-bold">고객 리뷰</span>
-        {/* TODO: 최상단 li pt제거, 마지막 li border-b 제거 */}
+        {/* TODO: 최상단 li pt제거, 마지막 li border-b 제거, 리뷰가 없을 때 UI 추가 */}
         <ul>
           <li className="flex items-center justify-between border-b py-5">
             <div className="flex items-center gap-5">
