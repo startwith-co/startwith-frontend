@@ -11,9 +11,9 @@ const routes = [
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex w-screen flex-col justify-center overflow-y-scroll bg-[#212121]">
+    <div className="flex w-screen flex-col overflow-y-scroll bg-[#212121]">
       <Header mode="vendor" />
-      <main className="mt-10 mb-10 flex flex-row">
+      <main className="mt-10 mb-60 flex">
         <ProfileSide routes={routes} companyName="스타트 윗" mode="vendor" />
         {children}
       </main>

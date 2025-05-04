@@ -2,7 +2,7 @@ import DarkBox from '@/shared/ui/dark-box';
 
 export default function VendorNoticeWidget() {
   return (
-    <div className="max-w-full rounded-2xl border-2 border-[#404040] p-7">
+    <div className="rounded-2xl border-2 border-[#404040] p-7">
       <h2 className="font-semibold text-white 2xl:text-xl">공지 사항</h2>
       <ul className="mt-5 flex flex-col gap-5">
         <li>
