@@ -1,6 +1,6 @@
 import DetailItem from '@/entities/my/ui/detail-item';
-import DetailControl from '@/features/my/detail-control';
-import PaginationControl from '@/features/my/pagination-control';
+import DetailControl from '@/features/my/ui/detail-control';
+import PaginationControl from '@/features/my/ui/pagination-control';
 
 function ItemDetailSection() {
   return (

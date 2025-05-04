@@ -1,29 +1,23 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { StateProps } from '../model/type';
 
 async function signupVendorPost(
-  _prevState: StateProps,
+  _prevState: void,
   formData: FormData,
-): Promise<StateProps> {
+): Promise<void> {
   const company = formData?.get('company') as string;
   const phoneNumber = formData?.get('phoneNumber') as string;
   const email = formData?.get('email') as string;
 
-  const errors: string[] = [];
   if (!company || company.trim().length === 0) {
-    errors.push('기업명 입력해 주세요.');
+    return;
   }
   if (!phoneNumber || phoneNumber.trim().length === 0) {
-    errors.push('전화번호 입력해 주세요.');
+    return;
   }
   if (!email || email.trim().length === 0) {
-    errors.push('이메일 입력해 주세요.');
-  }
-
-  if (errors.length > 0) {
-    return { errors };
+    return;
   }
 
   redirect('/signup/success');
