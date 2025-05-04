@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 
-import cn from '@/lib/utils';
+import cn from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
 import { MoreHorizontalIcon } from 'lucide-react';
 

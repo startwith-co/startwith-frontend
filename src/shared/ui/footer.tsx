@@ -12,9 +12,7 @@ export default function Footer({ mode = 'user' }: FooterProps) {
   return (
     <div
       className={`-translate-y-screen relative mb-20 ml-5 flex flex-col gap-28 px-4 sm:px-8 md:px-16 lg:px-32 2xl:px-[300px] ${
-        mode === 'vendor'
-          ? 'bg-[#212121] text-[#AAAAAA]'
-          : 'bg-[rgba(250,252,255,1)]'
+        mode === 'vendor' ? 'bg-[#212121] text-[#AAAAAA]' : 'bg-transparent'
       }`}
     >
       <ul className="border-[rgba(217, 217, 217, 1)] flex items-center justify-evenly border-y p-2.5 text-sm">
