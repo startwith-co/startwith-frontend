@@ -13,6 +13,7 @@ export default function VendorServiceBoard() {
             <p className="flex items-center gap-2">
               <IoIosStar className="size-5 2xl:size-6" />
               <span className="2xl:text-[23px]">0/5</span>
+              {/* TODO: 평점별 막대 그래프 */}
             </p>
           </div>
         </DarkBox>
