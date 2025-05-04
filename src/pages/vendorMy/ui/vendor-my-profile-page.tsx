@@ -4,7 +4,7 @@ import EditVendorTextArea from '@/features/vendorMy/ui/edit-vendor-text-area';
 
 function VendorMyProfile() {
   return (
-    <section className="flex flex-row">
+    <section className="grid w-full grid-cols-[1.3fr_1fr] pr-8">
       <div className="relative rounded-xl border-2 border-[#404040] bg-[#212121] p-8 shadow-md">
         <Image
           src="/images/profileAdd.png"

@@ -29,7 +29,7 @@ function EditVendorInfo() {
   return (
     <SignupForm
       action={editVendorInfoPost}
-      buttonProps="bg-black text-white w-[180px] h-[35px] font-light text-sm"
+      buttonProps="bg-black text-white h-[35px] font-light text-sm"
       buttonName="수정하기"
       buttonWrapperClassName="flex justify-center"
       loadingText="수정 중.."
@@ -43,7 +43,7 @@ function EditVendorInfo() {
             type="string"
             {...register('company')}
             name="company"
-            className="mt-2 mb-2 h-[40px] w-[400px] border-0 bg-[#F9F9F9] indent-2 text-black"
+            className="mt-2 mb-2 h-[40px] border-0 bg-[#3D3D3D] indent-2 text-white"
           />
         </label>
         {errors.company && (
@@ -58,7 +58,7 @@ function EditVendorInfo() {
             type="string"
             {...register('phoneNumber')}
             name="phoneNumber"
-            className="mt-2 mb-2 h-[40px] w-[400px] border-0 bg-[#F9F9F9] indent-2 text-black"
+            className="mt-2 mb-2 h-[40px] border-0 bg-[#3D3D3D] indent-2 text-white"
           />
         </label>
         {errors.phoneNumber && (
@@ -74,7 +74,7 @@ function EditVendorInfo() {
             type="string"
             {...register('email')}
             name="email"
-            className="mt-2 mb-2 h-[40px] w-[400px] border-0 bg-[#F9F9F9] indent-2 text-black"
+            className="mt-2 mb-2 h-[40px] border-0 bg-[#3D3D3D] indent-2 text-white"
           />
         </label>
         {errors.email && (
@@ -90,7 +90,7 @@ function EditVendorInfo() {
             type="string"
             {...register('accountNumber')}
             name="accountNumber"
-            className="mt-2 mb-2 h-[40px] w-[400px] border-0 bg-[#F9F9F9] indent-2"
+            className="mt-2 mb-2 h-[40px] border-0 bg-[#3D3D3D] indent-2 text-white"
           />
         </label>
         {errors.accountNumber && (
@@ -105,7 +105,7 @@ function EditVendorInfo() {
             type="string"
             {...register('bankName')}
             name="bankName"
-            className="mt-2 mb-2 h-[40px] w-[400px] border-0 bg-[#F9F9F9] indent-2 text-black"
+            className="mt-2 mb-2 h-[40px] border-0 bg-[#3D3D3D] indent-2 text-white"
           />
         </label>
         {errors.bankName && (
