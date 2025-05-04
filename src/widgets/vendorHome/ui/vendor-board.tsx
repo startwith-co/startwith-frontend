@@ -2,7 +2,7 @@ import DarkBox from '@/shared/ui/dark-box';
 
 export default function VendorBoard() {
   return (
-    <div className="flex h-[198px] flex-col overflow-hidden rounded-2xl border-2 px-[22.5px] py-5 text-white">
+    <div className="flex h-[198px] flex-col overflow-hidden rounded-2xl border-2 border-[#404040] px-[22.5px] py-5 text-white">
       <h2 className="mb-2 text-base font-semibold sm:mb-3 sm:text-lg md:mb-4 md:text-xl">
         운영 현황
       </h2>

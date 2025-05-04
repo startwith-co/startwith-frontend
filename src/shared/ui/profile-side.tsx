@@ -22,7 +22,7 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
 
   return (
     <aside
-      className={`mr-5 flex w-[200px] flex-col items-center rounded-r-2xl px-3.5 py-9 ${mode === 'user' ? 'h-[400px] bg-white' : 'h-[567px] border-2 border-l-0 border-[#404040] bg-[#212121]'} shadow-md`}
+      className={`mr-5 flex min-w-[200px] flex-col items-center rounded-r-2xl px-3.5 py-9 ${mode === 'user' ? 'h-[400px] bg-white' : 'h-[567px] border-2 border-l-0 border-[#404040] bg-[#212121]'} shadow-md`}
     >
       <div className="mb-4 flex items-center gap-2.5 rounded-3xl border-2 border-[#404040] px-2.5 py-1.5">
         <div className="flex items-center gap-1.5">
