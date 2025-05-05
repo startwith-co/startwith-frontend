@@ -11,7 +11,7 @@ export default function VendorManage() {
   const [period, setPeriod] = useState('오늘');
 
   return (
-    <div className="w-full rounded-md border-2 border-[#404040] px-8 py-7.5">
+    <div className="h-[333px] w-full rounded-md border-2 border-[#404040] px-8 py-7.5">
       <h2 className="mb-5 text-lg font-semibold text-white">정산 관리</h2>
       <ul className="flex flex-col gap-6">
         <li className="flex w-[275px] items-center justify-between">
