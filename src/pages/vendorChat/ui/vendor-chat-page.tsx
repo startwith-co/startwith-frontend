@@ -19,7 +19,7 @@ import RequestPayModal from '@/features/vendorChat/ui/request-pay-modal';
 export default function VendorChatPage() {
   const [open, setOpen] = useState(false);
   return (
-    <div className="grid grid-cols-[2fr_4fr_1.5fr] gap-6">
+    <div className="grid w-full grid-cols-[2fr_4fr_1.5fr] gap-6 pr-8">
       {/* 채팅룸 */}
       <div className="w-full rounded-3xl border-2 border-[#404040] bg-[#212121] p-4.5 pb-8">
         <div className="relative mb-5">
