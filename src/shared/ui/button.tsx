@@ -24,6 +24,10 @@ const buttonVariants = cva(
         link: 'underline-offset-4 hover:underline',
         vendor:
           ' bg-[linear-gradient(90deg,_#DBE8FF_0%,_#FEE9FF_100%)] rounded-3xl font-bold shadow-sm',
+
+        vendorGray: 'bg-[#3D3D3D] text-white',
+        vendorBlack: 'bg-black text-white',
+
         home: 'bg-white text-black font-bold shadow-lg rounded-xl',
         category: 'bg-[#DBE8FF] text-black',
       },
