@@ -16,7 +16,7 @@ function SignupLayout({
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-t from-[#F4F8FF] to-[#DBE8FF]">
       <h1 className="mb-2 text-4xl font-bold text-[#5b5bff]">SOLU</h1>
-      <p className="mb-5 text-lg font-extrabold text-black">{title}</p>
+      <p className="mb-5 text-xl font-extrabold text-black">{title}</p>
       {content && (
         <p className="mb-10 text-center text-sm whitespace-pre-line text-[#7A7A7A]">
           {content}
