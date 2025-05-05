@@ -1,9 +1,4 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/shared/ui/dialog';
+import CustomModal from '@/shared/ui/custommodal';
 import LoginForm from './login-form';
 
 export default function LoginModal({
@@ -14,15 +9,14 @@ export default function LoginModal({
   setOpen: (open: boolean) => void;
 }) {
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="flex h-auto w-[500px] flex-col items-center justify-center rounded-2xl border-0 bg-white px-7 py-8">
-        <DialogHeader>
-          <DialogTitle className="mt-10 text-center text-xl font-bold text-black">
-            로그인
-          </DialogTitle>
-        </DialogHeader>
-        <LoginForm />
-      </DialogContent>
-    </Dialog>
+    <CustomModal
+      open={open}
+      setOpen={setOpen}
+      title="로그인"
+      contentProps="flex h-auto w-[500px] flex-col items-center justify-center rounded-2xl border-0 bg-white px-7 py-8"
+      titleProps="mt-10 text-center text-xl font-bold text-black"
+    >
+      <LoginForm />
+    </CustomModal>
   );
 }
