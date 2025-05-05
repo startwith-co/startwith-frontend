@@ -1,4 +1,4 @@
-import MyProfile from '@/pages/my/ui/my-profile';
+import MyProfile from '@/pages/my/ui/my-profile-page';
 
 function page() {
   return <MyProfile />;
