@@ -1,6 +1,6 @@
 'use client';
 
-import SignupLayout from '@/pages/signup/ui/signup-layout';
+import SignupLayout from '@/entities/signup/ui/signup-layout';
 import SignupVendorForm from '@/features/signup/ui/signup-vendor-form';
 
 function SignupVendorPage() {
