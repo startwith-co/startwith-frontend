@@ -6,10 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '@/shared/ui/input';
 import SignupForm from '@/shared/ui/signup-form';
 import signupVendorPost from '@/features/signup/api/signupVendorPost';
-import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { Plus } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
+import useFileUpload from '@/shared/api/useFileUpload';
 
 const passwordRegex = /^(?=.*[!@#])[A-Za-z\d!@#]{8,16}$/;
 const schema = z.object({
@@ -32,29 +32,19 @@ type FormSchema = z.infer<typeof schema>;
 function SignupVendorForm() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
 
-  const [preview, setPreview] = useState<string | null>(null);
-  const [file, setFile] = useState<File | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      const reader = new FileReader();
-      reader.onload = () => setPreview(reader.result as string);
-      reader.readAsDataURL(selectedFile);
-    }
-  };
-
-  const handleClickFileInput = () => {
-    fileInputRef.current?.click();
-  };
+  const {
+    file,
+    fileInputRef,
+    handleFileChange,
+    handleClickFileInput,
+    preview,
+  } = useFileUpload();
 
   return (
     <SignupForm
@@ -64,6 +54,7 @@ function SignupVendorForm() {
       buttonProps="bg-gradient-to-r from-[#2D2D2D] to-[#404040] text-white w-full h-[60px] font-extrabold text-lg shadow-sm"
       buttonName="솔루션 공급사로 파트너쉽 시작"
       loadingText="신청 중.."
+      disabled={!isValid}
     >
       <div className="flex gap-6">
         <div className="space-y-4">

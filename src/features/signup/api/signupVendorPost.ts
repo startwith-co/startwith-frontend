@@ -29,10 +29,6 @@ async function signupVendorPost(
     return;
   }
 
-  if (!file) {
-    return;
-  }
-
   redirect('/signup/success');
 }
 

@@ -30,7 +30,7 @@ type FormSchema = z.infer<typeof schema>;
 function SignupUserForm() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
@@ -42,10 +42,12 @@ function SignupUserForm() {
       action={(prevState, formData) =>
         signupUserPost(prevState, formData, selectedIndustry)
       }
-      buttonProps="bg-white text-[#5B76FF] w-full h-[60px] font-extrabold text-lg shadow-sm"
+      variant="textBlue"
+      buttonProps=" w-full h-[60px] font-extrabold text-lg shadow-sm"
       buttonName="기업 고객으로 편리한 솔루션 탐색 시작"
       loadingText="신청 중.."
       formProps="w-[700px] space-y-6"
+      disabled={!isValid}
     >
       <div>
         <Input

@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 async function editInfoPost(
   _prevState: void,
   formData: FormData,
+  file: File | null,
 ): Promise<void> {
   const company = formData?.get('company') as string;
   const industry = formData?.get('industry') as string;
