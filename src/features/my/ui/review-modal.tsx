@@ -1,14 +1,8 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/shared/ui/dialog';
-import { Button } from '@/shared/ui/button';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { Star } from 'lucide-react';
+import SubmitCustomButton from '@/shared/ui/submit-custom-button';
+import CustomModal from '@/shared/ui/custommodal';
 
 export default function ReviewModal({
   open,
@@ -26,17 +20,20 @@ export default function ReviewModal({
   const handleSubmit = () => {
     toast.success(`제출 완료\n별점: ${rating}점\n내용: ${text}`);
     setOpen(false);
+    setRating(0);
+    setText('');
+    setHover(null);
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="h-[700px] w-[500px] rounded-2xl px-7 py-8">
-        <DialogHeader>
-          <DialogTitle className="text-center text-xl font-extrabold">
-            고객님의 소중한 리뷰를 남겨주세요
-          </DialogTitle>
-        </DialogHeader>
-
+    <CustomModal
+      open={open}
+      setOpen={setOpen}
+      title="고객님의 소중한 리뷰를 남겨주세요"
+      contentProps="h-[700px] w-[500px] rounded-2xl px-7 py-8"
+      titleProps="text-center text-xl font-extrabold"
+    >
+      <form action={handleSubmit}>
         <div className="flex justify-center gap-2">
           {[1, 2, 3, 4, 5].map((star) => (
             <Star
@@ -52,12 +49,10 @@ export default function ReviewModal({
           ))}
         </div>
 
-        <div className="relative">
+        <div className="relative mt-5">
           <textarea
             value={text}
-            onChange={
-              (e) => setText(e.target.value.slice(0, maxChars)) // 500자 제한
-            }
+            onChange={(e) => setText(e.target.value.slice(0, maxChars))}
             placeholder="리뷰를 입력해주세요..."
             className="min-h-[420px] w-full resize-none rounded-xl bg-[#f5f5f5] p-4 text-sm text-black focus:outline-none"
           />
@@ -65,18 +60,14 @@ export default function ReviewModal({
             {text.length}/{maxChars}자
           </div>
         </div>
-
-        <DialogFooter className="mt-1">
-          <Button
-            asChild={false}
-            className="h-[50px] w-full bg-[#4f7df9] font-bold text-white hover:bg-[#3c62d6]"
-            onClick={handleSubmit}
-            disabled={text.length === 0 || rating === 0}
-          >
-            리뷰 남기기
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        <SubmitCustomButton
+          buttonName="리뷰 남기기"
+          buttonProps="h-[50px] w-full bg-[#4f7df9] font-bold text-white hover:bg-[#3c62d6] mt-5"
+          disabled={text.length === 0 || rating === 0}
+          loadingText="로딩 중"
+          loadingTextProps="text-sm font-bold"
+        />
+      </form>
+    </CustomModal>
   );
 }

@@ -8,12 +8,26 @@ interface SubmitCustomButtonProps {
   buttonProps: string;
   loadingText: string;
   loadingTextProps?: string;
+  disabled?: boolean;
+  variant?:
+    | 'default'
+    | 'destructive'
+    | 'outline'
+    | 'secondary'
+    | 'ghost'
+    | 'link'
+    | 'login'
+    | 'bgBlackGradient'
+    | 'textBlue'
+    | 'bgBlueGradient';
 }
 function SubmitCustomButton({
   buttonName,
   buttonProps,
   loadingText,
   loadingTextProps,
+  variant,
+  disabled,
 }: SubmitCustomButtonProps) {
   const status = useFormStatus();
 
@@ -24,7 +38,13 @@ function SubmitCustomButton({
   }
 
   return (
-    <Button asChild={false} type="submit" className={`${buttonProps}`}>
+    <Button
+      asChild={false}
+      variant={variant}
+      type="submit"
+      className={`${buttonProps}`}
+      disabled={disabled}
+    >
       {buttonName}
     </Button>
   );

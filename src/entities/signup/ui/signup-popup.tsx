@@ -9,9 +9,10 @@ function SignupPopup() {
       </h1>
       <p className="mb-5 text-center text-sm">지금 바로 SOLU를 이용해보세요!</p>
       <Button
-        variant="login"
+        type="button"
+        variant="bgBlueGradient"
         asChild
-        className="h-[50px] w-full rounded-sm bg-gradient-to-t from-[#5B76FF] to-[#6E86FF] text-white"
+        className="h-[50px] w-full shadow-md"
       >
         <Link href="/login"> 확인</Link>
       </Button>

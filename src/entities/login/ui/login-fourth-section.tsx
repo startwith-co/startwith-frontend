@@ -28,7 +28,9 @@ function LoginFourthSection() {
           </p>
           <Button
             asChild
-            className="h-[55px] w-[600px] bg-gradient-to-b from-[#2D2D2D] to-[#404040] text-sm font-bold"
+            type="button"
+            variant="blackGradient"
+            className="h-[55px] w-[600px] text-sm font-bold"
           >
             <Link href="/signup/vendor">
               밴더로 회원가입하고, 솔루션 공급사로 파트너쉽 시작하기

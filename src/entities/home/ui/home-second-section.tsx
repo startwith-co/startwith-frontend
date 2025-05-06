@@ -1,6 +1,7 @@
 import { Button } from '@/shared/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
+import Solu from '@/shared/ui/solu';
 
 function HomeSecondSection() {
   return (
@@ -18,20 +19,20 @@ function HomeSecondSection() {
         <p className="text-3xl font-bold">
           우리 기업에게 꼭 맞는 솔루션은 무엇인지
           <br />
-          <span className="font-bold text-[#5B76FF]">SOLU</span>가 대신 분석해서
-          제안해드려요
+          <Solu />가 대신 분석해서 제안해드려요
         </p>
       </div>
       <div className="flex h-[500px] w-full flex-col items-center gap-5 pt-10">
         <p className="text-3xl font-bold">
           <span className="font-bold">ERP, CRM, HRM </span>등 우리 기업에게 꼭
           맞는
-          <br /> 프리미엄 기업 솔루션은
-          <span className="font-bold text-[#5B76FF]">SOLU</span>에 있습니다
+          <br /> 프리미엄 기업 솔루션은 <Solu />에 있습니다
         </p>
         <Button
           asChild
-          className="mt-4 h-[60px] w-[550px] bg-gradient-to-t from-[#6E86FF] to-[#5B76FF] text-sm font-bold text-white shadow-lg"
+          type="button"
+          variant="bgBlueGradient"
+          className="mt-4 h-[60px] w-[550px] text-sm font-bold shadow-lg"
         >
           <Link href="/signup/user">지금 바로 SOLU 시작하기</Link>
         </Button>

@@ -11,9 +11,10 @@ function LoginThirdBottomSection() {
         찾아보세요
       </h1>
       <Button
+        type="button"
         asChild
-        variant="ghost"
-        className="h-[50px] w-[350px] rounded-sm bg-white text-[#4f7df9] shadow-lg"
+        variant="textBlue"
+        className="h-[50px] w-[350px] shadow-lg"
       >
         <Link href="/signup/user">
           기업 고객으로 회원가입하고, 솔루션 탐색하기

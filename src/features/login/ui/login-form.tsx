@@ -18,7 +18,7 @@ type FormSchema = z.infer<typeof schema>;
 function LoginForm() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
@@ -27,11 +27,13 @@ function LoginForm() {
   return (
     <SignupForm
       action={loginPost}
-      buttonProps="bg-white text-black w-full h-[55px] font-light text-sm mt-4 shadow-lg"
+      variant="bgBlueGradient"
+      buttonProps="w-full h-[55px] cursor-pointer font-bold text-sm mt-4 shadow-lg"
       buttonName="로그인"
       buttonWrapperClassName="flex justify-center"
       loadingText="로그인 중.."
       formProps="w-full border-0"
+      disabled={!isValid}
     >
       <div>
         <Input

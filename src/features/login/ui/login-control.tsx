@@ -23,19 +23,21 @@ function LoginControl() {
         </p>
         <div>
           <Button
+            type="button"
             onClick={() => setOpen(true)}
             asChild={false}
-            variant="login"
-            className="h-[50px] w-full rounded-sm bg-gradient-to-t from-[#6E86FF] to-[#5B76FF] text-white shadow-md"
+            variant="bgBlueGradient"
+            className="h-[50px] w-full shadow-md"
           >
             로그인
           </Button>
 
           <div className="grid w-full grid-cols-2 gap-2 pt-4">
             <Button
+              type="button"
               asChild
-              variant="login"
-              className="h-[50px] w-full rounded-sm bg-[#2D2D2D] text-white shadow-md"
+              variant="bgBlackGradient"
+              className="h-[50px] w-full shadow-md"
             >
               <Link href="signup/vendor">
                 <span className="text-sm font-semibold">벤더로 회원가입</span>
@@ -43,9 +45,10 @@ function LoginControl() {
             </Button>
 
             <Button
+              type="button"
               asChild
-              variant="login"
-              className="h-[50px] w-full rounded-sm border border-gray-200 bg-white text-[#4f7df9] shadow-md"
+              variant="textBlue"
+              className="h-[50px] w-full shadow-md"
             >
               <Link href="signup/user">
                 <span className="text-sm font-semibold">
