@@ -4,7 +4,7 @@
     "browser": true,
     "node": true,
     "es6": true
-  },  
+  },
   "plugins": ["import", "@typescript-eslint", "react", "prettier"],
   "extends": [
     "airbnb",
@@ -34,6 +34,10 @@
       {
         "endOfLine": "auto"
       }
+    ],
+    "react/function-component-definition": [
+      2,
+      { "namedComponents": ["function-declaration"] }
     ]
   },
   "parser": "@typescript-eslint/parser",
