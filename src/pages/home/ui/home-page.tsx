@@ -1,5 +1,7 @@
 import MainCategoryButtons from '@/features/home/ui/main-category-buttons';
 import MainSectionButtons from '@/features/home/ui/main-section-buttons';
+import HomeSecondSection from '@/entities/home/ui/home-second-section';
+import HomeFirstSection from '@/entities/home/ui/home-first-section';
 
 function HomePage() {
   return (
@@ -12,6 +14,8 @@ function HomePage() {
       <MainSectionButtons />
       <h3 className="mt-50 text-lg font-bold">도입 예정 솔루션</h3>
       <MainCategoryButtons />
+      <HomeFirstSection />
+      <HomeSecondSection />
     </section>
   );
 }
