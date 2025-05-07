@@ -19,7 +19,7 @@ export default function VendorNormalInfo() {
           </span>
           <div className="relative w-full">
             <Input
-              className="border-none bg-[#3D3D3D] placeholder:text-white"
+              className="border-none bg-[#3D3D3D] placeholder:text-[13px] placeholder:text-white"
               placeholder="서비스명을 입력해주세요"
             />
             {/* TODO: 입력한 글자수에 따라 값 변경하기 */}
