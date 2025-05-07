@@ -17,10 +17,16 @@ export default function VendorNormalInfo() {
           <span className="mr-4">
             솔루션명<span className="text-red-500">*</span>
           </span>
-          <Input
-            className="bg-[#3D3D3D] placeholder:text-white"
-            placeholder="서비스명을 입력해주세요"
-          />
+          <div className="relative w-full">
+            <Input
+              className="border-none bg-[#3D3D3D] placeholder:text-white"
+              placeholder="서비스명을 입력해주세요"
+            />
+            {/* TODO: 입력한 글자수에 따라 값 변경하기 */}
+            <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-[13px] text-white">
+              0/100
+            </span>
+          </div>
         </li>
         <li>
           <span>
