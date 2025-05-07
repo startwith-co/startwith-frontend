@@ -143,6 +143,20 @@ th {
   font-weight: inherit;
 }
 
+/* Firefox 브라우저용 사용자 정의 스타일 */
+[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* 그 외(Chrome, Safari, Edge...)의 브라우저용 사용자 정의 스타일 */
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 @keyframes scrollRight {
   0% {
     transform: translateX(-50%);
