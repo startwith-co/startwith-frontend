@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { DropdownProps } from '@/shared/model/type';
-import cn from '@/lib/utils';
+import cn from '@/shared/lib/utils';
 
 export default function Dropdown({
   buttonText,

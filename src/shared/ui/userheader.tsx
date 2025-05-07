@@ -10,7 +10,7 @@ import Dropdown from './dropdown';
 
 export default function UserHeader() {
   return (
-    <header className="flex items-center justify-between bg-[rgba(250,252,255,1)] px-4 pt-[35px] sm:px-8 md:px-16 lg:px-32 2xl:px-[300px]">
+    <header className="flex items-center justify-between bg-transparent px-4 pt-[35px] sm:px-8 md:px-16 lg:px-32 2xl:px-[300px]">
       <div className="flex items-center gap-8">
         <Link href="/">
           <h1 className="text-primary text-3xl font-bold">SOLU</h1>
@@ -32,9 +32,11 @@ export default function UserHeader() {
       </div>
 
       <div className="flex items-center gap-3.5 text-[12px]">
-        <Button asChild={false} variant="vendor" className="h-7 text-[12px]">
-          밴더 전용 HOME
-        </Button>
+        <Link href="/vendor">
+          <Button asChild={false} variant="vendor" className="h-7 text-[12px]">
+            밴더 전용 HOME
+          </Button>
+        </Link>
         <Button asChild={false} variant="ghost" className="h-7 text-[12px]">
           <PiGlobe />
           <span className="font-normal">Language</span>

@@ -1,4 +1,4 @@
-import MyDetail from '@/pages/my/ui/my-detail';
+import MyDetail from '@/pages/my/ui/my-detail-page';
 
 function page() {
   return <MyDetail />;

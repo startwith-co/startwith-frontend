@@ -12,6 +12,18 @@ interface SignupFormProps {
   buttonWrapperClassName?: string;
   loadingText?: string;
   loadingTextProps?: string;
+  disabled?: boolean;
+  variant?:
+    | 'default'
+    | 'destructive'
+    | 'outline'
+    | 'secondary'
+    | 'ghost'
+    | 'link'
+    | 'login'
+    | 'bgBlackGradient'
+    | 'textBlue'
+    | 'bgBlueGradient';
 }
 
 /**
@@ -24,6 +36,7 @@ interface SignupFormProps {
  * @param buttonWrapperClassName
  * @param loadingText
  * @param loadingTextProps
+ * @param variant
  * @returns
  */
 
@@ -34,8 +47,10 @@ function SignupForm({
   buttonProps,
   formProps,
   loadingText,
+  variant,
   loadingTextProps,
   buttonWrapperClassName = '',
+  disabled,
 }: SignupFormProps) {
   const [state, formAction] = useActionState(action, undefined);
 
@@ -48,6 +63,8 @@ function SignupForm({
           buttonProps={buttonProps}
           loadingText={loadingText || '로딩 중'}
           loadingTextProps={loadingTextProps}
+          variant={variant || 'default'}
+          disabled={disabled}
         />
       </div>
     </form>

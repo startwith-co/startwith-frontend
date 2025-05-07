@@ -17,7 +17,7 @@ function EditVendorTextArea() {
     setText('');
   };
   return (
-    <div className="relative ml-5 h-full w-[550px] rounded-2xl border-2 border-[#404040] bg-[#212121] p-8 shadow-md">
+    <div className="relative ml-5 h-full rounded-2xl border-2 border-[#404040] bg-[#212121] p-8 shadow-md">
       <h1 className="mb-5 text-lg text-white">기업 상세 소개</h1>
       <textarea
         value={text}
@@ -31,18 +31,18 @@ function EditVendorTextArea() {
       <div className="align-center flex w-full flex-row justify-center gap-5">
         <Button
           asChild={false}
+          className="h-[40px] w-[185px] bg-[#3D3D3D] font-bold text-white hover:bg-[#3c62d6]"
+          onClick={handleReset}
+        >
+          초기화
+        </Button>
+        <Button
+          asChild={false}
           className="h-[40px] w-[185px] bg-[#000000] font-bold text-white hover:bg-[#3c62d6]"
           onClick={handleSubmit}
           disabled={text.length === 0}
         >
           수정하기
-        </Button>
-        <Button
-          asChild={false}
-          className="h-[40px] w-[185px] bg-[#3D3D3D] font-bold text-white hover:bg-[#3c62d6]"
-          onClick={handleReset}
-        >
-          초기화
         </Button>
       </div>
     </div>

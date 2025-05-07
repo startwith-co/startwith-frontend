@@ -5,10 +5,11 @@ import { redirect } from 'next/navigation';
 async function signupUserPost(
   _prevState: void,
   formData: FormData,
+  industry: string | null,
 ): Promise<void> {
   const company = formData?.get('company') as string;
-  const industry = formData?.get('industry') as string;
   const email = formData?.get('email') as string;
+  const password = formData?.get('password') as string;
 
   if (!company || company.trim().length === 0) {
     return;
@@ -17,6 +18,9 @@ async function signupUserPost(
     return;
   }
   if (!email || email.trim().length === 0) {
+    return;
+  }
+  if (!password || password.trim().length === 0) {
     return;
   }
 
