@@ -37,6 +37,7 @@
     "concurrently": "^9.1.2",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "firebase": "^11.7.1",
     "lucide-react": "^0.503.0",
     "msw": "^2.7.5",
     "next": "15.3.1",
