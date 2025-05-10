@@ -1,32 +1,46 @@
 import { Avatar, AvatarImage, AvatarFallback } from '@/shared/ui/avatar';
-import formatDate from '@/shared/lib/date-formatter';
+import clsx from 'clsx';
+import Link from 'next/link';
 
-function ChatRoomCard({
-  name,
-  preview,
-  img,
-  date,
-}: {
+export interface ChatRoomCardProps {
   name: string;
-  preview: string;
+  lastMessage: string;
   img: string;
   date: string;
-}) {
-  return (
-    <div className="flex items-center justify-center rounded-md bg-gray-100 p-3.5">
-      <Avatar className="mr-6 flex size-15 rounded-full">
-        <AvatarImage src={img} />
-        <AvatarFallback>{name[0]}</AvatarFallback>
-      </Avatar>
-      <div className="flex flex-col gap-1">
-        <div className="flex items-center justify-between">
-          <p className="font-semibold">{name}</p>
-          <p className="text-xs font-light text-gray-500">{formatDate(date)}</p>
-        </div>
-        <p className="text-sm">{preview}</p>
-      </div>
-    </div>
-  );
+  link: string;
+  className?: string;
+  avatarSize?: string;
 }
 
-export default ChatRoomCard;
+export default function ChatRoomCard({
+  name,
+  lastMessage,
+  img,
+  date,
+  link,
+  className = '',
+  avatarSize = 'size-15',
+}: ChatRoomCardProps) {
+  return (
+    <Link href={link}>
+      <div
+        className={clsx(
+          'flex items-center justify-center rounded-md p-3.5',
+          className,
+        )}
+      >
+        <Avatar className={clsx('mr-6 flex rounded-full', avatarSize)}>
+          <AvatarImage src={img} />
+          <AvatarFallback>{name[0]}</AvatarFallback>
+        </Avatar>
+        <div className="flex w-full flex-col gap-1">
+          <div className="flex items-center justify-between">
+            <p className="font-semibold">{name}</p>
+            <p className="text-xs font-light text-gray-500">{date}</p>
+          </div>
+          <p className="text-sm">{lastMessage}</p>
+        </div>
+      </div>
+    </Link>
+  );
+}

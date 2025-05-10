@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '@/shared/ui/input';
 import SignupForm from '@/shared/ui/signup-form';
 import requestPayPost from '@/features/vendorChat/api/requestPayPost';
+import { notFound, useSearchParams } from 'next/navigation';
 
 const schema = z.object({
   solutionName: z.string().min(1, '솔루션명 입력해주세요.'),
@@ -23,10 +24,28 @@ function RequestPayForm() {
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
+  const searchParams = useSearchParams();
+  const vendorId = searchParams?.get('vendorId');
+  const userId = searchParams?.get('userId');
+  if (!vendorId || !userId) return notFound();
+
+  const vendorName = 'vendorA';
+  const userName = 'userA';
 
   return (
     <SignupForm
-      action={requestPayPost}
+      action={(prevState, formData) =>
+        requestPayPost(
+          prevState,
+          formData,
+          vendorId,
+          vendorName,
+          userId,
+          vendorId,
+          userName,
+          vendorName,
+        )
+      }
       buttonProps="bg-black text-white w-full h-[45px] font-light text-sm mt-8"
       buttonName="결제 요청하기"
       buttonWrapperClassName="flex justify-center"

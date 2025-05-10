@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ChatRoomCard, { ChatRoomCardProps } from '@/shared/ui/chatroomcard';
+import ChatRoomCard, {
+  ChatRoomCardProps,
+} from '@/entities/chat/ui/chat-room-card';
 
 const meta: Meta<ChatRoomCardProps> = {
   title: 'Components/ChatRoomCard',
