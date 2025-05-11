@@ -1,5 +1,5 @@
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import db from '../../../fire-config';
+import db from 'fire-config';
 
 async function createRoom(
   roomId: string,

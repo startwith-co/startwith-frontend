@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Dialog,
   DialogContent,
@@ -5,15 +7,12 @@ import {
   DialogTitle,
 } from '@/shared/ui/dialog';
 
+import { useVendorRoomId } from '@/pages/vendor/chat/model/VendorRoomIdProvider';
 import RequestPayForm from './request-pay-form';
 
-export default function RequestPayModal({
-  open,
-  setOpen,
-}: {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}) {
+export default function RequestPayModal() {
+  const { open, setOpen } = useVendorRoomId();
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="flex h-auto w-[500px] flex-col items-center justify-center rounded-2xl border-0 bg-[#212121] px-7 py-8">

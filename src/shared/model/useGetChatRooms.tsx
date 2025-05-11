@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
-import db from '../../../fire-config';
+import db from 'fire-config';
 import { ChatRoom } from './roomType';
 
 function useGetChatRooms({ targetId }: { targetId: string }) {
@@ -23,7 +23,7 @@ function useGetChatRooms({ targetId }: { targetId: string }) {
     });
 
     return () => unsubscribe();
-  }, [userId]);
+  }, [targetId, userId]);
 
   return rooms;
 }

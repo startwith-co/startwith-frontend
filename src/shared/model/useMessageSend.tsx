@@ -14,12 +14,12 @@ import {
 
 import createRoom from '@/shared/api/create-room';
 import { v4 as uuidv4 } from 'uuid';
-import { useRoomId } from '@/shared/model/RoomIdProvider';
 import { notFound } from 'next/navigation';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import db, { storage } from 'fire-config';
 import { Message } from './roomType';
-import db from '../../../fire-config';
 
 interface UseMessageSendProps {
   messageId: string;
@@ -28,6 +28,9 @@ interface UseMessageSendProps {
   vendorName: string;
   vendorId: string;
   userId: string;
+  setCurRoomId: (roomId: string) => void;
+  curRoomId: string | null;
+  attachedFile?: File;
 }
 
 function useMessageSend({
@@ -37,10 +40,27 @@ function useMessageSend({
   vendorId,
   userId,
   messageName,
+  setCurRoomId,
+  curRoomId,
 }: UseMessageSendProps) {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
-  const { setCurRoomId, curRoomId } = useRoomId();
+  const [attachedFile, setAttachedFile] = useState<File | null>(null);
+  const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setAttachedFile(file);
+
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = () => setFilePreviewUrl(reader.result as string);
+      reader.readAsDataURL(file);
+    } else {
+      setFilePreviewUrl(null);
+    }
+  };
 
   useEffect(() => {
     let unsubscribe: () => void;
@@ -74,9 +94,10 @@ function useMessageSend({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!message.trim()) return;
+    if (!message.trim() && !attachedFile) return;
     const roomId = await findChatExistingRoom(userId, vendorId);
     const newRoomId = uuidv4();
+    const targetRoomId = roomId || newRoomId;
 
     if (!roomId) {
       await createRoom(
@@ -92,14 +113,33 @@ function useMessageSend({
       setCurRoomId(newRoomId);
     }
 
+    /* TODO: 파일 첨부 기능 구현 */
+
+    // let fileData = null;
+
+    // if (attachedFile) {
+    //   const fileRef = ref(
+    //     storage,
+    //     `chats/${targetRoomId}/${Date.now()}_${attachedFile.name}`,
+    //   );
+    //   console.log(fileData);
+    //   await uploadBytes(fileRef, attachedFile);
+    //   const fileUrl = await getDownloadURL(fileRef);
+
+    //   fileData = {
+    //     name: attachedFile.name,
+    //     type: attachedFile.type,
+    //     url: fileUrl,
+    //   };
+    // }
+
     const newMessage = {
       message,
       createdAt: serverTimestamp(),
       messageId,
       messageName,
+      // file: fileData,
     };
-
-    const targetRoomId = roomId || newRoomId;
 
     await addDoc(collection(db, 'chats', targetRoomId, 'messages'), newMessage);
 
@@ -111,12 +151,23 @@ function useMessageSend({
     });
 
     setMessage('');
+    setAttachedFile(null);
+    setFilePreviewUrl(null);
 
     const fetchedMessages = await getMessagesById(targetRoomId);
     setMessages(fetchedMessages);
   }
 
-  return { handleSubmit, message, setMessage, messages, setMessages };
+  return {
+    handleSubmit,
+    message,
+    setMessage,
+    messages,
+    setMessages,
+    handleFileChange,
+    attachedFile,
+    filePreviewUrl,
+  };
 }
 
 export default useMessageSend;

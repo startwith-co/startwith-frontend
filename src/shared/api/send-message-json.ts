@@ -1,7 +1,7 @@
 import { serverTimestamp, addDoc, collection } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { revalidatePath } from 'next/cache';
-import db from '../../../fire-config';
+import db from 'fire-config';
 import createRoom from './create-room';
 import findChatExistingRoom from './find-chat-existing-room';
 

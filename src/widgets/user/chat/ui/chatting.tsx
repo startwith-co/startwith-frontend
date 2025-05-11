@@ -7,8 +7,8 @@ import formatTime from '@/shared/lib/chat-format-time';
 import useMessageSend from '@/shared/model/useMessageSend';
 import { MdOutlineAttachFile } from 'react-icons/md';
 import { notFound, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
 import Image from 'next/image';
+import { useRoomId } from '@/shared/model/RoomIdProvider';
 
 function Chatting() {
   const searchParams = useSearchParams();
@@ -21,32 +21,26 @@ function Chatting() {
 
   const userName = 'userA';
   const vendorName = 'vendorB';
+  const { curRoomId, setCurRoomId } = useRoomId();
 
-  const [attachedFile, setAttachedFile] = useState<File | null>(null);
-  const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
-
-  const { handleSubmit, message, setMessage, messages } = useMessageSend({
+  const {
+    handleSubmit,
+    message,
+    setMessage,
+    messages,
+    attachedFile,
+    filePreviewUrl,
+    handleFileChange,
+  } = useMessageSend({
     messageId: userId,
     messageName: userName,
     userName,
     vendorName,
     vendorId,
     userId,
+    curRoomId,
+    setCurRoomId,
   });
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setAttachedFile(file);
-
-    if (file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = () => setFilePreviewUrl(reader.result as string);
-      reader.readAsDataURL(file);
-    } else {
-      setFilePreviewUrl(null);
-    }
-  };
 
   return (
     <div className="flex h-[calc(100vh-200px)] w-full flex-col overflow-hidden rounded-3xl bg-white shadow-md">
@@ -76,13 +70,50 @@ function Chatting() {
           }
 
           return (
-            <ChatBubble
-              key={msg.id}
-              message={msg.message}
-              messageId={msg.messageId}
-              userId={userId}
-              time={formatTime(msg.createdAt)}
-            />
+            <>
+              <ChatBubble
+                key={msg.id}
+                message={msg.message}
+                messageId={msg.messageId}
+                userId={userId}
+                time={formatTime(msg.createdAt)}
+              />
+              {/* TODO: 파일 첨부 기능 구현 */}
+              {/* {messages.map((msg) => {
+                const isImage = msg.file?.type?.startsWith('image/');
+                return (
+                  <div key={msg.id}>
+                    <ChatBubble
+                      message={msg.message}
+                      messageId={msg.messageId}
+                      userId={userId}
+                      time={formatTime(msg.createdAt)}
+                    />
+                    {msg.file && (
+                      <div className="mt-2 ml-4">
+                        {isImage ? (
+                          <Image
+                            src={msg.file.url}
+                            alt={msg.file.name}
+                            width={200}
+                            height={200}
+                            className="rounded"
+                          />
+                        ) : (
+                          <a
+                            href={msg.file.url}
+                            download={msg.file.name}
+                            className="text-blue-500 underline"
+                          >
+                            📎 {msg.file.name}
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })} */}
+            </>
           );
         })}
       </div>

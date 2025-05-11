@@ -8,6 +8,10 @@ import useMessageSend from '@/shared/model/useMessageSend';
 import ChatVendorBubble from '@/entities/chat/ui/chat-vendor-bubble';
 import ChatRequestCard from '@/entities/chat/ui/chat-request-card';
 import formatTime from '@/shared/lib/chat-format-time';
+import { useEffect } from 'react';
+import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
+import getMessagesById from '@/shared/api/get-messages-by-id';
+import { useVendorRoomId } from '@/pages/vendor/chat/model/VendorRoomIdProvider';
 
 function VendorChatting() {
   const searchParams = useSearchParams();
@@ -21,14 +25,31 @@ function VendorChatting() {
   const userName = 'userA';
   const vendorName = 'vendorB';
 
-  const { handleSubmit, message, setMessage, messages } = useMessageSend({
-    messageId: vendorId,
-    messageName: vendorName,
-    userName,
-    vendorName,
-    vendorId,
-    userId,
-  });
+  const { open, curRoomId, setCurRoomId } = useVendorRoomId();
+
+  const { handleSubmit, message, setMessage, messages, setMessages } =
+    useMessageSend({
+      messageId: vendorId,
+      messageName: vendorName,
+      userName,
+      vendorName,
+      vendorId,
+      userId,
+      curRoomId,
+      setCurRoomId,
+    });
+
+  useEffect(() => {
+    async function fetchMessages() {
+      if (!userId || !vendorId) notFound();
+      const roomId = await findChatExistingRoom(userId, vendorId);
+      if (!roomId) notFound();
+      const fetchedMessages = await getMessagesById(roomId);
+      setMessages(fetchedMessages);
+    }
+    if (open) return;
+    fetchMessages();
+  }, [userId, vendorId, open]);
 
   return (
     <div className="flex h-[calc(100vh-200px)] w-full flex-col rounded-3xl border-2 border-[#404040] bg-[#212121]">

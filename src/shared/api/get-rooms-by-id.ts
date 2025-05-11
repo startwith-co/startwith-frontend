@@ -1,5 +1,5 @@
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import db from '../../../fire-config';
+import db from 'fire-config';
 import { ChatRoom } from '../model/roomType';
 
 async function getRoomsById(userId: string): Promise<ChatRoom[]> {

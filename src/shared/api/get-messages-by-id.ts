@@ -1,5 +1,5 @@
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import db from '../../../fire-config';
+import db from 'fire-config';
 import { Message } from '../model/roomType';
 
 async function getMessagesById(roomId: string): Promise<Message[]> {

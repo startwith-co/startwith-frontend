@@ -4,10 +4,10 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/shared/ui/avatar';
 import VendorChatUserCard from '@/entities/vendorChat/ui/vendor-chat-user-card';
 import { Button } from '@/shared/ui/button';
 import RequestPayModal from '@/features/vendorChat/ui/request-pay-modal';
-import { useState } from 'react';
+import { useVendorRoomId } from '@/pages/vendor/chat/model/VendorRoomIdProvider';
 
 function VendorControl() {
-  const [open, setOpen] = useState(false);
+  const { setOpen } = useVendorRoomId();
 
   return (
     <div className="flex h-full w-full flex-col gap-2.5 rounded-3xl border-2 border-[#404040] bg-[#212121] px-8 pt-[19px] shadow-md">
@@ -29,7 +29,9 @@ function VendorControl() {
           <Button
             asChild={false}
             className="h-[40px] w-full bg-black text-sm text-[#5B76FF]"
-            onClick={() => setOpen(true)}
+            onClick={() => {
+              setOpen(true);
+            }}
           >
             결제 요청하기
           </Button>
@@ -39,7 +41,7 @@ function VendorControl() {
           >
             개발 완료 알림
           </Button>
-          <RequestPayModal open={open} setOpen={setOpen} />
+          <RequestPayModal />
         </div>
       </div>
     </div>

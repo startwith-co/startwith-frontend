@@ -6,6 +6,7 @@ export interface Message {
   messageId: string;
   messageName: string;
   createdAt: Timestamp;
+  file?: File;
 }
 
 export interface LastMessageType
