@@ -33,12 +33,12 @@ export default function ChatRoomCard({
           <AvatarImage src={img} />
           <AvatarFallback>{name[0]}</AvatarFallback>
         </Avatar>
-        <div className="flex w-full flex-col gap-1">
+        <div className="flex min-w-0 flex-col gap-1">
           <div className="flex items-center justify-between">
-            <p className="font-semibold">{name}</p>
+            <p className="truncate font-semibold">{name}</p>
             <p className="text-xs font-light text-gray-500">{date}</p>
           </div>
-          <p className="text-sm">{lastMessage}</p>
+          <p className="truncate text-sm">{lastMessage}</p>
         </div>
       </div>
     </Link>

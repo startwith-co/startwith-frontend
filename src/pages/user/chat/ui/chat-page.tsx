@@ -1,7 +1,7 @@
 import ChatRooms from '@/widgets/user/chat/ui/chat-rooms';
 import ChatCompanyProfile from '@/widgets/user/chat/ui/chat-company-profile';
 import Chatting from '@/widgets/user/chat/ui/chatting';
-import RoomIdProvider from '@/shared/model/RoomIdProvider';
+import RoomIdProvider from '../model/RoomIdProvider';
 
 export default async function ChatPage() {
   return (

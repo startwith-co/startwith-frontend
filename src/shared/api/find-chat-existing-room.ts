@@ -16,7 +16,7 @@ async function findChatExistingRoom(userId: string, vendorId: string) {
     return doc.id;
   }
 
-  return null; // 방이 존재하지 않음
+  return null;
 }
 
 export default findChatExistingRoom;

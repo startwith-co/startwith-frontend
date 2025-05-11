@@ -16,7 +16,7 @@ import useGetChatRooms from '@/shared/model/useGetChatRooms';
 function VendorChatRooms() {
   const rooms = useGetChatRooms({ targetId: 'vendorId' });
   return (
-    <div className="w-full rounded-3xl border-2 border-[#404040] bg-[#212121] p-4.5 pb-8">
+    <div className="w-full min-w-0 rounded-3xl border-2 border-[#404040] bg-[#212121] p-4.5 pb-8">
       <div className="relative mb-5">
         <Input
           type="search"

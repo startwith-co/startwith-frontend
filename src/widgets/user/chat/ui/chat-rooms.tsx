@@ -16,7 +16,7 @@ function ChatRooms() {
   const rooms = useGetChatRooms({ targetId: 'userId' });
 
   return (
-    <div className="w-full rounded-3xl bg-white p-4.5 pb-8 shadow-md">
+    <div className="w-full min-w-0 rounded-3xl bg-white p-4.5 pb-8 shadow-md">
       <div className="relative mb-5">
         <Input
           type="search"

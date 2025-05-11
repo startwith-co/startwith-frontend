@@ -8,7 +8,7 @@ import useMessageSend from '@/shared/model/useMessageSend';
 import { MdOutlineAttachFile } from 'react-icons/md';
 import { notFound, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { useRoomId } from '@/shared/model/RoomIdProvider';
+import { useRoomId } from '@/pages/user/chat/model/RoomIdProvider';
 
 function Chatting() {
   const searchParams = useSearchParams();
