@@ -1,4 +1,6 @@
-import ChatRoomCard from '@/shared/ui/chatroomcard';
+'use client';
+
+import ChatRoomCard from '@/entities/chat/ui/chat-room-card';
 import Input from '@/shared/ui/input';
 import {
   Pagination,
@@ -7,10 +9,14 @@ import {
   PaginationLink,
 } from '@/shared/ui/pagination';
 import { IoSearchOutline } from 'react-icons/io5';
+import formatTime from '@/shared/lib/chat-format-time';
+import useGetChatRooms from '@/shared/model/useGetChatRooms';
 
 function ChatRooms() {
+  const rooms = useGetChatRooms({ targetId: 'userId' });
+
   return (
-    <div className="w-full rounded-3xl bg-white p-4.5 pb-8 shadow-md">
+    <div className="w-full min-w-0 rounded-3xl bg-white p-4.5 pb-8 shadow-md">
       <div className="relative mb-5">
         <Input
           type="search"
@@ -23,30 +29,16 @@ function ChatRooms() {
         />
       </div>
       <div className="flex flex-col gap-2.5">
-        <ChatRoomCard
-          name="더비즈온"
-          preview="안녕하세요, 더비즈온입니다."
-          img="https://github.com/shadcn.png"
-          date="2025-04-30 10:00"
-        />
-        <ChatRoomCard
-          name="더비즈온"
-          preview="안녕하세요, 더비즈온입니다."
-          img="https://github.com/shadcn.png"
-          date="2025-04-30 10:00"
-        />
-        <ChatRoomCard
-          name="더비즈온"
-          preview="안녕하세요, 더비즈온입니다."
-          img="https://github.com/shadcn.png"
-          date="2025-04-30 10:00"
-        />
-        <ChatRoomCard
-          name="더비즈온"
-          preview="안녕하세요, 더비즈온입니다."
-          img="https://github.com/shadcn.png"
-          date="2025-04-30 10:00"
-        />
+        {rooms.map((room) => (
+          <ChatRoomCard
+            key={room.roomId}
+            name={room.lastMessage.messageName}
+            lastMessage={room.lastMessage.message}
+            img={room.vendorId || ''}
+            date={formatTime(room.lastMessage.updatedAt)}
+            link={`/chat?userId=${room.userId}&vendorId=${room.vendorId}`}
+          />
+        ))}
       </div>
       <div className="flex items-center justify-center">
         {/* TODO: Link형태로 되어있어서 추후 일반 버튼으로 수정해야 함. */}

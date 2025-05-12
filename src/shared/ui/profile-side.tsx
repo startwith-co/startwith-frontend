@@ -34,7 +34,7 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
         'mr-5 flex max-h-[598px] min-w-[200px] flex-col items-center rounded-r-2xl px-3.5 py-9 shadow-md',
         mode === 'user'
           ? 'h-[400px] bg-white'
-          : 'relative h-auto border-2 border-l-0 border-[#404040] bg-[#212121]',
+          : 'relative h-auto min-w-0 border-2 border-l-0 border-[#404040] bg-[#212121]',
       )}
     >
       <div className="mb-4 flex items-center gap-2.5 rounded-3xl border-2 border-[#404040] px-2.5 py-1.5">

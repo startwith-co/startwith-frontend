@@ -9,7 +9,7 @@ import signupVendorPost from '@/features/signup/api/signupVendorPost';
 import Image from 'next/image';
 import { Plus } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
-import useFileUpload from '@/shared/api/useFileUpload';
+import useFileUpload from '@/shared/model/useFileUpload';
 
 const passwordRegex = /^(?=.*[!@#])[A-Za-z\d!@#]{8,16}$/;
 const schema = z.object({
