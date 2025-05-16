@@ -30,7 +30,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "*.config.js",
-    "src/app/mockServer.ts"
+    "src/app/mockServer.ts",
   ],
   "exclude": ["node_modules"]
 }
