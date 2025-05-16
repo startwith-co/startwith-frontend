@@ -1,9 +1,9 @@
 import express from 'express';
 import { createMiddleware } from '@mswjs/http-middleware';
 import cors from 'cors';
-import userHandlers from '@/entities/user/api/mock-user';
+import loginMockHandlers from '@/features/login/api/loginMockHandler';
 
-const handlers = [...userHandlers];
+const handlers = [...loginMockHandlers];
 const app = express();
 app.use(cors());
 const PORT = 8080;
