@@ -34,7 +34,7 @@ function ForgetForm() {
     <SignupForm
       action={loginPost}
       buttonProps="bg-gradient-to-t from-[#6E86FF] to-[#5B76FF] text-white w-full h-[55px] font-bold text-sm mt-4 "
-      buttonName="비밀번호 찾기"
+      buttonName="비밀번호 재설정하기"
       buttonWrapperClassName="flex justify-center"
       loadingText="인증 중.."
       formProps="border-0 space-y-4 w-[500px]"
