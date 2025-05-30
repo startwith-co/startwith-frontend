@@ -133,6 +133,9 @@
   --color-accent: #395aff;
   --color-light: #bdd2ff;
   --color-box-gray: #f5f5f5;
+  --color-vendor-primary: #5b76ff;
+  --color-vendor-gray: #f1f1f1;
+  --color-vendor-secondary: #aaaaaa;
 }
 
 html {

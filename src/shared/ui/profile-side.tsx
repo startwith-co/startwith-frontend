@@ -31,28 +31,28 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
     // TODO: 사이드바 높이 수정
     <aside
       className={cn(
-        'mr-5 flex max-h-[598px] min-w-[200px] flex-col items-center rounded-r-2xl px-3.5 py-9 shadow-md',
+        'mr-5 flex max-h-[580px] w-[200px] flex-col items-center rounded-r-2xl px-3.5 py-9 shadow-md',
         mode === 'user'
           ? 'h-[400px] bg-white'
-          : 'relative h-auto min-w-0 border-2 border-l-0 border-[#404040] bg-[#212121]',
+          : 'bg-vendor-primary relative h-auto',
       )}
     >
-      <div className="mb-4 flex items-center gap-2.5 rounded-3xl border-2 border-[#404040] px-2.5 py-1.5">
+      <div className="mb-4 flex items-center gap-2.5 rounded-3xl border-2 border-white px-2.5 py-1.5">
         <div className="flex items-center gap-1.5">
           <div className="size-3.5 rounded-full bg-orange-500" />
-          <span className="text-[13px] text-[#AAAAAA]">입점 심사중</span>
+          <span className="text-[13px] text-white">입점 심사중</span>
         </div>
         <div
-          className="flex size-3.5 cursor-pointer items-center justify-center rounded-full bg-[#404040]"
+          className="flex size-3.5 cursor-pointer items-center justify-center rounded-full bg-black"
           onMouseEnter={handleModalOpen}
           onMouseLeave={handleModalClose}
         >
           <span className="text-[13px] text-white">?</span>
           {isModalOpen && (
-            <DarkBox className="absolute -top-20 left-full z-10 flex w-72 p-7.5 shadow-md">
+            <DarkBox className="absolute top-0 left-full z-10 flex w-[338px] p-7.5 shadow-md">
               <div className="flex w-full flex-col items-center gap-5">
-                <h2 className="font-semibold text-white">입점 심사란?</h2>
-                <p className="text-center text-sm text-white [&>span]:font-bold">
+                <h2 className="font-semibold">입점 심사란?</h2>
+                <p className="text-center text-sm text-[#7A7A7A] [&>span]:font-bold">
                   <span>SOLU</span>는 기업 고객이 신뢰할 수 있는 솔루션만을
                   제공하기 위해, 입점 신청 시 <span>간단한 사전 심사 절차</span>
                   를 운영하고 있습니다. <br />

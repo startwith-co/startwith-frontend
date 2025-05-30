@@ -8,6 +8,6 @@ export default function DarkBox({
   className?: string;
 }) {
   return (
-    <div className={cn('rounded-md bg-[#3D3D3D]', className)}>{children}</div>
+    <div className={cn('bg-vendor-gray rounded-md', className)}>{children}</div>
   );
 }

@@ -6,9 +6,9 @@ import VendorServiceBoard from '@/widgets/vendorHome/ui/vendor-service-board';
 
 export default function VendorHomePage() {
   return (
-    <div className="flex w-full flex-col gap-5 pr-8">
-      <div className="grid grid-cols-[2.5fr_1fr_1fr] gap-5.5 2xl:grid-cols-[1.7fr_1fr_1fr]">
-        <div className="flex flex-col gap-5">
+    <div className="flex w-full flex-col gap-7.5 pr-8">
+      <div className="grid grid-cols-[2.5fr_1fr_1fr] gap-7.5 2xl:grid-cols-[1.7fr_1fr_1fr]">
+        <div className="flex flex-col gap-7.5">
           <VendorBoard />
           <VendorStatistics />
         </div>
@@ -16,7 +16,7 @@ export default function VendorHomePage() {
         <VendorNoticeWidget />
       </div>
 
-      <div className="grid grid-cols-[2.5fr_1fr_1fr] gap-5.5 2xl:grid-cols-[1.7fr_1fr_1fr]">
+      <div className="grid grid-cols-[2.5fr_1fr_1fr] gap-7.5 2xl:grid-cols-[1.7fr_1fr_1fr]">
         <div className="col-start-1 col-end-2">
           <VendorStatistics />
         </div>

@@ -6,13 +6,11 @@ import { Button } from './button';
 
 export default function VendorHeader() {
   return (
-    <header className="flex items-center justify-between bg-[#212121] pt-[35px] pr-8 pl-[222px]">
-      <Link href="/vendor">
-        <h1 className="bg-gradient-to-t from-[#F4F8FF] to-[#DBE8FF] bg-clip-text text-3xl font-bold text-transparent">
+    <header className="bg-vendor-gray flex items-center justify-between pt-[35px] pr-8 pl-[222px]">
+      <Link href="/vendor" className="text-vendor-primary">
+        <h1 className="text-3xl font-bold">
           SOLU
-          <span className="ml-3 bg-gradient-to-t from-[#F4F8FF] to-[#DBE8FF] bg-clip-text text-xl font-bold text-transparent">
-            밴더 HOME
-          </span>
+          <span className="ml-3 text-xl font-bold">밴더 HOME</span>
         </h1>
       </Link>
       <div className="flex items-center gap-3.5 text-[12px]">
