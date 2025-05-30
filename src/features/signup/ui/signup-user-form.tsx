@@ -43,7 +43,7 @@ function SignupUserForm() {
         signupUserPost(prevState, formData, selectedIndustry)
       }
       variant="textBlue"
-      buttonProps=" w-full h-[60px] font-extrabold text-lg shadow-sm"
+      buttonProps=" w-full h-[60px] font-extrabold text-lg shadow-sm mb-8"
       buttonName="기업 고객으로 편리한 솔루션 탐색 시작"
       loadingText="신청 중.."
       formProps="w-[700px] space-y-6"
@@ -62,19 +62,38 @@ function SignupUserForm() {
         )}
       </div>
 
-      <div>
+      <div className="grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
         <Input
-          type="string"
           {...register('email')}
-          name="email"
-          placeholder="담당자 이메일"
+          placeholder="이메일 입력"
           className="h-[55px] w-full bg-white indent-2"
         />
         {errors.email && (
           <p className="text-sm text-red-500">{errors.email.message}</p>
         )}
+        <Button
+          type="button"
+          asChild={false}
+          onClick={() => {}}
+          className="h-[55px] w-full bg-white text-sm text-[#7A7A7A] shadow-sm"
+        >
+          이메일 인증코드 전송
+        </Button>
       </div>
-
+      <div className="grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
+        <Input
+          placeholder="인증코드 입력"
+          className="h-[55px] w-full bg-white indent-2"
+        />
+        <Button
+          type="button"
+          asChild={false}
+          onClick={() => {}}
+          className="h-[55px] w-full bg-white text-sm text-[#7A7A7A] shadow-sm"
+        >
+          인증코드 인증하기
+        </Button>
+      </div>
       <div>
         <Input
           type="password"
@@ -86,6 +105,21 @@ function SignupUserForm() {
         {errors.password && (
           <p className="text-sm text-red-500">{errors.password.message}</p>
         )}
+      </div>
+      <div className="grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
+        <Input
+          placeholder="비밀번호 확인"
+          className="h-[55px] w-full bg-white indent-2"
+        />
+
+        <Button
+          type="button"
+          asChild={false}
+          onClick={() => {}}
+          className="h-[55px] w-full bg-white text-sm text-[#7A7A7A] shadow-sm"
+        >
+          비밀번호 확인하기
+        </Button>
       </div>
 
       <div>

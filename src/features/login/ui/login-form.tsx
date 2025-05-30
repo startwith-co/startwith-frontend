@@ -36,45 +36,60 @@ function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onValid)} className="w-full border-0">
-      <div>
+      <div className="relative w-full">
         <Input
           id="email"
           type="email"
           {...register('email')}
-          placeholder="이메일 입력"
+          placeholder={errors.email ? '' : '이메일 입력'}
           className="h-[40px] w-full rounded-t-md rounded-b-none border border-b-0 border-[#7A7A7A] indent-2 text-black"
         />
         {errors.email && (
-          <p className="text-sm text-red-500">{errors.email.message}</p>
+          <span className="absolute bottom-3 left-5 text-xs text-red-500">
+            {errors.email.message}
+          </span>
         )}
       </div>
 
-      <div>
+      <div className="relative w-full">
         <Input
           id="password"
           type="password"
           {...register('password')}
-          placeholder="비밀번호 입력"
-          className="h-[40px] w-full rounded-t-none rounded-b-md border border-t border-[#7A7A7A] indent-2 text-black"
+          placeholder={errors.password ? '' : '비밀번호 입력'}
+          className={`h-[40px] w-full rounded-t-none rounded-b-md border indent-2 text-black ${
+            errors.password ? 'border-red-500' : 'border-[#7A7A7A]'
+          }`}
         />
         {errors.password && (
-          <p className="text-sm text-red-500">{errors.password.message}</p>
+          <span className="absolute bottom-3 left-5 text-xs text-red-500">
+            {errors.password.message}
+          </span>
         )}
       </div>
 
-      <p className="mt-2 text-sm text-[#A7A7A7]">
-        <Link href="/forget">비밀번호를 잃어버렸어요?</Link>
+      <p className="mt-2 text-sm text-[#A7A7A7] underline">
+        <Link href="/forget">비밀번호를 잃어버렸나요?</Link>
       </p>
 
-      <div className="flex justify-center">
+      <div className="grid grid-cols-2 gap-2">
         <Button
           asChild={false}
           type="submit"
           variant="bgBlueGradient"
-          className="mt-4 h-[55px] w-full cursor-pointer text-sm font-bold shadow-lg"
+          className="mt-4 h-[55px] cursor-pointer text-sm font-bold shadow-lg"
           disabled={!isValid}
         >
-          로그인
+          벤더로 로그인
+        </Button>
+        <Button
+          asChild={false}
+          type="submit"
+          variant="bgBlackGradient"
+          className="mt-4 h-[55px] cursor-pointer text-sm font-bold shadow-lg"
+          disabled={!isValid}
+        >
+          기업 고객으로 로그인
         </Button>
       </div>
     </form>

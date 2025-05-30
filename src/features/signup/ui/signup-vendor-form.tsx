@@ -51,79 +51,25 @@ function SignupVendorForm() {
       action={(prevState, formData) =>
         signupVendorPost(prevState, formData, file)
       }
-      buttonProps="bg-gradient-to-r from-[#2D2D2D] to-[#404040] text-white w-full h-[60px] font-extrabold text-lg shadow-sm"
+      buttonProps="bg-gradient-to-r from-[#2D2D2D] to-[#404040] text-white w-full h-[60px] font-extrabold text-lg shadow-sm mb-8"
       buttonName="솔루션 공급사로 파트너쉽 시작"
       loadingText="신청 중.."
       disabled={!isValid}
     >
-      <div className="flex gap-6">
-        <div className="space-y-4">
-          <Input
-            {...register('company')}
-            placeholder="기업명(사업자명)"
-            className="h-[55px] w-[600px] bg-white indent-2"
-          />
-          {errors.company && (
-            <p className="text-sm text-red-500">{errors.company.message}</p>
-          )}
-
-          <Input
-            {...register('name')}
-            placeholder="담당자 성함"
-            className="h-[55px] w-[600px] bg-white indent-2"
-          />
-          {errors.name && (
-            <p className="text-sm text-red-500">{errors.name.message}</p>
-          )}
-
-          <Input
-            {...register('phoneNumber')}
-            placeholder="담당자 연락처(휴대폰)"
-            className="h-[55px] w-[600px] bg-white indent-2"
-          />
-          {errors.phoneNumber && (
-            <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
-          )}
-
-          <Input
-            {...register('email')}
-            placeholder="이메일 입력"
-            className="h-[55px] w-[600px] bg-white indent-2"
-          />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
-          )}
-
-          <Input
-            type="password"
-            {...register('password')}
-            placeholder="비밀번호 입력 *8~16자리 입력, 특수기호(!@#) 1개 포함"
-            className="h-[55px] w-[600px] bg-white indent-2"
-          />
-          {errors.password && (
-            <p className="text-sm text-red-500">{errors.password.message}</p>
-          )}
-        </div>
-
-        <div className="flex h-full flex-col items-center space-y-2">
-          <Button
-            type="button"
-            asChild={false}
-            onClick={handleClickFileInput}
-            className="flex h-[270px] w-[200px] cursor-pointer items-center justify-center rounded-lg border border-dashed border-gray-300 bg-white"
-          >
-            {preview ? (
-              <Image
-                src={preview}
-                alt="미리보기"
-                width={200}
-                height={270}
-                className="rounded-lg object-cover"
-              />
-            ) : (
-              <Plus size={70} className="font-bold text-gray-400" />
+      <div className="w-[700px] space-y-4">
+        <div className="grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
+          <div className="relative w-full">
+            <Input
+              {...register('company')}
+              placeholder="기업명(사업자명)"
+              className="h-[55px] w-full bg-white indent-2"
+            />
+            {errors.company && (
+              <p className="absolute bottom-1 left-2 text-sm text-red-500">
+                {errors.company.message}
+              </p>
             )}
-          </Button>
+          </div>
 
           <input
             id="file"
@@ -134,15 +80,97 @@ function SignupVendorForm() {
             onChange={handleFileChange}
           />
 
+          <div className="relative w-full">
+            <Button
+              type="button"
+              asChild={false}
+              onClick={handleClickFileInput}
+              className="h-[50px] w-full bg-white text-sm text-[#5B76FF] shadow-sm"
+            >
+              사업자 등록증 첨부하기
+            </Button>
+
+            {file && (
+              <p className="absolute bottom-0 left-6 mt-1 truncate text-[8px] text-gray-600">
+                {file.name}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <Input
+          {...register('name')}
+          placeholder="담당자 성함"
+          className="h-[55px] w-full bg-white indent-2"
+        />
+        {errors.name && (
+          <p className="text-sm text-red-500">{errors.name.message}</p>
+        )}
+
+        <Input
+          {...register('phoneNumber')}
+          placeholder="담당자 연락처(휴대폰)"
+          className="h-[55px] w-full bg-white indent-2"
+        />
+        {errors.phoneNumber && (
+          <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
+        )}
+        <div className="grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
+          <Input
+            {...register('email')}
+            placeholder="담당자 이메일 입력"
+            className="h-[55px] w-full bg-white indent-2"
+          />
+          {errors.email && (
+            <p className="text-sm text-red-500">{errors.email.message}</p>
+          )}
           <Button
             type="button"
             asChild={false}
-            onClick={handleClickFileInput}
-            className="mt-4 h-[50px] w-full bg-white text-sm text-[#5B76FF] shadow-sm"
+            onClick={() => {}}
+            className="h-[55px] w-full bg-white text-sm text-[#7A7A7A] shadow-sm"
           >
-            사업자 등록증 첨부하기
+            이메일 인증코드 전송
           </Button>
         </div>
+        <div className="grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
+          <Input
+            placeholder="인증코드 입력"
+            className="h-[55px] w-full bg-white indent-2"
+          />
+          <Button
+            type="button"
+            asChild={false}
+            onClick={() => {}}
+            className="h-[55px] w-full bg-white text-sm text-[#7A7A7A] shadow-sm"
+          >
+            인증코드 인증하기
+          </Button>
+        </div>
+        <Input
+          type="password"
+          {...register('password')}
+          placeholder="비밀번호 입력 *8~16자리 입력, 특수기호(!@#) 1개 포함"
+          className="h-[55px] w-full bg-white indent-2"
+        />
+        {errors.password && (
+          <p className="text-sm text-red-500">{errors.password.message}</p>
+        )}
+      </div>
+      <div className="grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
+        <Input
+          placeholder="비밀번호 확인"
+          className="h-[55px] w-full bg-white indent-2"
+        />
+
+        <Button
+          type="button"
+          asChild={false}
+          onClick={() => {}}
+          className="h-[55px] w-full bg-white text-sm text-[#7A7A7A] shadow-sm"
+        >
+          비밀번호 확인하기
+        </Button>
       </div>
     </SignupForm>
   );

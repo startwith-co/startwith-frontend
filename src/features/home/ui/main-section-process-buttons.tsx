@@ -4,16 +4,16 @@ function MainSectionButtons() {
   return (
     <div className="mt-10 grid w-[500px] grid-cols-2 gap-8">
       <Button variant="textBlue" className="h-[120px] w-full" asChild={false}>
-        CRM(고객 정보 및 관계 관리)
+        제조
       </Button>
       <Button variant="textBlue" className="h-[120px] w-full" asChild={false}>
-        ERP(전사 자원 관리)
+        의료
       </Button>
       <Button variant="textBlue" className="h-[120px] w-full" asChild={false}>
-        HR(성과 및 조직 관리)
+        물류/유통
       </Button>
       <Button variant="textBlue" className="h-[120px] w-full" asChild={false}>
-        HRM(인사 관리)
+        정보통신/IT
       </Button>
     </div>
   );
