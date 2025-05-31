@@ -11,7 +11,7 @@ export default function DarkButton({
   return (
     <button>
       <DarkBox
-        className={cn('px-3.5 py-2.5 text-xs hover:bg-black', className)}
+        className={cn('hover:bg-primary px-3.5 py-2.5 text-xs', className)}
       >
         {title}
       </DarkBox>

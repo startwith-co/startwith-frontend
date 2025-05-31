@@ -16,7 +16,7 @@ export default function Footer({ mode = 'user' }: FooterProps) {
       className={cn(
         'mb-20 flex flex-col gap-28',
         mode === 'vendor'
-          ? 'bg-vendor-gray text-vendor-secondary'
+          ? 'bg-vendor-bg text-vendor-secondary'
           : 'bg-transparent px-4 sm:px-8 md:px-16 lg:px-32 2xl:px-[300px]',
       )}
     >

@@ -136,6 +136,7 @@
   --color-vendor-primary: #5b76ff;
   --color-vendor-gray: #f1f1f1;
   --color-vendor-secondary: #aaaaaa;
+  --color-vendor-bg: #f5f5f5;
 }
 
 html {

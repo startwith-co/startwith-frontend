@@ -51,7 +51,7 @@ export default function VendorDropInput({ title }: { title: string }) {
   return (
     <label
       className={cn(
-        'flex h-[165px] w-[219px] cursor-pointer flex-col items-center justify-center rounded-md bg-[#3D3D3D]',
+        'bg-vendor-gray flex h-[165px] w-[219px] cursor-pointer flex-col items-center justify-center rounded-md',
         dragOver && 'bg-[#404040]',
       )}
       onDragEnter={handleDragEnter}

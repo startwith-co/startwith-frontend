@@ -6,7 +6,7 @@ import { Button } from './button';
 
 export default function VendorHeader() {
   return (
-    <header className="bg-vendor-gray flex items-center justify-between pt-[35px] pr-8 pl-[222px]">
+    <header className="bg-vendor-bg flex items-center justify-between pt-[35px] pr-8 pl-[222px]">
       <Link href="/vendor" className="text-vendor-primary">
         <h1 className="text-3xl font-bold">
           SOLU
