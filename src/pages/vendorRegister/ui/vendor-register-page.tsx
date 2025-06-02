@@ -1,4 +1,3 @@
-import DarkButton from '@/entities/vendorRegister/ui/dark-button';
 import { Button } from '@/shared/ui/button';
 import VendorDetailInfo from '@/widgets/vendorRegister/ui/vendor-detail-info';
 import VendorKeyword from '@/widgets/vendorRegister/ui/vendor-keyword';
