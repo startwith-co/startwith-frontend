@@ -3,7 +3,13 @@
 import { ChangeEvent, useState } from 'react';
 import cn from '@/shared/lib/utils';
 
-export default function VendorDropInput({ title }: { title: string }) {
+export default function UploadInput({
+  title,
+  className,
+}: {
+  title: string;
+  className?: string;
+}) {
   const [dragOver, setDragOver] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
 
@@ -51,8 +57,9 @@ export default function VendorDropInput({ title }: { title: string }) {
   return (
     <label
       className={cn(
-        'bg-vendor-gray flex h-[165px] w-[219px] cursor-pointer flex-col items-center justify-center rounded-md',
+        'bg-vendor-gray flex cursor-pointer flex-col items-center justify-center rounded-md',
         dragOver && 'bg-[#404040]',
+        className,
       )}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}

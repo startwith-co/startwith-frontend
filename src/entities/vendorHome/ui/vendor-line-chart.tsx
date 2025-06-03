@@ -52,8 +52,6 @@ export default function VendorLineChart() {
       {
         label: '사용자 수',
         data: datasetsByType[period].data,
-        borderColor: 'white',
-        backgroundColor: 'white',
         borderWidth: 0.8,
         tension: 0.1,
       },
@@ -66,22 +64,22 @@ export default function VendorLineChart() {
         'h-[260px]',
         'w-full',
         'rounded-md',
-        'bg-[#3D3D3D]',
+        'bg-vendor-gray',
         'p-2.5',
       )}
     >
       <div className="relative mb-2 flex w-full items-center">
-        <h3 className="mx-auto text-sm text-white">매출</h3>
+        <h3 className="mx-auto text-sm">매출</h3>
         <div className="absolute right-1 flex gap-0">
           {(['day', 'week', 'month'] as const).map((type, index) => (
             <button
               key={type}
               onClick={() => setPeriod(type)}
               className={cn(
-                'border border-[#AAAAAA] px-2 py-1 text-[10px]',
+                'border border-[#7A7A7A] px-2 py-1 text-[10px]',
                 period === type
-                  ? 'bg-black text-white'
-                  : 'bg-[#3D3D3D] text-[#AAAAAA]',
+                  ? 'bg-[#7A7A7A] text-white'
+                  : 'bg-vendor-gray text-vendor-secondary',
                 index === 0 && 'rounded-l-md',
                 index === 2 && 'rounded-r-md',
               )}
@@ -112,19 +110,15 @@ export default function VendorLineChart() {
               x: {
                 grid: { display: false },
                 ticks: {
-                  color: 'white',
                   font: { size: 8 },
                 },
-                border: { color: 'white' },
               },
               y: {
                 grid: { display: false },
                 ticks: {
-                  color: 'white',
                   font: { size: 8 },
                   stepSize: 250,
                 },
-                border: { color: 'white' },
               },
             },
           }}

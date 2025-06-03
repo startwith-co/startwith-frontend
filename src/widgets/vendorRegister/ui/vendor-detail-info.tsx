@@ -1,9 +1,12 @@
+'use client';
+
 import Input from '@/shared/ui/input';
 import VendorDropInput from '@/features/vendorRegister/ui/vendor-drop-input';
+import VendorSelect from '@/shared/ui/vendor-select';
 
 export default function VendorDetailInfo() {
   return (
-    <div className="rounded-md border-2 border-[#404040] px-[35px] py-7.5 text-white">
+    <div className="rounded-md bg-white px-[35px] py-7.5 shadow-md 2xl:pr-[104px]">
       <h2 className="mb-6 text-lg font-semibold">솔루션 상세 정보</h2>
       <ul className="flex w-full flex-col gap-6 text-[13px] [&>li]:flex [&>li]:items-center [&>li>span]:w-[139px]">
         <li>
@@ -18,65 +21,45 @@ export default function VendorDetailInfo() {
           </span>
           <VendorDropInput title="PDF 파일 등록" />
         </li>
-        <li>
-          <span>업무 효율 상승률</span>
-          <div className="relative">
+        <li className="items-start!">
+          <span>예상 도입 성과 1</span>
+          <div className="flex flex-col gap-[23px]">
             <Input
-              type="number"
-              className="w-[270px] border-none bg-[#3D3D3D] text-center"
+              type="text"
+              className="bg-vendor-gray w-[220px] border-none text-center"
+              placeholder="도입 성과명을 입력해주세요."
             />
-            <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-white">
-              %
-            </span>
+            <div className="flex gap-5">
+              <Input
+                type="number"
+                className="bg-vendor-gray h-[40px] w-[60px] border-none text-center"
+                placeholder="0"
+              />
+              <VendorSelect
+                onChange={() => {}}
+                options={['%', '시간']}
+                placeholder="%"
+                triggerClassName="h-[40px] w-[60px] rounded-md bg-vendor-gray font-light items-center justify-center flex text-xs"
+                itemsClassName="justify-center font-light bg-vendor-gray"
+              />
+              <VendorSelect
+                onChange={() => {}}
+                options={['감소', '증가']}
+                placeholder="감소"
+                triggerClassName="h-[40px] w-[60px] rounded-md bg-vendor-gray font-light items-center justify-center flex text-xs"
+                itemsClassName="justify-center font-light bg-vendor-gray"
+              />
+            </div>
           </div>
         </li>
         <li>
-          <span>업무 처리 속도 상승률</span>
-          <div className="relative">
-            <Input
-              type="number"
-              className="w-[270px] border-none bg-[#3D3D3D] text-center"
-            />
-            <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-white">
-              %
-            </span>
-          </div>
-        </li>
-        <li>
-          <span>업무 자동화 전환율</span>
-          <div className="relative">
-            <Input
-              type="number"
-              className="w-[270px] border-none bg-[#3D3D3D] text-center"
-            />
-            <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-white">
-              %
-            </span>
-          </div>
-        </li>
-        <li>
-          <span>업무 시간 단축</span>
-          <div className="relative">
-            <Input
-              type="number"
-              className="w-[270px] border-none bg-[#3D3D3D] text-center"
-            />
-            <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-white">
-              시간
-            </span>
-          </div>
-        </li>
-        <li>
-          <span>비용 절감</span>
-          <div className="relative">
-            <Input
-              type="number"
-              className="w-[270px] border-none bg-[#3D3D3D] text-center"
-            />
-            <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-white">
-              원
-            </span>
-          </div>
+          {/* TODO: 플러스 누르면 도입 성과 창이 늘어나는 방식 */}
+          <span>예상 도입 성과 2</span>
+          <Input
+            type="text"
+            className="bg-vendor-gray w-[220px] border-none text-center"
+            placeholder="+"
+          />
         </li>
       </ul>
     </div>

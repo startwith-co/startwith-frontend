@@ -29,21 +29,20 @@ function EditVendorInfo() {
   return (
     <SignupForm
       action={editVendorInfoPost}
-      buttonProps="bg-black text-white h-[35px] font-light text-sm"
+      buttonProps="bg-vendor-gray h-[35px] font-light text-sm"
       buttonName="수정하기"
       buttonWrapperClassName="flex justify-center"
       loadingText="수정 중.."
-      loadingTextProps="text-white"
     >
       <div>
-        <label htmlFor="company" className="text-sm text-[#A7A7A7]">
-          기업명(사업자명)
+        <label htmlFor="company" className="text-sm">
+          기업명(사업자명)<span className="text-red-500">*</span>
           <Input
             id="company"
             type="string"
             {...register('company')}
             name="company"
-            className="mt-2 mb-2 h-[40px] border-0 bg-[#3D3D3D] indent-2 text-white"
+            className="bg-vendor-gray mt-2 mb-2 h-[40px] indent-2"
           />
         </label>
         {errors.company && (
@@ -51,14 +50,14 @@ function EditVendorInfo() {
         )}
       </div>
       <div>
-        <label htmlFor="phoneNumber" className="text-sm text-[#A7A7A7]">
-          담당자 연락처(휴대폰)
+        <label htmlFor="phoneNumber" className="text-sm">
+          담당자 연락처(휴대폰)<span className="text-red-500">*</span>
           <Input
             id="phoneNumber"
             type="string"
             {...register('phoneNumber')}
             name="phoneNumber"
-            className="mt-2 mb-2 h-[40px] border-0 bg-[#3D3D3D] indent-2 text-white"
+            className="bg-vendor-gray mt-2 mb-2 h-[40px] indent-2"
           />
         </label>
         {errors.phoneNumber && (
@@ -67,14 +66,14 @@ function EditVendorInfo() {
       </div>
 
       <div>
-        <label htmlFor="email" className="text-sm text-[#A7A7A7]">
-          담당자 이메일
+        <label htmlFor="email" className="text-sm">
+          담당자 이메일<span className="text-red-500">*</span>
           <Input
             id="email"
             type="string"
             {...register('email')}
             name="email"
-            className="mt-2 mb-2 h-[40px] border-0 bg-[#3D3D3D] indent-2 text-white"
+            className="bg-vendor-gray mt-2 mb-2 h-[40px] indent-2"
           />
         </label>
         {errors.email && (
@@ -83,14 +82,14 @@ function EditVendorInfo() {
       </div>
 
       <div>
-        <label htmlFor="accountNumber" className="text-sm text-[#A7A7A7]">
-          계좌번호
+        <label htmlFor="accountNumber" className="text-sm">
+          사업자 계좌번호<span className="text-red-500">*</span>
           <Input
             id="accountNumber"
             type="string"
             {...register('accountNumber')}
             name="accountNumber"
-            className="mt-2 mb-2 h-[40px] border-0 bg-[#3D3D3D] indent-2 text-white"
+            className="bg-vendor-gray mt-2 mb-2 h-[40px] indent-2"
           />
         </label>
         {errors.accountNumber && (
@@ -98,14 +97,14 @@ function EditVendorInfo() {
         )}
       </div>
       <div>
-        <label htmlFor="bankName" className="text-sm text-[#A7A7A7]">
-          은행명
+        <label htmlFor="bankName" className="text-sm">
+          은행명<span className="text-red-500">*</span>
           <Input
             id="bankName"
             type="string"
             {...register('bankName')}
             name="bankName"
-            className="mt-2 mb-2 h-[40px] border-0 bg-[#3D3D3D] indent-2 text-white"
+            className="bg-vendor-gray mt-2 mb-2 h-[40px] indent-2"
           />
         </label>
         {errors.bankName && (

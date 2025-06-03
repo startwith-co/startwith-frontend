@@ -11,7 +11,7 @@ const routes = [
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex w-screen flex-col overflow-y-scroll bg-[#212121]">
+    <div className="bg-vendor-bg flex w-screen flex-col overflow-y-scroll">
       <Header mode="vendor" />
       <main className="mt-10 mb-60 flex w-full">
         <ProfileSide routes={routes} companyName="스타트 윗" mode="vendor" />
