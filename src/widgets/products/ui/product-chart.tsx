@@ -2,36 +2,20 @@
 
 import WhiteBox from '@/shared/ui/white-box';
 import PieChart from '@/entities/product/ui/pie-chart';
-import LineChart from '@/entities/product/ui/line-chart';
-import scale from '@/widgets/products/model/scale';
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
+import { IoIosStar } from 'react-icons/io';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/shared/ui/pagination';
 
 export default function ProductChart() {
   return (
     <WhiteBox className="flex flex-col gap-[60px] p-8">
-      <div className="flex flex-col gap-6.5">
-        <span className="text-xl font-semibold">추천 산업군</span>
-        <div className="flex gap-4">
-          <div className="bg-light flex items-center justify-center rounded-md px-5 py-2">
-            제조
-          </div>
-          <div className="bg-light flex items-center justify-center rounded-md px-5 py-2">
-            제조
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-6.5">
-        <span className="text-xl font-semibold">추천 규모</span>
-        <div className="flex gap-4">
-          {scale.map((item) => (
-            <div
-              className="bg-box-gray hover flex h-[100px] w-[160px] items-center justify-center rounded-md font-semibold text-[#696969] hover:bg-gradient-to-r hover:from-[#6E86FF] hover:to-[#5B76FF] hover:text-white"
-              key={item}
-            >
-              {item}
-            </div>
-          ))}
-        </div>
-      </div>
       <div className="flex flex-col gap-6.5">
         <span className="text-xl font-semibold">이용자 개요 분석</span>
         <div className="flex items-center justify-around">
@@ -39,13 +23,86 @@ export default function ProductChart() {
           <PieChart />
         </div>
       </div>
-      <div className="-mt-32 flex flex-col gap-6.5">
-        <span className="text-xl font-semibold">이용자 증감 분석</span>
-        <LineChart />
+      <div className="relative -top-32 flex flex-col">
+        <span className="mb-6.5 text-xl font-bold">
+          스타트윗 주요 기업 고객
+        </span>
+        <div className="grid grid-cols-6">
+          <div className="bg-vendor-gray aspect-square" />
+        </div>
       </div>
-      <div className="flex flex-col gap-6.5">
-        <span className="text-xl font-semibold">이용자 누적 추이 분석</span>
-        <LineChart />
+      <div className="relative -top-32 flex flex-col">
+        <span className="text-xl font-bold">고객 리뷰</span>
+        {/* TODO: 최상단 li pt제거, 마지막 li border-b 제거, 리뷰가 없을 때 UI 추가 */}
+        <ul>
+          <li className="flex items-center justify-between border-b py-5">
+            <div className="flex items-center gap-5">
+              <Avatar className="size-12.5">
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center">
+                  <span className="mr-2.5 text-sm font-normal">더비즈온</span>
+                  <IoIosStar />
+                </div>
+                <p>리뷰 내용</p>
+              </div>
+            </div>
+            <p className="self-end text-[13px] text-[#717171]">
+              작성일시 : 25.01.01 AM 11:38
+            </p>
+          </li>
+          <li className="flex items-center justify-between border-b pt-6.5 pb-5">
+            <div className="flex items-center gap-5">
+              <Avatar className="size-12.5">
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center">
+                  <span className="mr-2.5 text-sm font-normal">더비즈온</span>
+                  <IoIosStar />
+                </div>
+                <p>리뷰 내용</p>
+              </div>
+            </div>
+            <p className="self-end text-[13px] text-[#717171]">
+              작성일시 : 25.01.01 AM 11:38
+            </p>
+          </li>
+        </ul>
+        <Pagination className="mt-8.5">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                className="border bg-white text-[#AAAAAA]"
+              />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#" className="bg-white text-[#7D7D7D]">
+                1
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#" className="bg-white text-[#7D7D7D]">
+                2
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#" className="bg-white text-[#7D7D7D]">
+                3
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                className="border bg-white text-[#AAAAAA]"
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </WhiteBox>
   );
