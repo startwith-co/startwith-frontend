@@ -7,29 +7,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui/select';
+import cn from '../lib/utils';
 
 interface VendorSelectProps {
   onChange: (value: string) => void;
   options: string[];
   placeholder: string;
+  triggerClassName?: string;
+  itemsClassName?: string;
 }
 
 export default function VendorSelect({
   onChange,
   options,
   placeholder,
+  triggerClassName,
+  itemsClassName,
 }: VendorSelectProps) {
   return (
     <Select onValueChange={onChange}>
-      <SelectTrigger className="bg-vendor-gray h-12 w-full rounded-lg text-xs font-medium shadow">
+      <SelectTrigger
+        className={cn(
+          'bg-vendor-gray h-12 w-full rounded-lg text-xs font-medium',
+          triggerClassName,
+        )}
+      >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent className="bg-vendor-gray rounded-xl shadow-lg">
+      <SelectContent className="bg-vendor-gray rounded-xl">
         {options.map((option) => (
           <SelectItem
             key={option}
             value={option}
-            className="hover:bg-vendor-secondary h-10 cursor-pointer justify-center text-sm"
+            className={cn(
+              'hover:bg-vendor-secondary h-10 cursor-pointer justify-center text-sm',
+              itemsClassName,
+            )}
           >
             {option}
           </SelectItem>

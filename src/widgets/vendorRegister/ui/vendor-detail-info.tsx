@@ -1,6 +1,8 @@
+'use client';
+
 import Input from '@/shared/ui/input';
 import VendorDropInput from '@/features/vendorRegister/ui/vendor-drop-input';
-import Dropdown from '@/shared/ui/dropdown';
+import VendorSelect from '@/shared/ui/vendor-select';
 
 export default function VendorDetailInfo() {
   return (
@@ -30,22 +32,22 @@ export default function VendorDetailInfo() {
             <div className="flex gap-5">
               <Input
                 type="number"
-                className="bg-vendor-gray w-[60px] border-none text-center"
+                className="bg-vendor-gray h-[40px] w-[60px] border-none text-center"
                 placeholder="0"
               />
-              <Dropdown
-                buttonText="%"
-                items={[{ label: '%' }, { label: '시간' }]}
-                divClassName="h-[40px] w-[60px] rounded-md bg-vendor-gray font-light items-center justify-center flex text-xs"
-                buttonClassName="w-[60px] justify-center font-light bg-vendor-gray"
-                menuClassName="w-[60px] justify-center bg-vendor-gray"
+              <VendorSelect
+                onChange={() => {}}
+                options={['%', '시간']}
+                placeholder="%"
+                triggerClassName="h-[40px] w-[60px] rounded-md bg-vendor-gray font-light items-center justify-center flex text-xs"
+                itemsClassName="justify-center font-light bg-vendor-gray"
               />
-              <Dropdown
-                buttonText="감소"
-                items={[{ label: '감소' }, { label: '증가' }]}
-                divClassName="h-[40px] w-[60px] rounded-md bg-vendor-gray font-light items-center justify-center flex text-xs"
-                buttonClassName="w-[60px] justify-center font-light bg-vendor-gray"
-                menuClassName="w-[60px] justify-center bg-vendor-gray"
+              <VendorSelect
+                onChange={() => {}}
+                options={['감소', '증가']}
+                placeholder="감소"
+                triggerClassName="h-[40px] w-[60px] rounded-md bg-vendor-gray font-light items-center justify-center flex text-xs"
+                itemsClassName="justify-center font-light bg-vendor-gray"
               />
             </div>
           </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import Input from '@/shared/ui/input';
 import {
   industryCategory,
@@ -5,6 +7,7 @@ import {
   surviceCategory,
 } from '@/entities/vendorRegister/model/vendor-normal-info-category';
 import Dropdown from '@/shared/ui/dropdown';
+import VendorSelect from '@/shared/ui/vendor-select';
 
 export default function VendorNormalInfo() {
   return (
@@ -45,30 +48,22 @@ export default function VendorNormalInfo() {
           <span>
             솔루션 카테고리<span className="text-red-500">*</span>
           </span>
-          <Dropdown
-            buttonText="솔루션 카테고리 선택"
-            items={surviceCategory.map((item) => ({
-              id: item,
-              label: item,
-            }))}
-            divClassName="h-[40px] w-[220px] rounded-md bg-vendor-gray font-light items-center justify-center flex text-xs"
-            buttonClassName="w-[220px] justify-center font-light bg-vendor-gray"
-            menuClassName="w-[220px] justify-center bg-vendor-gray"
+          <VendorSelect
+            onChange={() => {}}
+            options={surviceCategory}
+            placeholder="솔루션 카테고리 선택"
+            triggerClassName="w-[220px] h-[40px]"
           />
         </li>
         <li>
           <span>
             도입 가능 산업군<span className="text-red-500">*</span>
           </span>
-          <Dropdown
-            buttonText="산업군 카테고리 선택"
-            items={industryCategory.map((item) => ({
-              id: item,
-              label: item,
-            }))}
-            divClassName="h-[40px] w-[220px] rounded-md bg-vendor-gray font-light items-center justify-center flex text-xs"
-            buttonClassName="w-[220px] justify-center font-light bg-vendor-gray"
-            menuClassName="w-[220px] justify-center bg-vendor-gray"
+          <VendorSelect
+            onChange={() => {}}
+            options={industryCategory}
+            placeholder="산업군 카테고리 선택"
+            triggerClassName="w-[220px] h-[40px]"
           />
         </li>
         <li>

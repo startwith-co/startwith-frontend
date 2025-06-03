@@ -1,4 +1,6 @@
-import Dropdown from '@/shared/ui/dropdown';
+'use client';
+
+import VendorSelect from '@/shared/ui/vendor-select';
 
 export default function VendorManage() {
   return (
@@ -6,16 +8,12 @@ export default function VendorManage() {
       <h2 className="mb-5 text-lg font-semibold">정산 처리 상태</h2>
       <div className="flex items-center gap-22">
         <span>처리 상태</span>
-        <Dropdown
-          items={[
-            { label: '전체' },
-            { label: '정산 완료' },
-            { label: '정산 대기' },
-          ]}
-          buttonText="정산 대기"
-          divClassName="h-[40px] w-[220px] rounded-md bg-vendor-gray font-light items-center flex text-xs"
-          buttonClassName="w-[220px] justify-between font-light bg-vendor-gray px-4"
-          menuClassName="w-[220px] bg-vendor-gray"
+        <VendorSelect
+          onChange={() => {}}
+          options={['전체', '정산 완료', '정산 대기']}
+          placeholder="정산 대기"
+          triggerClassName="h-[40px] w-[220px] rounded-md bg-vendor-gray font-light items-center flex text-xs"
+          itemsClassName="justify-center font-light bg-vendor-gray"
         />
       </div>
     </div>

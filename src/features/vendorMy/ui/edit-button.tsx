@@ -14,7 +14,7 @@ export default function EditButton({
     <Button
       asChild={false}
       className={cn(
-        'bg-vendor-gray text-vendor-secondary h-[47px] w-[240px] border-none text-center',
+        'bg-vendor-gray text-vendor-secondary hover:bg-vendor-primary h-[47px] w-[240px] border-none text-center hover:text-white',
         className,
       )}
       onClick={onClick}
