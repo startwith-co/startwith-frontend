@@ -12,7 +12,7 @@ export default function SearchPage() {
         <Sidebar />
         <div className="mt-12.5 flex flex-col gap-5">
           <div className="flex items-center justify-between">
-            <h2 className="text-[16px]">총 15개의 서비스</h2>
+            <h2 className="text-[16px] font-semibold">총 15개의 솔루션</h2>
             <Dropdown
               buttonText="정렬"
               items={[]}
