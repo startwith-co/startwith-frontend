@@ -11,7 +11,8 @@ import { Button } from '@/shared/ui/button';
 import useFileUpload from '@/shared/model/useFileUpload';
 import { useState } from 'react';
 import ErrorMessage from '@/shared/ui/error-message';
-import useSendEmail from '../api/useSendEmail';
+import useSendEmail from '../model/useSendEmail';
+import useVerifyEmail from '../model/useVerifyEmail';
 
 const passwordRegex = /^(?=.*[!@#])[A-Za-z\d!@#]{8,16}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,6 +31,7 @@ const schema = z.object({
       '비밀번호는 특수문자(!@#)를 1개 이상 포함해야 합니다.',
     ),
   confirmPassword: z.string(),
+  code: z.string(),
 });
 
 type FormSchema = z.infer<typeof schema>;
@@ -60,11 +62,14 @@ function SignupVendorForm() {
   const { timer, isCounting, handleSendEmail } = useSendEmail();
 
   const email = watch('email');
+  const code = watch('code');
+
   const isEmailValid = emailRegex.test(email);
 
   const passValid = watch('password');
   const isPassValid = passwordRegex.test(passValid);
 
+  const { emailVerified, verifyEmail } = useVerifyEmail(email, code, 'vendor');
   const confirmValid = watch('confirmPassword');
 
   const handleConfirmClick = () => {
@@ -90,7 +95,7 @@ function SignupVendorForm() {
       buttonProps="bg-gradient-to-r from-[#2D2D2D] to-[#404040] text-white w-full h-[60px] font-extrabold text-lg shadow-sm mb-8 mt-5"
       buttonName="솔루션 공급사로 파트너쉽 시작"
       loadingText="신청 중.."
-      disabled={!isValid || !matchSuccess}
+      disabled={!isValid || !matchSuccess || !emailVerified}
     >
       <div className="w-[700px] space-y-4">
         <div className="mb-0 grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
@@ -111,24 +116,28 @@ function SignupVendorForm() {
             onChange={handleFileChange}
           />
 
-          <div className="relative w-full">
+          <div className="relative h-[55px] w-full">
             <Button
               type="button"
               asChild={false}
               variant="textBlue"
               onClick={handleClickFileInput}
-              className="h-[50px] w-full text-sm text-[#5B76FF] shadow-sm"
+              className="h-[40px] w-full text-sm text-[#5B76FF] shadow-sm"
             >
               사업자 등록증 첨부하기
             </Button>
-
-            {file && (
-              <p className="absolute bottom-0 left-6 mt-1 truncate text-[8px] text-gray-600">
-                {file.name}
+            {file ? (
+              <p className="mt-1 truncate text-center text-[8px] text-gray-600">
+                ({file.name})
+              </p>
+            ) : (
+              <p className="mt-1 truncate text-center text-[8px] text-gray-600">
+                파일을 첨부해주세요.
               </p>
             )}
           </div>
         </div>
+
         {errors.company && <ErrorMessage message={errors.company.message} />}
 
         <Input
@@ -158,7 +167,7 @@ function SignupVendorForm() {
             disabled={isCounting || !isEmailValid}
             asChild={false}
             variant="textBlue"
-            onClick={handleSendEmail}
+            onClick={() => handleSendEmail(email, 'vendor')}
             className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
           >
             {isCounting
@@ -172,12 +181,13 @@ function SignupVendorForm() {
             <Input
               placeholder="인증코드 입력"
               className="h-[55px] w-full bg-white indent-2"
+              {...register('code')}
             />
             <Button
               type="button"
               asChild={false}
               variant="textBlue"
-              onClick={() => {}}
+              onClick={verifyEmail}
               className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
             >
               인증코드 인증하기

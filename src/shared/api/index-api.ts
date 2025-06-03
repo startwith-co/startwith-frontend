@@ -4,7 +4,7 @@ import { getSession } from 'next-auth/react';
 import { getErrorDataFromKyError } from '../lib/error-handler';
 
 const api = ky.create({
-  prefixUrl: process.env.NEXT_PUBLIC_MOCK_SERVER,
+  prefixUrl: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },

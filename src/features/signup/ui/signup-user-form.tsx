@@ -11,7 +11,8 @@ import { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
 import ErrorMessage from '@/shared/ui/error-message';
 import SignupIndustryModal from './signup-industry-modal';
-import useSendEmail from '../api/useSendEmail';
+import useSendEmail from '../model/useSendEmail';
+import useVerifyEmail from '../model/useVerifyEmail';
 
 const passwordRegex = /^(?=.*[!@#])[A-Za-z\d!@#]{8,16}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -28,6 +29,8 @@ const schema = z.object({
       '비밀번호는 특수문자(!@#)를 1개 이상 포함해야 합니다.',
     ),
   confirmPassword: z.string(),
+  phoneNumber: z.string().min(1, '전화번호 입력해주세요.'),
+  code: z.string(),
 });
 
 type FormSchema = z.infer<typeof schema>;
@@ -44,6 +47,7 @@ function SignupUserForm() {
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
+
   const [matchSuccess, setMatchSuccess] = useState(false);
   const [hasTriedConfirm, setHasTriedConfirm] = useState(false);
 
@@ -61,11 +65,15 @@ function SignupUserForm() {
       setMatchSuccess(true);
     }
   };
+
   const [open, setOpen] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
   const { timer, isCounting, handleSendEmail } = useSendEmail();
-
   const email = watch('email');
+  const code = watch('code');
+
+  const { emailVerified, verifyEmail } = useVerifyEmail(email, code, 'user');
+
   const isEmailValid = emailRegex.test(email);
 
   const passValid = watch('password');
@@ -83,7 +91,7 @@ function SignupUserForm() {
       buttonName="기업 고객으로 편리한 솔루션 탐색 시작"
       loadingText="신청 중.."
       formProps="w-[700px] space-y-6"
-      disabled={!isValid || !matchSuccess}
+      disabled={!isValid || !matchSuccess || !emailVerified}
     >
       <div>
         <Input
@@ -94,6 +102,19 @@ function SignupUserForm() {
           className="h-[55px] w-full bg-white indent-2"
         />
         {errors.company && <ErrorMessage message={errors.company.message} />}
+      </div>
+
+      <div>
+        <Input
+          type="string"
+          {...register('phoneNumber')}
+          name="phoneNumber"
+          placeholder="담당자 연락처"
+          className="h-[55px] w-full bg-white indent-2"
+        />
+        {errors.phoneNumber && (
+          <ErrorMessage message={errors.phoneNumber.message} />
+        )}
       </div>
 
       <div className="mb-0 grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
@@ -108,7 +129,7 @@ function SignupUserForm() {
           asChild={false}
           disabled={isCounting || !isEmailValid}
           variant="textBlue"
-          onClick={handleSendEmail}
+          onClick={() => handleSendEmail(email, 'user')}
           className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
         >
           {isCounting
@@ -122,11 +143,13 @@ function SignupUserForm() {
           <Input
             placeholder="인증코드 입력"
             className="h-[55px] w-full bg-white indent-2"
+            {...register('code')}
           />
           <Button
             type="button"
             asChild={false}
-            onClick={() => {}}
+            variant="textBlue"
+            onClick={verifyEmail}
             className="h-[55px] w-full bg-white text-sm text-[#7A7A7A] shadow-sm"
           >
             인증코드 인증하기
@@ -170,6 +193,7 @@ function SignupUserForm() {
       <div className="mt-5">
         <Button
           type="button"
+          variant="textBlue"
           asChild={false}
           className="h-[55px] w-full justify-start bg-white text-[#7A7A7A]"
           onClick={() => setOpen(true)}

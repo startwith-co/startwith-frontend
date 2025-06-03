@@ -3,10 +3,13 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Input from '@/shared/ui/input'; // ← 사용자 정의 Input 컴포넌트
+import Input from '@/shared/ui/input';
 import { signIn } from 'next-auth/react';
-import { Button } from '@/shared/ui/button'; // ← 사용자 정의 Button 컴포넌트
+import { Button } from '@/shared/ui/button';
 import Link from 'next/link';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const schema = z.object({
   email: z.string().min(1, '이메일을 입력해주세요.'),
@@ -25,13 +28,22 @@ function LoginForm() {
     mode: 'onChange',
   });
 
-  // ✅ 유효한 폼 제출 시 실행
+  const [target, setTarget] = useState<'vendor' | 'user'>('vendor');
+  const router = useRouter();
+
   const onValid = async (data: FormSchema) => {
-    await signIn('credentials', {
-      callbackUrl: '/',
+    const res = await signIn('credentials', {
       email: data.email,
       password: data.password,
+      target,
+      redirect: false,
     });
+
+    if (res?.error) {
+      toast.error('로그인 실패: 아이디 또는 비밀번호를 확인해주세요.');
+    } else if (res?.ok) {
+      router.push('/');
+    }
   };
 
   return (
@@ -79,6 +91,7 @@ function LoginForm() {
           variant="bgBlueGradient"
           className="mt-4 h-[55px] cursor-pointer text-sm font-bold shadow-lg"
           disabled={!isValid}
+          onClick={() => setTarget('vendor')}
         >
           벤더로 로그인
         </Button>
@@ -88,6 +101,7 @@ function LoginForm() {
           variant="bgBlackGradient"
           className="mt-4 h-[55px] cursor-pointer text-sm font-bold shadow-lg"
           disabled={!isValid}
+          onClick={() => setTarget('user')}
         >
           기업 고객으로 로그인
         </Button>
