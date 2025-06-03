@@ -29,7 +29,7 @@ function LoginFourthSection() {
           <Button
             asChild
             type="button"
-            variant="blackGradient"
+            variant="bgBlackGradient"
             className="h-[55px] w-[600px] text-sm font-bold"
           >
             <Link href="/signup/vendor">
