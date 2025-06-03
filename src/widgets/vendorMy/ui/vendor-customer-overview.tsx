@@ -1,8 +1,8 @@
 'use client';
 
 import EditButton from '@/features/vendorMy/ui/edit-button';
-import Dropdown from '@/shared/ui/dropdown';
 import Input from '@/shared/ui/input';
+import VendorSelect from '@/shared/ui/vendor-select';
 
 export default function VendorCustomerOverview() {
   return (
@@ -35,23 +35,19 @@ export default function VendorCustomerOverview() {
           <span>산업별 기업 고객 개요</span>
           <div className="mt-5 flex flex-col gap-5">
             <div className="grid grid-cols-2 items-center gap-5">
-              {/* TODO: dropdown 컴포넌트 재생성 */}
-              <Dropdown
-                items={[
-                  { label: 'IT/인터넷' },
-                  { label: '금융' },
-                  { label: '제조' },
-                  { label: '서비스' },
-                  { label: '유통' },
-                  { label: '의료' },
-                  { label: '교육' },
-                  { label: '건설' },
-                  { label: '유통' },
-                  { label: '의료' },
-                  { label: '교육' },
-                  { label: '건설' },
+              <VendorSelect
+                options={[
+                  'IT/인터넷',
+                  '금융',
+                  '제조',
+                  '서비스',
+                  '유통',
+                  '의료',
+                  '교육',
+                  '건설',
                 ]}
-                buttonText="IT/인터넷"
+                placeholder="산업군 카테고리 선택"
+                onChange={() => {}}
               />
               <Input
                 className="bg-vendor-gray h-12 text-center"
