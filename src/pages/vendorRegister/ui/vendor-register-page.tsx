@@ -5,6 +5,7 @@ import VendorDetailInfo from '@/widgets/vendorRegister/ui/vendor-detail-info';
 import VendorKeyword from '@/widgets/vendorRegister/ui/vendor-keyword';
 import VendorNormalInfo from '@/widgets/vendorRegister/ui/vendor-normal-info';
 import VendorSaleInfo from '@/widgets/vendorRegister/ui/vendor-sale-info';
+import ky from 'ky';
 import { FormProvider, useForm } from 'react-hook-form';
 
 export default function VendorRegisterPage() {
@@ -12,12 +13,12 @@ export default function VendorRegisterPage() {
     defaultValues: {
       representImageUrl: '',
       descriptionPdfUrl: '',
-      vendorSeq: 0,
+      vendorSeq: 1,
       solutionName: '',
       solutionDetail: '',
       category: '',
       industry: '',
-      recommendedCompanySize: '',
+      recommendedCompanySize: [],
       solutionImplementationType: '',
       specialist: '',
       amount: null,
@@ -27,7 +28,49 @@ export default function VendorRegisterPage() {
     },
   });
 
-  const onSubmit = methods.handleSubmit((data) => console.log(data));
+  const onSubmit = methods.handleSubmit(async (data) => {
+    const formData = new FormData();
+
+    formData.append('representImageUrl', data.representImageUrl);
+    formData.append('descriptionPdfUrl', data.descriptionPdfUrl);
+
+    const jsonPart = {
+      vendorSeq: 1,
+      solutionName: 'string',
+      solutionDetail: 'string',
+      category: 'KM',
+      industry: 'string',
+      recommendedCompanySize: 'string',
+      solutionImplementationType: 'string',
+      specialist: 'string',
+      amount: 10000,
+      duration: 0,
+      solutionEffect: [
+        {
+          effectName: 'string',
+          percent: 0,
+          direction: 'INCREASE',
+        },
+      ],
+      keyword: ['string'],
+    };
+
+    formData.append(
+      'request',
+      new Blob([JSON.stringify(jsonPart)], { type: 'application/json' }),
+    );
+
+    const res = await ky
+      .post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/solution-service/solution`,
+        {
+          body: formData,
+        },
+      )
+      .json();
+
+    console.log(res);
+  });
 
   return (
     <FormProvider {...methods}>

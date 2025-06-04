@@ -60,7 +60,9 @@ export default function VendorDetailInfo() {
                   type="number"
                   className="bg-vendor-gray h-[40px] w-[60px] border-none text-center"
                   placeholder="0"
-                  {...register(`solutionEffect.${index}.percent`)}
+                  {...register(`solutionEffect.${index}.percent`, {
+                    valueAsNumber: true,
+                  })}
                 />
                 <VendorSelect
                   options={['%', '시간']}
