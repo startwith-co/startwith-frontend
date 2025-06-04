@@ -15,6 +15,7 @@ const api = ky.create({
         }
       },
     ],
+
     beforeError: [
       async (error) => {
         if (error instanceof HTTPError) {
@@ -39,6 +40,7 @@ const api = ky.create({
           // }
 
           // 일반적인 오류 처리
+
           const errorData = await getErrorDataFromKyError(error);
           toast.error(`[${errorData.code}] ${errorData.message}`);
         } else {

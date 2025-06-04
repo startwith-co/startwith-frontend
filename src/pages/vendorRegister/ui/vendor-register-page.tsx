@@ -1,34 +1,40 @@
 'use client';
 
+import api from '@/shared/api/index-api';
 import { Button } from '@/shared/ui/button';
 import VendorDetailInfo from '@/widgets/vendorRegister/ui/vendor-detail-info';
 import VendorKeyword from '@/widgets/vendorRegister/ui/vendor-keyword';
 import VendorNormalInfo from '@/widgets/vendorRegister/ui/vendor-normal-info';
 import VendorSaleInfo from '@/widgets/vendorRegister/ui/vendor-sale-info';
-import ky from 'ky';
 import { FormProvider, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  VendorRegisterSchema,
+  vendorRegisterSchema,
+} from '../model/vendor-register-schema';
 
 export default function VendorRegisterPage() {
-  const methods = useForm({
+  const methods = useForm<VendorRegisterSchema>({
+    resolver: zodResolver(vendorRegisterSchema),
     defaultValues: {
-      representImageUrl: '',
-      descriptionPdfUrl: '',
+      representImageUrl: undefined,
+      descriptionPdfUrl: undefined,
       vendorSeq: 1,
       solutionName: '',
       solutionDetail: '',
-      category: '',
+      category: 'KM',
       industry: '',
       recommendedCompanySize: [],
       solutionImplementationType: '',
       specialist: '',
-      amount: null,
-      duration: null,
+      amount: undefined,
+      duration: undefined,
       solutionEffect: [],
       keyword: [''],
     },
   });
 
-  const onSubmit = methods.handleSubmit(async (data) => {
+  const onSubmit = methods.handleSubmit(async (data: VendorRegisterSchema) => {
     const formData = new FormData();
 
     formData.append('representImageUrl', data.representImageUrl);
@@ -60,16 +66,9 @@ export default function VendorRegisterPage() {
       new Blob([JSON.stringify(jsonPart)], { type: 'application/json' }),
     );
 
-    const res = await ky
-      .post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/solution-service/solution`,
-        {
-          body: formData,
-        },
-      )
-      .json();
-
-    console.log(res);
+    await api.post(`api/solution-service/solution`, {
+      body: formData,
+    });
   });
 
   return (
