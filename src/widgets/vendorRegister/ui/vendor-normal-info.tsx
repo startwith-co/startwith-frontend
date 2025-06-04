@@ -6,10 +6,13 @@ import {
   scaleCategory,
   surviceCategory,
 } from '@/entities/vendorRegister/model/vendor-normal-info-category';
-import Dropdown from '@/shared/ui/dropdown';
 import VendorSelect from '@/shared/ui/vendor-select';
+import { Controller, useFormContext } from 'react-hook-form';
+import cn from '@/shared/lib/utils';
 
 export default function VendorNormalInfo() {
+  const { register, control } = useFormContext();
+
   return (
     <div className="rounded-md bg-white px-[35px] py-7.5 shadow-md 2xl:pr-[104px]">
       <h2 className="mb-6 text-lg font-semibold">솔루션 기본 정보 입력</h2>
@@ -22,6 +25,7 @@ export default function VendorNormalInfo() {
             <Input
               className="bg-vendor-gray border-none placeholder:text-[13px]"
               placeholder="솔루션명을 입력해주세요."
+              {...register('solutionName')}
             />
             {/* TODO: 입력한 글자수에 따라 값 변경하기 */}
             <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-[13px]">
@@ -37,6 +41,7 @@ export default function VendorNormalInfo() {
             <Input
               className="bg-vendor-gray border-none placeholder:text-[13px]"
               placeholder="솔루션 기본 설명을 입력해주세요."
+              {...register('solutionDetail')}
             />
             {/* TODO: 입력한 글자수에 따라 값 변경하기 */}
             <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-[13px]">
@@ -48,38 +53,78 @@ export default function VendorNormalInfo() {
           <span>
             솔루션 카테고리<span className="text-red-500">*</span>
           </span>
-          <VendorSelect
-            onChange={() => {}}
-            options={surviceCategory}
-            placeholder="솔루션 카테고리 선택"
-            triggerClassName="w-[220px] h-[40px]"
+          <Controller
+            control={control}
+            name="category"
+            render={({ field }) => (
+              <VendorSelect
+                options={surviceCategory}
+                placeholder="솔루션 카테고리 선택"
+                triggerClassName="w-[220px] h-[40px]"
+                {...field}
+              />
+            )}
           />
         </li>
         <li>
           <span>
             도입 가능 산업군<span className="text-red-500">*</span>
           </span>
-          <VendorSelect
-            onChange={() => {}}
-            options={industryCategory}
-            placeholder="산업군 카테고리 선택"
-            triggerClassName="w-[220px] h-[40px]"
+          <Controller
+            control={control}
+            name="industry"
+            render={({ field }) => (
+              <VendorSelect
+                options={industryCategory}
+                placeholder="산업군 카테고리 선택"
+                triggerClassName="w-[220px] h-[40px]"
+                {...field}
+              />
+            )}
           />
         </li>
         <li>
           <span>
             도입 가능 기업 규모<span className="text-red-500">*</span>
           </span>
-          <div className="flex gap-5">
-            {scaleCategory.map((item) => (
-              <button
-                key={item}
-                className="bg-vendor-gray rounded-md px-[15px] py-[13px] text-xs"
-              >
-                {item}
-              </button>
-            ))}
-          </div>
+          <Controller
+            control={control}
+            name="recommendedCompanySize"
+            render={({ field }) => {
+              const { value = [], onChange } = field;
+
+              const toggleSelection = (item: string) => {
+                if (value.includes(item)) {
+                  onChange(value.filter((v: string) => v !== item));
+                } else {
+                  onChange([...value, item]);
+                }
+              };
+
+              return (
+                <div className="flex gap-5">
+                  {scaleCategory.map((item) => {
+                    const isSelected = value.includes(item);
+                    return (
+                      <button
+                        key={item}
+                        type="button"
+                        className={cn(
+                          'bg-vendor-gray hover:bg-primary rounded-md px-[15px] py-[13px] text-xs hover:text-white',
+                          {
+                            'bg-primary text-white': isSelected,
+                          },
+                        )}
+                        onClick={() => toggleSelection(item)}
+                      >
+                        {item}
+                      </button>
+                    );
+                  })}
+                </div>
+              );
+            }}
+          />
         </li>
       </ul>
     </div>
