@@ -20,15 +20,9 @@ export default function VendorRegisterPage() {
       recommendedCompanySize: '',
       solutionImplementationType: '',
       specialist: '',
-      amount: 0,
-      duration: 0,
-      solutionEffect: [
-        {
-          effectName: '',
-          percent: 0,
-          direction: '',
-        },
-      ],
+      amount: null,
+      duration: null,
+      solutionEffect: [],
       keyword: [''],
     },
   });

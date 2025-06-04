@@ -3,12 +3,19 @@
 import { ChangeEvent, useState } from 'react';
 import cn from '@/shared/lib/utils';
 
-export default function VendorDropInput({ title }: { title: string }) {
+export default function VendorDropInput({
+  title,
+  onChange,
+}: {
+  title: string;
+  onChange: (file: File | null) => void;
+}) {
   const [dragOver, setDragOver] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
 
   const handleFileSelect = (newFile: File | null) => {
     setFile(newFile);
+    onChange(newFile);
   };
 
   // 드래그 중인 요소가 목표 지점 진입할때
