@@ -1,6 +1,7 @@
 import Solu from '@/shared/ui/solu';
 import { Button } from '@/shared/ui/button';
 import React, { useState } from 'react';
+import { useSolution } from '@/shared/model/SolutionProvider';
 import ChatUserCancelModal from './chat-user-cancel-modal';
 
 interface ChatCompleteCardProps {
@@ -19,6 +20,7 @@ function ChatUserPayCompleteCard({
   solutionPrice,
 }: ChatCompleteCardProps) {
   const [open, setOpen] = useState(false);
+  const { setSolution } = useSolution();
   return (
     <div className="w-[360px] space-y-4 rounded-xl border bg-[#F5F5F5] p-6">
       <div className="flex items-center justify-center gap-2 font-bold">
@@ -71,7 +73,14 @@ function ChatUserPayCompleteCard({
 
       <Button
         asChild={false}
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true);
+          setSolution({
+            solutionName,
+            solutionCategory,
+            solutionPrice,
+          });
+        }}
         variant="bgBlueGradient"
         className="mt-4 h-[40px] w-full text-sm text-white"
       >

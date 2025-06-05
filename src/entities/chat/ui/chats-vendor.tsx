@@ -1,4 +1,5 @@
 import formatTime from '@/shared/lib/chat-format-time';
+import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
 import ChatVendorBubble from './chat-vendor-bubble';
 import ChatVendorRequestCard from './chat-vendor-request-card';
 import ChatVendorCancelCompleteCard from './chat-vendor-cancelComplete-card';
@@ -22,82 +23,55 @@ function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
         }
 
         const isMine = msg.messageId === vendorId;
-        const timeEl = (
-          <span className="mb-1 self-end text-[11px] text-gray-400">
-            {formatTime(msg.createdAt)}
-          </span>
-        );
-        const wrapperClass = `flex ${isMine ? 'justify-end' : 'justify-start'} gap-2`;
 
         if (parsed?.type === 'request-card') {
           return (
-            <div key={msg.id} className={wrapperClass}>
-              {isMine ? (
-                <>
-                  {timeEl}
-                  <ChatVendorRequestCard {...parsed} />
-                </>
-              ) : (
-                <>
-                  <ChatVendorRequestCard {...parsed} />
-                  {timeEl}
-                </>
-              )}
-            </div>
+            <ChatCardWrapper
+              key={msg.id + msg.createdAt}
+              isMine={isMine}
+              msg={msg}
+            >
+              <ChatVendorRequestCard {...parsed} />
+            </ChatCardWrapper>
           );
         }
 
         if (parsed?.type === 'pay-complete-card') {
           return (
-            <div key={msg.id} className={wrapperClass}>
-              {isMine ? (
-                <>
-                  {timeEl}
-                  <ChatVendorPayCompleteCard {...parsed} />
-                </>
-              ) : (
-                <>
-                  <ChatVendorPayCompleteCard {...parsed} />
-                  {timeEl}
-                </>
-              )}
-            </div>
+            <ChatCardWrapper
+              key={msg.id + msg.createdAt}
+              isMine={isMine}
+              msg={msg}
+            >
+              <ChatVendorPayCompleteCard {...parsed} />
+            </ChatCardWrapper>
           );
         }
 
         if (parsed?.type === 'cancel-complete-card') {
           return (
-            <div key={msg.id} className={wrapperClass}>
-              {isMine ? (
-                <>
-                  {timeEl}
-                  <ChatVendorCancelCompleteCard {...parsed} />
-                </>
-              ) : (
-                <>
-                  <ChatVendorCancelCompleteCard {...parsed} />
-                  {timeEl}
-                </>
-              )}
-            </div>
+            <ChatCardWrapper
+              key={msg.id + msg.createdAt}
+              isMine={isMine}
+              msg={msg}
+            >
+              <ChatVendorCancelCompleteCard {...parsed} />
+            </ChatCardWrapper>
           );
         }
 
         if (parsed?.type === 'cancel-request-card') {
           return (
-            <div key={msg.id} className={wrapperClass}>
-              {isMine ? (
-                <>
-                  {timeEl}
-                  <ChatVendorCancelRequestCard {...parsed} />
-                </>
-              ) : (
-                <>
-                  <ChatVendorCancelRequestCard {...parsed} />
-                  {timeEl}
-                </>
-              )}
-            </div>
+            <ChatCardWrapper
+              key={msg.id + msg.createdAt}
+              isMine={isMine}
+              msg={msg}
+            >
+              <ChatVendorCancelRequestCard
+                {...parsed}
+                createdAt={msg.createdAt}
+              />
+            </ChatCardWrapper>
           );
         }
 

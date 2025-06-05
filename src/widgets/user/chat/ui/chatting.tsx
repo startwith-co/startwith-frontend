@@ -1,29 +1,15 @@
 'use client';
 
-import ChatBubble from '@/entities/chat/ui/chat-user-bubble';
-import ChatRequestCard from '@/entities/chat/ui/chat-user-request-card';
 import Input from '@/shared/ui/input';
-import formatTime from '@/shared/lib/chat-format-time';
 import useMessageSend from '@/shared/model/useMessageSend';
 import { MdOutlineAttachFile } from 'react-icons/md';
-import { notFound, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { useRoomId } from '@/pages/user/chat/model/RoomIdProvider';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
 import ChatsUser from '@/entities/chat/ui/chats-user';
+import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 
 function Chatting() {
-  const searchParams = useSearchParams();
-  const userId = searchParams?.get('userId');
-  const vendorId = searchParams?.get('vendorId');
-
-  if (!userId || !vendorId) {
-    notFound();
-  }
-
-  const userName = 'userB';
-  const vendorName = 'vendorB';
-  const { curRoomId, setCurRoomId } = useRoomId();
+  const { userId, userName } = useChatMeta();
 
   const {
     handleSubmit,
@@ -36,12 +22,6 @@ function Chatting() {
   } = useMessageSend({
     messageId: userId,
     messageName: userName,
-    userName,
-    vendorName,
-    vendorId,
-    userId,
-    curRoomId,
-    setCurRoomId,
   });
 
   const chatMainDate = formatMainDate(messages[0]?.createdAt) || '';

@@ -1,6 +1,9 @@
 import CustomModal from '@/shared/ui/custommodal';
 import { Button } from '@/shared/ui/button';
-import React from 'react';
+import React, { useCallback } from 'react';
+import requestPost from '@/shared/api/request-post';
+import { useSolution } from '@/shared/model/SolutionProvider';
+import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 
 interface ChatUserCancelModalProps {
   open: boolean;
@@ -11,6 +14,31 @@ export default function ChatUserCancelModal({
   open,
   setOpen,
 }: ChatUserCancelModalProps) {
+  const { solutionName, solutionPrice, solutionCategory } = useSolution();
+
+  console.log(solutionName, solutionPrice, solutionCategory);
+  const { vendorId, vendorName, userId, userName } = useChatMeta();
+
+  const onCancelPayment = useCallback(async () => {
+    await requestPost(
+      solutionName,
+      solutionPrice.toString(),
+      solutionCategory,
+      userId,
+      userName,
+      userId,
+      vendorId,
+      userName,
+      vendorName,
+      'cancel-request-card',
+    );
+    setOpen(false);
+  }, [solutionName, solutionPrice, solutionCategory, setOpen]);
+
+  const handleCancel = useCallback(() => {
+    setOpen(false);
+  }, [setOpen]);
+
   return (
     <CustomModal
       open={open}
@@ -23,6 +51,7 @@ export default function ChatUserCancelModal({
         variant="textBlue"
         className="h-[44px] w-full bg-[#F1F1F1] font-bold text-black"
         asChild={false}
+        onClick={onCancelPayment}
       >
         네
       </Button>

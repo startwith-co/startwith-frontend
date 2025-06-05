@@ -3,11 +3,11 @@
 import { Avatar, AvatarImage, AvatarFallback } from '@/shared/ui/avatar';
 import { Button } from '@/shared/ui/button';
 import RequestPayModal from '@/features/vendorChat/ui/request-pay-modal';
-import { useVendorRoomId } from '@/pages/vendor/chat/model/VendorRoomIdProvider';
+import { useVendorModal } from '@/pages/vendor/chat/model/VendorModalProvider';
 import ChatUserCard from '@/entities/chat/ui/chat-user-card';
 
 function VendorControl() {
-  const { setOpen } = useVendorRoomId();
+  const { setOpen } = useVendorModal();
 
   return (
     <div className="flex h-full w-full flex-col gap-2.5 rounded-3xl bg-[#FFFFFF] px-8 pt-[19px] shadow-lg">

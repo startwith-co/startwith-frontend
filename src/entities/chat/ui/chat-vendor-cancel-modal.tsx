@@ -1,11 +1,13 @@
 import CustomModal from '@/shared/ui/custommodal';
 import { Button } from '@/shared/ui/button';
-import React from 'react';
+import React, { useCallback } from 'react';
+import requestPost from '@/shared/api/request-post';
+import { useSolution } from '@/shared/model/SolutionProvider';
+import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 
 interface ChatVendorCancelModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  solutionPrice: number;
 }
 
 const formatPrice = (num: number) => {
@@ -15,8 +17,32 @@ const formatPrice = (num: number) => {
 export default function ChatVendorCancelModal({
   open,
   setOpen,
-  solutionPrice,
 }: ChatVendorCancelModalProps) {
+  const { solutionName, solutionPrice, solutionCategory } = useSolution();
+
+  console.log(solutionName, solutionPrice, solutionCategory);
+  const { vendorId, vendorName, userId, userName } = useChatMeta();
+
+  const onCancelAcceptPayment = useCallback(async () => {
+    await requestPost(
+      solutionName,
+      solutionPrice.toString(),
+      solutionCategory,
+      vendorId,
+      vendorName,
+      userId,
+      vendorId,
+      userName,
+      vendorName,
+      'cancel-complete-card',
+    );
+    setOpen(false);
+  }, [solutionName, solutionPrice, solutionCategory, setOpen]);
+
+  const handleCancel = useCallback(() => {
+    setOpen(false);
+  }, [setOpen]);
+
   return (
     <CustomModal
       open={open}
@@ -53,6 +79,7 @@ export default function ChatVendorCancelModal({
           variant="bgBlueGradient"
           className="h-[44px] w-full font-bold text-white"
           asChild={false}
+          onClick={onCancelAcceptPayment}
         >
           네
         </Button>
@@ -60,7 +87,7 @@ export default function ChatVendorCancelModal({
           asChild={false}
           variant="secondary"
           className="h-[44px] w-full bg-[#F1F1F1] font-bold"
-          onClick={() => setOpen(false)}
+          onClick={handleCancel}
         >
           아니요
         </Button>

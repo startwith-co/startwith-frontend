@@ -20,33 +20,23 @@ import getMessagesById from '@/shared/api/get-messages-by-id';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import db, { storage } from 'fire-config';
 import { Message } from './roomType';
+import { useRoomId } from './RoomIdProvider';
+import { useChatMeta } from './ChatMetaProvider';
 
 interface UseMessageSendProps {
   messageId: string;
   messageName: string;
-  userName: string;
-  vendorName: string;
-  vendorId: string;
-  userId: string;
-  setCurRoomId: (roomId: string) => void;
-  curRoomId: string | null;
   attachedFile?: File;
 }
 
-function useMessageSend({
-  messageId,
-  userName,
-  vendorName,
-  vendorId,
-  userId,
-  messageName,
-  setCurRoomId,
-  curRoomId,
-}: UseMessageSendProps) {
+function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
+
+  const { curRoomId, setCurRoomId } = useRoomId();
+  const { userId, userName, vendorId, vendorName } = useChatMeta();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

@@ -1,13 +1,30 @@
 'use client';
 
-import { ReactNode, useActionState } from 'react';
+import { ReactNode, useActionState, FormEvent } from 'react';
 import SubmitCustomButton from './submit-custom-button';
+
+/**
+ * @description
+ * 서버 액션을 사용할 때는 action prop을 사용하고,
+ * 클라이언트 액션을 사용할 때는 onSubmit prop을 사용합니다.
+ *
+ * @example
+ * ```tsx
+ * <SignupForm
+ *   action={signupUserPost}
+ *   buttonName="가입하기"
+ *   buttonProps="bg-gradient-to-r from-[#2D2D2D] to-[#404040] text-white w-full h-[60px] font-extrabold text-lg shadow-sm mb-8 mt-5"
+ *   disabled={!isValid}
+ * />
+ * ```
+ *
+ */
 
 interface SignupFormProps {
   buttonName: string;
   buttonProps: string;
   children: ReactNode;
-  action: (prevState: void, formData: FormData) => Promise<void>;
+  action: (prevState: void, formData: FormData) => Promise<void> | void;
   formProps?: string;
   buttonWrapperClassName?: string;
   loadingText?: string;
@@ -24,21 +41,8 @@ interface SignupFormProps {
     | 'bgBlackGradient'
     | 'textBlue'
     | 'bgBlueGradient';
+  isServerAction?: boolean;
 }
-
-/**
- *
- * @param buttonName
- * @param buttonProps
- * @param children
- * @param action
- * @param formProps
- * @param buttonWrapperClassName
- * @param loadingText
- * @param loadingTextProps
- * @param variant
- * @returns
- */
 
 function SignupForm({
   action,
@@ -51,11 +55,23 @@ function SignupForm({
   loadingTextProps,
   buttonWrapperClassName = '',
   disabled,
+  isServerAction = true,
 }: SignupFormProps) {
   const [state, formAction] = useActionState(action, undefined);
 
+  const handleClientSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    await action(undefined, formData);
+  };
+
   return (
-    <form action={formAction} className={`${formProps || 'space-y-6'}`}>
+    <form
+      {...(isServerAction
+        ? { action: formAction }
+        : { onSubmit: handleClientSubmit })}
+      className={formProps || 'space-y-6'}
+    >
       {children}
       <div className={buttonWrapperClassName}>
         <SubmitCustomButton

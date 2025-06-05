@@ -7,11 +7,11 @@ import {
   DialogTitle,
 } from '@/shared/ui/dialog';
 
-import { useVendorRoomId } from '@/pages/vendor/chat/model/VendorRoomIdProvider';
+import { useVendorModal } from '@/pages/vendor/chat/model/VendorModalProvider';
 import RequestPayForm from './request-pay-form';
 
 export default function RequestPayModal() {
-  const { open, setOpen } = useVendorRoomId();
+  const { open, setOpen } = useVendorModal();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
