@@ -9,9 +9,14 @@ import {
 import VendorSelect from '@/shared/ui/vendor-select';
 import { Controller, useFormContext } from 'react-hook-form';
 import cn from '@/shared/lib/utils';
+import ErrorMessage from '@/shared/ui/error-message';
 
 export default function VendorNormalInfo() {
-  const { register, control } = useFormContext();
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <div className="rounded-md bg-white px-[35px] py-7.5 shadow-md 2xl:pr-[104px]">
@@ -23,7 +28,10 @@ export default function VendorNormalInfo() {
           </span>
           <div className="relative w-full">
             <Input
-              className="bg-vendor-gray border-none placeholder:text-[13px]"
+              className={cn(
+                'bg-vendor-gray border placeholder:text-[13px]',
+                errors.solutionName && 'border-red-500 focus:border-red-500',
+              )}
               placeholder="솔루션명을 입력해주세요."
               {...register('solutionName')}
             />
@@ -39,7 +47,10 @@ export default function VendorNormalInfo() {
           </span>
           <div className="relative w-full">
             <Input
-              className="bg-vendor-gray border-none placeholder:text-[13px]"
+              className={cn(
+                'bg-vendor-gray placeholder:text-[13px]',
+                errors.solutionDetail && 'border-red-500 focus:border-red-500',
+              )}
               placeholder="솔루션 기본 설명을 입력해주세요."
               {...register('solutionDetail')}
             />
@@ -57,12 +68,20 @@ export default function VendorNormalInfo() {
             control={control}
             name="category"
             render={({ field }) => (
-              <VendorSelect
-                options={serviceCategory}
-                placeholder="솔루션 카테고리 선택"
-                triggerClassName="w-[220px] h-[40px]"
-                {...field}
-              />
+              <>
+                <VendorSelect
+                  options={serviceCategory}
+                  placeholder="솔루션 카테고리 선택"
+                  triggerClassName="w-[220px] h-[40px]"
+                  {...field}
+                />
+                {errors.category && (
+                  <ErrorMessage
+                    message={`${errors.category.message}`}
+                    className="ml-5"
+                  />
+                )}
+              </>
             )}
           />
         </li>
@@ -74,12 +93,20 @@ export default function VendorNormalInfo() {
             control={control}
             name="industry"
             render={({ field }) => (
-              <VendorSelect
-                options={industryCategory}
-                placeholder="산업군 카테고리 선택"
-                triggerClassName="w-[220px] h-[40px]"
-                {...field}
-              />
+              <>
+                <VendorSelect
+                  options={industryCategory}
+                  placeholder="산업군 카테고리 선택"
+                  triggerClassName="w-[220px] h-[40px]"
+                  {...field}
+                />
+                {errors.industry && (
+                  <ErrorMessage
+                    message={`${errors.industry.message}`}
+                    className="ml-5"
+                  />
+                )}
+              </>
             )}
           />
         </li>
@@ -102,7 +129,7 @@ export default function VendorNormalInfo() {
               };
 
               return (
-                <div className="flex gap-5">
+                <div className="flex items-center gap-5">
                   {scaleCategory.map((item) => {
                     const isSelected = value.includes(item);
                     return (
@@ -121,6 +148,11 @@ export default function VendorNormalInfo() {
                       </button>
                     );
                   })}
+                  {errors.recommendedCompanySize && (
+                    <ErrorMessage
+                      message={`${errors.recommendedCompanySize.message}`}
+                    />
+                  )}
                 </div>
               );
             }}

@@ -5,9 +5,15 @@ import VendorDropInput from '@/features/vendorRegister/ui/vendor-drop-input';
 import VendorSelect from '@/shared/ui/vendor-select';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { Button } from '@/shared/ui/button';
+import ErrorMessage from '@/shared/ui/error-message';
 
 export default function VendorDetailInfo() {
-  const { register, control, setValue } = useFormContext();
+  const {
+    register,
+    control,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
 
   const { fields, append } = useFieldArray({
     control,
@@ -32,6 +38,12 @@ export default function VendorDetailInfo() {
               handleRepresentImageChange('representImageUrl', file)
             }
           />
+          {errors.representImageUrl && (
+            <ErrorMessage
+              message={`${errors.representImageUrl.message}`}
+              className="ml-5"
+            />
+          )}
         </li>
         <li>
           <span>
@@ -43,6 +55,12 @@ export default function VendorDetailInfo() {
               handleRepresentImageChange('descriptionPdfUrl', file)
             }
           />
+          {errors.descriptionPdfUrl && (
+            <ErrorMessage
+              message={`${errors.descriptionPdfUrl.message}`}
+              className="ml-5"
+            />
+          )}
         </li>
 
         {fields.map((field, index) => (
@@ -81,7 +99,6 @@ export default function VendorDetailInfo() {
                         onChange(value === '증가' ? 'INCREASE' : 'DECREASE')
                       }
                       options={['감소', '증가']}
-                      placeholder="감소"
                       triggerClassName="h-[40px] w-[60px] rounded-md bg-vendor-gray font-light items-center justify-center flex text-xs"
                       itemsClassName="justify-center font-light bg-vendor-gray"
                     />
@@ -105,6 +122,12 @@ export default function VendorDetailInfo() {
           >
             +
           </Button>
+          {errors.solutionEffect?.message && (
+            <ErrorMessage
+              message={`${errors.solutionEffect.message}`}
+              className="ml-5"
+            />
+          )}
         </li>
       </ul>
     </div>

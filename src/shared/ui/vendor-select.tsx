@@ -12,7 +12,7 @@ import cn from '../lib/utils';
 interface VendorSelectProps {
   onChange: (value: string) => void;
   options: string[];
-  placeholder: string;
+  placeholder?: string;
   triggerClassName?: string;
   itemsClassName?: string;
 }

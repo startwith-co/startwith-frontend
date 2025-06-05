@@ -22,8 +22,8 @@ export default function VendorRegisterPage() {
   const methods = useForm({
     resolver: zodResolver(vendorRegisterSchema),
     defaultValues: {
-      representImageUrl: undefined,
-      descriptionPdfUrl: undefined,
+      representImageUrl: new File([], ''),
+      descriptionPdfUrl: new File([], ''),
       vendorSeq: 1,
       solutionName: '',
       solutionDetail: '',

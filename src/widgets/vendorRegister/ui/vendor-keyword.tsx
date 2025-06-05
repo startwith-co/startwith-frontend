@@ -1,10 +1,15 @@
 import { useState, KeyboardEvent, ChangeEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Input from '@/shared/ui/input';
+import ErrorMessage from '@/shared/ui/error-message';
 
 export default function VendorKeyword() {
   const [inputValue, setInputValue] = useState('');
-  const { setValue, watch } = useFormContext();
+  const {
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext();
 
   const keywords = watch('keyword') || [];
 
@@ -60,6 +65,9 @@ export default function VendorKeyword() {
                 </button>
               ))}
             </div>
+            {errors.keyword && keywords.length === 0 && (
+              <ErrorMessage message={`${errors.keyword.message}`} />
+            )}
           </div>
         </li>
       </ul>
