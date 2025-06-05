@@ -11,6 +11,7 @@ import {
 import { IoSearchOutline } from 'react-icons/io5';
 import formatTime from '@/shared/lib/chat-format-time';
 import useGetChatRooms from '@/shared/model/useGetChatRooms';
+import formatMainDate from '@/shared/lib/chat-main-date-format';
 
 function ChatRooms() {
   const rooms = useGetChatRooms({ targetId: 'userId' });
@@ -33,9 +34,9 @@ function ChatRooms() {
           <ChatRoomCard
             key={room.roomId}
             name={room.lastMessage.messageName}
+            updatedDate={formatMainDate(room.lastMessage.updatedAt)}
             lastMessage={room.lastMessage.message}
             img={room.vendorId || ''}
-            date={formatTime(room.lastMessage.updatedAt)}
             link={`/chat?userId=${room.userId}&vendorId=${room.vendorId}`}
           />
         ))}

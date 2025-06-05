@@ -5,7 +5,7 @@ interface ChatBubbleProps {
   time: string;
 }
 
-export default function ChatBubble({
+export default function ChatUserBubble({
   message,
   messageId,
   userId,
@@ -15,7 +15,7 @@ export default function ChatBubble({
 
   return (
     <div
-      className={`flex ${isMine ? 'mr-2 flex-row-reverse' : 'ml-2 flex-row'} mb-2 gap-1.5`}
+      className={`flex ${isMine ? 'mr-2 flex-row-reverse' : 'ml-2 flex-row'} mt-4 mb-2 gap-1.5`}
     >
       <div
         className={`max-w-[70%] rounded-2xl px-4 py-2 text-sm ${isMine ? 'bg-blue-100 text-black' : 'bg-gray-100 text-black'} `}

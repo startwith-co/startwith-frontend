@@ -5,13 +5,12 @@ import { MdOutlineAttachFile } from 'react-icons/md';
 import { useSearchParams, notFound } from 'next/navigation';
 import useMessageSend from '@/shared/model/useMessageSend';
 
-import ChatVendorBubble from '@/entities/chat/ui/chat-vendor-bubble';
-import ChatRequestCard from '@/entities/chat/ui/chat-request-card';
-import formatTime from '@/shared/lib/chat-format-time';
 import { useEffect } from 'react';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
 import { useVendorRoomId } from '@/pages/vendor/chat/model/VendorRoomIdProvider';
+import formatMainDate from '@/shared/lib/chat-main-date-format';
+import ChatsVendor from '@/entities/chat/ui/chats-vendor';
 
 function VendorChatting() {
   const searchParams = useSearchParams();
@@ -51,45 +50,18 @@ function VendorChatting() {
     fetchMessages();
   }, [userId, vendorId, open]);
 
+  const chatMainDate = formatMainDate(messages[0]?.createdAt) || '';
+
   return (
-    <div className="flex h-[calc(100vh-200px)] w-full flex-col rounded-3xl border-2 border-[#404040] bg-[#212121]">
-      {/* 메시지 영역 */}
-      <div className="flex-1 space-y-2 overflow-y-auto px-4 py-4">
-        {messages.map((msg) => {
-          let parsed;
-          try {
-            parsed = JSON.parse(msg.message);
-          } catch {
-            parsed = null;
-          }
-
-          if (parsed?.type === 'request-card') {
-            return (
-              <div key={msg.id} className="flex justify-end gap-2">
-                <span className="mt-50 text-xs text-gray-400">
-                  {formatTime(msg.createdAt)}
-                </span>
-                <ChatRequestCard
-                  mode="vendor"
-                  solutionName={parsed.solutionName}
-                  workDate={parsed.workDate}
-                  solutionPrice={parsed.solutionPrice}
-                />
-              </div>
-            );
-          }
-
-          return (
-            <ChatVendorBubble
-              key={msg.id}
-              message={msg.message}
-              messageId={msg.messageId}
-              vendorId={vendorId}
-              time={formatTime(msg.createdAt)}
-            />
-          );
-        })}
-      </div>
+    <div className="flex h-[calc(100vh-200px)] w-full flex-col rounded-3xl bg-[#FFFFFF] shadow-lg">
+      {chatMainDate && (
+        <div className="flex items-center justify-center">
+          <span className="mt-3 mb-2 rounded-full bg-[#F5F5F5] px-5 py-2 text-xs text-[#727272]">
+            {chatMainDate}
+          </span>
+        </div>
+      )}
+      <ChatsVendor messages={messages} vendorId={vendorId} />
 
       {/* 입력창 영역 */}
       <form onSubmit={handleSubmit} className="relative bg-none p-4">
@@ -98,7 +70,7 @@ function VendorChatting() {
           placeholder="메시지 입력"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="h-[45px] w-full rounded-3xl pr-20 pl-4 text-white placeholder:font-light"
+          className="h-[45px] w-full rounded-3xl pr-20 pl-4 text-black placeholder:font-light"
         />
         <MdOutlineAttachFile className="absolute top-1/2 right-16 size-5.5 -translate-y-1/2 transform text-white" />
         <button

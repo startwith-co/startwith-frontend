@@ -16,12 +16,12 @@ import useGetChatRooms from '@/shared/model/useGetChatRooms';
 function VendorChatRooms() {
   const rooms = useGetChatRooms({ targetId: 'vendorId' });
   return (
-    <div className="w-full min-w-0 rounded-3xl border-2 border-[#404040] bg-[#212121] p-4.5 pb-8">
+    <div className="w-full min-w-0 rounded-3xl bg-[#FFFFFF] p-4.5 pb-8 shadow-lg">
       <div className="relative mb-5">
         <Input
           type="search"
           placeholder="실시간 상담 검색"
-          className="h-[45px] rounded-2xl border-0 bg-[#3D3D3D] pl-4 placeholder:font-light"
+          className="h-[45px] rounded-2xl border-0 bg-[#F5F5F5] pl-4 placeholder:font-light"
         />
         <IoSearchOutline
           size={20}
@@ -35,9 +35,8 @@ function VendorChatRooms() {
             name={room.lastMessage.messageName}
             lastMessage={room.lastMessage.message}
             img={room.vendorId || ''}
-            date={formatTime(room.lastMessage.updatedAt)}
+            updatedDate={formatTime(room.lastMessage.updatedAt)}
             link={`/chat?userId=${room.userId}&vendorId=${room.vendorId}`}
-            className="bg-[#3D3D3D] text-white"
           />
         ))}
       </div>
@@ -45,13 +44,13 @@ function VendorChatRooms() {
         {/* TODO: Link형태로 되어있어서 추후 일반 버튼으로 수정해야 함. */}
         <Pagination className="mt-6">
           <PaginationContent className="flex gap-2.5">
-            <PaginationItem className="bg-[#3D3D3D]">
+            <PaginationItem>
               <PaginationLink href="#">1</PaginationLink>
             </PaginationItem>
-            <PaginationItem className="bg-[#3D3D3D]">
+            <PaginationItem>
               <PaginationLink href="#">2</PaginationLink>
             </PaginationItem>
-            <PaginationItem className="bg-[#3D3D3D]">
+            <PaginationItem>
               <PaginationLink href="#">3</PaginationLink>
             </PaginationItem>
           </PaginationContent>

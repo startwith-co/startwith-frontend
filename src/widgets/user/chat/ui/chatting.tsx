@@ -1,7 +1,7 @@
 'use client';
 
-import ChatBubble from '@/entities/chat/ui/chat-bubble';
-import ChatRequestCard from '@/entities/chat/ui/chat-request-card';
+import ChatBubble from '@/entities/chat/ui/chat-user-bubble';
+import ChatRequestCard from '@/entities/chat/ui/chat-user-request-card';
 import Input from '@/shared/ui/input';
 import formatTime from '@/shared/lib/chat-format-time';
 import useMessageSend from '@/shared/model/useMessageSend';
@@ -9,6 +9,8 @@ import { MdOutlineAttachFile } from 'react-icons/md';
 import { notFound, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { useRoomId } from '@/pages/user/chat/model/RoomIdProvider';
+import formatMainDate from '@/shared/lib/chat-main-date-format';
+import ChatsUser from '@/entities/chat/ui/chats-user';
 
 function Chatting() {
   const searchParams = useSearchParams();
@@ -19,7 +21,7 @@ function Chatting() {
     notFound();
   }
 
-  const userName = 'userA';
+  const userName = 'userB';
   const vendorName = 'vendorB';
   const { curRoomId, setCurRoomId } = useRoomId();
 
@@ -42,81 +44,18 @@ function Chatting() {
     setCurRoomId,
   });
 
+  const chatMainDate = formatMainDate(messages[0]?.createdAt) || '';
+
   return (
     <div className="flex h-[calc(100vh-200px)] w-full flex-col overflow-hidden rounded-3xl bg-white shadow-md">
-      <div className="flex-1 overflow-y-auto px-4 py-4">
-        {messages.map((msg) => {
-          let parsed;
-          try {
-            parsed = JSON.parse(msg.message);
-          } catch {
-            parsed = null;
-          }
-
-          if (parsed?.type === 'request-card') {
-            return (
-              <div className="flex gap-2" key={msg.id}>
-                <ChatRequestCard
-                  mode="user"
-                  solutionName={parsed.solutionName}
-                  workDate={parsed.workDate}
-                  solutionPrice={parsed.solutionPrice}
-                />
-                <span className="mt-50 text-xs text-gray-400">
-                  {formatTime(msg.createdAt)}
-                </span>
-              </div>
-            );
-          }
-
-          return (
-            <>
-              <ChatBubble
-                key={msg.id}
-                message={msg.message}
-                messageId={msg.messageId}
-                userId={userId}
-                time={formatTime(msg.createdAt)}
-              />
-              {/* TODO: 파일 첨부 기능 구현 */}
-              {/* {messages.map((msg) => {
-                const isImage = msg.file?.type?.startsWith('image/');
-                return (
-                  <div key={msg.id}>
-                    <ChatBubble
-                      message={msg.message}
-                      messageId={msg.messageId}
-                      userId={userId}
-                      time={formatTime(msg.createdAt)}
-                    />
-                    {msg.file && (
-                      <div className="mt-2 ml-4">
-                        {isImage ? (
-                          <Image
-                            src={msg.file.url}
-                            alt={msg.file.name}
-                            width={200}
-                            height={200}
-                            className="rounded"
-                          />
-                        ) : (
-                          <a
-                            href={msg.file.url}
-                            download={msg.file.name}
-                            className="text-blue-500 underline"
-                          >
-                            📎 {msg.file.name}
-                          </a>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                );
-              })} */}
-            </>
-          );
-        })}
-      </div>
+      {chatMainDate && (
+        <div className="flex items-center justify-center">
+          <span className="mt-3 mb-2 rounded-full bg-[#F5F5F5] px-5 py-2 text-xs text-[#727272]">
+            {chatMainDate}
+          </span>
+        </div>
+      )}
+      <ChatsUser messages={messages} userId={userId} />
 
       <form onSubmit={handleSubmit} className="bg-none p-4">
         <div className="relative w-full">
