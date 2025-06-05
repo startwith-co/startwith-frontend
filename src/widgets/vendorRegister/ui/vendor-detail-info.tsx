@@ -34,6 +34,7 @@ export default function VendorDetailInfo() {
           </span>
           <VendorDropInput
             title="대표 이미지"
+            accept={['image/*']}
             onChange={(file) =>
               handleRepresentImageChange('representImageUrl', file)
             }
@@ -51,6 +52,7 @@ export default function VendorDetailInfo() {
           </span>
           <VendorDropInput
             title="PDF 파일 등록"
+            accept={['application/pdf']}
             onChange={(file) =>
               handleRepresentImageChange('descriptionPdfUrl', file)
             }
@@ -98,6 +100,7 @@ export default function VendorDetailInfo() {
                       onChange={(value: string) =>
                         onChange(value === '증가' ? 'INCREASE' : 'DECREASE')
                       }
+                      placeholder="증가"
                       options={['감소', '증가']}
                       triggerClassName="h-[40px] w-[60px] rounded-md bg-vendor-gray font-light items-center justify-center flex text-xs"
                       itemsClassName="justify-center font-light bg-vendor-gray"

@@ -15,8 +15,12 @@ export default function VendorNormalInfo() {
   const {
     register,
     control,
+    watch,
     formState: { errors },
   } = useFormContext();
+
+  const solutionName = watch('solutionName');
+  const solutionDetail = watch('solutionDetail');
 
   return (
     <div className="rounded-md bg-white px-[35px] py-7.5 shadow-md 2xl:pr-[104px]">
@@ -32,12 +36,12 @@ export default function VendorNormalInfo() {
                 'bg-vendor-gray border placeholder:text-[13px]',
                 errors.solutionName && 'border-red-500 focus:border-red-500',
               )}
+              maxLength={100}
               placeholder="솔루션명을 입력해주세요."
               {...register('solutionName')}
             />
-            {/* TODO: 입력한 글자수에 따라 값 변경하기 */}
             <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-[13px]">
-              0/100
+              {solutionName?.length || 0}/100
             </span>
           </div>
         </li>
@@ -48,15 +52,15 @@ export default function VendorNormalInfo() {
           <div className="relative w-full">
             <Input
               className={cn(
-                'bg-vendor-gray placeholder:text-[13px]',
+                'bg-vendor-gray pr-20 placeholder:text-[13px]',
                 errors.solutionDetail && 'border-red-500 focus:border-red-500',
               )}
+              maxLength={300}
               placeholder="솔루션 기본 설명을 입력해주세요."
               {...register('solutionDetail')}
             />
-            {/* TODO: 입력한 글자수에 따라 값 변경하기 */}
             <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-[13px]">
-              0/300
+              {solutionDetail?.length || 0}/300
             </span>
           </div>
         </li>

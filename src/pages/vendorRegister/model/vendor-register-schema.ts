@@ -24,8 +24,14 @@ export const vendorRegisterSchema = z.object({
     .instanceof(File)
     .refine((value) => value.size > 0, '설명서를 업로드해주세요.'),
   vendorSeq: z.number(),
-  solutionName: z.string().min(1, '솔루션명 입력해주세요.'),
-  solutionDetail: z.string().min(1, '솔루션 설명 입력해주세요.'),
+  solutionName: z
+    .string()
+    .min(1, '솔루션명 입력해주세요.')
+    .max(100, '최대 100자까지 입력 가능합니다.'),
+  solutionDetail: z
+    .string()
+    .min(1, '솔루션 설명 입력해주세요.')
+    .max(300, '최대 300자까지 입력 가능합니다.'),
   category: z
     .union([categoryEnum, z.literal('')])
     .refine((value) => value !== '', {
@@ -35,14 +41,26 @@ export const vendorRegisterSchema = z.object({
   recommendedCompanySize: z.array(z.string()).min(1, '기업 규모 선택해주세요.'),
   solutionImplementationType: z.string(),
   specialist: z.string(),
-  amount: z.string().min(1, '최소 1원 이상의 가격을 입력해주세요.'),
-  duration: z.string().min(1, '최소 1일 이상의 기간을 입력해주세요.'),
+  amount: z
+    .string()
+    .min(1, '최소 1원 이상의 가격을 입력해주세요.')
+    .refine(
+      (value) => Number(value) > 0,
+      '최소 1원 이상의 가격을 입력해주세요.',
+    ),
+  duration: z
+    .string()
+    .min(1, '최소 1일 이상의 기간을 입력해주세요.')
+    .refine(
+      (value) => Number(value) > 0,
+      '최소 1일 이상의 기간을 입력해주세요.',
+    ),
   solutionEffect: z
     .array(
       z.object({
         effectName: z.string().min(1, '효과명 입력해주세요.'),
         percent: z.number().min(1, '퍼센트 입력해주세요.'),
-        direction: z.enum(['INCREASE', 'DECREASE']),
+        direction: z.enum(['INCREASE', 'DECREASE']).default('INCREASE'),
       }),
     )
     .min(1, '도입 성과를 추가해주세요.'),
