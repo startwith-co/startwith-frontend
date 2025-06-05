@@ -1,6 +1,5 @@
 import Solu from '@/shared/ui/solu';
 import { Button } from '@/shared/ui/button';
-import { CheckCircle } from 'lucide-react';
 import React, { useState } from 'react';
 import CircleCheckbox from './circle-check-box';
 
@@ -8,7 +7,6 @@ interface ChatRequestCardProps {
   solutionName: string;
   solutionCategory: string;
   solutionPrice: number;
-  mode?: 'user' | 'vendor';
 }
 
 const formatPrice = (num: number) => {
@@ -19,7 +17,7 @@ function ChatUserRequestCard({
   solutionName,
   solutionCategory,
   solutionPrice,
-}: Omit<ChatRequestCardProps, 'mode'>) {
+}: ChatRequestCardProps) {
   const [checked, setChecked] = useState(false);
 
   return (

@@ -36,7 +36,11 @@ function VendorChatRooms() {
             lastMessage={room.lastMessage.message}
             img={room.vendorId || ''}
             updatedDate={formatTime(room.lastMessage.updatedAt)}
-            link={`/chat?userId=${room.userId}&vendorId=${room.vendorId}`}
+            link={`/vendor/chat?userId=${room.userId}&vendorId=${room.vendorId}`}
+            userId={room.userId}
+            vendorId={room.vendorId}
+            userName={room.userName}
+            vendorName={room.vendorName}
           />
         ))}
       </div>

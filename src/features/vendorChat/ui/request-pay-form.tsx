@@ -1,13 +1,11 @@
 'use client';
 
-import { Controller, useForm, useFormContext } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '@/shared/ui/input';
 import SignupForm from '@/shared/ui/signup-form';
-import requestPayPost from '@/features/vendorChat/api/requestPayPost';
-import { notFound, useSearchParams } from 'next/navigation';
-import { useVendorRoomId } from '@/pages/vendor/chat/model/VendorRoomIdProvider';
+import requestPost from '@/shared/api/request-post';
 import { useState, useRef } from 'react';
 import { Button } from '@/shared/ui/button';
 import Image from 'next/image';
@@ -18,6 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui/select';
+import { useVendorModal } from '@/pages/vendor/chat/model/VendorModalProvider';
+import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 
 const solutionCategoryOptions = [
   'BI(데이터 시각화)',
@@ -50,6 +50,7 @@ function RequestPayForm() {
     formState: { errors, isValid },
     handleSubmit,
     control,
+    getValues,
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
@@ -60,33 +61,31 @@ function RequestPayForm() {
   const contractRef = useRef<HTMLInputElement>(null);
   const refundRef = useRef<HTMLInputElement>(null);
 
-  const { setOpen } = useVendorRoomId();
-  const searchParams = useSearchParams();
-  const vendorId = searchParams?.get('vendorId');
-  const userId = searchParams?.get('userId');
+  const { setOpen } = useVendorModal();
+  const { vendorId, vendorName, userId, userName } = useChatMeta();
 
-  if (!vendorId || !userId) return notFound();
-
-  const vendorName = 'vendorA';
-  const userName = 'userA';
-
-  const onSubmit = async (formData: FormData) => {
-    await requestPayPost(
-      undefined,
-      formData,
+  const onSubmit = async () => {
+    const formData = getValues();
+    await requestPost(
+      formData.solutionName,
+      formData.solutionPrice,
+      formData.solutionCategory,
       vendorId,
       vendorName,
       userId,
       vendorId,
       userName,
       vendorName,
+      'request-card',
     );
+
     setOpen(false);
   };
 
   return (
     <SignupForm
-      action={(_prevState, formData) => onSubmit(formData)}
+      isServerAction={false}
+      action={onSubmit}
       buttonProps="w-full h-[45px] text-white font-semibold mt-6 disabled:opacity-50"
       buttonName="결제 요청하기"
       buttonWrapperClassName="mt-4"
@@ -197,7 +196,7 @@ function RequestPayForm() {
             onClick={() => refundRef.current?.click()}
             className="h-[45px] w-full bg-[#F5F5F5] text-sm text-[#7A7A7A]"
           >
-            {refundFile ? '✅ 업로드 완료' : '+ 업로드하기'}
+            {refundFile ? '업로드 완료' : '+ 업로드하기'}
           </Button>
           {refundFile && refundFile.type.startsWith('image') && (
             <Image

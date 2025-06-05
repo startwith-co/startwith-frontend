@@ -9,8 +9,6 @@ import React, {
 } from 'react';
 
 interface VendorRoomIdContextType {
-  curRoomId: string | null;
-  setCurRoomId: (curRoomId: string) => void;
   open: boolean;
   setOpen: (open: boolean) => void;
 }
@@ -19,14 +17,10 @@ const VendorRoomIdContext = createContext<VendorRoomIdContextType | undefined>(
   undefined,
 );
 
-function VendorRoomIdProvider({ children }: { children: ReactNode }) {
-  const [curRoomId, setCurRoomId] = useState<string | null>(null);
+function VendorModalProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
 
-  const value = useMemo(
-    () => ({ curRoomId, setCurRoomId, open, setOpen }),
-    [curRoomId, open],
-  );
+  const value = useMemo(() => ({ open, setOpen }), [open]);
 
   return (
     <VendorRoomIdContext.Provider value={value}>
@@ -35,14 +29,12 @@ function VendorRoomIdProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export const useVendorRoomId = (): VendorRoomIdContextType => {
+export const useVendorModal = (): VendorRoomIdContextType => {
   const context = useContext(VendorRoomIdContext);
   if (!context) {
-    throw new Error(
-      'useVendorRoomId must be used within a VendorRoomIdProvider',
-    );
+    throw new Error('useVendorModal must be used within a VendorModalProvider');
   }
   return context;
 };
 
-export default VendorRoomIdProvider;
+export default VendorModalProvider;

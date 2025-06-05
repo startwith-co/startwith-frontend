@@ -8,34 +8,18 @@ import useMessageSend from '@/shared/model/useMessageSend';
 import { useEffect } from 'react';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
-import { useVendorRoomId } from '@/pages/vendor/chat/model/VendorRoomIdProvider';
+import { useVendorModal } from '@/pages/vendor/chat/model/VendorModalProvider';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
 import ChatsVendor from '@/entities/chat/ui/chats-vendor';
+import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 
 function VendorChatting() {
-  const searchParams = useSearchParams();
-  const userId = searchParams?.get('userId');
-  const vendorId = searchParams?.get('vendorId');
-
-  if (!userId || !vendorId) {
-    notFound();
-  }
-
-  const userName = 'userA';
-  const vendorName = 'vendorB';
-
-  const { open, curRoomId, setCurRoomId } = useVendorRoomId();
-
+  const { open } = useVendorModal();
+  const { vendorId, vendorName, userId } = useChatMeta();
   const { handleSubmit, message, setMessage, messages, setMessages } =
     useMessageSend({
       messageId: vendorId,
       messageName: vendorName,
-      userName,
-      vendorName,
-      vendorId,
-      userId,
-      curRoomId,
-      setCurRoomId,
     });
 
   useEffect(() => {

@@ -1,6 +1,9 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { Avatar, AvatarImage, AvatarFallback } from '@/shared/ui/avatar';
 import clsx from 'clsx';
-import Link from 'next/link';
 
 export interface ChatRoomCardProps {
   name: string;
@@ -10,6 +13,10 @@ export interface ChatRoomCardProps {
   className?: string;
   avatarSize?: string;
   updatedDate?: string;
+  userId: string;
+  vendorId: string;
+  userName: string;
+  vendorName: string;
 }
 
 export default function ChatRoomCard({
@@ -20,31 +27,45 @@ export default function ChatRoomCard({
   className = '',
   avatarSize = 'size-15',
   updatedDate,
+  userId,
+  vendorId,
+  userName,
+  vendorName,
 }: ChatRoomCardProps) {
+  const router = useRouter();
+  const { setChatMeta } = useChatMeta();
+
+  const handleClick = () => {
+    setChatMeta({ userId, vendorId, userName, vendorName });
+    router.push(link);
+  };
+
   return (
-    <Link href={link}>
-      <div
-        className={clsx(
-          'flex items-center justify-center rounded-lg bg-[#F5F5F5] px-1 py-2.5',
-          className,
-        )}
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={handleClick}
+      onKeyPress={handleClick}
+      className={clsx(
+        'flex cursor-pointer items-center justify-center rounded-lg bg-[#F5F5F5] px-1 py-2.5',
+        className,
+      )}
+    >
+      <Avatar
+        className={clsx('mr-3 flex rounded-full bg-[#D9D9D9]', avatarSize)}
       >
-        <Avatar
-          className={clsx('mr-3 flex rounded-full bg-[#D9D9D9]', avatarSize)}
-        >
-          <AvatarImage src={img} />
-          <AvatarFallback>{name[0]}</AvatarFallback>
-        </Avatar>
-        <div className="flex min-w-0 flex-col gap-1">
-          <div className="flex w-full items-center gap-x-8">
-            <span className="truncate font-semibold">{name}</span>
-            <span className="truncate text-xs font-light text-[#A7A7A7]">
-              {updatedDate}
-            </span>
-          </div>
-          <span className="truncate text-sm">{lastMessage}</span>
+        <AvatarImage src={img} />
+        <AvatarFallback>{name[0]}</AvatarFallback>
+      </Avatar>
+      <div className="flex min-w-0 flex-col gap-1">
+        <div className="flex w-full items-center gap-x-8">
+          <span className="truncate font-semibold">{name}</span>
+          <span className="truncate text-xs font-light text-[#A7A7A7]">
+            {updatedDate}
+          </span>
         </div>
+        <span className="truncate text-sm">{lastMessage}</span>
       </div>
-    </Link>
+    </div>
   );
 }

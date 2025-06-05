@@ -32,6 +32,10 @@ function ChatRooms() {
       <div className="flex flex-col gap-2.5">
         {rooms.map((room) => (
           <ChatRoomCard
+            userId={room.userId}
+            vendorId={room.vendorId}
+            userName={room.userName}
+            vendorName={room.vendorName}
             key={room.roomId}
             name={room.lastMessage.messageName}
             updatedDate={formatMainDate(room.lastMessage.updatedAt)}

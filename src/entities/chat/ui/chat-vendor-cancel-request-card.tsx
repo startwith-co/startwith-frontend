@@ -1,12 +1,15 @@
 import { Button } from '@/shared/ui/button';
 import Solu from '@/shared/ui/solu';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSolution } from '@/shared/model/SolutionProvider';
+import { Timestamp } from 'firebase/firestore';
 import ChatVendorCancelModal from './chat-vendor-cancel-modal';
 
 interface ChatVendorCancelRequestCardProps {
   solutionName: string;
   solutionCategory: string;
   solutionPrice: number;
+  createdAt: Timestamp;
 }
 
 const formatPrice = (num: number) => {
@@ -17,8 +20,22 @@ function ChatVendorCancelRequestCard({
   solutionName,
   solutionCategory,
   solutionPrice,
+  createdAt,
 }: ChatVendorCancelRequestCardProps) {
   const [open, setOpen] = useState(false);
+  const { setSolution } = useSolution();
+
+  const [isExpired, setIsExpired] = useState(false);
+
+  useEffect(() => {
+    const now = Date.now();
+    const created = createdAt.toDate().getTime();
+    const diff = now - created;
+
+    if (diff > 86400000) {
+      setIsExpired(true);
+    }
+  }, [createdAt]);
 
   return (
     <div className="h-auto w-[300px] rounded-xl bg-[#F5F5F5] p-4 shadow-md">
@@ -44,16 +61,16 @@ function ChatVendorCancelRequestCard({
           asChild={false}
           variant="bgBlueGradient"
           className="h-[44px] w-full font-bold text-white"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setOpen(true);
+            setSolution({ solutionName, solutionCategory, solutionPrice });
+          }}
+          disabled={isExpired}
         >
-          결제 취소하기
+          {isExpired ? '취소 불가 (24시간 초과)' : '결제 취소하기'}
         </Button>
       </div>
-      <ChatVendorCancelModal
-        open={open}
-        setOpen={setOpen}
-        solutionPrice={solutionPrice}
-      />
+      <ChatVendorCancelModal open={open} setOpen={setOpen} />
     </div>
   );
 }

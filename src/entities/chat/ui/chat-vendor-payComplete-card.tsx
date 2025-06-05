@@ -1,6 +1,5 @@
 import Solu from '@/shared/ui/solu';
 import { Button } from '@/shared/ui/button';
-import { CheckCircle } from 'lucide-react';
 import React, { useState } from 'react';
 import ChatVendorCancelModal from './chat-vendor-cancel-modal';
 
@@ -79,11 +78,7 @@ function ChatVendorPayCompleteCard({
         결제 취소하기
       </Button>
 
-      <ChatVendorCancelModal
-        open={open}
-        setOpen={setOpen}
-        solutionPrice={solutionPrice}
-      />
+      <ChatVendorCancelModal open={open} setOpen={setOpen} />
     </div>
   );
 }

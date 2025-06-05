@@ -1,4 +1,5 @@
 import formatTime from '@/shared/lib/chat-format-time';
+import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
 import ChatUserBubble from './chat-user-bubble';
 import ChatUserCancelRequestCard from './chat-user-cancel-request-card';
 import ChatUserPayCompleteCard from './chat-user-payComplete-card';
@@ -22,82 +23,76 @@ function ChatsUser({ messages, userId }: ChatsUserProps) {
         }
 
         const isMine = msg.messageId === userId;
-        const timeEl = (
-          <span className="mb-1 self-end text-[11px] text-gray-400">
-            {formatTime(msg.createdAt)}
-          </span>
-        );
-        const wrapperClass = `flex ${isMine ? 'justify-end' : 'justify-start'} items-end gap-2`;
 
         if (parsed?.type === 'request-card') {
           return (
-            <div key={msg.id + msg.createdAt} className={wrapperClass}>
-              {isMine ? (
-                <>
-                  {timeEl}
-                  <ChatUserRequestCard {...parsed} />
-                </>
-              ) : (
-                <>
-                  <ChatUserRequestCard {...parsed} />
-                  {timeEl}
-                </>
-              )}
-            </div>
+            <ChatCardWrapper
+              key={msg.id + msg.createdAt}
+              isMine={isMine}
+              msg={msg}
+            >
+              <ChatUserRequestCard {...parsed} />
+            </ChatCardWrapper>
           );
         }
 
         if (parsed?.type === 'pay-complete-card') {
           return (
-            <div key={msg.id + msg.createdAt} className={wrapperClass}>
-              {isMine ? (
-                <>
-                  {timeEl}
-                  <ChatUserPayCompleteCard {...parsed} />
-                </>
-              ) : (
-                <>
-                  <ChatUserPayCompleteCard {...parsed} />
-                  {timeEl}
-                </>
-              )}
-            </div>
+            <ChatCardWrapper
+              key={msg.id + msg.createdAt}
+              isMine={isMine}
+              msg={msg}
+            >
+              <ChatUserPayCompleteCard {...parsed} />
+            </ChatCardWrapper>
           );
         }
 
         if (parsed?.type === 'cancel-request-card') {
           return (
-            <div key={msg.id + msg.createdAt} className={wrapperClass}>
-              {isMine ? (
-                <>
-                  {timeEl}
-                  <ChatUserCancelRequestCard {...parsed} />
-                </>
-              ) : (
-                <>
-                  <ChatUserCancelRequestCard {...parsed} />
-                  {timeEl}
-                </>
-              )}
-            </div>
+            <ChatCardWrapper
+              key={msg.id + msg.createdAt}
+              isMine={isMine}
+              msg={msg}
+            >
+              <ChatUserCancelRequestCard {...parsed} />
+            </ChatCardWrapper>
           );
         }
 
         if (parsed?.type === 'cancel-complete-card') {
           return (
-            <div key={msg.id + msg.createdAt} className={wrapperClass}>
-              {isMine ? (
-                <>
-                  {timeEl}
-                  <ChatUserCancelCompleteCard {...parsed} />
-                </>
-              ) : (
-                <>
-                  <ChatUserCancelCompleteCard {...parsed} />
-                  {timeEl}
-                </>
-              )}
-            </div>
+            <ChatCardWrapper
+              key={msg.id + msg.createdAt}
+              isMine={isMine}
+              msg={msg}
+            >
+              <ChatUserCancelCompleteCard {...parsed} />
+            </ChatCardWrapper>
+          );
+        }
+
+        if (parsed?.type === 'cancel-request-card') {
+          return (
+            <ChatCardWrapper
+              key={msg.id + msg.createdAt}
+              isMine={isMine}
+              msg={msg}
+            >
+              <ChatUserCancelRequestCard {...parsed} />
+            </ChatCardWrapper>
+          );
+        }
+
+        if (parsed?.type === 'cancel-complete-card') {
+          return (
+            <ChatCardWrapper
+              key={msg.id + msg.createdAt}
+              isMine={isMine}
+              msg={msg}
+            >
+              <ChatUserCancelCompleteCard {...parsed} />
+            </ChatCardWrapper>
           );
         }
 
