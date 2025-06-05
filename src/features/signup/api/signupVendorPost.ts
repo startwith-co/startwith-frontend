@@ -1,6 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import signupVendor from './signupVendor';
 
 async function signupVendorPost(
   _prevState: void,
@@ -12,6 +13,7 @@ async function signupVendorPost(
   const email = formData?.get('email') as string;
   const name = formData?.get('name') as string;
   const password = formData?.get('password') as string;
+  const confirmPassword = formData?.get('confirmPassword') as string;
 
   if (!company || company.trim().length === 0) {
     return;
@@ -28,6 +30,14 @@ async function signupVendorPost(
   if (!password || password.trim().length === 0) {
     return;
   }
+  if (password !== confirmPassword) {
+    return;
+  }
+
+  if (!file) {
+    return;
+  }
+  await signupVendor(formData, file);
 
   redirect('/signup/success');
 }
