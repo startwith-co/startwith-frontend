@@ -8,13 +8,18 @@ import VendorNormalInfo from '@/widgets/vendorRegister/ui/vendor-normal-info';
 import VendorSaleInfo from '@/widgets/vendorRegister/ui/vendor-sale-info';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 import {
   VendorRegisterSchema,
   vendorRegisterSchema,
 } from '../model/vendor-register-schema';
+import vendorCategoryMapping from '../utils/vendor-category-mapping';
 
 export default function VendorRegisterPage() {
-  const methods = useForm<VendorRegisterSchema>({
+  const session = useSession();
+
+  const methods = useForm({
     resolver: zodResolver(vendorRegisterSchema),
     defaultValues: {
       representImageUrl: undefined,
@@ -22,17 +27,26 @@ export default function VendorRegisterPage() {
       vendorSeq: 1,
       solutionName: '',
       solutionDetail: '',
-      category: 'KM',
+      category: '',
       industry: '',
       recommendedCompanySize: [],
-      solutionImplementationType: '',
-      specialist: '',
-      amount: undefined,
-      duration: undefined,
+      solutionImplementationType: 'string',
+      specialist: 'string',
+      amount: '',
+      duration: '',
       solutionEffect: [],
-      keyword: [''],
+      keyword: [],
     },
   });
+
+  useEffect(() => {
+    if (session.status === 'authenticated' && session.data?.vendorSeq) {
+      methods.reset({
+        ...methods.getValues(),
+        vendorSeq: session.data.vendorSeq,
+      });
+    }
+  }, [session, methods]);
 
   const onSubmit = methods.handleSubmit(async (data: VendorRegisterSchema) => {
     const formData = new FormData();
@@ -41,26 +55,19 @@ export default function VendorRegisterPage() {
     formData.append('descriptionPdfUrl', data.descriptionPdfUrl);
 
     const jsonPart = {
-      vendorSeq: 1,
-      solutionName: 'string',
-      solutionDetail: 'string',
-      category: 'KM',
-      industry: 'string',
-      recommendedCompanySize: 'string',
-      solutionImplementationType: 'string',
-      specialist: 'string',
-      amount: 10000,
-      duration: 0,
-      solutionEffect: [
-        {
-          effectName: 'string',
-          percent: 0,
-          direction: 'INCREASE',
-        },
-      ],
-      keyword: ['string'],
+      vendorSeq: methods.getValues('vendorSeq'),
+      solutionName: data.solutionName,
+      solutionDetail: data.solutionDetail,
+      category: vendorCategoryMapping(data.category),
+      industry: data.industry,
+      recommendedCompanySize: data.recommendedCompanySize.join(','),
+      solutionImplementationType: data.solutionImplementationType,
+      specialist: data.specialist,
+      amount: Number(data.amount),
+      duration: Number(data.duration),
+      solutionEffect: data.solutionEffect,
+      keyword: data.keyword,
     };
-
     formData.append(
       'request',
       new Blob([JSON.stringify(jsonPart)], { type: 'application/json' }),

@@ -4,7 +4,7 @@ import Input from '@/shared/ui/input';
 import {
   industryCategory,
   scaleCategory,
-  surviceCategory,
+  serviceCategory,
 } from '@/entities/vendorRegister/model/vendor-normal-info-category';
 import VendorSelect from '@/shared/ui/vendor-select';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -58,7 +58,7 @@ export default function VendorNormalInfo() {
             name="category"
             render={({ field }) => (
               <VendorSelect
-                options={surviceCategory}
+                options={serviceCategory}
                 placeholder="솔루션 카테고리 선택"
                 triggerClassName="w-[220px] h-[40px]"
                 {...field}

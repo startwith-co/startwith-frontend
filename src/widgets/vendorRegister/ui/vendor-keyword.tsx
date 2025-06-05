@@ -6,7 +6,7 @@ export default function VendorKeyword() {
   const [inputValue, setInputValue] = useState('');
   const { setValue, watch } = useFormContext();
 
-  const keywords = watch('keywords') || [];
+  const keywords = watch('keyword') || [];
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -19,7 +19,7 @@ export default function VendorKeyword() {
       e.preventDefault();
       const value = inputValue;
       if (value && !keywords.includes(value)) {
-        setValue('keywords', [...keywords, value]);
+        setValue('keyword', [...keywords, value]);
       }
       setInputValue('');
     }
@@ -27,7 +27,7 @@ export default function VendorKeyword() {
 
   const removeKeyword = (keyword: string) => {
     setValue(
-      'keywords',
+      'keyword',
       keywords.filter((k: string) => k !== keyword),
     );
   };

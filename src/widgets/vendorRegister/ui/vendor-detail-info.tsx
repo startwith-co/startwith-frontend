@@ -74,9 +74,12 @@ export default function VendorDetailInfo() {
                 <Controller
                   control={control}
                   name={`solutionEffect.${index}.direction`}
-                  render={({ field: directionField }) => (
+                  render={({ field: { onChange, ...rest } }) => (
                     <VendorSelect
-                      {...directionField}
+                      {...rest}
+                      onChange={(value: string) =>
+                        onChange(value === '증가' ? 'INCREASE' : 'DECREASE')
+                      }
                       options={['감소', '증가']}
                       placeholder="감소"
                       triggerClassName="h-[40px] w-[60px] rounded-md bg-vendor-gray font-light items-center justify-center flex text-xs"

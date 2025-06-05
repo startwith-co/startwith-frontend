@@ -1,4 +1,4 @@
-export const surviceCategory = [
+export const serviceCategory = [
   'BI(데이터 시각화)',
   'BPM(업무 자동화)',
   'CSM(콘텐츠 관리 시스템)',

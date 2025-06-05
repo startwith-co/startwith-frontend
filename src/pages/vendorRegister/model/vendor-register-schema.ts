@@ -1,35 +1,40 @@
 import { z } from 'zod';
 
+const categoryEnum = z.enum([
+  'BI(데이터 시각화)',
+  'BPM(업무 자동화)',
+  'CSM(콘텐츠 관리 시스템)',
+  'CRM(고객 관계 관리)',
+  'DMS(문서 관리 시스템)',
+  'EAM(전사적 콘텐츠 관리)',
+  'ERP(전사적 자원 관리)',
+  'HR(성과 및 조직 관리)',
+  'HRM(인사운영 관리)',
+  'KM(지식 관리)',
+  'SCM(공급망 관리)',
+  'SI(시스템 통합 및 구축)',
+  '보안',
+]);
+
 export const vendorRegisterSchema = z.object({
   representImageUrl: z.instanceof(File),
   descriptionPdfUrl: z.instanceof(File),
   vendorSeq: z.number(),
   solutionName: z.string().min(1, '솔루션명 입력해주세요.'),
   solutionDetail: z.string().min(1, '솔루션 설명 입력해주세요.'),
-  category: z.enum([
-    'BI',
-    'BPM',
-    'CMS',
-    'CRM',
-    'DMS',
-    'EAM',
-    'ECM',
-    'ERP',
-    'HR',
-    'HRM',
-    'KM',
-    'SCM',
-    'SI',
-    'SECURITY',
-  ]),
+  category: z
+    .union([categoryEnum, z.literal('')])
+    .refine((value) => value !== '', {
+      message: '카테고리를 선택해주세요.',
+    }),
   industry: z.string().min(1, '산업 선택해주세요.'),
   recommendedCompanySize: z.array(z.string(), {
     required_error: '기업 규모 선택해주세요.',
   }),
   solutionImplementationType: z.string(),
   specialist: z.string(),
-  amount: z.number().min(1, '가격 입력해주세요.'),
-  duration: z.number().min(1, '기간 입력해주세요.'),
+  amount: z.string().min(1, '가격 입력해주세요.'),
+  duration: z.string().min(1, '기간 입력해주세요.'),
   solutionEffect: z.array(
     z.object({
       effectName: z.string().min(1, '효과명 입력해주세요.'),
