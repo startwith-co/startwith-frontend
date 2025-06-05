@@ -9,15 +9,18 @@ import VendorSaleInfo from '@/widgets/vendorRegister/ui/vendor-sale-info';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   VendorRegisterSchema,
   vendorRegisterSchema,
 } from '../model/vendor-register-schema';
 import vendorCategoryMapping from '../utils/vendor-category-mapping';
+import VendorSubmitModal from './vendor-submit-modal';
 
 export default function VendorRegisterPage() {
   const session = useSession();
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   const methods = useForm({
     resolver: zodResolver(vendorRegisterSchema),
@@ -76,6 +79,7 @@ export default function VendorRegisterPage() {
     await api.post(`api/solution-service/solution`, {
       body: formData,
     });
+    setOpenDialog(true);
   });
 
   return (
@@ -97,6 +101,10 @@ export default function VendorRegisterPage() {
           </Button>
         </div>
       </form>
+      <VendorSubmitModal
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+      />
     </FormProvider>
   );
 }

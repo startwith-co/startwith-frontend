@@ -6,6 +6,7 @@ import VendorSelect from '@/shared/ui/vendor-select';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { Button } from '@/shared/ui/button';
 import ErrorMessage from '@/shared/ui/error-message';
+import { Trash } from 'lucide-react';
 
 export default function VendorDetailInfo() {
   const {
@@ -15,7 +16,7 @@ export default function VendorDetailInfo() {
     formState: { errors },
   } = useFormContext();
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: 'solutionEffect',
   });
@@ -66,9 +67,9 @@ export default function VendorDetailInfo() {
         </li>
 
         {fields.map((field, index) => (
-          <li key={field.id} className="items-start!">
+          <li key={field.id} className="relative items-start!">
             <span>{`예상 도입 성과 ${index + 1}`}</span>
-            <div className="flex flex-col gap-[23px]">
+            <div className="relative flex flex-col items-center gap-[23px]">
               <Input
                 type="text"
                 className="bg-vendor-gray w-[220px] border-none text-center"
@@ -108,6 +109,14 @@ export default function VendorDetailInfo() {
                   )}
                 />
               </div>
+              <button
+                type="button"
+                onClick={() => remove(index)}
+                className="absolute top-0 right-[-30px] text-red-400 transition-colors hover:text-red-600"
+                aria-label={`예상 도입 성과 ${index + 1} 삭제`}
+              >
+                <Trash size={16} />
+              </button>
             </div>
           </li>
         ))}
