@@ -8,6 +8,7 @@ function useVerifyEmail(
   code: string,
   target: 'vendor' | 'user',
 ) {
+  console.log(email, code, target);
   const [emailVerified, setEmailVerified] = useState(false);
   async function verifyEmail() {
     try {
