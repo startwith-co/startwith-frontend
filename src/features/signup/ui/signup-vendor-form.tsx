@@ -60,17 +60,11 @@ function SignupVendorForm() {
   const [hasTriedConfirm, setHasTriedConfirm] = useState(false);
 
   const { timer, isCounting, handleSendEmail } = useSendEmail();
-
-  const email = watch('email');
-  const code = watch('code');
-
-  const isEmailValid = emailRegex.test(email);
-
-  const passValid = watch('password');
-  const isPassValid = passwordRegex.test(passValid);
-
-  const { emailVerified, verifyEmail } = useVerifyEmail(email, code, 'vendor');
-  const confirmValid = watch('confirmPassword');
+  const { emailVerified, verifyEmail } = useVerifyEmail(
+    watch('email'),
+    watch('code'),
+    'vendor',
+  );
 
   const handleConfirmClick = () => {
     setHasTriedConfirm(true);
@@ -95,7 +89,7 @@ function SignupVendorForm() {
       buttonProps="bg-gradient-to-r from-[#2D2D2D] to-[#404040] text-white w-full h-[60px] font-extrabold text-lg shadow-sm mb-8 mt-5"
       buttonName="솔루션 공급사로 파트너쉽 시작"
       loadingText="신청 중.."
-      disabled={!isValid || !matchSuccess || !emailVerified}
+      disabled={!isValid || !matchSuccess || !emailVerified || !file}
     >
       <div className="w-[700px] space-y-4">
         <div className="mb-0 grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
@@ -111,7 +105,7 @@ function SignupVendorForm() {
             id="file"
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept="application/pdf"
             className="hidden"
             onChange={handleFileChange}
           />
@@ -132,7 +126,7 @@ function SignupVendorForm() {
               </p>
             ) : (
               <p className="mt-1 truncate text-center text-[8px] text-gray-600">
-                파일을 첨부해주세요.
+                PDF 파일을 첨부해주세요.
               </p>
             )}
           </div>
@@ -155,6 +149,7 @@ function SignupVendorForm() {
         {errors.phoneNumber && (
           <ErrorMessage message={errors.phoneNumber.message} />
         )}
+
         <div className="mt-5 mb-0 grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
           <Input
             {...register('email')}
@@ -164,10 +159,10 @@ function SignupVendorForm() {
 
           <Button
             type="button"
-            disabled={isCounting || !isEmailValid}
+            disabled={isCounting || !emailRegex.test(watch('email'))}
             asChild={false}
             variant="textBlue"
-            onClick={() => handleSendEmail(email, 'vendor')}
+            onClick={() => handleSendEmail(watch('email'), 'vendor')}
             className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
           >
             {isCounting
@@ -176,6 +171,7 @@ function SignupVendorForm() {
           </Button>
         </div>
         {errors.email && <ErrorMessage message={errors.email.message} />}
+
         {isCounting && (
           <div className="mt-5 grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
             <Input
@@ -202,30 +198,36 @@ function SignupVendorForm() {
           className="mt-5 mb-0 h-[55px] w-full bg-white indent-2"
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
-      </div>
-      <div className="mb-0 grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
-        <Input
-          placeholder="비밀번호 확인"
-          className="h-[55px] w-full bg-white indent-2"
-          type="password"
-          {...register('confirmPassword')}
-        />
 
-        <Button
-          type="button"
-          asChild={false}
-          disabled={!isPassValid || confirmValid.length < 8}
-          variant="textBlue"
-          onClick={handleConfirmClick}
-          className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
-        >
-          비밀번호 확인하기
-          {matchSuccess && <CheckCircle className="h-5 w-5 text-green-500" />}
-        </Button>
+        <div className="mt-5 mb-0 grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
+          <Input
+            placeholder="비밀번호 확인"
+            className="h-[55px] w-full bg-white indent-2"
+            type="password"
+            {...register('confirmPassword')}
+          />
+
+          <Button
+            type="button"
+            asChild={false}
+            disabled={
+              !passwordRegex.test(watch('password')) ||
+              watch('confirmPassword').length < 8
+            }
+            variant="textBlue"
+            onClick={handleConfirmClick}
+            className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
+          >
+            비밀번호 확인하기
+            {matchSuccess && (
+              <CheckCircle className="ml-1 h-5 w-5 text-green-500" />
+            )}
+          </Button>
+        </div>
+        {hasTriedConfirm && !matchSuccess && (
+          <ErrorMessage message="비밀번호를 다시 확인해주세요." />
+        )}
       </div>
-      {hasTriedConfirm && !matchSuccess && (
-        <ErrorMessage message="비밀번호를 다시 확인해주세요." />
-      )}
     </SignupForm>
   );
 }
