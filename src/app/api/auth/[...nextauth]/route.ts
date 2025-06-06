@@ -3,7 +3,12 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import ky from 'ky';
 import { LoginResponse } from '@/features/login/model/loginType';
 
-const { auth, handlers, signIn, signOut } = nextAuth({
+export const {
+  auth,
+  handlers: { GET, POST },
+  signIn,
+  signOut,
+} = nextAuth({
   secret: '1004',
   providers: [
     CredentialsProvider({
@@ -95,5 +100,3 @@ const { auth, handlers, signIn, signOut } = nextAuth({
     },
   },
 });
-
-export const { GET, POST } = handlers;

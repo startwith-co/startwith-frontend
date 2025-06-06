@@ -3,47 +3,57 @@
 import { ChangeEvent, useState } from 'react';
 import cn from '@/shared/lib/utils';
 
-export default function VendorDropInput({ title }: { title: string }) {
-  const [dragOver, setDragOver] = useState<boolean>(false);
+interface VendorDropInputProps {
+  title: string;
+  accept?: string[]; // 배열로 받음
+  onChange: (file: File | null) => void;
+}
+
+export default function VendorDropInput({
+  title,
+  accept,
+  onChange,
+}: VendorDropInputProps) {
+  const [dragOver, setDragOver] = useState(false);
   const [file, setFile] = useState<File | null>(null);
 
+  const isAcceptedFile = (newFile: File) => {
+    if (!accept) return true;
+    return accept.some((type) => {
+      if (type.startsWith('.')) return newFile.name.endsWith(type);
+      if (type.endsWith('/*'))
+        return newFile.type.startsWith(type.replace('/*', ''));
+      return newFile.type === type;
+    });
+  };
+
   const handleFileSelect = (newFile: File | null) => {
+    if (newFile && !isAcceptedFile(newFile)) {
+      alert('허용되지 않는 파일 형식입니다.');
+    }
     setFile(newFile);
+    onChange(newFile);
   };
 
-  // 드래그 중인 요소가 목표 지점 진입할때
-  const handleDragEnter = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDrag = (
+    e: React.DragEvent<HTMLLabelElement>,
+    isOver: boolean,
+  ) => {
     e.preventDefault();
     e.stopPropagation();
-    setDragOver(true);
+    setDragOver(isOver);
   };
 
-  // 드래그 중인 요소가 목표 지점을 벗어날때
-  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragOver(false);
-  };
-
-  // 드래그 중인 요소가 목표 지점에 위치할때
-  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  // 드래그 중인 요소가 목표 지점에서 드롭될때
   const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setDragOver(false);
-    if (e.dataTransfer) {
-      const newFile = e.dataTransfer.files[0];
-      handleFileSelect(newFile);
-    }
+    const newFile = e.dataTransfer?.files[0];
+    handleFileSelect(newFile ?? null);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newFile = e.target.files ? e.target.files[0] : null;
+    const newFile = e.target.files?.[0] ?? null;
     handleFileSelect(newFile);
     e.target.value = '';
   };
@@ -54,15 +64,20 @@ export default function VendorDropInput({ title }: { title: string }) {
         'bg-vendor-gray flex h-[165px] w-[219px] cursor-pointer flex-col items-center justify-center rounded-md',
         dragOver && 'bg-[#404040]',
       )}
-      onDragEnter={handleDragEnter}
-      onDragLeave={handleDragLeave}
-      onDragOver={handleDragOver}
+      onDragEnter={(e) => handleDrag(e, true)}
+      onDragLeave={(e) => handleDrag(e, false)}
+      onDragOver={(e) => handleDrag(e, true)}
       onDrop={handleDrop}
     >
       <span className="text-5xl">+</span>
       <span>{title}</span>
       <span className="text-xs text-[#BDBDBD]">(최대 1개)</span>
-      <input type="file" className="hidden" onChange={handleChange} />
+      <input
+        type="file"
+        className="hidden"
+        accept={accept?.join(',')}
+        onChange={handleChange}
+      />
       <span>{file?.name}</span>
     </label>
   );

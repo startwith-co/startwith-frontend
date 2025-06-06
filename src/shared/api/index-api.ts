@@ -5,9 +5,6 @@ import { getErrorDataFromKyError } from '../lib/error-handler';
 
 const api = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
   hooks: {
     beforeRequest: [
       async (req) => {
@@ -17,6 +14,7 @@ const api = ky.create({
         }
       },
     ],
+
     beforeError: [
       async (error) => {
         if (error instanceof HTTPError) {
@@ -41,6 +39,7 @@ const api = ky.create({
           // }
 
           // 일반적인 오류 처리
+
           const errorData = await getErrorDataFromKyError(error);
           toast.error(`[${errorData.code}] ${errorData.message}`);
         } else {
