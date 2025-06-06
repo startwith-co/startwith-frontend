@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Star } from 'lucide-react';
 import SubmitCustomButton from '@/shared/ui/submit-custom-button';
 import CustomModal from '@/shared/ui/custommodal';
+import api from '@/shared/api/index-api';
+import { useSession } from 'next-auth/react';
 
 export default function ReviewModal({
   open,
@@ -14,10 +16,21 @@ export default function ReviewModal({
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState<number | null>(null);
   const [text, setText] = useState('');
-
+  const solutionSeq = 8;
   const maxChars = 500;
-
-  const handleSubmit = () => {
+  const { data: session } = useSession();
+  const handleSubmit = async () => {
+    await api.post(`api/solution-service/review`, {
+      body: JSON.stringify({
+        star: rating,
+        comment: text,
+        consumerSeq: session?.consumerSeq,
+        solutionSeq,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     toast.success(`제출 완료\n별점: ${rating}점\n내용: ${text}`);
     setOpen(false);
     setRating(0);

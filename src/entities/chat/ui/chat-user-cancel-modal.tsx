@@ -16,7 +16,6 @@ export default function ChatUserCancelModal({
 }: ChatUserCancelModalProps) {
   const { solutionName, solutionPrice, solutionCategory } = useSolution();
 
-  console.log(solutionName, solutionPrice, solutionCategory);
   const { vendorId, vendorName, userId, userName } = useChatMeta();
 
   const onCancelPayment = useCallback(async () => {
