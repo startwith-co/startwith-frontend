@@ -27,18 +27,18 @@ function EditVendorInfo() {
         className="absolute top-27 left-25 z-10"
       />
       <div>
-        <label htmlFor="company" className="text-sm">
+        <label htmlFor="vendorName" className="text-sm">
           기업명(사업자명)<span className="text-red-500">*</span>
           <Input
-            id="company"
+            id="vendorName"
             type="string"
-            {...register('company')}
-            name="company"
+            {...register('vendorName')}
+            name="vendorName"
             className="bg-vendor-gray mt-2 mb-2 h-[40px] indent-2"
           />
         </label>
-        {errors.company && (
-          <p className="text-sm text-red-500">{`${errors.company.message}`}</p>
+        {errors.vendorName && (
+          <p className="text-sm text-red-500">{`${errors.vendorName.message}`}</p>
         )}
       </div>
       <div>
@@ -89,18 +89,18 @@ function EditVendorInfo() {
         )}
       </div>
       <div>
-        <label htmlFor="bankName" className="text-sm">
+        <label htmlFor="bank" className="text-sm">
           은행명<span className="text-red-500">*</span>
           <Input
-            id="bankName"
+            id="bank"
             type="string"
-            {...register('bankName')}
-            name="bankName"
+            {...register('bank')}
+            name="bank"
             className="bg-vendor-gray mt-2 h-[40px] indent-2"
           />
         </label>
-        {errors.bankName && (
-          <p className="text-sm text-red-500">{`${errors.bankName.message}`}</p>
+        {errors.bank && (
+          <p className="text-sm text-red-500">{`${errors.bank.message}`}</p>
         )}
       </div>
       <Button

@@ -1,7 +1,7 @@
 'use server';
 
 import serverApi from '@/shared/api/server-api';
-import { ApiResponse } from '@/shared/model/apiType';
+import { revalidateTag } from 'next/cache';
 import { VendorUpdateSchema } from '../model/vendor-update-schema';
 
 export default async function updateVendorInfo(data: VendorUpdateSchema) {
@@ -35,11 +35,10 @@ export default async function updateVendorInfo(data: VendorUpdateSchema) {
     new Blob([JSON.stringify(jsonPart)], { type: 'application/json' }),
   );
 
-  const response = await serverApi
-    .put<ApiResponse<VendorUpdateSchema>>(`api/b2b-service/vendor`, {
+  await serverApi
+    .put(`api/b2b-service/vendor`, {
       body: formData,
     })
     .json();
-
-  return response.data;
+  revalidateTag(`vendorInfo-${data.vendorSeq}`);
 }

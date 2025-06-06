@@ -1,10 +1,3 @@
-interface VendorTimeProps {
-  hour: number;
-  minute: number;
-  second: number;
-  nano: number;
-}
-
 export interface VendorInfoProps {
   vendorSeq: number;
   vendorName: string | null;
@@ -17,14 +10,14 @@ export interface VendorInfoProps {
   vendorExplanation: string | null;
   vendorBannerImageUrl: string | null;
   weekdayAvailable: boolean;
-  weekdayStartTime: VendorTimeProps | null;
-  weekdayEndTime: VendorTimeProps | null;
+  weekdayStartTime: string | null;
+  weekdayEndTime: string | null;
   weekendAvailable: boolean;
-  weekendStartTime: VendorTimeProps | null;
-  weekendEndTime: VendorTimeProps | null;
+  weekendStartTime: string | null;
+  weekendEndTime: string | null;
   holidayAvailable: boolean;
-  holidayStartTime: VendorTimeProps | null;
-  holidayEndTime: VendorTimeProps | null;
+  holidayStartTime: string | null;
+  holidayEndTime: string | null;
   orderCount: number | null;
   clientCount: number | null;
   vendorUniqueType: string;

@@ -1,7 +1,6 @@
 'use client';
 
 import EditVendorInfo from '@/features/vendorMy/ui/edit-vendor-info';
-import Image from 'next/image';
 import EditVendorTextArea from '@/features/vendorMy/ui/edit-vendor-text-area';
 import VendorTimeSetting from '@/widgets/vendorMy/ui/vendor-time-setting';
 import VendorUploadBanner from '@/widgets/vendorMy/ui/vendor-upload-banner';
@@ -10,8 +9,13 @@ import VendorUploadLogo from '@/widgets/vendorMy/ui/vendor-upload-logo';
 import VendorCustomerOverview from '@/widgets/vendorMy/ui/vendor-customer-overview';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { vendorUpdateSchema } from '../model/vendor-update-schema';
+import { toast } from 'react-toastify';
+import {
+  VendorUpdateSchema,
+  vendorUpdateSchema,
+} from '../model/vendor-update-schema';
 import { VendorInfoProps } from '../model/type';
+import updateVendorInfo from '../api/updateVendorInfo';
 
 function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
   const methods = useForm({
@@ -25,58 +29,34 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
       email: vendorInfo?.email || '',
       audit: vendorInfo?.audit || true,
       accountNumber: vendorInfo?.accountNumber || '',
-      bank: vendorInfo?.bank || 'string',
-      vendorExplanation: vendorInfo?.vendorExplanation || 'string',
-      weekdayAvailable: vendorInfo?.weekdayAvailable || true,
-      weekdayStartTime: {
-        hour: vendorInfo?.weekdayStartTime?.hour || 0,
-        minute: vendorInfo?.weekdayStartTime?.minute || 0,
-        second: vendorInfo?.weekdayStartTime?.second || 0,
-        nano: vendorInfo?.weekdayStartTime?.nano || 0,
-      },
-      weekdayEndTime: {
-        hour: vendorInfo?.weekdayEndTime?.hour || 0,
-        minute: vendorInfo?.weekdayEndTime?.minute || 0,
-        second: vendorInfo?.weekdayEndTime?.second || 0,
-        nano: vendorInfo?.weekdayEndTime?.nano || 0,
-      },
-      weekendAvailable: vendorInfo?.weekendAvailable || true,
-      weekendStartTime: {
-        hour: vendorInfo?.weekendStartTime?.hour || 0,
-        minute: vendorInfo?.weekendStartTime?.minute || 0,
-        second: vendorInfo?.weekendStartTime?.second || 0,
-        nano: vendorInfo?.weekendStartTime?.nano || 0,
-      },
-      weekendEndTime: {
-        hour: vendorInfo?.weekendEndTime?.hour || 0,
-        minute: vendorInfo?.weekendEndTime?.minute || 0,
-        second: vendorInfo?.weekendEndTime?.second || 0,
-        nano: vendorInfo?.weekendEndTime?.nano || 0,
-      },
-      holidayAvailable: vendorInfo?.holidayAvailable || true,
-      holidayStartTime: {
-        hour: vendorInfo?.holidayStartTime?.hour || 0,
-        minute: vendorInfo?.holidayStartTime?.minute || 0,
-        second: vendorInfo?.holidayStartTime?.second || 0,
-        nano: vendorInfo?.holidayStartTime?.nano || 0,
-      },
-      holidayEndTime: {
-        hour: vendorInfo?.holidayEndTime?.hour || 0,
-        minute: vendorInfo?.holidayEndTime?.minute || 0,
-        second: vendorInfo?.holidayEndTime?.second || 0,
-        nano: vendorInfo?.holidayEndTime?.nano || 0,
-      },
+      bank: vendorInfo?.bank || '',
+      vendorExplanation: vendorInfo?.vendorExplanation || '',
+      weekdayAvailable: vendorInfo?.weekdayAvailable,
+      weekdayStartTime: vendorInfo?.weekdayStartTime || '00:00:00',
+      weekdayEndTime: vendorInfo?.weekdayEndTime || '23:59:59',
+      weekendAvailable: vendorInfo?.weekendAvailable,
+      weekendStartTime: vendorInfo?.weekendStartTime || '00:00:00',
+      weekendEndTime: vendorInfo?.weekendEndTime || '23:59:59',
+      holidayAvailable: vendorInfo?.holidayAvailable,
+      holidayStartTime: vendorInfo?.holidayStartTime || '00:00:00',
+      holidayEndTime: vendorInfo?.holidayEndTime || '23:59:59',
       orderCount: vendorInfo?.orderCount || 0,
       clientCount: vendorInfo?.clientCount || 0,
     },
   });
 
+  const onSubmit = async (data: VendorUpdateSchema) => {
+    try {
+      await updateVendorInfo(data);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit((data) => {
-          console.log(data);
-        })}
+        onSubmit={methods.handleSubmit(onSubmit)}
         className="flex flex-col gap-7.5 pr-10"
       >
         <div className="grid grid-cols-2 gap-7.5">
