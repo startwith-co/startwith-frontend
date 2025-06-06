@@ -60,7 +60,7 @@ export const vendorRegisterSchema = z.object({
       z.object({
         effectName: z.string().min(1, '효과명 입력해주세요.'),
         percent: z.number().min(1, '퍼센트 입력해주세요.'),
-        direction: z.enum(['INCREASE', 'DECREASE']).default('INCREASE'),
+        direction: z.enum(['INCREASE', 'DECREASE']),
       }),
     )
     .min(1, '도입 성과를 추가해주세요.'),

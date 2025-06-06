@@ -129,7 +129,7 @@ export default function VendorDetailInfo() {
             variant="ghost"
             className="bg-vendor-gray w-[220px] text-center hover:text-white"
             onClick={() =>
-              append({ effectName: '', percent: '', direction: '' })
+              append({ effectName: '', percent: '', direction: 'INCREASE' })
             }
           >
             +

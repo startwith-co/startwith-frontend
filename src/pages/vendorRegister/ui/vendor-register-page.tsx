@@ -9,7 +9,7 @@ import VendorSaleInfo from '@/widgets/vendorRegister/ui/vendor-sale-info';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   VendorRegisterSchema,
   vendorRegisterSchema,
@@ -27,7 +27,7 @@ export default function VendorRegisterPage() {
     defaultValues: {
       representImageUrl: new File([], ''),
       descriptionPdfUrl: new File([], ''),
-      vendorSeq: 1,
+      vendorSeq: session.data?.vendorSeq || 0,
       solutionName: '',
       solutionDetail: '',
       category: '',
@@ -42,15 +42,6 @@ export default function VendorRegisterPage() {
     },
   });
 
-  useEffect(() => {
-    if (session.status === 'authenticated' && session.data?.vendorSeq) {
-      methods.reset({
-        ...methods.getValues(),
-        vendorSeq: session.data.vendorSeq,
-      });
-    }
-  }, [session, methods]);
-
   const onSubmit = methods.handleSubmit(async (data: VendorRegisterSchema) => {
     const formData = new FormData();
 
@@ -58,7 +49,7 @@ export default function VendorRegisterPage() {
     formData.append('descriptionPdfUrl', data.descriptionPdfUrl);
 
     const jsonPart = {
-      vendorSeq: methods.getValues('vendorSeq'),
+      vendorSeq: session.data?.vendorSeq || 0,
       solutionName: data.solutionName,
       solutionDetail: data.solutionDetail,
       category: vendorCategoryMapping(data.category),
