@@ -6,7 +6,7 @@ import VendorSelect from '@/shared/ui/vendor-select';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { Button } from '@/shared/ui/button';
 import ErrorMessage from '@/shared/ui/error-message';
-import { Trash } from 'lucide-react';
+import { CircleX } from 'lucide-react';
 
 export default function VendorDetailInfo() {
   const {
@@ -112,10 +112,10 @@ export default function VendorDetailInfo() {
               <button
                 type="button"
                 onClick={() => remove(index)}
-                className="absolute top-0 right-[-30px] text-red-400 transition-colors hover:text-red-600"
+                className="text-vendor-secondary absolute top-2.5 right-[-30px]"
                 aria-label={`예상 도입 성과 ${index + 1} 삭제`}
               >
-                <Trash size={16} />
+                <CircleX size={16} />
               </button>
             </div>
           </li>
