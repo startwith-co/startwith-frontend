@@ -1,6 +1,5 @@
 'use client';
 
-import api from '@/shared/api/index-api';
 import { Button } from '@/shared/ui/button';
 import VendorDetailInfo from '@/widgets/vendorRegister/ui/vendor-detail-info';
 import VendorKeyword from '@/widgets/vendorRegister/ui/vendor-keyword';
@@ -10,12 +9,13 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import {
   VendorRegisterSchema,
   vendorRegisterSchema,
 } from '../model/vendor-register-schema';
-import vendorCategoryMapping from '../utils/vendor-category-mapping';
 import VendorSubmitModal from './vendor-submit-modal';
+import registerSolution from '../api/register-solution';
 
 export default function VendorRegisterPage() {
   const session = useSession();
@@ -42,40 +42,21 @@ export default function VendorRegisterPage() {
     },
   });
 
-  const onSubmit = methods.handleSubmit(async (data: VendorRegisterSchema) => {
-    const formData = new FormData();
-
-    formData.append('representImageUrl', data.representImageUrl);
-    formData.append('descriptionPdfUrl', data.descriptionPdfUrl);
-
-    const jsonPart = {
-      vendorSeq: session.data?.vendorSeq || 0,
-      solutionName: data.solutionName,
-      solutionDetail: data.solutionDetail,
-      category: vendorCategoryMapping(data.category),
-      industry: data.industry,
-      recommendedCompanySize: data.recommendedCompanySize.join(','),
-      solutionImplementationType: data.solutionImplementationType,
-      specialist: data.specialist,
-      amount: Number(data.amount),
-      duration: Number(data.duration),
-      solutionEffect: data.solutionEffect,
-      keyword: data.keyword,
-    };
-    formData.append(
-      'request',
-      new Blob([JSON.stringify(jsonPart)], { type: 'application/json' }),
-    );
-
-    await api.post(`api/solution-service/solution`, {
-      body: formData,
-    });
-    setOpenDialog(true);
-  });
+  const onSubmit = async (data: VendorRegisterSchema) => {
+    try {
+      await registerSolution(data);
+      setOpenDialog(true);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <FormProvider {...methods}>
-      <form className="flex w-full flex-col gap-7.5 pr-10" onSubmit={onSubmit}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="flex w-full flex-col gap-7.5 pr-10"
+      >
         <VendorNormalInfo />
         <VendorSaleInfo />
         <VendorDetailInfo />
