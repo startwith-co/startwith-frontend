@@ -5,9 +5,14 @@ import { Button } from '@/shared/ui/button';
 import Input from '@/shared/ui/input';
 import { useFormContext, Controller } from 'react-hook-form';
 import cn from '@/shared/lib/utils';
+import { formatTime, deformatTime } from '../utils/formatTime';
 
 export default function VendorTimeSetting() {
-  const { control, getValues, register } = useFormContext();
+  const { control, watch } = useFormContext();
+
+  const weekdayAvailable = watch('weekdayAvailable');
+  const weekendAvailable = watch('weekendAvailable');
+  const holidayAvailable = watch('holidayAvailable');
 
   return (
     <div className="rounded-md bg-white p-8 shadow-md">
@@ -23,7 +28,7 @@ export default function VendorTimeSetting() {
                 asChild={false}
                 className={cn(
                   'bg-vendor-gray text-vendor-secondary h-15 min-w-[60px] border-none text-center',
-                  getValues('weekdayAvailable') ? 'bg-primary text-white' : '',
+                  weekdayAvailable ? 'bg-primary text-white' : '',
                 )}
                 onClick={() => field.onChange(!field.value)}
                 type="button"
@@ -34,16 +39,32 @@ export default function VendorTimeSetting() {
           />
 
           <div className="flex items-center gap-1">
-            <Input
-              placeholder="09시"
-              className="bg-vendor-gray h-15 w-[80px] border-none text-center"
-              {...register('weekdayStartTime')}
+            <Controller
+              control={control}
+              name="weekdayStartTime"
+              render={({ field }) => (
+                <Input
+                  value={formatTime(field.value)}
+                  onChange={(e) => field.onChange(deformatTime(e.target.value))}
+                  placeholder="09시"
+                  className="bg-vendor-gray h-15 w-[80px] border-none text-center"
+                  disabled={!weekdayAvailable}
+                />
+              )}
             />
             <span className="mx-1">~</span>
-            <Input
-              placeholder="18시"
-              className="bg-vendor-gray h-15 w-[80px] border-none text-center"
-              {...register('weekdayEndTime')}
+            <Controller
+              control={control}
+              name="weekdayEndTime"
+              render={({ field }) => (
+                <Input
+                  value={formatTime(field.value)}
+                  onChange={(e) => field.onChange(deformatTime(e.target.value))}
+                  placeholder="18시"
+                  className="bg-vendor-gray h-15 w-[80px] border-none text-center"
+                  disabled={!weekdayAvailable}
+                />
+              )}
             />
           </div>
         </div>
@@ -56,7 +77,7 @@ export default function VendorTimeSetting() {
                 asChild={false}
                 className={cn(
                   'bg-vendor-gray text-vendor-secondary h-15 min-w-[60px] border-none text-center',
-                  getValues('weekendAvailable') ? 'bg-primary text-white' : '',
+                  weekendAvailable ? 'bg-primary text-white' : '',
                 )}
                 onClick={() => field.onChange(!field.value)}
                 type="button"
@@ -66,16 +87,32 @@ export default function VendorTimeSetting() {
             )}
           />
           <div className="flex items-center gap-1">
-            <Input
-              placeholder="09시"
-              className="bg-vendor-gray h-15 w-[80px] border-none text-center"
-              {...register('weekendStartTime')}
+            <Controller
+              control={control}
+              name="weekendStartTime"
+              render={({ field }) => (
+                <Input
+                  value={formatTime(field.value)}
+                  onChange={(e) => field.onChange(deformatTime(e.target.value))}
+                  placeholder="09시"
+                  className="bg-vendor-gray h-15 w-[80px] border-none text-center"
+                  disabled={!weekendAvailable}
+                />
+              )}
             />
             <span className="mx-1">~</span>
-            <Input
-              placeholder="18시"
-              className="bg-vendor-gray h-15 w-[80px] border-none text-center"
-              {...register('weekendEndTime')}
+            <Controller
+              control={control}
+              name="weekendEndTime"
+              render={({ field }) => (
+                <Input
+                  value={formatTime(field.value)}
+                  onChange={(e) => field.onChange(deformatTime(e.target.value))}
+                  placeholder="18시"
+                  className="bg-vendor-gray h-15 w-[80px] border-none text-center"
+                  disabled={!weekendAvailable}
+                />
+              )}
             />
           </div>
         </div>
@@ -89,7 +126,7 @@ export default function VendorTimeSetting() {
                 className={cn(
                   'bg-vendor-gray text-vendor-secondary h-15 min-w-[60px] border-none text-center',
                   {
-                    'bg-primary text-white': getValues('holidayAvailable'),
+                    'bg-primary text-white': holidayAvailable,
                   },
                 )}
                 onClick={() => field.onChange(!field.value)}
@@ -100,16 +137,32 @@ export default function VendorTimeSetting() {
             )}
           />
           <div className="flex items-center gap-1">
-            <Input
-              placeholder="09시"
-              className="bg-vendor-gray h-15 w-[80px] border-none text-center"
-              {...register('holidayStartTime')}
+            <Controller
+              control={control}
+              name="holidayStartTime"
+              render={({ field }) => (
+                <Input
+                  value={formatTime(field.value)}
+                  onChange={(e) => field.onChange(deformatTime(e.target.value))}
+                  placeholder="09시"
+                  className="bg-vendor-gray h-15 w-[80px] border-none text-center"
+                  disabled={!holidayAvailable}
+                />
+              )}
             />
             <span className="mx-1">~</span>
-            <Input
-              placeholder="18시"
-              className="bg-vendor-gray h-15 w-[80px] border-none text-center"
-              {...register('holidayEndTime')}
+            <Controller
+              control={control}
+              name="holidayEndTime"
+              render={({ field }) => (
+                <Input
+                  value={formatTime(field.value)}
+                  onChange={(e) => field.onChange(deformatTime(e.target.value))}
+                  placeholder="18시"
+                  className="bg-vendor-gray h-15 w-[80px] border-none text-center"
+                  disabled={!holidayAvailable}
+                />
+              )}
             />
           </div>
         </div>

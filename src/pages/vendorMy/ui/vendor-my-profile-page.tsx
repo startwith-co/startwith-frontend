@@ -66,7 +66,6 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
           <EditVendorTextArea />
         </div>
         <div className="grid grid-cols-[1fr_2fr] gap-7.5">
-          {/* TODO: 시간, 분 단위만 세팅할 수 있게, 박스 클릭시 활성화 되게 */}
           <VendorTimeSetting />
           <VendorUploadBanner />
           <VendorTotalSetting />
