@@ -96,22 +96,54 @@ export default function VendorNormalInfo() {
           <Controller
             control={control}
             name="industry"
-            render={({ field }) => (
-              <>
-                <VendorSelect
-                  options={industryCategory}
-                  placeholder="산업군 카테고리 선택"
-                  triggerClassName="w-[220px] h-[40px]"
-                  {...field}
-                />
-                {errors.industry && (
-                  <ErrorMessage
-                    message={`${errors.industry.message}`}
-                    className="ml-5"
+            render={({ field }) => {
+              const selected = field.value?.split(',').filter(Boolean) || [];
+              const toggleItem = (item: string) => {
+                const newSelected = selected.includes(item)
+                  ? selected.filter((i: string) => i !== item)
+                  : [...selected, item];
+                field.onChange(newSelected.join(','));
+              };
+
+              const removeItem = (item: string) => {
+                const filtered = selected.filter((i: string) => i !== item);
+                field.onChange(filtered.join(','));
+              };
+
+              return (
+                <div className="flex items-center">
+                  <VendorSelect
+                    options={industryCategory}
+                    placeholder="산업군 카테고리 선택"
+                    triggerClassName="w-[220px] h-[40px]"
+                    onChange={(val: string) => toggleItem(val)}
                   />
-                )}
-              </>
-            )}
+                  {selected.length > 0 && (
+                    <div className="flex">
+                      {selected.map((item: string) => (
+                        <button
+                          key={item}
+                          type="button"
+                          onClick={() => removeItem(item)}
+                          className="bg-vendor-gray hover:bg-primary ml-5 h-[40px] rounded-md px-2 py-1 text-xs hover:text-white"
+                        >
+                          {item}
+                          <span className="text-vendor-secondary ml-2 text-xs font-extrabold">
+                            ✕
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {errors.industry && (
+                    <ErrorMessage
+                      message={`${errors.industry.message}`}
+                      className="ml-5"
+                    />
+                  )}
+                </div>
+              );
+            }}
           />
         </li>
         <li>

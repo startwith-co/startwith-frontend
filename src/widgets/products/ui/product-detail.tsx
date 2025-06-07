@@ -71,14 +71,16 @@ export default function ProductDetail({
       </div>
       <div className="mt-12.5 flex flex-col gap-5">
         <span className="text-xl font-semibold">솔루션 도입 가능 산업군</span>
-        {industry.map((item) => (
-          <div
-            key={item}
-            className="text-primary flex h-[85px] w-[130px] items-center justify-center gap-3.5 rounded-md bg-white p-4 shadow-md"
-          >
-            <span className="text-lg font-semibold">{item}</span>
-          </div>
-        ))}
+        <div className="flex gap-5">
+          {industry.map((item) => (
+            <div
+              key={item}
+              className="item-center text-primary flex h-[85px] w-[130px] items-center justify-center gap-3.5 rounded-md bg-white p-4 shadow-md"
+            >
+              <span className="text-center text-lg font-semibold">{item}</span>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="mt-12.5 flex flex-col gap-5">
         <span className="text-xl font-semibold">
