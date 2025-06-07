@@ -8,7 +8,7 @@ import Image from 'next/image';
 function EditVendorInfo() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useFormContext();
   return (
     <div className="relative flex flex-col justify-between rounded-xl bg-white p-8 shadow-md">
@@ -108,8 +108,9 @@ function EditVendorInfo() {
         className="bg-vendor-gray mt-5 h-[40px] w-[185px] self-center font-bold text-black hover:bg-[#3c62d6] hover:text-white"
         onClick={() => {}}
         type="submit"
+        disabled={!isDirty}
       >
-        수정하기
+        수정 완료
       </Button>
     </div>
   );

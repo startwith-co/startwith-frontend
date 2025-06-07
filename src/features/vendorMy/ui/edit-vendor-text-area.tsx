@@ -27,7 +27,7 @@ function EditVendorTextArea() {
           className="bg-vendor-gray h-[40px] w-[185px] font-bold text-black hover:bg-[#3c62d6] hover:text-white"
           type="submit"
         >
-          수정하기
+          수정 완료
         </Button>
       </div>
     </div>

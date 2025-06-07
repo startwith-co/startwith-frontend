@@ -1,10 +1,11 @@
 export function formatTime(value?: string) {
   if (!value) return '';
-  const [hour, minute] = value.split(':');
+  const newValue = value.slice(0, 5);
+  const [hour, minute] = newValue.split(':');
   return `${hour}:${minute}`;
 }
 
 export function deformatTime(value?: string) {
-  if (!value) return '';
+  if (!value) return '00:00:00';
   return `${value}:00`;
 }

@@ -5,10 +5,15 @@ import { Button } from '@/shared/ui/button';
 import Input from '@/shared/ui/input';
 import { useFormContext, Controller } from 'react-hook-form';
 import cn from '@/shared/lib/utils';
+import ErrorMessage from '@/shared/ui/error-message';
 import { formatTime, deformatTime } from '../utils/formatTime';
 
 export default function VendorTimeSetting() {
-  const { control, watch } = useFormContext();
+  const {
+    control,
+    watch,
+    formState: { errors },
+  } = useFormContext();
 
   const weekdayAvailable = watch('weekdayAvailable');
   const weekendAvailable = watch('weekendAvailable');
@@ -17,6 +22,18 @@ export default function VendorTimeSetting() {
   return (
     <div className="rounded-md bg-white p-8 shadow-md">
       <h2 className="mb-4 font-semibold">상담가능 요일 및 시간 설정</h2>
+      <ErrorMessage
+        message={
+          errors.weekdayStartTime?.message?.toString() ||
+          errors.weekdayEndTime?.message?.toString() ||
+          errors.weekendStartTime?.message?.toString() ||
+          errors.weekendEndTime?.message?.toString() ||
+          errors.holidayStartTime?.message?.toString() ||
+          errors.holidayEndTime?.message?.toString() ||
+          ''
+        }
+        className="mb-5"
+      />
 
       <div className="mb-10 flex flex-col gap-5">
         <div className="grid grid-cols-2 items-center gap-5">
