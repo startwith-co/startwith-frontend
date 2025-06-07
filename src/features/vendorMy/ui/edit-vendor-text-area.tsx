@@ -4,7 +4,7 @@ import { Button } from '@/shared/ui/button';
 import { useFormContext } from 'react-hook-form';
 
 function EditVendorTextArea() {
-  const { register, resetField } = useFormContext();
+  const { register, setValue } = useFormContext();
 
   return (
     <div className="relative h-full rounded-2xl bg-white p-8 shadow-md">
@@ -17,7 +17,7 @@ function EditVendorTextArea() {
         <Button
           asChild={false}
           className="bg-vendor-gray h-[40px] w-[185px] font-bold text-black hover:bg-[#3c62d6] hover:text-white"
-          onClick={() => resetField('vendorExplanation')}
+          onClick={() => setValue('vendorExplanation', '')}
           type="button"
         >
           초기화

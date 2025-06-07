@@ -18,6 +18,7 @@ import { VendorInfoProps } from '../model/type';
 import updateVendorInfo from '../api/updateVendorInfo';
 
 function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
+  // TODO: vendorBannerIamgeUrl 파일로 안받고 오니 수정할때마다 파일 업로드를 하지 않으면 빈 파일로 대체되버림.
   const methods = useForm({
     resolver: zodResolver(vendorUpdateSchema),
     defaultValues: {
@@ -48,6 +49,7 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
   const onSubmit = async (data: VendorUpdateSchema) => {
     try {
       await updateVendorInfo(data);
+      toast.success('수정이 완료되었습니다.');
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -64,6 +66,7 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
           <EditVendorTextArea />
         </div>
         <div className="grid grid-cols-[1fr_2fr] gap-7.5">
+          {/* TODO: 시간, 분 단위만 세팅할 수 있게, 박스 클릭시 활성화 되게 */}
           <VendorTimeSetting />
           <VendorUploadBanner />
           <VendorTotalSetting />
