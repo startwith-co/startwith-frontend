@@ -7,12 +7,14 @@ interface VendorDropInputProps {
   title: string;
   accept?: string[]; // 배열로 받음
   onChange: (file: File | null) => void;
+  className?: string;
 }
 
 export default function VendorDropInput({
   title,
   accept,
   onChange,
+  className,
 }: VendorDropInputProps) {
   const [dragOver, setDragOver] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -61,8 +63,9 @@ export default function VendorDropInput({
   return (
     <label
       className={cn(
-        'bg-vendor-gray flex h-[165px] w-[219px] cursor-pointer flex-col items-center justify-center rounded-md',
+        'bg-vendor-gray flex cursor-pointer flex-col items-center justify-center rounded-md',
         dragOver && 'bg-[#404040]',
+        className,
       )}
       onDragEnter={(e) => handleDrag(e, true)}
       onDragLeave={(e) => handleDrag(e, false)}

@@ -16,3 +16,8 @@ export interface SolutionDetailProps {
   recommendedCompanySize: string[];
   solutionEffect: SolutionEffectProps[];
 }
+
+export interface VendorCategoryProps {
+  solutionSeq: number;
+  category: string;
+}

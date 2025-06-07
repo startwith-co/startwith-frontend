@@ -2,7 +2,10 @@ import InquireCard from '@/widgets/products/ui/inquire-card';
 import ProductChart from '@/widgets/products/ui/product-chart';
 import ProductDetail from '@/widgets/products/ui/product-detail';
 import Image from 'next/image';
+import VendorInfo from '@/widgets/products/ui/vendor-info';
+import getVendorInfo from '@/pages/vendorMy/api/getVendorInfo';
 import getSolution from '../api/getSolution';
+import getVendorCategory from '../api/getVendorCategory';
 
 export default async function ProductsDetailPage({
   vendorSeq,
@@ -11,21 +14,31 @@ export default async function ProductsDetailPage({
   vendorSeq: string;
   category: string;
 }) {
-  const solution = await getSolution(vendorSeq, category);
+  const [solution, vendorInfo, vendorCategory] = await Promise.all([
+    getSolution(vendorSeq, category),
+    getVendorInfo(Number(vendorSeq)),
+    getVendorCategory(vendorSeq),
+  ]);
 
   return (
     <div className="mt-10 mb-72">
       <Image
-        src={solution.representImageUrl}
+        src={vendorInfo.vendorBannerImageUrl || ''}
         alt="image"
         width={100}
         height={100}
         className="h-72 w-full bg-gray-200 object-cover"
       />
       <div className="mt-6.5 grid grid-cols-[1fr_3.5fr] gap-10 px-20 2xl:px-72">
-        <InquireCard />
+        <InquireCard vendorName={vendorInfo.vendorName || ''} />
         <div className="flex min-w-0 flex-col gap-10">
-          <ProductDetail {...solution} category={category} />
+          <ProductDetail
+            {...solution}
+            category={category}
+            vendorCategory={vendorCategory}
+            vendorSeq={vendorSeq}
+          />
+          <VendorInfo {...vendorInfo} />
           <ProductChart />
         </div>
       </div>

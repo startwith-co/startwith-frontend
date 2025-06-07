@@ -1,7 +1,7 @@
 'use client';
 
 import Input from '@/shared/ui/input';
-import VendorDropInput from '@/features/vendorRegister/ui/vendor-drop-input';
+import VendorDropInput from '@/shared/ui/vendor-drop-input';
 import VendorSelect from '@/shared/ui/vendor-select';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { Button } from '@/shared/ui/button';
@@ -39,6 +39,7 @@ export default function VendorDetailInfo() {
             onChange={(file) =>
               handleRepresentImageChange('representImageUrl', file)
             }
+            className="h-[165px] w-[220px]"
           />
           {errors.representImageUrl && (
             <ErrorMessage
@@ -57,6 +58,7 @@ export default function VendorDetailInfo() {
             onChange={(file) =>
               handleRepresentImageChange('descriptionPdfUrl', file)
             }
+            className="h-[165px] w-[220px]"
           />
           {errors.descriptionPdfUrl && (
             <ErrorMessage
