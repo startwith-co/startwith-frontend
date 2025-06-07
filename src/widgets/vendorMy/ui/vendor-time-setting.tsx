@@ -63,7 +63,7 @@ export default function VendorTimeSetting() {
                 <Input
                   value={formatTime(field.value)}
                   onChange={(e) => field.onChange(deformatTime(e.target.value))}
-                  placeholder="09시"
+                  type="time"
                   className="bg-vendor-gray h-15 w-[80px] border-none text-center"
                   disabled={!weekdayAvailable}
                 />
@@ -77,7 +77,7 @@ export default function VendorTimeSetting() {
                 <Input
                   value={formatTime(field.value)}
                   onChange={(e) => field.onChange(deformatTime(e.target.value))}
-                  placeholder="18시"
+                  type="time"
                   className="bg-vendor-gray h-15 w-[80px] border-none text-center"
                   disabled={!weekdayAvailable}
                 />
@@ -111,7 +111,7 @@ export default function VendorTimeSetting() {
                 <Input
                   value={formatTime(field.value)}
                   onChange={(e) => field.onChange(deformatTime(e.target.value))}
-                  placeholder="09시"
+                  type="time"
                   className="bg-vendor-gray h-15 w-[80px] border-none text-center"
                   disabled={!weekendAvailable}
                 />
@@ -125,7 +125,7 @@ export default function VendorTimeSetting() {
                 <Input
                   value={formatTime(field.value)}
                   onChange={(e) => field.onChange(deformatTime(e.target.value))}
-                  placeholder="18시"
+                  type="time"
                   className="bg-vendor-gray h-15 w-[80px] border-none text-center"
                   disabled={!weekendAvailable}
                 />
@@ -161,7 +161,7 @@ export default function VendorTimeSetting() {
                 <Input
                   value={formatTime(field.value)}
                   onChange={(e) => field.onChange(deformatTime(e.target.value))}
-                  placeholder="09시"
+                  type="time"
                   className="bg-vendor-gray h-15 w-[80px] border-none text-center"
                   disabled={!holidayAvailable}
                 />
@@ -175,7 +175,7 @@ export default function VendorTimeSetting() {
                 <Input
                   value={formatTime(field.value)}
                   onChange={(e) => field.onChange(deformatTime(e.target.value))}
-                  placeholder="18시"
+                  type="time"
                   className="bg-vendor-gray h-15 w-[80px] border-none text-center"
                   disabled={!holidayAvailable}
                 />
