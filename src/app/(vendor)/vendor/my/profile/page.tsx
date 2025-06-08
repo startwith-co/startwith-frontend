@@ -1,7 +1,14 @@
+import { auth } from '@/app/api/auth/[...nextauth]/route';
 import VendorMyProfile from '@/pages/vendorMy/ui/vendor-my-profile-page';
+import { SessionProvider } from 'next-auth/react';
+import getVendorInfo from '@/pages/vendorMy/api/getVendorInfo';
 
-function page() {
-  return <VendorMyProfile />;
+export default async function page() {
+  const session = await auth();
+  const vendorInfo = await getVendorInfo(session?.vendorSeq || 0);
+  return (
+    <SessionProvider>
+      <VendorMyProfile vendorInfo={vendorInfo} />
+    </SessionProvider>
+  );
 }
-
-export default page;

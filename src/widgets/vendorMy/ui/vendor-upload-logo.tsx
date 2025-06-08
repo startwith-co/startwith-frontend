@@ -1,7 +1,7 @@
 'use client';
 
 import EditButton from '@/features/vendorMy/ui/edit-button';
-import UploadInput from '@/shared/ui/upload-input';
+import VendorDropInput from '@/shared/ui/vendor-drop-input';
 
 export default function VendorUploadLogo() {
   return (
@@ -10,9 +10,11 @@ export default function VendorUploadLogo() {
       <div className="grid grid-cols-5 gap-5">
         {Array.from({ length: 5 }).map(() => (
           <div key={Math.random()}>
-            <UploadInput
+            <VendorDropInput
               title="대표 이미지 등록"
-              className="aspect-square text-xs"
+              accept={['image/jpg', 'image/png']}
+              onChange={(file) => {}}
+              className="aspect-square w-full text-xs"
             />
           </div>
         ))}
