@@ -1,10 +1,10 @@
-import api from '@/shared/api/index-api';
 import { useEffect } from 'react';
 import { ApiResponse } from '@/shared/model/apiType';
 import { VendorDetailType } from '@/shared/model/vendorDetailType';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { ConsumerDetailType } from '@/shared/model/consumerDetailType';
 import Link from 'next/link';
+import api from '@/shared/api/index-api';
 
 export default function TestUserButton() {
   const { setChatMeta, consumerId, vendorId } = useChatMeta();
@@ -34,7 +34,7 @@ export default function TestUserButton() {
       .catch((err) => {
         console.error('chatMeta fetch failed:', err);
       });
-  }, [setChatMeta]);
+  }, []);
 
   return (
     <div className="flex flex-col gap-2 font-bold">

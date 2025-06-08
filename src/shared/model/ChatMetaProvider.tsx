@@ -34,29 +34,32 @@ function ChatMetaProvider({
   children: ReactNode;
   initialValues: Omit<ChatMetaContextType, 'setChatMeta'>;
 }) {
-  const [state, setState] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const stored = sessionStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        try {
-          return JSON.parse(stored);
-        } catch {
-          return initialValues;
-        }
-      }
-    }
-    return initialValues;
+  const [state, setState] = useState<ChatMetaContextType>({
+    ...initialValues,
+    setChatMeta: () => {},
   });
-
-  useEffect(() => {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }, [state]);
 
   const setChatMeta = (
     meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>,
   ) => {
-    setState((prev: any) => ({ ...prev, ...meta }));
+    setState((prev) => {
+      const updated = { ...prev, ...meta, setChatMeta };
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    });
   };
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        setState({ ...parsed, setChatMeta });
+      } catch {
+        console.warn('Invalid chatMeta in sessionStorage');
+      }
+    }
+  }, []);
 
   const value = useMemo(() => ({ ...state, setChatMeta }), [state]);
 

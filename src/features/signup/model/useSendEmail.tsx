@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from '@/shared/api/index-api';
+import serverApi from '@/shared/api/server-api';
 
 function useSendEmail() {
   const [timer, setTimer] = useState(0);
@@ -19,11 +19,11 @@ function useSendEmail() {
 
   const handleSendEmail = async (email: string, target: 'vendor' | 'user') => {
     if (target === 'vendor') {
-      await api.post('api/b2b-service/vendor/email/send', {
+      await serverApi.post('api/b2b-service/vendor/email/send', {
         json: { email },
       });
     } else {
-      await api.post('api/b2b-service/consumer/email/send', {
+      await serverApi.post('api/b2b-service/consumer/email/send', {
         json: { email },
       });
     }

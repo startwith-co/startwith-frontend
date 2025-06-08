@@ -1,8 +1,6 @@
-import api from '@/shared/api/index-api';
-import { ApiResponse } from '@/shared/model/apiType';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { useEffect, useState } from 'react';
-import { CategoryRequest } from './vendorCategotyType';
+import getVendorCategory from '@/pages/products/api/getVendorCategory';
 
 const solutionCategory = [
   { label: 'BI(데이터 시각화)', value: 'BI' },
@@ -43,11 +41,9 @@ function useRequestCategory() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await api
-          .get(`api/b2b-service/vendor/category?vendorSeq=${vendorSeq}`)
-          .json<ApiResponse<CategoryRequest[]>>();
+        const res = await getVendorCategory(vendorSeq.toString());
         setSolutionCategoryOptions(
-          res.data.map((category: { category: string }) => ({
+          res.map((category: { category: string }) => ({
             label: valueToLabelMap[category.category],
             value: category.category,
           })),

@@ -9,11 +9,10 @@ async function signupUser(formData: FormData, industry: string | null) {
     confirmPassword: formData.get('confirmPassword'),
     industry,
   };
-  console.log(requestPayload);
 
   try {
     const response = await ky.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/b2b-service/consumer`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/b2b-service/consumer/join`,
       {
         body: JSON.stringify(requestPayload),
         headers: {

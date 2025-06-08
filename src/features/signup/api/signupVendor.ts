@@ -13,13 +13,14 @@ async function signupVendor(formData: FormData, file: File) {
   const body = new FormData();
   body.append(
     'request',
-    new Blob([JSON.stringify(requestPayload)], { type: 'application/json' }),
+    new File([JSON.stringify(requestPayload)], 'request.json', {
+      type: 'application/json',
+    }),
   );
   body.append('businessLicenseImage', file);
-  console.log('body', body);
   try {
     const response = await ky.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/b2b-service/vendor`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/b2b-service/vendor/join`,
       {
         body,
       },
