@@ -1,4 +1,10 @@
-import { serverTimestamp, addDoc, collection } from 'firebase/firestore';
+import {
+  serverTimestamp,
+  addDoc,
+  collection,
+  updateDoc,
+  doc,
+} from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import db from 'fire-config';
 import createRoom from './create-room';
@@ -8,19 +14,19 @@ async function sendMessageJson(
   message: string,
   messageId: string,
   messageName: string,
-  userId: string,
+  consumerId: string,
   vendorId: string,
-  userName: string,
+  consumerName: string,
   vendorName: string,
 ) {
   const newRoomId = uuidv4();
-  const roomId = await findChatExistingRoom(userId, vendorId);
+  const roomId = await findChatExistingRoom(consumerId, vendorId);
   if (!roomId) {
     await createRoom(
       newRoomId,
-      userId,
+      consumerId,
       vendorId,
-      userName,
+      consumerName,
       vendorName,
       messageId,
       message,
@@ -33,6 +39,15 @@ async function sendMessageJson(
     createdAt: serverTimestamp(),
     messageId,
     messageName,
+  });
+
+  await updateDoc(doc(db, 'chats', roomId || newRoomId), {
+    lastMessage: {
+      messageId,
+      message,
+      messageName,
+      updatedAt: serverTimestamp(),
+    },
   });
 }
 

@@ -20,9 +20,9 @@ async function requestPost(
   solutionCategory: string,
   messageId: string,
   messageName: string,
-  userId: string,
+  consumerId: string,
+  consumerName: string,
   vendorId: string,
-  userName: string,
   vendorName: string,
   type:
     | 'request-card'
@@ -41,9 +41,9 @@ async function requestPost(
     JSON.stringify(messagePayload),
     messageId,
     messageName,
-    userId,
+    consumerId,
     vendorId,
-    userName,
+    consumerName,
     vendorName,
   );
 }

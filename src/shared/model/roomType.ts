@@ -16,8 +16,8 @@ export interface LastMessageType
 
 export interface ChatRoom {
   roomId: string;
-  userId: string;
-  userName: string;
+  consumerId: string;
+  consumerName: string;
   vendorId: string;
   vendorName: string;
   createdAt: Timestamp;

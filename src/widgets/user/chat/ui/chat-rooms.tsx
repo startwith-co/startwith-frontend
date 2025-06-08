@@ -14,7 +14,7 @@ import useGetChatRooms from '@/shared/model/useGetChatRooms';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
 
 function ChatRooms() {
-  const rooms = useGetChatRooms({ targetId: 'userId' });
+  const rooms = useGetChatRooms({ targetId: 'consumerId' });
 
   return (
     <div className="w-full min-w-0 rounded-3xl bg-white p-4.5 pb-8 shadow-md">
@@ -32,16 +32,16 @@ function ChatRooms() {
       <div className="flex flex-col gap-2.5">
         {rooms.map((room) => (
           <ChatRoomCard
-            userId={room.userId}
+            consumerId={room.consumerId}
             vendorId={room.vendorId}
-            userName={room.userName}
+            consumerName={room.consumerName}
             vendorName={room.vendorName}
             key={room.roomId}
             name={room.lastMessage.messageName}
             updatedDate={formatMainDate(room.lastMessage.updatedAt)}
             lastMessage={room.lastMessage.message}
             img={room.vendorId || ''}
-            link={`/chat?userId=${room.userId}&vendorId=${room.vendorId}`}
+            link={`/chat?consumerId=${room.consumerId}&vendorId=${room.vendorId}`}
           />
         ))}
       </div>

@@ -16,7 +16,7 @@ async function signupVendor(formData: FormData, file: File) {
     new Blob([JSON.stringify(requestPayload)], { type: 'application/json' }),
   );
   body.append('businessLicenseImage', file);
-
+  console.log('body', body);
   try {
     const response = await ky.post(
       `${process.env.NEXT_PUBLIC_API_URL}/api/b2b-service/vendor`,

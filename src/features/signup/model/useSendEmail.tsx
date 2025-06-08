@@ -17,14 +17,14 @@ function useSendEmail() {
     return () => clearTimeout(countdown);
   }, [isCounting, timer]);
 
-  const handleSendEmail = (email: string, target: 'vendor' | 'user') => {
+  const handleSendEmail = async (email: string, target: 'vendor' | 'user') => {
     if (target === 'vendor') {
-      api.post('api/b2b-service/vendor/email/send', {
-        body: JSON.stringify({ email }),
+      await api.post('api/b2b-service/vendor/email/send', {
+        json: { email },
       });
     } else {
-      api.post('api/b2b-service/consumer/email/send', {
-        body: JSON.stringify({ email }),
+      await api.post('api/b2b-service/consumer/email/send', {
+        json: { email },
       });
     }
     setTimer(300);

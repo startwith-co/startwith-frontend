@@ -3,9 +3,9 @@ import db from 'fire-config';
 
 async function createRoom(
   roomId: string,
-  userId: string,
+  consumerId: string,
   vendorId: string,
-  userName: string,
+  consumerName: string,
   vendorName: string,
   messageId: string,
   message: string,
@@ -17,8 +17,8 @@ async function createRoom(
   // 문서에 데이터 설정
   await setDoc(roomRef, {
     roomId,
-    userId,
-    userName,
+    consumerId,
+    consumerName,
     vendorName,
     vendorId,
     lastMessage: {

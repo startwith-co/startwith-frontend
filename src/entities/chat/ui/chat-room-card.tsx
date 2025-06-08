@@ -13,9 +13,9 @@ export interface ChatRoomCardProps {
   className?: string;
   avatarSize?: string;
   updatedDate?: string;
-  userId: string;
+  consumerId: string;
   vendorId: string;
-  userName: string;
+  consumerName: string;
   vendorName: string;
 }
 
@@ -27,16 +27,16 @@ export default function ChatRoomCard({
   className = '',
   avatarSize = 'size-15',
   updatedDate,
-  userId,
+  consumerId,
   vendorId,
-  userName,
+  consumerName,
   vendorName,
 }: ChatRoomCardProps) {
   const router = useRouter();
   const { setChatMeta } = useChatMeta();
 
   const handleClick = () => {
-    setChatMeta({ userId, vendorId, userName, vendorName });
+    setChatMeta({ consumerId, vendorId, consumerName, vendorName });
     router.push(link);
   };
 

@@ -1,17 +1,17 @@
 interface ChatBubbleProps {
   message: string;
   messageId: string;
-  userId: string;
+  consumerId: string;
   time: string;
 }
 
 export default function ChatUserBubble({
   message,
   messageId,
-  userId,
+  consumerId,
   time,
 }: ChatBubbleProps) {
-  const isMine = messageId === userId;
+  const isMine = messageId === consumerId;
 
   return (
     <div
