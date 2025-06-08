@@ -1,15 +1,13 @@
 'use client';
 
 import { SessionProvider } from 'next-auth/react';
-import TestButton from './component/TestButton';
+import TestUserButton from './component/TestUserButton';
 
 function page() {
   return (
-    <div>
-      <SessionProvider>
-        <TestButton />
-      </SessionProvider>
-    </div>
+    <SessionProvider>
+      <TestUserButton />
+    </SessionProvider>
   );
 }
 

@@ -36,7 +36,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
 
   const { curRoomId, setCurRoomId } = useRoomId();
-  const { userId, userName, vendorId, vendorName } = useChatMeta();
+  const { consumerId, consumerName, vendorId, vendorName } = useChatMeta();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -56,9 +56,9 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     let unsubscribe: () => void;
 
     async function realTimeMessages() {
-      if (!userId || !vendorId) notFound();
+      if (!consumerId || !vendorId) notFound();
 
-      const roomId = await findChatExistingRoom(userId, vendorId);
+      const roomId = await findChatExistingRoom(consumerId, vendorId);
       if (roomId) {
         setCurRoomId(roomId);
 
@@ -80,21 +80,21 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [curRoomId, setCurRoomId, userId, vendorId]);
+  }, [curRoomId, setCurRoomId, consumerId, vendorId]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!message.trim() && !attachedFile) return;
-    const roomId = await findChatExistingRoom(userId, vendorId);
+    const roomId = await findChatExistingRoom(consumerId, vendorId);
     const newRoomId = uuidv4();
     const targetRoomId = roomId || newRoomId;
 
     if (!roomId) {
       await createRoom(
         newRoomId,
-        userId,
+        consumerId,
         vendorId,
-        userName,
+        consumerName,
         vendorName,
         messageId,
         message,

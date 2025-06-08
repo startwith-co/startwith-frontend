@@ -5,7 +5,7 @@ export interface TimeObject {
   nano: number;
 }
 
-export interface VendorDetail {
+export interface VendorDetailType {
   vendorSeq: number;
   vendorName: string;
   managerName: string;

@@ -5,20 +5,20 @@ import { notFound, useSearchParams } from 'next/navigation';
 
 function ChattingMainWrapper({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
-  const userId = searchParams?.get('userId');
+  const consumerId = searchParams?.get('consumerId');
   const vendorId = searchParams?.get('vendorId');
 
-  if (!userId || !vendorId) {
+  if (!consumerId || !vendorId) {
     notFound();
   }
 
   return (
     <ChatMetaProvider
       initialValues={{
-        userId,
-        userName: 'userA',
+        consumerId,
+        consumerName: 'userA',
         vendorId,
-        vendorName: 'vendorC',
+        vendorName: 'vendorA',
       }}
     >
       {children}

@@ -9,7 +9,8 @@ import ChatsUser from '@/entities/chat/ui/chats-user';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 
 function Chatting() {
-  const { userId, userName } = useChatMeta();
+  const { consumerId, consumerName } = useChatMeta();
+  console.log('consumerId', consumerId, 'consumerName', consumerName);
 
   const {
     handleSubmit,
@@ -20,8 +21,8 @@ function Chatting() {
     filePreviewUrl,
     handleFileChange,
   } = useMessageSend({
-    messageId: userId,
-    messageName: userName,
+    messageId: consumerId,
+    messageName: consumerName,
   });
 
   const chatMainDate = formatMainDate(messages[0]?.createdAt) || '';
@@ -35,7 +36,7 @@ function Chatting() {
           </span>
         </div>
       )}
-      <ChatsUser messages={messages} userId={userId} />
+      <ChatsUser messages={messages} consumerId={consumerId} />
 
       <form onSubmit={handleSubmit} className="bg-none p-4">
         <div className="relative w-full">

@@ -18,23 +18,10 @@ import {
 } from '@/shared/ui/select';
 import { useVendorModal } from '@/pages/vendor/chat/model/VendorModalProvider';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
-
-const solutionCategoryOptions = [
-  'BI(데이터 시각화)',
-  'BPM(업무 프로세스 관리)',
-  'CMS(콘텐츠 관리 시스템)',
-  'CRM(고객 관계 관리)',
-  'DMS(문서 관리 시스템)',
-  'EAM(전사적 자산 관리)',
-  'ECM(전사 콘텐츠 관리)',
-  'ERP(전사적 자원 관리)',
-  'HR(성과 및 조직 관리)',
-  'HRM(인사운영 관리)',
-  'KM(지식 관리)',
-  'SCM(공급망 관리)',
-  'SI(시스템 통합 및 구축)',
-  '보안',
-];
+import { useRoomId } from '@/shared/model/RoomIdProvider';
+import deleteLastMessage from '@/shared/api/delete-last-message';
+import requestServerPost from '../api/requestServerPost';
+import useRequestCategory from '../model/requestCategory';
 
 const schema = z.object({
   solutionName: z.string().min(1, '계약명을 입력해주세요.'),
@@ -48,38 +35,70 @@ function RequestPayForm() {
   const {
     register,
     formState: { errors, isValid },
-    handleSubmit,
     control,
     getValues,
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
+  const solutionCategoryOptions = useRequestCategory();
 
   const [contractFile, setContractFile] = useState<File | null>(null);
   const [refundFile, setRefundFile] = useState<File | null>(null);
   const contractRef = useRef<HTMLInputElement>(null);
   const refundRef = useRef<HTMLInputElement>(null);
+  const { curRoomId } = useRoomId();
 
   const { setOpen } = useVendorModal();
-  const { vendorId, vendorName, userId, userName } = useChatMeta();
+  const {
+    vendorId,
+    vendorName,
+    consumerId,
+    consumerName,
+    vendorSeq,
+    consumerSeq,
+  } = useChatMeta();
 
   const onSubmit = async () => {
     const formData = getValues();
-    await requestPost(
-      formData.solutionName,
-      formData.solutionPrice,
-      formData.solutionCategory,
-      vendorId,
-      vendorName,
-      userId,
-      vendorId,
-      userName,
-      vendorName,
-      'request-card',
-    );
 
-    setOpen(false);
+    try {
+      // 1. 첫 번째 요청
+      await requestServerPost({
+        consumerSeq,
+        vendorSeq,
+        category: formData.solutionCategory,
+        paymentEventName: formData.solutionName,
+        amount: Number(formData.solutionPrice),
+        contractConfirmationUrl: contractFile,
+        refundPolicyUrl: refundFile,
+      });
+
+      try {
+        // 2. 두 번째 요청
+        await requestPost(
+          formData.solutionName,
+          formData.solutionPrice,
+          formData.solutionCategory,
+          vendorId,
+          vendorName,
+          consumerId,
+          consumerName,
+          vendorId,
+          vendorName,
+          'request-card',
+        );
+
+        // 3. 모든 요청 성공 시
+        setOpen(false);
+      } catch (secondErr) {
+        await deleteLastMessage(curRoomId!);
+        throw secondErr;
+      }
+    } catch (err) {
+      console.error('요청 실패:', err);
+      // 첫 요청 실패 or 롤백 실패 → 아무것도 하지 않음
+    }
   };
 
   return (
@@ -122,8 +141,8 @@ function RequestPayForm() {
                 </SelectTrigger>
                 <SelectContent className="max-h-[300px] overflow-auto">
                   {solutionCategoryOptions.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option}
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
                     </SelectItem>
                   ))}
                 </SelectContent>

@@ -15,7 +15,7 @@ import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 
 function VendorChatting() {
   const { open } = useVendorModal();
-  const { vendorId, vendorName, userId } = useChatMeta();
+  const { vendorId, vendorName, consumerId } = useChatMeta();
   const { handleSubmit, message, setMessage, messages, setMessages } =
     useMessageSend({
       messageId: vendorId,
@@ -24,15 +24,15 @@ function VendorChatting() {
 
   useEffect(() => {
     async function fetchMessages() {
-      if (!userId || !vendorId) notFound();
-      const roomId = await findChatExistingRoom(userId, vendorId);
+      if (!consumerId || !vendorId) notFound();
+      const roomId = await findChatExistingRoom(consumerId, vendorId);
       if (!roomId) notFound();
       const fetchedMessages = await getMessagesById(roomId);
       setMessages(fetchedMessages);
     }
     if (open) return;
     fetchMessages();
-  }, [userId, vendorId, open]);
+  }, [consumerId, vendorId, open]);
 
   const chatMainDate = formatMainDate(messages[0]?.createdAt) || '';
 

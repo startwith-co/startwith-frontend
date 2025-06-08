@@ -22,3 +22,13 @@ export interface VendorInfoProps {
   clientCount: number | null;
   vendorUniqueType: string;
 }
+
+export interface ConsumerInfoProps {
+  consumerSeq: number;
+  consumerName: string;
+  phoneNumber: string;
+  email: string;
+  industry: string;
+  consumerImageUrl: string;
+  consumerUniqueType: string;
+}

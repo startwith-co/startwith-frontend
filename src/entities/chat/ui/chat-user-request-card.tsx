@@ -1,6 +1,8 @@
 import Solu from '@/shared/ui/solu';
 import { Button } from '@/shared/ui/button';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import CircleCheckbox from './circle-check-box';
 
 interface ChatRequestCardProps {
@@ -19,6 +21,8 @@ function ChatUserRequestCard({
   solutionPrice,
 }: ChatRequestCardProps) {
   const [checked, setChecked] = useState(false);
+  const { consumerSeq, vendorSeq } = useChatMeta();
+  const router = useRouter();
 
   return (
     <div className="flex w-[360px] flex-col items-center justify-center space-y-4 rounded-xl border bg-[#F5F5F5] p-6 shadow-md">
@@ -67,6 +71,11 @@ function ChatUserRequestCard({
         asChild={false}
         variant="bgBlueGradient"
         className="mt-3 h-[45px] w-full font-bold text-white"
+        onClick={() =>
+          router.push(
+            `/payment?consumerSeq=${consumerSeq}&vendorSeq=${vendorSeq}`,
+          )
+        }
       >
         결제하기
       </Button>

@@ -8,10 +8,10 @@ import ChatUserRequestCard from './chat-user-request-card';
 
 interface ChatsUserProps {
   messages: any[];
-  userId: string;
+  consumerId: string;
 }
 
-function ChatsUser({ messages, userId }: ChatsUserProps) {
+function ChatsUser({ messages, consumerId }: ChatsUserProps) {
   return (
     <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
       {messages.map((msg) => {
@@ -22,7 +22,7 @@ function ChatsUser({ messages, userId }: ChatsUserProps) {
           parsed = null;
         }
 
-        const isMine = msg.messageId === userId;
+        const isMine = msg.messageId === consumerId;
 
         if (parsed?.type === 'request-card') {
           return (
@@ -101,7 +101,7 @@ function ChatsUser({ messages, userId }: ChatsUserProps) {
             key={msg.id + msg.createdAt}
             message={msg.message}
             messageId={msg.messageId}
-            userId={userId}
+            consumerId={consumerId}
             time={formatTime(msg.createdAt)}
           />
         );

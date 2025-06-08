@@ -1,16 +1,27 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode, useMemo } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useMemo,
+} from 'react';
 
 interface ChatMetaContextType {
-  userId: string;
-  userName: string;
+  consumerId: string;
+  consumerName: string;
   vendorId: string;
   vendorName: string;
+  vendorSeq: number;
+  consumerSeq: number;
   setChatMeta: (
     meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>,
   ) => void;
 }
+
+const STORAGE_KEY = 'chatMeta';
 
 const ChatMetaContext = createContext<ChatMetaContextType | undefined>(
   undefined,
@@ -23,18 +34,37 @@ function ChatMetaProvider({
   children: ReactNode;
   initialValues: Omit<ChatMetaContextType, 'setChatMeta'>;
 }) {
-  const [state, setState] = useState(initialValues);
+  const [state, setState] = useState<ChatMetaContextType>({
+    ...initialValues,
+    setChatMeta: () => {},
+  });
 
   const setChatMeta = (
     meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>,
   ) => {
-    setState((prev) => ({ ...prev, ...meta }));
+    setState((prev) => {
+      const updated = { ...prev, ...meta, setChatMeta };
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    });
   };
 
+  useEffect(() => {
+    const stored = sessionStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        setState({ ...parsed, setChatMeta });
+      } catch {
+        console.warn('Invalid chatMeta in sessionStorage');
+      }
+    }
+  }, []);
+
+  const value = useMemo(() => ({ ...state, setChatMeta }), [state]);
+
   return (
-    <ChatMetaContext.Provider
-      value={useMemo(() => ({ ...state, setChatMeta }), [state])}
-    >
+    <ChatMetaContext.Provider value={value}>
       {children}
     </ChatMetaContext.Provider>
   );

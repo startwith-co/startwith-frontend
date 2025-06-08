@@ -16,18 +16,18 @@ export default function ChatUserCancelModal({
 }: ChatUserCancelModalProps) {
   const { solutionName, solutionPrice, solutionCategory } = useSolution();
 
-  const { vendorId, vendorName, userId, userName } = useChatMeta();
+  const { vendorId, vendorName, consumerId, consumerName } = useChatMeta();
 
   const onCancelPayment = useCallback(async () => {
     await requestPost(
       solutionName,
       solutionPrice.toString(),
       solutionCategory,
-      userId,
-      userName,
-      userId,
+      consumerId,
+      consumerName,
+      consumerId,
+      consumerName,
       vendorId,
-      userName,
       vendorName,
       'cancel-request-card',
     );

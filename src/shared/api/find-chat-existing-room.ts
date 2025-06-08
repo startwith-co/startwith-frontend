@@ -1,11 +1,11 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import db from 'fire-config';
 
-async function findChatExistingRoom(userId: string, vendorId: string) {
+async function findChatExistingRoom(consumerId: string, vendorId: string) {
   const chatsRef = collection(db, 'chats');
   const q = query(
     chatsRef,
-    where('userId', '==', userId),
+    where('consumerId', '==', consumerId),
     where('vendorId', '==', vendorId),
   );
 

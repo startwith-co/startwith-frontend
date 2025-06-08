@@ -1,4 +1,4 @@
-export interface ConsumerDetail {
+export interface ConsumerDetailType {
   consumerSeq: number;
   consumerName: string;
   phoneNumber: string;

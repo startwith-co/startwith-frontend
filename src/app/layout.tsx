@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import localFont from 'next/font/local';
 import { ToastContainer } from 'react-toastify';
+import ChatMetaProvider from '@/shared/model/ChatMetaProvider';
 import AmplitudeContextProvider from './_providers/amplitude-provider';
 import SentryProvider from './_providers/sentry-provider';
 
@@ -71,13 +72,24 @@ export default function RootLayout({
           pauseOnHover
           theme="light"
         />
-        <AmplitudeContextProvider userId="">
-          {process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? (
-            <> {children}</>
-          ) : (
-            <SentryProvider>{children}</SentryProvider>
-          )}
-        </AmplitudeContextProvider>
+        <ChatMetaProvider
+          initialValues={{
+            consumerId: 'userA',
+            consumerName: 'userA',
+            vendorId: 'vendorC',
+            vendorName: 'vendorC',
+            consumerSeq: 1,
+            vendorSeq: 1,
+          }}
+        >
+          <AmplitudeContextProvider userId="">
+            {process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? (
+              <> {children}</>
+            ) : (
+              <SentryProvider>{children}</SentryProvider>
+            )}
+          </AmplitudeContextProvider>
+        </ChatMetaProvider>
       </body>
     </html>
   );

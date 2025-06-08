@@ -21,7 +21,7 @@ export default function ChatVendorCancelModal({
   const { solutionName, solutionPrice, solutionCategory } = useSolution();
 
   console.log(solutionName, solutionPrice, solutionCategory);
-  const { vendorId, vendorName, userId, userName } = useChatMeta();
+  const { vendorId, vendorName, consumerId, consumerName } = useChatMeta();
 
   const onCancelAcceptPayment = useCallback(async () => {
     await requestPost(
@@ -30,9 +30,9 @@ export default function ChatVendorCancelModal({
       solutionCategory,
       vendorId,
       vendorName,
-      userId,
+      consumerId,
+      consumerName,
       vendorId,
-      userName,
       vendorName,
       'cancel-complete-card',
     );

@@ -4,6 +4,7 @@ import ProductDetail from '@/widgets/products/ui/product-detail';
 import Image from 'next/image';
 import VendorInfo from '@/widgets/products/ui/vendor-info';
 import getVendorInfo from '@/pages/vendorMy/api/getVendorInfo';
+import getConsumerInfo from '@/pages/vendorMy/api/getConsumerInfo';
 import getSolution from '../api/getSolution';
 import getVendorCategory from '../api/getVendorCategory';
 
@@ -30,7 +31,11 @@ export default async function ProductsDetailPage({
         className="h-72 w-full bg-gray-200 object-cover"
       />
       <div className="mt-6.5 grid grid-cols-[1fr_3.5fr] gap-10 px-20 2xl:px-72">
-        <InquireCard vendorName={vendorInfo.vendorName || ''} />
+        <InquireCard
+          vendorName={vendorInfo.vendorName || ''}
+          vendorId={vendorInfo.vendorUniqueType || ''}
+          vendorSeq={Number(vendorSeq)}
+        />
         <div className="flex min-w-0 flex-col gap-10">
           <ProductDetail
             {...solution}
