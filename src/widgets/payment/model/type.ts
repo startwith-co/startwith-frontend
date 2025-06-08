@@ -26,6 +26,8 @@ export interface WidgetsProps {
     customerEmail,
     customerName,
     customerMobilePhone,
+    method,
+    virtualAccount,
   }: {
     orderId: string;
     orderName: string;
@@ -34,6 +36,8 @@ export interface WidgetsProps {
     customerEmail: string;
     customerName: string;
     customerMobilePhone: string;
+    method?: string;
+    virtualAccount?: VirutalAccountProps;
   }) => Promise<void>;
   renderAgreement: ({
     selector,
@@ -42,4 +46,12 @@ export interface WidgetsProps {
     selector: string;
     variantKey: string;
   }) => Promise<WidgetAgreementWidget>;
+}
+
+interface VirutalAccountProps {
+  cashReceipt: CashReceiptProps;
+}
+
+interface CashReceiptProps {
+  type: '소득공제' | '지출증빙' | '미발행';
 }

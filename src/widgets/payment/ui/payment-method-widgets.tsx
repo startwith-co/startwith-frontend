@@ -7,12 +7,17 @@ import { WidgetsProps } from '@/widgets/payment/model/type';
 const clientKey = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';
 const customerKey = 'xaszxdbW4vJ08QWeRLRdT';
 
-export default function PaymentMethodWidgets() {
+export default function PaymentMethodWidgets({
+  amount,
+  paymentMethod,
+  paymentEventName,
+}: {
+  amount: number;
+  paymentMethod: 'creditCard' | 'virtualAccount';
+  paymentEventName: string;
+}) {
   // TODO: 실제 데이터로 변경(쿠폰, 할인 적용 후)
-  const [amount, setAmount] = useState({
-    currency: 'KRW',
-    value: 100,
-  });
+
   const [ready, setReady] = useState(false);
   const [widgets, setWidgets] = useState<WidgetsProps>();
 
@@ -39,7 +44,7 @@ export default function PaymentMethodWidgets() {
         return;
       }
       // ------ 주문의 결제 금액 설정 ------
-      await widgets.setAmount(amount);
+      await widgets.setAmount({ currency: 'KRW', value: amount });
 
       await Promise.all([
         // ------  결제 UI 렌더링 ------
@@ -65,7 +70,7 @@ export default function PaymentMethodWidgets() {
       return;
     }
 
-    widgets.setAmount(amount);
+    widgets.setAmount({ currency: 'KRW', value: amount });
   }, [widgets, amount]);
 
   return (
@@ -87,8 +92,8 @@ export default function PaymentMethodWidgets() {
                 // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
                 // TODO: random orderID 설정, 이름, 메일, 핸드폰 번호 전부 사용자 맞춤으로 설정
                 await widgets?.requestPayment({
-                  orderId: 'y2Rv6eNn9bQZi-hrMWMWF',
-                  orderName: '토스 티셔츠 외 2건',
+                  orderId: 'y2Rv6eNn9bQZi-hrMWMWF222',
+                  orderName: `${paymentEventName}`,
                   successUrl: `${window.location.origin}/payment/success`,
                   failUrl: `${window.location.origin}/payment/fail`,
                   customerEmail: 'customer123@gmail.com',
