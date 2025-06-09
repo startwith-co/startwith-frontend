@@ -6,7 +6,7 @@ export default async function Page({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const paymentEventSeq = await searchParams.paymentEventSeq;
+  const { paymentEventSeq } = await searchParams;
   const paymentInfo = await getPaymentInfo({
     paymentEventSeq: paymentEventSeq as string,
   });

@@ -1,14 +1,17 @@
 import Solu from '@/shared/ui/solu';
 import { Button } from '@/shared/ui/button';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
+import getPaymentRequest from '@/entities/chat/api/getPaymentRequest';
+import PaymentRequestProps from '@/entities/chat/model/type';
 import CircleCheckbox from './circle-check-box';
 
 interface ChatRequestCardProps {
   solutionName: string;
   solutionCategory: string;
   solutionPrice: number;
+  uuid: string;
 }
 
 const formatPrice = (num: number) => {
@@ -19,10 +22,22 @@ function ChatUserRequestCard({
   solutionName,
   solutionCategory,
   solutionPrice,
+  uuid,
 }: ChatRequestCardProps) {
   const [checked, setChecked] = useState(false);
-  const { paymentEventSeq } = useChatMeta();
+  const [paymentRequestData, setPaymentRequestData] =
+    useState<PaymentRequestProps | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const getPaymentRequestData = async () => {
+      const data = await getPaymentRequest({
+        paymentUniqueType: uuid,
+      });
+      setPaymentRequestData(data);
+    };
+    getPaymentRequestData();
+  }, [uuid]);
 
   return (
     <div className="flex w-[360px] flex-col items-center justify-center space-y-4 rounded-xl border bg-[#F5F5F5] p-6 shadow-md">
@@ -72,7 +87,9 @@ function ChatUserRequestCard({
         variant="bgBlueGradient"
         className="mt-3 h-[45px] w-full font-bold text-white"
         onClick={() =>
-          router.push(`/payment?paymentEventSeq=${paymentEventSeq}`)
+          router.push(
+            `/payment?paymentEventSeq=${paymentRequestData?.paymentEventSeq}`,
+          )
         }
       >
         결제하기

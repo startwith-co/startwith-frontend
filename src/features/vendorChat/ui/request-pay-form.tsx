@@ -20,6 +20,7 @@ import { useVendorModal } from '@/pages/vendor/chat/model/VendorModalProvider';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { useRoomId } from '@/shared/model/RoomIdProvider';
 import deleteLastMessage from '@/shared/api/delete-last-message';
+import { v4 as uuidv4 } from 'uuid';
 import requestServerPost from '../api/requestServerPost';
 import useRequestCategory from '../model/requestCategory';
 
@@ -48,6 +49,7 @@ function RequestPayForm() {
   const contractRef = useRef<HTMLInputElement>(null);
   const refundRef = useRef<HTMLInputElement>(null);
   const { curRoomId } = useRoomId();
+  const uuid = uuidv4();
 
   const { setOpen } = useVendorModal();
   const {
@@ -57,7 +59,6 @@ function RequestPayForm() {
     consumerName,
     vendorSeq,
     consumerSeq,
-    setPaymentEventSeq,
   } = useChatMeta();
 
   const onSubmit = async () => {
@@ -65,7 +66,7 @@ function RequestPayForm() {
 
     try {
       // 1. 첫 번째 요청
-      const paymentEventSeq = await requestServerPost({
+      await requestServerPost({
         consumerSeq,
         vendorSeq,
         category: formData.solutionCategory,
@@ -73,8 +74,8 @@ function RequestPayForm() {
         amount: Number(formData.solutionPrice),
         contractConfirmationUrl: contractFile,
         refundPolicyUrl: refundFile,
+        paymentEventUniqueType: uuid,
       });
-      setPaymentEventSeq(paymentEventSeq);
 
       try {
         // 2. 두 번째 요청
@@ -89,6 +90,7 @@ function RequestPayForm() {
           vendorId,
           vendorName,
           'request-card',
+          uuid,
         );
 
         // 3. 모든 요청 성공 시

@@ -17,11 +17,10 @@ interface ChatMetaContextType {
   vendorName: string;
   vendorSeq: number;
   consumerSeq: number;
-  paymentEventSeq?: number;
+  paymentEventSeq: number;
   setChatMeta: (
     meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>,
   ) => void;
-  setPaymentEventSeq: (seq: number) => void;
 }
 
 const STORAGE_KEY = 'chatMeta';
@@ -40,27 +39,19 @@ function ChatMetaProvider({
   const [state, setState] = useState<ChatMetaContextType>({
     ...initialValues,
     setChatMeta: () => {},
-    setPaymentEventSeq: () => {},
   });
 
   const setChatMeta = useCallback(
     (meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>) => {
       setState((prev) => {
-        const updated = { ...prev, ...meta, setChatMeta };
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-        return updated;
+        const updated = { ...prev, ...meta };
+        const withSetter = { ...updated, setChatMeta };
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(withSetter));
+        return withSetter;
       });
     },
     [],
   );
-
-  const setPaymentEventSeq = useCallback((seq: number) => {
-    setState((prev) => {
-      const updated = { ...prev, paymentEventSeq: seq };
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-      return updated;
-    });
-  }, []);
 
   useEffect(() => {
     const stored = sessionStorage.getItem(STORAGE_KEY);
@@ -72,12 +63,9 @@ function ChatMetaProvider({
         console.warn('Invalid chatMeta in sessionStorage');
       }
     }
-  }, []);
+  }, [setChatMeta]);
 
-  const value = useMemo(
-    () => ({ ...state, setChatMeta, setPaymentEventSeq }),
-    [state, setChatMeta, setPaymentEventSeq],
-  );
+  const value = useMemo(() => ({ ...state, setChatMeta }), [state]);
 
   return (
     <ChatMetaContext.Provider value={value}>
