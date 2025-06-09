@@ -2,8 +2,12 @@ import { Button } from '@/shared/ui/button';
 
 export default function TotalPriceWidget({
   totalPrice,
+  actualAmount,
+  tax,
 }: {
   totalPrice: number;
+  actualAmount: number;
+  tax: number;
 }) {
   return (
     <div className="flex flex-col gap-5">
@@ -16,13 +20,13 @@ export default function TotalPriceWidget({
           </li>
           <li>
             <span>부가세(10%)</span>
-            <span>{totalPrice * 0.1}원</span>
+            <span>{tax}원</span>
           </li>
         </ul>
         <div className="flex flex-col gap-5">
           <div className="text-primary flex items-center justify-between font-bold">
             <span>총 결제 금액</span>
-            <span>{totalPrice + totalPrice * 0.1}원</span>
+            <span>{actualAmount}원</span>
           </div>
           <Button asChild={false} className="h-12 w-full">
             결제하기

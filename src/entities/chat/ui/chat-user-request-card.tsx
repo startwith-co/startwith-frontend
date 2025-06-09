@@ -21,7 +21,7 @@ function ChatUserRequestCard({
   solutionPrice,
 }: ChatRequestCardProps) {
   const [checked, setChecked] = useState(false);
-  const { consumerSeq, vendorSeq } = useChatMeta();
+  const { paymentEventSeq } = useChatMeta();
   const router = useRouter();
 
   return (
@@ -72,9 +72,7 @@ function ChatUserRequestCard({
         variant="bgBlueGradient"
         className="mt-3 h-[45px] w-full font-bold text-white"
         onClick={() =>
-          router.push(
-            `/payment?consumerSeq=${consumerSeq}&vendorSeq=${vendorSeq}`,
-          )
+          router.push(`/payment?paymentEventSeq=${paymentEventSeq}`)
         }
       >
         결제하기

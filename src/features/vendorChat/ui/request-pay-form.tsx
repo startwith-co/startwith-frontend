@@ -57,6 +57,7 @@ function RequestPayForm() {
     consumerName,
     vendorSeq,
     consumerSeq,
+    setPaymentEventSeq,
   } = useChatMeta();
 
   const onSubmit = async () => {
@@ -64,7 +65,7 @@ function RequestPayForm() {
 
     try {
       // 1. 첫 번째 요청
-      await requestServerPost({
+      const paymentEventSeq = await requestServerPost({
         consumerSeq,
         vendorSeq,
         category: formData.solutionCategory,
@@ -73,6 +74,7 @@ function RequestPayForm() {
         contractConfirmationUrl: contractFile,
         refundPolicyUrl: refundFile,
       });
+      setPaymentEventSeq(paymentEventSeq);
 
       try {
         // 2. 두 번째 요청

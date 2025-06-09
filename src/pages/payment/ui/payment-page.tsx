@@ -21,9 +21,17 @@ export default function PaymentPage({
     <div className="mt-20 mb-68 flex flex-col gap-14">
       <div className="grid grid-cols-[2fr_1fr] items-stretch gap-8">
         <OrderDetailsWidget {...paymentInfo} />
-        <TotalPriceWidget totalPrice={paymentInfo.amount} />
+        <TotalPriceWidget
+          totalPrice={paymentInfo.amount}
+          tax={paymentInfo.tax}
+          actualAmount={paymentInfo.actualAmount}
+        />
       </div>
-      <VendorInfoWidget />
+      <VendorInfoWidget
+        vendorName={paymentInfo.vendorName}
+        vendorPhone={paymentInfo.phoneNumber}
+        vendorEmail={paymentInfo.email}
+      />
       <div className="grid grid-cols-[2fr_1fr] gap-8">
         <div className="flex flex-col gap-5">
           <h2 className="text-lg font-semibold">결제 수단 선택</h2>
@@ -53,11 +61,7 @@ export default function PaymentPage({
           </div>
         </div>
       </div>
-      <PaymentMethodWidgets
-        amount={paymentInfo.amount}
-        paymentMethod={paymentMethod}
-        paymentEventName={paymentInfo.paymentEventName}
-      />
+      <PaymentMethodWidgets {...paymentInfo} />
     </div>
   );
 }

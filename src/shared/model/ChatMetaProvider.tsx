@@ -7,6 +7,7 @@ import {
   useEffect,
   ReactNode,
   useMemo,
+  useCallback,
 } from 'react';
 
 interface ChatMetaContextType {
@@ -16,9 +17,11 @@ interface ChatMetaContextType {
   vendorName: string;
   vendorSeq: number;
   consumerSeq: number;
+  paymentEventSeq?: number;
   setChatMeta: (
     meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>,
   ) => void;
+  setPaymentEventSeq: (seq: number) => void;
 }
 
 const STORAGE_KEY = 'chatMeta';
@@ -37,17 +40,27 @@ function ChatMetaProvider({
   const [state, setState] = useState<ChatMetaContextType>({
     ...initialValues,
     setChatMeta: () => {},
+    setPaymentEventSeq: () => {},
   });
 
-  const setChatMeta = (
-    meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>,
-  ) => {
+  const setChatMeta = useCallback(
+    (meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>) => {
+      setState((prev) => {
+        const updated = { ...prev, ...meta, setChatMeta };
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+        return updated;
+      });
+    },
+    [],
+  );
+
+  const setPaymentEventSeq = useCallback((seq: number) => {
     setState((prev) => {
-      const updated = { ...prev, ...meta, setChatMeta };
+      const updated = { ...prev, paymentEventSeq: seq };
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       return updated;
     });
-  };
+  }, []);
 
   useEffect(() => {
     const stored = sessionStorage.getItem(STORAGE_KEY);
@@ -61,7 +74,10 @@ function ChatMetaProvider({
     }
   }, []);
 
-  const value = useMemo(() => ({ ...state, setChatMeta }), [state]);
+  const value = useMemo(
+    () => ({ ...state, setChatMeta, setPaymentEventSeq }),
+    [state, setChatMeta, setPaymentEventSeq],
+  );
 
   return (
     <ChatMetaContext.Provider value={value}>
