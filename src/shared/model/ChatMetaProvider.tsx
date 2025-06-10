@@ -65,7 +65,10 @@ function ChatMetaProvider({
     }
   }, [setChatMeta]);
 
-  const value = useMemo(() => ({ ...state, setChatMeta }), [state]);
+  const value = useMemo(
+    () => ({ ...state, setChatMeta }),
+    [setChatMeta, state],
+  );
 
   return (
     <ChatMetaContext.Provider value={value}>

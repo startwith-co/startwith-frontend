@@ -5,8 +5,9 @@ import TotalPriceWidget from '@/widgets/payment/ui/total-price-widget';
 import VendorInfoWidget from '@/widgets/payment/ui/vendor-info-widget';
 import PaymentMethodWidgets from '@/widgets/payment/ui/payment-method-widgets';
 import { Button } from '@/shared/ui/button';
-import PaymentInfoProps from '@/pages/payment/model/type';
+import { PaymentInfoProps } from '@/pages/payment/model/type';
 import { useState } from 'react';
+import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 
 export default function PaymentPage({
   paymentInfo,
@@ -28,9 +29,9 @@ export default function PaymentPage({
         />
       </div>
       <VendorInfoWidget
-        vendorName={paymentInfo.vendorName}
-        vendorPhone={paymentInfo.phoneNumber}
-        vendorEmail={paymentInfo.email}
+        consumerName={paymentInfo.consumerName}
+        consumerPhone={paymentInfo.phoneNumber}
+        consumerEmail={paymentInfo.email}
       />
       <div className="grid grid-cols-[2fr_1fr] gap-8">
         <div className="flex flex-col gap-5">

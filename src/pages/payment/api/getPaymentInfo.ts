@@ -1,6 +1,6 @@
 import serverApi from '@/shared/api/server-api';
 import { ApiResponse } from '@/shared/model/apiType';
-import PaymentInfoProps from '../model/type';
+import { PaymentInfoProps } from '../model/type';
 
 export default async function getPaymentInfo({
   paymentEventSeq,

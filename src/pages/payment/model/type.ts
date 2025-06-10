@@ -1,4 +1,4 @@
-export default interface PaymentInfoProps {
+export interface PaymentInfoProps {
   paymentEventSeq: number;
   paymentEventName: string;
   category:
@@ -26,4 +26,32 @@ export default interface PaymentInfoProps {
   consumerName: string;
   phoneNumber: string;
   email: string;
+}
+
+export interface PaymentSuccessProps {
+  orderId: string;
+  orderName: string;
+  paymentKey: string;
+  method: string;
+  totalAmount: number;
+  approvedAt: string;
+  cardCompany: string;
+  cardNumber: string;
+  cardType: string;
+  receiptUrl: string;
+  category:
+    | 'BI'
+    | 'BPM'
+    | 'CMS'
+    | 'CRM'
+    | 'DMS'
+    | 'EAM'
+    | 'ECM'
+    | 'ERP'
+    | 'HR'
+    | 'HRM'
+    | 'KM'
+    | 'SCM'
+    | 'SI'
+    | 'SECURITY';
 }

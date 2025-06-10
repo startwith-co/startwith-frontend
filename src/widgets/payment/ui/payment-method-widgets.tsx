@@ -2,21 +2,23 @@
 
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
 import { useEffect, useState } from 'react';
-import PaymentInfoProps from '@/pages/payment/model/type';
+import { PaymentInfoProps } from '@/pages/payment/model/type';
 import { WidgetsProps } from '@/widgets/payment/model/type';
-
-const clientKey = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';
-const customerKey = 'xaszxdbW4vJ08QWeRLRdT';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function PaymentMethodWidgets({
-  amount,
+  actualAmount,
   paymentEventName,
   phoneNumber,
   email,
   vendorName,
+  paymentEventSeq,
 }: PaymentInfoProps) {
   const [ready, setReady] = useState(false);
   const [widgets, setWidgets] = useState<WidgetsProps>();
+  const clientKey = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';
+  // TODO: customerKey => 무작위
+  const customerKey = uuidv4();
 
   useEffect(() => {
     async function fetchPaymentWidgets() {
@@ -41,7 +43,7 @@ export default function PaymentMethodWidgets({
         return;
       }
       // ------ 주문의 결제 금액 설정 ------
-      await widgets.setAmount({ currency: 'KRW', value: amount });
+      await widgets.setAmount({ currency: 'KRW', value: actualAmount });
 
       await Promise.all([
         // ------  결제 UI 렌더링 ------
@@ -67,8 +69,8 @@ export default function PaymentMethodWidgets({
       return;
     }
 
-    widgets.setAmount({ currency: 'KRW', value: amount });
-  }, [widgets, amount]);
+    widgets.setAmount({ currency: 'KRW', value: actualAmount });
+  }, [widgets, actualAmount]);
 
   return (
     <div className="grid grid-cols-[2fr_1fr] gap-8">
@@ -89,13 +91,13 @@ export default function PaymentMethodWidgets({
                 // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
                 // TODO: random orderID 설정
                 await widgets?.requestPayment({
-                  orderId: 'y2Rv6eNn9bQZi-hrMWMWF222',
+                  orderId: uuidv4(),
                   orderName: `${paymentEventName}`,
-                  successUrl: `${window.location.origin}/payment/success`,
-                  failUrl: `${window.location.origin}/payment/fail`,
+                  successUrl: `${window.location.origin}/payment/success?paymentEventSeq=${paymentEventSeq}`,
+                  failUrl: `${window.location.origin}/payment/fail?paymentEventSeq=${paymentEventSeq}`,
                   customerEmail: email,
                   customerName: vendorName,
-                  customerMobilePhone: phoneNumber,
+                  customerMobilePhone: phoneNumber.replace(/-/g, ''),
                 });
               } catch (error) {
                 // TODO: 에러 종류에 따라 다른 UI 처리(toast)

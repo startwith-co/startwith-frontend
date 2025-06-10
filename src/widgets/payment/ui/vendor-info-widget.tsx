@@ -1,11 +1,11 @@
 export default function VendorInfoWidget({
-  vendorName,
-  vendorPhone,
-  vendorEmail,
+  consumerName,
+  consumerPhone,
+  consumerEmail,
 }: {
-  vendorName: string;
-  vendorPhone: string;
-  vendorEmail: string;
+  consumerName: string;
+  consumerPhone: string;
+  consumerEmail: string;
 }) {
   return (
     <div className="grid grid-cols-[2fr_1fr] gap-8">
@@ -14,15 +14,15 @@ export default function VendorInfoWidget({
         <div className="flex w-full flex-col gap-3.5 rounded-md bg-white p-6 shadow-md">
           <div className="grid grid-cols-[120px_347px] items-center">
             <span className="text-[#7A7A7A]">기업명</span>
-            <span>{vendorName}</span>
+            <span>{consumerName}</span>
           </div>
           <div className="grid grid-cols-[120px_347px] items-center">
             <span className="text-[#7A7A7A]">연락처</span>
-            <span>{vendorPhone}</span>
+            <span>{consumerPhone}</span>
           </div>
           <div className="grid grid-cols-[120px_347px] items-center">
             <span className="text-[#7A7A7A]">Email</span>
-            <span>{vendorEmail}</span>
+            <span>{consumerEmail}</span>
           </div>
         </div>
       </div>

@@ -1,4 +1,6 @@
-import serverApi from '@/shared/api/server-api';
+import { ApiResponse } from '@/shared/model/apiType';
+import api from '@/shared/api/index-api';
+import { PaymentSuccessProps } from '../model/type';
 
 export default async function paymentRequest({
   paymentKey,
@@ -11,8 +13,8 @@ export default async function paymentRequest({
   paymentEventSeq: string;
   amount: string;
 }) {
-  const response = await serverApi
-    .post(`api/payment-service/payment`, {
+  const response = await api
+    .post<ApiResponse<PaymentSuccessProps>>(`api/payment-service/payment`, {
       json: {
         paymentEventSeq: Number(paymentEventSeq),
         paymentKey,

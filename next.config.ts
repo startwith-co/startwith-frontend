@@ -3,6 +3,7 @@ import type { NextConfig } from 'next';
 
 // eslint-disable-next-line import/no-mutable-exports
 let nextConfig: NextConfig = {
+  reactStrictMode: false,
   transpilePackages: ['msw'],
   images: {
     remotePatterns: [
