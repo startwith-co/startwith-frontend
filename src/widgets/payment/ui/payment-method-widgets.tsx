@@ -2,19 +2,23 @@
 
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
 import { useEffect, useState } from 'react';
+import { PaymentInfoProps } from '@/pages/payment/model/type';
 import { WidgetsProps } from '@/widgets/payment/model/type';
+import { v4 as uuidv4 } from 'uuid';
 
-const clientKey = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';
-const customerKey = 'xaszxdbW4vJ08QWeRLRdT';
-
-export default function PaymentMethodWidgets() {
-  // TODO: 실제 데이터로 변경(쿠폰, 할인 적용 후)
-  const [amount, setAmount] = useState({
-    currency: 'KRW',
-    value: 100,
-  });
+export default function PaymentMethodWidgets({
+  actualAmount,
+  paymentEventName,
+  phoneNumber,
+  email,
+  vendorName,
+  paymentEventSeq,
+}: PaymentInfoProps) {
   const [ready, setReady] = useState(false);
   const [widgets, setWidgets] = useState<WidgetsProps>();
+  const clientKey = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';
+  // TODO: customerKey => 무작위
+  const customerKey = uuidv4();
 
   useEffect(() => {
     async function fetchPaymentWidgets() {
@@ -39,7 +43,7 @@ export default function PaymentMethodWidgets() {
         return;
       }
       // ------ 주문의 결제 금액 설정 ------
-      await widgets.setAmount(amount);
+      await widgets.setAmount({ currency: 'KRW', value: actualAmount });
 
       await Promise.all([
         // ------  결제 UI 렌더링 ------
@@ -65,8 +69,8 @@ export default function PaymentMethodWidgets() {
       return;
     }
 
-    widgets.setAmount(amount);
-  }, [widgets, amount]);
+    widgets.setAmount({ currency: 'KRW', value: actualAmount });
+  }, [widgets, actualAmount]);
 
   return (
     <div className="grid grid-cols-[2fr_1fr] gap-8">
@@ -85,15 +89,15 @@ export default function PaymentMethodWidgets() {
                 // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
                 // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
                 // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-                // TODO: random orderID 설정, 이름, 메일, 핸드폰 번호 전부 사용자 맞춤으로 설정
+                // TODO: random orderID 설정
                 await widgets?.requestPayment({
-                  orderId: 'y2Rv6eNn9bQZi-hrMWMWF',
-                  orderName: '토스 티셔츠 외 2건',
-                  successUrl: `${window.location.origin}/payment/success`,
-                  failUrl: `${window.location.origin}/payment/fail`,
-                  customerEmail: 'customer123@gmail.com',
-                  customerName: '김토스',
-                  customerMobilePhone: '01012341234',
+                  orderId: uuidv4(),
+                  orderName: `${paymentEventName}`,
+                  successUrl: `${window.location.origin}/payment/success?paymentEventSeq=${paymentEventSeq}`,
+                  failUrl: `${window.location.origin}/payment/fail?paymentEventSeq=${paymentEventSeq}`,
+                  customerEmail: email,
+                  customerName: vendorName,
+                  customerMobilePhone: phoneNumber.replace(/-/g, ''),
                 });
               } catch (error) {
                 // TODO: 에러 종류에 따라 다른 UI 처리(toast)

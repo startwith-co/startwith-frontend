@@ -80,6 +80,7 @@ export default function RootLayout({
             vendorName: 'vendorC',
             consumerSeq: 1,
             vendorSeq: 1,
+            paymentEventSeq: 0,
           }}
         >
           <AmplitudeContextProvider userId="">

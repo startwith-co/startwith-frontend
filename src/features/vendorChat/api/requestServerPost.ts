@@ -9,6 +9,7 @@ interface RequestServerPost {
   amount: number;
   contractConfirmationUrl: File | null;
   refundPolicyUrl: File | null;
+  paymentEventUniqueType: string;
 }
 
 async function requestServerPost(data: RequestServerPost) {
@@ -29,6 +30,7 @@ async function requestServerPost(data: RequestServerPost) {
     category: data.category,
     paymentEventName: data.paymentEventName,
     amount: data.amount,
+    paymentEventUniqueType: data.paymentEventUniqueType,
   };
 
   body.append(

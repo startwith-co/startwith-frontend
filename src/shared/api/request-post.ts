@@ -1,4 +1,5 @@
 import sendMessageJson from '@/shared/api/send-message-json';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  *
@@ -29,12 +30,14 @@ async function requestPost(
     | 'cancel-request-card'
     | 'cancel-complete-card'
     | 'pay-complete-card',
+  uuid: string,
 ): Promise<void> {
   const messagePayload = {
     type,
     solutionName,
     solutionCategory,
     solutionPrice,
+    uuid,
   };
 
   await sendMessageJson(

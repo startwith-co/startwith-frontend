@@ -7,6 +7,7 @@ import {
   useEffect,
   ReactNode,
   useMemo,
+  useCallback,
 } from 'react';
 
 interface ChatMetaContextType {
@@ -16,6 +17,7 @@ interface ChatMetaContextType {
   vendorName: string;
   vendorSeq: number;
   consumerSeq: number;
+  paymentEventSeq: number;
   setChatMeta: (
     meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>,
   ) => void;
@@ -39,15 +41,17 @@ function ChatMetaProvider({
     setChatMeta: () => {},
   });
 
-  const setChatMeta = (
-    meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>,
-  ) => {
-    setState((prev) => {
-      const updated = { ...prev, ...meta, setChatMeta };
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-      return updated;
-    });
-  };
+  const setChatMeta = useCallback(
+    (meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>) => {
+      setState((prev) => {
+        const updated = { ...prev, ...meta };
+        const withSetter = { ...updated, setChatMeta };
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(withSetter));
+        return withSetter;
+      });
+    },
+    [],
+  );
 
   useEffect(() => {
     const stored = sessionStorage.getItem(STORAGE_KEY);
@@ -59,9 +63,12 @@ function ChatMetaProvider({
         console.warn('Invalid chatMeta in sessionStorage');
       }
     }
-  }, []);
+  }, [setChatMeta]);
 
-  const value = useMemo(() => ({ ...state, setChatMeta }), [state]);
+  const value = useMemo(
+    () => ({ ...state, setChatMeta }),
+    [setChatMeta, state],
+  );
 
   return (
     <ChatMetaContext.Provider value={value}>

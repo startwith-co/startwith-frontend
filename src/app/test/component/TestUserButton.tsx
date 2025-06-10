@@ -9,7 +9,7 @@ import api from '@/shared/api/index-api';
 export default function TestUserButton() {
   const { setChatMeta, consumerId, vendorId } = useChatMeta();
   const vendorSeq = 1;
-  const consumerSeq = 2;
+  const consumerSeq = 1;
 
   useEffect(() => {
     const vendorPromise = api
