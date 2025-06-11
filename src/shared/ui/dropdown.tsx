@@ -30,7 +30,7 @@ export default function Dropdown({
 
   return (
     <div
-      className={cn('relative inline-block text-left', divClassName)}
+      className={cn('relative inline-block', divClassName)}
       ref={dropdownRef}
     >
       <button

@@ -9,7 +9,7 @@ import editInfoPost from '@/features/my/api/editInfoPost';
 import SignupIndustryModal from '@/features/signup/ui/signup-industry-modal';
 import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
-import useFileUpload from '@/shared/api/useFileUpload';
+import useFileUpload from '@/shared/model/useFileUpload';
 import Image from 'next/image';
 
 const schema = z.object({

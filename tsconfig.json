@@ -13,13 +13,15 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": ".",
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "fire-config": ["fire-config"]
     }
   },
   "include": [
@@ -28,7 +30,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "*.config.js",
-    "src/app/mockServer.ts"
+    "src/app/mockServer.ts",
   ],
   "exclude": ["node_modules"]
 }

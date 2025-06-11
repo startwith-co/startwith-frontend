@@ -1,4 +1,4 @@
-import SignupSuccessPage from '@/pages/signup/ui/signup-success-page';
+import SignupSuccessPage from '@/views/signup/ui/signup-success-page';
 
 function page() {
   return <SignupSuccessPage />;

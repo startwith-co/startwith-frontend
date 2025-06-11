@@ -28,11 +28,11 @@ const buttonVariants = cva(
         vendorGray: 'bg-[#3D3D3D] text-white',
         vendorBlack: 'bg-black text-white',
         textBlue:
-          'text-[#5B76FF] bg-white hover:bg-[#e8edff] hover:text-[#3d5aff] rounded-sm',
+          'text-[#5B76FF] bg-white hover:bg-[#5B76FF] hover:text-white rounded-sm',
         bgBlackGradient:
           'bg-gradient-to-t from-[#2D2D2D] to-[#404040] text-white hover:brightness-110 hover:shadow-lg rounded-sm',
         bgBlueGradient:
-          'bg-gradient-to-t from-[#6E86FF] to-[#5B76FF] text-white hover:brightness-105 hover:shadow-md rounded-sm',
+          'bg-gradient-to-t from-[#6E86FF] to-[#5B76FF] text-white hover:brightness-110 hover:shadow-md rounded-sm',
         home: 'bg-white text-black font-bold shadow-lg rounded-xl',
         category: 'bg-[#DBE8FF] text-black',
       },
