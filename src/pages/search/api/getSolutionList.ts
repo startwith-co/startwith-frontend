@@ -3,13 +3,13 @@ import { ApiResponse } from '@/shared/model/apiType';
 import SolutionProps from '../model/type';
 
 export default async function getSolutionList({
-  solutionCategory,
-  industryCategory,
+  category,
+  industry,
   budget = '전체',
   page = '1',
 }: {
-  solutionCategory?: string;
-  industryCategory?: string;
+  category?: string;
+  industry?: string;
   budget?: string;
   page?: string;
 }) {
@@ -19,8 +19,8 @@ export default async function getSolutionList({
   const query =
     // eslint-disable-next-line
     `api/solution-service/solution/list?` +
-    (solutionCategory ? `category=${solutionCategory}&` : '') +
-    (industryCategory ? `industry=${industryCategory}&` : '') +
+    (category ? `category=${category}&` : '') +
+    (industry ? `industry=${industry}&` : '') +
     (budget ? `budget=${budget}&` : '') +
     `start=${start}&end=${end}`;
 

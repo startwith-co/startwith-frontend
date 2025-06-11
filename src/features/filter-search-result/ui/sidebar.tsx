@@ -11,12 +11,12 @@ import {
 import { ChevronDown } from 'lucide-react';
 
 export default function Sidebar({
-  solutionCategory,
-  industryCategory,
+  category,
+  industry,
   budget,
 }: {
-  solutionCategory: string;
-  industryCategory: string;
+  category: string;
+  industry: string;
   budget: string;
 }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -53,11 +53,11 @@ export default function Sidebar({
               <li>
                 <span>솔루션 카테고리 선택</span>
                 <div className="flex gap-3.5">
-                  {solutionCategories.map((category) => (
+                  {solutionCategories.map((solutionCategory) => (
                     <FilterButton
-                      key={category}
-                      value={category}
-                      isActive={category === solutionCategory}
+                      key={solutionCategory}
+                      value={solutionCategory}
+                      isActive={solutionCategory === category}
                     />
                   ))}
                 </div>
@@ -65,11 +65,11 @@ export default function Sidebar({
               <li>
                 <span>산업군 카테고리 선택</span>
                 <div className="flex flex-wrap gap-3.5">
-                  {industryCategories.map((category) => (
+                  {industryCategories.map((industryCategory) => (
                     <FilterButton
-                      key={category}
-                      value={category}
-                      isActive={category === industryCategory}
+                      key={industryCategory}
+                      value={industryCategory}
+                      isActive={industryCategory === industry}
                     />
                   ))}
                 </div>
@@ -77,12 +77,12 @@ export default function Sidebar({
               <li>
                 <span>예산 설정</span>
                 <div className="flex flex-col gap-3.5">
-                  {scaleCategories.map((category) => (
+                  {scaleCategories.map((scaleCategory) => (
                     <FilterButton
-                      key={category}
-                      value={category}
+                      key={scaleCategory}
+                      value={scaleCategory}
                       className="text-xs"
-                      isActive={category === budget}
+                      isActive={scaleCategory === budget}
                     />
                   ))}
                 </div>
@@ -95,7 +95,7 @@ export default function Sidebar({
         )}
       </div>
       <div>
-        {/* TODO: context api에서 가져오기 */}
+        {/* TODO: props에서 가져오기 */}
         <h2 className="mb-3 pt-5 text-lg font-semibold">적용된 필터</h2>
         <Button asChild={false} variant="category">
           적용

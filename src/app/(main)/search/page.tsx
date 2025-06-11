@@ -5,13 +5,12 @@ export default async function Page({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const { solutionCategory, industryCategory, budget, page } =
-    await searchParams;
+  const { category, industry, budget, page } = await searchParams;
 
   return (
     <SearchPage
-      solutionCategory={solutionCategory as string}
-      industryCategory={industryCategory as string}
+      category={category as string}
+      industry={industry as string}
       budget={budget as string}
       page={page as string}
     />

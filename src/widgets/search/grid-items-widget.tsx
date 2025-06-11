@@ -6,7 +6,9 @@ export default function GridItemsWidget({
 }: {
   solutions: SolutionProps[];
 }) {
-  return (
+  return solutions.length === 0 ? (
+    <div>검색 결과가 없습니다.</div>
+  ) : (
     <div className="grid grid-cols-3 gap-10">
       {solutions.map((solution) => (
         <ItemBox

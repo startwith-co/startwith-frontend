@@ -20,9 +20,7 @@ function MainSectionButtons() {
   };
 
   const handleSecondSectionClick = (button: string) => {
-    router.push(
-      `/search?solutionCategory=${solutionCategory}&industryCategory=${button}`,
-    );
+    router.push(`/search?category=${solutionCategory}&industry=${button}`);
   };
 
   return (

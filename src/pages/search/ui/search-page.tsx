@@ -4,19 +4,19 @@ import GridItemsWidget from '@/widgets/search/grid-items-widget';
 import getSolutionList from '../api/getSolutionList';
 
 export default async function SearchPage({
-  solutionCategory,
-  industryCategory,
+  category,
+  industry,
   budget,
   page,
 }: {
-  solutionCategory: string;
-  industryCategory: string;
+  category: string;
+  industry: string;
   budget: string;
   page: string;
 }) {
   const solutions = await getSolutionList({
-    solutionCategory,
-    industryCategory,
+    category,
+    industry,
     budget,
     page,
   });
@@ -27,14 +27,12 @@ export default async function SearchPage({
       <div className="h-72 w-full rounded-md bg-gray-200" />
       <div className="grid grid-cols-[1fr_4.5fr] gap-[120px]">
         {/* TODO: 사이드바 조건별로 다른 메뉴값 변경되게 */}
-        <Sidebar
-          solutionCategory={solutionCategory}
-          industryCategory={industryCategory}
-          budget={budget}
-        />
+        <Sidebar category={category} industry={industry} budget={budget} />
         <div className="mt-12.5 flex flex-col gap-5">
           <div className="flex items-center justify-between">
-            <h2 className="text-[16px] font-semibold">총 15개의 솔루션</h2>
+            <h2 className="text-[16px] font-semibold">
+              총 {solutions.length}개의 솔루션
+            </h2>
             <Dropdown
               buttonText="정렬"
               items={[]}
