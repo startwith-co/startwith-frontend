@@ -30,7 +30,8 @@ export default function InquireCard({
       // const session = await getSession();
       // console.log(session);
       // if (!session?.consumerSeq) return;
-      const consumerSeq = 2;
+      // TODO: 실제 session의 consumerSeq를 사용
+      const consumerSeq = 1;
 
       const res = await api
         .get(`api/b2b-service/consumer?consumerSeq=${consumerSeq}`)

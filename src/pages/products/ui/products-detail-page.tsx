@@ -4,7 +4,6 @@ import ProductDetail from '@/widgets/products/ui/product-detail';
 import Image from 'next/image';
 import VendorInfo from '@/widgets/products/ui/vendor-info';
 import getVendorInfo from '@/pages/vendorMy/api/getVendorInfo';
-import getConsumerInfo from '@/pages/vendorMy/api/getConsumerInfo';
 import getSolution from '../api/getSolution';
 import getVendorCategory from '../api/getVendorCategory';
 
@@ -23,6 +22,7 @@ export default async function ProductsDetailPage({
 
   return (
     <div className="mt-10 mb-72">
+      {/* TODO: 이미지 없을때 default 이미지 설정 */}
       <Image
         src={vendorInfo.vendorBannerImageUrl || ''}
         alt="image"

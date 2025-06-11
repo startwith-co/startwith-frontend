@@ -17,6 +17,8 @@ export default function GridItemsWidget({
           price={String(solution.amount)}
           rating={String(solution.averageStar)}
           company={solution.vendorName}
+          vendorSeq={String(solution.vendorSeq)}
+          category={solution.category}
         />
       ))}
     </div>

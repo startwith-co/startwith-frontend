@@ -3,4 +3,6 @@ export default interface ItemBoxProps {
   price: string;
   rating: string;
   company: string;
+  vendorSeq: string;
+  category: string;
 }
