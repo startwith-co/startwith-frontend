@@ -34,7 +34,7 @@ function HomeSecondSection() {
           variant="bgBlueGradient"
           className="mt-4 h-[60px] w-[550px] text-sm font-bold shadow-lg"
         >
-          <Link href="/signup/user">지금 바로 SOLU 시작하기</Link>
+          <Link href="#top">지금 바로 SOLU 시작하기</Link>
         </Button>
       </div>
     </section>

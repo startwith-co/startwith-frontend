@@ -72,6 +72,7 @@ export default function RootLayout({
           pauseOnHover
           theme="light"
         />
+
         <ChatMetaProvider
           initialValues={{
             consumerId: 'userA',

@@ -78,6 +78,7 @@ export default function Sidebar() {
         )}
       </div>
       <div>
+        {/* TODO: context api에서 가져오기 */}
         <h2 className="mb-3 pt-5 text-lg font-semibold">적용된 필터</h2>
         <Button asChild={false} variant="category">
           적용
