@@ -19,12 +19,12 @@ export default function SuccessPage({
   amount: string;
 }) {
   const router = useRouter();
-  const chatMeta = sessionStorage.getItem('chatMeta');
-  const { vendorId, consumerId, vendorName, consumerName } = JSON.parse(
-    chatMeta || '{}',
-  );
 
   useEffect(() => {
+    const chatMeta = sessionStorage.getItem('chatMeta');
+    const { vendorId, consumerId, vendorName, consumerName } = JSON.parse(
+      chatMeta || '{}',
+    );
     const fetchData = async () => {
       try {
         const res = await paymentRequest({
