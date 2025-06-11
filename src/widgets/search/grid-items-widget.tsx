@@ -1,50 +1,26 @@
 import ItemBox from '@/entities/search/ui/item-box';
+import SolutionProps from '@/pages/search/model/type';
 
-export default function GridItemsWidget() {
-  return (
+export default function GridItemsWidget({
+  solutions,
+}: {
+  solutions: SolutionProps[];
+}) {
+  return solutions.length === 0 ? (
+    <div>검색 결과가 없습니다.</div>
+  ) : (
     <div className="grid grid-cols-3 gap-10">
-      <ItemBox
-        name="더비즈온 중견기업 전용 ERP 구축"
-        price="2,000,000원/월(VAT 별도)~"
-        rating="4.5(12)"
-        company="더비즈온"
-      />
-      <ItemBox
-        name="더비즈온 중견기업 전용 ERP 구축"
-        price="2,000,000원/월(VAT 별도)~"
-        rating="4.5(12)"
-        company="더비즈온"
-      />
-      <ItemBox
-        name="더비즈온 중견기업 전용 ERP 구축"
-        price="2,000,000원/월(VAT 별도)~"
-        rating="4.5(12)"
-        company="더비즈온"
-      />
-      <ItemBox
-        name="더비즈온 중견기업 전용 ERP 구축"
-        price="2,000,000원/월(VAT 별도)~"
-        rating="4.5(12)"
-        company="더비즈온"
-      />
-      <ItemBox
-        name="더비즈온 중견기업 전용 ERP 구축"
-        price="2,000,000원/월(VAT 별도)~"
-        rating="4.5(12)"
-        company="더비즈온"
-      />
-      <ItemBox
-        name="더비즈온 중견기업 전용 ERP 구축"
-        price="2,000,000원/월(VAT 별도)~"
-        rating="4.5(12)"
-        company="더비즈온"
-      />
-      <ItemBox
-        name="더비즈온 중견기업 전용 ERP 구축"
-        price="2,000,000원/월(VAT 별도)~"
-        rating="4.5(12)"
-        company="더비즈온"
-      />
+      {solutions.map((solution) => (
+        <ItemBox
+          key={solution.solutionSeq}
+          name={solution.solutionName}
+          price={String(solution.amount)}
+          rating={String(solution.averageStar)}
+          company={solution.vendorName}
+          vendorSeq={String(solution.vendorSeq)}
+          category={solution.category}
+        />
+      ))}
     </div>
   );
 }

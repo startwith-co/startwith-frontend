@@ -7,13 +7,18 @@ export default function ItemBox({
   price,
   rating,
   company,
+  vendorSeq,
+  category,
 }: ItemBoxProps) {
   return (
-    <Link href="/products/1" className="flex flex-col gap-5">
+    <Link
+      href={`/products/${vendorSeq}?category=${category}`}
+      className="flex flex-col gap-5"
+    >
       <div className="h-56 w-full rounded-md bg-gray-200" />
       <div className="flex flex-col gap-1">
         <span className="text-[15px] font-bold">{name}</span>
-        <span className="text-[15px]">{price}</span>
+        <span className="text-[15px]">{price}원/월(VAT 별도)~</span>
         <p className="flex items-center gap-1">
           <IoIosStar />
           <span className="text-xs">{rating}</span>
