@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { FiBell, FiMail } from 'react-icons/fi';
 import { IoSearchOutline } from 'react-icons/io5';
 import { PiGlobe } from 'react-icons/pi';
@@ -9,26 +11,42 @@ import { Button } from './button';
 import Dropdown from './dropdown';
 
 export default function UserHeader() {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const keyword = inputRef.current?.value.trim();
+    if (keyword) {
+      router.push(`/search?keyword=${keyword}`);
+    }
+  };
+
   return (
     <header className="flex items-center justify-between bg-transparent px-4 pt-[35px] sm:px-8 md:px-16 lg:px-32 2xl:px-[300px]">
       <div className="flex items-center gap-8">
         <Link href="/">
           <h1 className="text-primary text-3xl font-bold">SOLU</h1>
         </Link>
-        <div className="relative">
+
+        <form onSubmit={handleSearch} className="relative">
           <IoSearchOutline
             size={20}
             className="absolute top-1/2 left-3 -translate-y-1/2 transform"
           />
           <Input
+            ref={inputRef}
             type="search"
             placeholder="키워드를 검색해주세요."
             className="h-[45px] w-[420px] rounded-3xl bg-white pl-10 text-black shadow-sm placeholder:text-black"
           />
-          <button className="absolute top-1/2 right-3 flex size-[30px] -translate-y-1/2 transform items-center justify-center rounded-full bg-black p-1 text-center text-white">
+          <button
+            type="submit"
+            className="absolute top-1/2 right-3 flex size-[30px] -translate-y-1/2 transform items-center justify-center rounded-full bg-black p-1 text-center text-white"
+          >
             →
           </button>
-        </div>
+        </form>
       </div>
 
       <div className="flex items-center gap-3.5 text-[12px]">

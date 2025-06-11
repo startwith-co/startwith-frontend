@@ -6,11 +6,13 @@ export default async function getSolutionList({
   category,
   industry,
   budget = '전체',
+  keyword,
   page = '1',
 }: {
   category?: string;
   industry?: string;
   budget?: string;
+  keyword?: string;
   page?: string;
 }) {
   const start = (Number(page) - 1) * 15;
@@ -22,6 +24,7 @@ export default async function getSolutionList({
     (category ? `category=${category}&` : '') +
     (industry ? `industry=${industry}&` : '') +
     (budget ? `budget=${budget}&` : '') +
+    (keyword ? `keyword=${keyword}&` : '') +
     `start=${start}&end=${end}`;
 
   const response = await serverApi

@@ -8,17 +8,20 @@ export default async function SearchPage({
   industry,
   budget,
   page,
+  keyword,
 }: {
   category: string;
   industry: string;
   budget: string;
   page: string;
+  keyword: string;
 }) {
   const solutions = await getSolutionList({
     category,
     industry,
     budget,
     page,
+    keyword,
   });
 
   return (
