@@ -1,5 +1,5 @@
 import ky, { HTTPError } from 'ky';
-import { auth } from '@/app/api/auth/[...nextauth]/route';
+import { auth } from '@/auth';
 
 const serverApi = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_URL,

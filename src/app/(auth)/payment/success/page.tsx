@@ -1,9 +1,11 @@
 import SuccessPage from '@/pages/payment/ui/payment-success-page';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { paymentKey, orderId, paymentEventSeq, amount } = await searchParams;
 

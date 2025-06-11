@@ -4,6 +4,7 @@ import React, { useCallback } from 'react';
 import requestPost from '@/shared/api/request-post';
 import { useSolution } from '@/shared/model/SolutionProvider';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ChatVendorCancelModalProps {
   open: boolean;
@@ -35,6 +36,7 @@ export default function ChatVendorCancelModal({
       vendorId,
       vendorName,
       'cancel-complete-card',
+      uuidv4(),
     );
     setOpen(false);
   }, [solutionName, solutionPrice, solutionCategory, setOpen]);

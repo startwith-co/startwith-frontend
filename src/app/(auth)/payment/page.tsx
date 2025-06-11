@@ -1,10 +1,12 @@
 import PaymentPage from '@/pages/payment/ui/payment-page';
 import getPaymentInfo from '@/pages/payment/api/getPaymentInfo';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { paymentEventSeq } = await searchParams;
   const paymentInfo = await getPaymentInfo({

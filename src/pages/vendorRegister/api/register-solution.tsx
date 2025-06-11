@@ -1,6 +1,6 @@
 'use server';
 
-import { auth } from '@/app/api/auth/[...nextauth]/route';
+import { auth } from '@/auth';
 import serverApi from '@/shared/api/server-api';
 import { VendorRegisterSchema } from '../model/vendor-register-schema';
 import vendorCategoryMapping from '../utils/vendor-category-mapping';

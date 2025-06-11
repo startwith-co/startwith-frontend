@@ -19,6 +19,9 @@ function ChattingMainWrapper({ children }: { children: React.ReactNode }) {
         consumerName: 'userA',
         vendorId,
         vendorName: 'vendorA',
+        consumerSeq: 0,
+        vendorSeq: 0,
+        paymentEventSeq: 0,
       }}
     >
       {children}
