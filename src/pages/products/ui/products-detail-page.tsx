@@ -4,6 +4,7 @@ import ProductDetail from '@/widgets/products/ui/product-detail';
 import Image from 'next/image';
 import VendorInfo from '@/widgets/products/ui/vendor-info';
 import getVendorInfo from '@/pages/vendorMy/api/getVendorInfo';
+import defaultImage from 'public/images/404.png';
 import getSolution from '../api/getSolution';
 import getVendorCategory from '../api/getVendorCategory';
 
@@ -22,13 +23,12 @@ export default async function ProductsDetailPage({
 
   return (
     <div className="mt-10 mb-72">
-      {/* TODO: 이미지 없을때 default 이미지 설정 */}
       <Image
-        src={vendorInfo.vendorBannerImageUrl || ''}
+        src={vendorInfo.vendorBannerImageUrl || defaultImage}
         alt="image"
         width={100}
         height={100}
-        className="h-72 w-full bg-gray-200 object-cover"
+        className="h-72 w-full bg-gray-200 object-cover object-center"
       />
       <div className="mt-6.5 grid grid-cols-[1fr_3.5fr] gap-10 px-20 2xl:px-72">
         <InquireCard
