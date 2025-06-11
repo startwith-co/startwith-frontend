@@ -5,10 +5,12 @@ export default function FilterButton({
   value,
   className,
   isActive,
+  onClick,
 }: {
   value: string;
   className?: string;
   isActive?: boolean;
+  onClick?: () => void;
 }) {
   return (
     <Button
@@ -18,6 +20,7 @@ export default function FilterButton({
         className,
         isActive && 'bg-primary text-white',
       )}
+      onClick={onClick}
     >
       {value}
     </Button>
