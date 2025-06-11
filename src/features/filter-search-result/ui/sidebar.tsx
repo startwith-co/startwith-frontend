@@ -10,7 +10,15 @@ import {
 } from '@/entities/search/model/sidebar-filter';
 import { ChevronDown } from 'lucide-react';
 
-export default function Sidebar() {
+export default function Sidebar({
+  solutionCategory,
+  industryCategory,
+  budget,
+}: {
+  solutionCategory: string;
+  industryCategory: string;
+  budget: string;
+}) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   return (
@@ -46,7 +54,11 @@ export default function Sidebar() {
                 <span>솔루션 카테고리 선택</span>
                 <div className="flex gap-3.5">
                   {solutionCategories.map((category) => (
-                    <FilterButton key={category} value={category} />
+                    <FilterButton
+                      key={category}
+                      value={category}
+                      isActive={category === solutionCategory}
+                    />
                   ))}
                 </div>
               </li>
@@ -54,7 +66,11 @@ export default function Sidebar() {
                 <span>산업군 카테고리 선택</span>
                 <div className="flex flex-wrap gap-3.5">
                   {industryCategories.map((category) => (
-                    <FilterButton key={category} value={category} />
+                    <FilterButton
+                      key={category}
+                      value={category}
+                      isActive={category === industryCategory}
+                    />
                   ))}
                 </div>
               </li>
@@ -66,6 +82,7 @@ export default function Sidebar() {
                       key={category}
                       value={category}
                       className="text-xs"
+                      isActive={category === budget}
                     />
                   ))}
                 </div>
