@@ -3,7 +3,7 @@ import scale from '@/entities/product/model/scale';
 import {
   SolutionDetailProps,
   VendorCategoryProps,
-} from '@/pages/products/model/type';
+} from '@/views/products/model/type';
 import cn from '@/shared/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';

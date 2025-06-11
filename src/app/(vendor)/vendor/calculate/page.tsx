@@ -1,4 +1,4 @@
-import VendorCalculatePage from '@/pages/vendorCalculate/ui/vendor-calculate-page';
+import VendorCalculatePage from '@/views/vendorCalculate/ui/vendor-calculate-page';
 
 export const dynamic = 'force-dynamic';
 

@@ -4,7 +4,7 @@ import type { NextConfig } from 'next';
 // eslint-disable-next-line import/no-mutable-exports
 let nextConfig: NextConfig = {
   reactStrictMode: false,
-  transpilePackages: ['msw'],
+  transpilePackages: ['msw', 'next-auth'],
   images: {
     remotePatterns: [
       new URL('https://way-s3.s3.ap-northeast-2.amazonaws.com/**'),

@@ -2,7 +2,7 @@
 
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
 import { useEffect, useState } from 'react';
-import { PaymentInfoProps } from '@/pages/payment/model/type';
+import { PaymentInfoProps } from '@/views/payment/model/type';
 import { WidgetsProps } from '@/widgets/payment/model/type';
 import { v4 as uuidv4 } from 'uuid';
 

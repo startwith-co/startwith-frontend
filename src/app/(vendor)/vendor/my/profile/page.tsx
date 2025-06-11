@@ -1,7 +1,7 @@
 import { auth } from '@/auth';
-import VendorMyProfile from '@/pages/vendorMy/ui/vendor-my-profile-page';
+import VendorMyProfile from '@/views/vendorMy/ui/vendor-my-profile-page';
 import { SessionProvider } from 'next-auth/react';
-import getVendorInfo from '@/pages/vendorMy/api/getVendorInfo';
+import getVendorInfo from '@/views/vendorMy/api/getVendorInfo';
 
 export const dynamic = 'force-dynamic';
 

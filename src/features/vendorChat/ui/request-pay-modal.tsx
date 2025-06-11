@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from '@/shared/ui/dialog';
 
-import { useVendorModal } from '@/pages/vendor/chat/model/VendorModalProvider';
+import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import RequestPayForm from './request-pay-form';
 
 export default function RequestPayModal() {

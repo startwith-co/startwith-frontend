@@ -1,4 +1,4 @@
-import ForgetPage from '@/pages/forget/ui/forget-page';
+import ForgetPage from '@/views/forget/ui/forget-page';
 
 function page() {
   return <ForgetPage />;

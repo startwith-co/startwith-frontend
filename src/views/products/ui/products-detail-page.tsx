@@ -3,7 +3,7 @@ import ProductChart from '@/widgets/products/ui/product-chart';
 import ProductDetail from '@/widgets/products/ui/product-detail';
 import Image from 'next/image';
 import VendorInfo from '@/widgets/products/ui/vendor-info';
-import getVendorInfo from '@/pages/vendorMy/api/getVendorInfo';
+import getVendorInfo from '@/views/vendorMy/api/getVendorInfo';
 import defaultImage from 'public/images/404.png';
 import getSolution from '../api/getSolution';
 import getVendorCategory from '../api/getVendorCategory';

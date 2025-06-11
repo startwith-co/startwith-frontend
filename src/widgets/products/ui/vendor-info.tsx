@@ -1,6 +1,6 @@
 import WhiteBox from '@/shared/ui/white-box';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
-import { VendorInfoProps } from '@/pages/vendorMy/model/type';
+import { VendorInfoProps } from '@/views/vendorMy/model/type';
 
 function formatTimeRange(available: boolean, start: string, end: string) {
   if (!available) return '상담 불가능';

@@ -1,4 +1,4 @@
-import SearchPage from '@/pages/search/ui/search-page';
+import SearchPage from '@/views/search/ui/search-page';
 
 export default async function Page({
   searchParams,

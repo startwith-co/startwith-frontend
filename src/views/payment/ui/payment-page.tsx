@@ -5,7 +5,7 @@ import TotalPriceWidget from '@/widgets/payment/ui/total-price-widget';
 import VendorInfoWidget from '@/widgets/payment/ui/vendor-info-widget';
 import PaymentMethodWidgets from '@/widgets/payment/ui/payment-method-widgets';
 import { Button } from '@/shared/ui/button';
-import { PaymentInfoProps } from '@/pages/payment/model/type';
+import { PaymentInfoProps } from '@/views/payment/model/type';
 import { useState } from 'react';
 
 export default function PaymentPage({

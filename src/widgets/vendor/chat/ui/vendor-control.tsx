@@ -3,7 +3,7 @@
 import { Avatar, AvatarImage, AvatarFallback } from '@/shared/ui/avatar';
 import { Button } from '@/shared/ui/button';
 import RequestPayModal from '@/features/vendorChat/ui/request-pay-modal';
-import { useVendorModal } from '@/pages/vendor/chat/model/VendorModalProvider';
+import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import ChatUserCard from '@/entities/chat/ui/chat-user-card';
 
 function VendorControl() {

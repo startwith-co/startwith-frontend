@@ -1,5 +1,5 @@
-import PaymentPage from '@/pages/payment/ui/payment-page';
-import getPaymentInfo from '@/pages/payment/api/getPaymentInfo';
+import PaymentPage from '@/views/payment/ui/payment-page';
+import getPaymentInfo from '@/views/payment/api/getPaymentInfo';
 
 export const dynamic = 'force-dynamic';
 

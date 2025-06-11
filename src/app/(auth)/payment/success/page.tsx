@@ -1,4 +1,4 @@
-import SuccessPage from '@/pages/payment/ui/payment-success-page';
+import SuccessPage from '@/views/payment/ui/payment-success-page';
 
 export const dynamic = 'force-dynamic';
 

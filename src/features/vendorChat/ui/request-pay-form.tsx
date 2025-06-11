@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui/select';
-import { useVendorModal } from '@/pages/vendor/chat/model/VendorModalProvider';
+import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { useRoomId } from '@/shared/model/RoomIdProvider';
 import deleteLastMessage from '@/shared/api/delete-last-message';

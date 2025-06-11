@@ -1,4 +1,4 @@
-import VendorChatPage from '@/pages/vendor/chat/ui/vendor-chat-page';
+import VendorChatPage from '@/views/vendor/chat/ui/vendor-chat-page';
 
 export const dynamic = 'force-dynamic';
 

@@ -1,5 +1,5 @@
 import ItemBox from '@/entities/search/ui/item-box';
-import SolutionProps from '@/pages/search/model/type';
+import SolutionProps from '@/views/search/model/type';
 
 export default function GridItemsWidget({
   solutions,

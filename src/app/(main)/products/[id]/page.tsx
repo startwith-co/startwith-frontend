@@ -1,4 +1,4 @@
-import ProductsDetailPage from '@/pages/products/ui/products-detail-page';
+import ProductsDetailPage from '@/views/products/ui/products-detail-page';
 
 export default async function Page({
   params,

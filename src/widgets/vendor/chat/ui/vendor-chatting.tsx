@@ -2,16 +2,15 @@
 
 import Input from '@/shared/ui/input';
 import { MdOutlineAttachFile } from 'react-icons/md';
-import { useSearchParams, notFound } from 'next/navigation';
 import useMessageSend from '@/shared/model/useMessageSend';
-
 import { useEffect } from 'react';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
-import { useVendorModal } from '@/pages/vendor/chat/model/VendorModalProvider';
+import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
 import ChatsVendor from '@/entities/chat/ui/chats-vendor';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
+import { notFound } from 'next/navigation';
 
 function VendorChatting() {
   const { open } = useVendorModal();

@@ -1,4 +1,4 @@
-import LoginPage from '@/pages/login/ui/login-page';
+import LoginPage from '@/views/login/ui/login-page';
 
 function page() {
   return <LoginPage />;

@@ -1,4 +1,4 @@
-import ChatPage from '@/pages/user/chat/ui/chat-page';
+import ChatPage from '@/views/user/chat/ui/chat-page';
 
 export const dynamic = 'force-dynamic';
 
