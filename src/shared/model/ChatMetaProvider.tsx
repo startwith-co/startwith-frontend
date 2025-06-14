@@ -28,14 +28,17 @@ const STORAGE_KEY = 'chatMeta';
 const ChatMetaContext = createContext<ChatMetaContextType | undefined>(
   undefined,
 );
+const initialValues = {
+  consumerId: '',
+  consumerName: '',
+  vendorId: '',
+  vendorName: '',
+  consumerSeq: 0,
+  vendorSeq: 0,
+  paymentEventSeq: 0,
+};
 
-function ChatMetaProvider({
-  children,
-  initialValues,
-}: {
-  children: ReactNode;
-  initialValues: Omit<ChatMetaContextType, 'setChatMeta'>;
-}) {
+function ChatMetaProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<ChatMetaContextType>({
     ...initialValues,
     setChatMeta: () => {},
