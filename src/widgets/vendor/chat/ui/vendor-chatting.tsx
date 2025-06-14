@@ -10,15 +10,43 @@ import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
 import ChatsVendor from '@/entities/chat/ui/chats-vendor';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
+import useCurrentSession from '@/shared/model/useCurrentSession';
+import api from '@/shared/api/index-api';
+import { ConsumerDetailType } from '@/shared/model/consumerDetailType';
+import { ApiResponse } from '@/shared/model/apiType';
 
 function VendorChatting() {
   const { open } = useVendorModal();
-  const { vendorId, vendorName, consumerId } = useChatMeta();
+  const { vendorId, vendorName, consumerId, setChatMeta } = useChatMeta();
   const { handleSubmit, message, setMessage, messages, setMessages } =
     useMessageSend({
       messageId: vendorId,
       messageName: vendorName,
     });
+
+  const { session, status } = useCurrentSession();
+
+  useEffect(() => {
+    const fetchConsumer = async () => {
+      if (!session?.consumerSeq) return;
+      const { consumerSeq } = session;
+
+      const res = await api
+        .get(`api/b2b-service/consumer?consumerSeq=${consumerSeq}`)
+        .json<ApiResponse<ConsumerDetailType>>();
+
+      setChatMeta({
+        vendorName: session.name,
+        vendorId: session.uniqueType,
+        vendorSeq: session.vendorSeq,
+        consumerName: res.data.consumerName,
+        consumerId: res.data.consumerUniqueType,
+        consumerSeq: res.data.consumerSeq,
+      });
+    };
+
+    fetchConsumer();
+  }, [session, setChatMeta, vendorId, vendorName]);
 
   useEffect(() => {
     async function fetchMessages() {
