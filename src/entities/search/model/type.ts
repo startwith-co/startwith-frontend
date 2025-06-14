@@ -5,4 +5,5 @@ export default interface ItemBoxProps {
   company: string;
   vendorSeq: string;
   category: string;
+  image: string;
 }
