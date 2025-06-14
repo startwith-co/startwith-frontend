@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { DropdownProps } from '@/shared/model/type';
 import cn from '@/shared/lib/utils';
+import logoutAction from '@/shared/api/logoutAction';
 
 export default function Dropdown({
   buttonText,
@@ -59,6 +60,15 @@ export default function Dropdown({
                 {item.label}
               </button>
             ))}
+            <button
+              className="w-full px-2 py-2 text-center text-sm text-red-500 hover:bg-gray-100"
+              onClick={async () => {
+                await logoutAction();
+                setIsOpen(false);
+              }}
+            >
+              로그아웃
+            </button>
           </div>
         </div>
       )}

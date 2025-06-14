@@ -36,6 +36,8 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
                 consumerSeq: data.data.consumerSeq,
                 accessToken: data.data.accessToken,
                 refreshToken: data.data.refreshToken,
+                uniqueType: data.data.consumerUniqueType,
+                name: data.data.consumerName,
               };
             }
           }
@@ -59,6 +61,8 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
                 vendorSeq: data.data.vendorSeq,
                 accessToken: data.data.accessToken,
                 refreshToken: data.data.refreshToken,
+                uniqueType: data.data.vendorUniqueType,
+                name: data.data.vendorName,
               };
             }
           }
@@ -80,6 +84,8 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
           refreshToken: user.refreshToken,
           consumerSeq: user.consumerSeq,
           vendorSeq: user.vendorSeq,
+          uniqueType: user.uniqueType,
+          name: user.name,
         };
       }
       return token;
@@ -91,6 +97,8 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
         refreshToken: token.refreshToken,
         consumerSeq: token.consumerSeq,
         vendorSeq: token.vendorSeq,
+        uniqueType: token.uniqueType,
+        name: token.name,
       };
     },
   },

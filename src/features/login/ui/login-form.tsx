@@ -4,12 +4,12 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '@/shared/ui/input';
-import { signIn } from 'next-auth/react';
 import { Button } from '@/shared/ui/button';
 import Link from 'next/link';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import loginAction from '../api/loginAction';
 
 const schema = z.object({
   email: z.string().min(1, '이메일을 입력해주세요.'),
@@ -32,17 +32,12 @@ function LoginForm() {
   const router = useRouter();
 
   const onValid = async (data: FormSchema) => {
-    const res = await signIn('credentials', {
-      email: data.email,
-      password: data.password,
-      target,
-      redirect: false,
-    });
+    const result = await loginAction({ ...data, target });
 
-    if (res?.error) {
-      toast.error('로그인 실패: 아이디 또는 비밀번호를 확인해주세요.');
-    } else if (res?.status === 200) {
+    if (result.success) {
       router.push('/');
+    } else {
+      toast.error(`로그인 실패: ${result.message}`);
     }
   };
 
