@@ -10,7 +10,6 @@ import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
 import ChatsVendor from '@/entities/chat/ui/chats-vendor';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
-import { notFound } from 'next/navigation';
 
 function VendorChatting() {
   const { open } = useVendorModal();
@@ -23,15 +22,15 @@ function VendorChatting() {
 
   useEffect(() => {
     async function fetchMessages() {
-      if (!consumerId || !vendorId) notFound();
+      if (!consumerId || !vendorId) return;
       const roomId = await findChatExistingRoom(consumerId, vendorId);
-      if (!roomId) notFound();
+      if (!roomId) return;
       const fetchedMessages = await getMessagesById(roomId);
       setMessages(fetchedMessages);
     }
     if (open) return;
     fetchMessages();
-  }, [consumerId, vendorId, open]);
+  }, [consumerId, vendorId, open, setMessages]);
 
   const chatMainDate = formatMainDate(messages[0]?.createdAt) || '';
 

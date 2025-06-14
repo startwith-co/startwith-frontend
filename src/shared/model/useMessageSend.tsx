@@ -14,7 +14,6 @@ import {
 
 import createRoom from '@/shared/api/create-room';
 import { v4 as uuidv4 } from 'uuid';
-import { notFound } from 'next/navigation';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -56,7 +55,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     let unsubscribe: () => void;
 
     async function realTimeMessages() {
-      if (!consumerId || !vendorId) notFound();
+      if (!consumerId || !vendorId || consumerId === vendorId) return;
 
       const roomId = await findChatExistingRoom(consumerId, vendorId);
       if (roomId) {
@@ -85,6 +84,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!message.trim() && !attachedFile) return;
+
     const roomId = await findChatExistingRoom(consumerId, vendorId);
     const newRoomId = uuidv4();
     const targetRoomId = roomId || newRoomId;

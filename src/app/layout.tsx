@@ -75,17 +75,7 @@ export default function RootLayout({
             theme="light"
           />
 
-          <ChatMetaProvider
-            initialValues={{
-              consumerId: 'userA',
-              consumerName: 'userA',
-              vendorId: 'vendorC',
-              vendorName: 'vendorC',
-              consumerSeq: 1,
-              vendorSeq: 1,
-              paymentEventSeq: 0,
-            }}
-          >
+          <ChatMetaProvider>
             <AmplitudeContextProvider userId="">
               {process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? (
                 <> {children}</>
