@@ -46,7 +46,7 @@ export default function InquireCard({
     };
 
     fetchConsumer();
-  }, []);
+  }, [session, setChatMeta, vendorId, vendorName, vendorSeq]);
 
   return (
     <div className="flex flex-col gap-6">
