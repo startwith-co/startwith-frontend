@@ -3,17 +3,17 @@
 import { useState, useEffect } from 'react';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import db from 'fire-config';
-import { getSession } from 'next-auth/react';
 import { ChatRoom } from './roomType';
+import useCurrentSession from './useCurrentSession';
 
 function useGetChatRooms({ targetId }: { targetId: string }) {
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
-
+  const { session } = useCurrentSession();
+  console.log('session', session);
   useEffect(() => {
     let unsubscribe: () => void;
 
     const fetchRooms = async () => {
-      const session = await getSession();
       if (!session) return;
       const q = query(
         collection(db, 'chats'),
@@ -34,7 +34,7 @@ function useGetChatRooms({ targetId }: { targetId: string }) {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [targetId]);
+  }, [targetId, session]);
 
   return rooms;
 }
