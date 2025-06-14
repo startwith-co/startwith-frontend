@@ -6,13 +6,13 @@ import { useRouter } from 'next/navigation';
 import { FiBell, FiMail } from 'react-icons/fi';
 import { IoSearchOutline } from 'react-icons/io5';
 import { PiGlobe } from 'react-icons/pi';
-import { useSession } from 'next-auth/react';
+import useCurrentSession from '@/shared/model/useCurrentSession';
 import Input from './input';
 import { Button } from './button';
 import Dropdown from './dropdown';
 
 export default function UserHeader() {
-  const session = useSession();
+  const { session } = useCurrentSession();
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -64,7 +64,7 @@ export default function UserHeader() {
         <FiBell size={24} />
         <FiMail size={24} />
         <Dropdown
-          buttonText={session.data?.name || 'user'}
+          buttonText={session?.name || 'user'}
           items={[{ label: '내 정보' }]}
         />
       </div>

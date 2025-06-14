@@ -9,7 +9,7 @@ import api from '@/shared/api/index-api';
 import { ApiResponse } from '@/shared/model/apiType';
 import { ConsumerDetailType } from '@/shared/model/consumerDetailType';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import useCurrentSession from '@/shared/model/useCurrentSession';
 
 interface InquireCardProps {
   vendorName: string;
@@ -24,12 +24,12 @@ export default function InquireCard({
 }: InquireCardProps) {
   const { setChatMeta, consumerId: curConsumerId } = useChatMeta();
   const router = useRouter();
-  const session = useSession();
+  const { session, status } = useCurrentSession();
 
   useEffect(() => {
     const fetchConsumer = async () => {
-      if (!session?.data?.consumerSeq) return;
-      const { consumerSeq } = session.data;
+      if (!session?.consumerSeq) return;
+      const { consumerSeq } = session;
 
       const res = await api
         .get(`api/b2b-service/consumer?consumerSeq=${consumerSeq}`)
@@ -56,7 +56,7 @@ export default function InquireCard({
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <span className="text-xl font-bold">{vendorName}</span>
-        {session.data?.uniqueType !== vendorId && (
+        {session?.uniqueType !== vendorId && status === 'authenticated' && (
           <Button
             asChild={false}
             className="mt-4.5 w-full rounded-3xl"
