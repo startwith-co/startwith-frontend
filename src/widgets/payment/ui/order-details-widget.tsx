@@ -1,20 +1,26 @@
 import { Avatar, AvatarImage } from '@/shared/ui/avatar';
+import { PaymentInfoProps } from '@/views/payment/model/type';
+import Image from 'next/image';
+import defaultImage from 'public/images/404.png';
 
 export default function OrderDetailsWidget({
   paymentEventName,
   category,
   amount,
-}: {
-  paymentEventName: string;
-  category: string;
-  amount: number;
-}) {
+  representImageUrl,
+}: PaymentInfoProps) {
   return (
     <div className="flex flex-col gap-5">
       <h2 className="text-lg font-semibold">주문 내역</h2>
       <div className="flex w-full flex-col rounded-md bg-white p-6 shadow-md">
         <div className="flex gap-8">
-          <div className="h-40 w-2xs rounded-md bg-gray-300" />
+          <Image
+            src={representImageUrl || defaultImage}
+            alt="image"
+            width={200}
+            height={170}
+            className="h-40 w-2xs rounded-md bg-gray-300 object-cover object-center"
+          />
           <div className="flex flex-col justify-between gap-3">
             <div>
               <span className="font-semibold">{paymentEventName}</span>
