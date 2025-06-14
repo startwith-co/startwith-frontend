@@ -6,11 +6,13 @@ import { useRouter } from 'next/navigation';
 import { FiBell, FiMail } from 'react-icons/fi';
 import { IoSearchOutline } from 'react-icons/io5';
 import { PiGlobe } from 'react-icons/pi';
+import { useSession } from 'next-auth/react';
 import Input from './input';
 import { Button } from './button';
 import Dropdown from './dropdown';
 
 export default function UserHeader() {
+  const session = useSession();
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -61,7 +63,11 @@ export default function UserHeader() {
         </Button>
         <FiBell size={24} />
         <FiMail size={24} />
-        <Dropdown buttonText="스타트윗" items={[{ label: '내 정보' }]} />
+        {/* TODO: login시 이름도 저장해서 뽑아서 사용하기 */}
+        <Dropdown
+          buttonText={session.data?.user?.name || 'user'}
+          items={[{ label: '내 정보' }]}
+        />
       </div>
     </header>
   );
