@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import formatTime from '@/shared/lib/chat-format-time';
 import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
 import ChatUserBubble from './chat-user-bubble';
@@ -12,8 +13,16 @@ interface ChatsUserProps {
 }
 
 function ChatsUser({ messages, consumerId }: ChatsUserProps) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
-    <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
+    <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
       {messages.map((msg) => {
         let parsed;
         try {
@@ -44,30 +53,6 @@ function ChatsUser({ messages, consumerId }: ChatsUserProps) {
               msg={msg}
             >
               <ChatUserPayCompleteCard {...parsed} />
-            </ChatCardWrapper>
-          );
-        }
-
-        if (parsed?.type === 'cancel-request-card') {
-          return (
-            <ChatCardWrapper
-              key={msg.id + msg.createdAt}
-              isMine={isMine}
-              msg={msg}
-            >
-              <ChatUserCancelRequestCard {...parsed} />
-            </ChatCardWrapper>
-          );
-        }
-
-        if (parsed?.type === 'cancel-complete-card') {
-          return (
-            <ChatCardWrapper
-              key={msg.id + msg.createdAt}
-              isMine={isMine}
-              msg={msg}
-            >
-              <ChatUserCancelCompleteCard {...parsed} />
             </ChatCardWrapper>
           );
         }

@@ -1,7 +1,7 @@
 import api from '@/shared/api/index-api';
 import { ApiResponse } from '@/shared/model/apiType';
-import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { useEffect, useState } from 'react';
+import { getSession } from 'next-auth/react';
 import { CategoryRequest } from './vendorCategotyType';
 
 const solutionCategory = [
@@ -39,10 +39,11 @@ function useRequestCategory() {
     SolutionCategoryOption[]
   >([]);
 
-  const { vendorSeq } = useChatMeta();
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+        const session = await getSession();
+        const vendorSeq = session?.vendorSeq;
         const res = await api
           .get(`api/b2b-service/vendor/category?vendorSeq=${vendorSeq}`)
           .json<ApiResponse<CategoryRequest[]>>();
@@ -58,7 +59,7 @@ function useRequestCategory() {
     };
 
     fetchCategories();
-  }, [vendorSeq]);
+  }, []);
 
   return solutionCategoryOptions;
 }

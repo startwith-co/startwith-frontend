@@ -11,7 +11,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from 'firebase/firestore';
-
+import { useSearchParams } from 'next/navigation';
 import createRoom from '@/shared/api/create-room';
 import { v4 as uuidv4 } from 'uuid';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
@@ -21,6 +21,7 @@ import db, { storage } from 'fire-config';
 import { Message } from './roomType';
 import { useRoomId } from './RoomIdProvider';
 import { useChatMeta } from './ChatMetaProvider';
+import useCurrentSession from './useCurrentSession';
 
 interface UseMessageSendProps {
   messageId: string;
@@ -33,9 +34,13 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
-
+  const { session } = useCurrentSession();
   const { curRoomId, setCurRoomId } = useRoomId();
-  const { consumerId, consumerName, vendorId, vendorName } = useChatMeta();
+  const { consumerName, vendorName } = useChatMeta();
+
+  const searchParams = useSearchParams();
+  const consumerId = searchParams.get('consumerId') as string;
+  const vendorId = searchParams.get('vendorId') as string;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -90,6 +95,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     const targetRoomId = roomId || newRoomId;
 
     if (!roomId) {
+      if (!session) return;
       await createRoom(
         newRoomId,
         consumerId,
@@ -99,6 +105,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
         messageId,
         message,
         messageName,
+        session?.consumerSeq?.toString() || '',
       );
       setCurRoomId(newRoomId);
     }
