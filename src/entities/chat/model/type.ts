@@ -6,4 +6,5 @@ export default interface PaymentRequestProps {
   contractConfirmationUrl: string;
   refundPolicyUrl: string;
   createdAt: string;
+  orderId: string | null;
 }

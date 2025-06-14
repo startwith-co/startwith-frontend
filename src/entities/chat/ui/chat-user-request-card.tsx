@@ -2,7 +2,6 @@ import Solu from '@/shared/ui/solu';
 import { Button } from '@/shared/ui/button';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import getPaymentRequest from '@/entities/chat/api/getPaymentRequest';
 import PaymentRequestProps from '@/entities/chat/model/type';
 import CircleCheckbox from './circle-check-box';
@@ -28,6 +27,7 @@ function ChatUserRequestCard({
   const [paymentRequestData, setPaymentRequestData] =
     useState<PaymentRequestProps | null>(null);
   const router = useRouter();
+  console.log(paymentRequestData);
 
   useEffect(() => {
     const getPaymentRequestData = async () => {
@@ -82,17 +82,18 @@ function ChatUserRequestCard({
         <CircleCheckbox checked={checked} onCheckedChange={setChecked} />
       </div>
       <Button
-        disabled={!checked}
+        disabled={!checked || !!paymentRequestData?.orderId}
         asChild={false}
         variant="bgBlueGradient"
         className="mt-3 h-[45px] w-full font-bold text-white"
-        onClick={() =>
+        onClick={() => {
+          if (paymentRequestData?.orderId) return;
           router.push(
             `/payment?paymentEventSeq=${paymentRequestData?.paymentEventSeq}`,
-          )
-        }
+          );
+        }}
       >
-        결제하기
+        {paymentRequestData?.orderId ? '결제 완료' : '결제하기'}
       </Button>
     </div>
   );
