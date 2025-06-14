@@ -1,6 +1,7 @@
 import { IoIosStar } from 'react-icons/io';
 import Link from 'next/link';
 import Image from 'next/image';
+import defaultImage from 'public/images/404.png';
 import ItemBoxProps from '../model/type';
 
 export default function ItemBox({
@@ -18,10 +19,10 @@ export default function ItemBox({
       className="flex flex-col gap-5"
     >
       <Image
-        src={image}
+        src={image || defaultImage}
         alt={name}
-        width={100}
-        height={100}
+        width={200}
+        height={170}
         className="h-56 w-full rounded-md bg-gray-200 object-cover object-center"
       />
       <div className="flex flex-col gap-1">

@@ -26,8 +26,9 @@ export default async function ProductsDetailPage({
       <Image
         src={vendorInfo.vendorBannerImageUrl || defaultImage}
         alt="image"
-        width={100}
-        height={100}
+        width={200}
+        height={170}
+        unoptimized
         className="h-72 w-full bg-gray-200 object-cover object-center"
       />
       <div className="mt-6.5 grid grid-cols-[1fr_3.5fr] gap-10 px-20 2xl:px-72">
