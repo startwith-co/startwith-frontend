@@ -63,9 +63,8 @@ export default function UserHeader() {
         </Button>
         <FiBell size={24} />
         <FiMail size={24} />
-        {/* TODO: login시 이름도 저장해서 뽑아서 사용하기 */}
         <Dropdown
-          buttonText={session.data?.user?.name || 'user'}
+          buttonText={session.data?.name || 'user'}
           items={[{ label: '내 정보' }]}
         />
       </div>
