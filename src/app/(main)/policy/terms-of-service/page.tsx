@@ -1,9 +1,9 @@
 export default function TermsOfService() {
   return (
     <div className="mx-auto my-10 max-w-4xl px-6 py-10 text-gray-800">
-      <h1 className="mb-6 text-3xl font-bold">이용약관</h1>
+      <h1 className="mb-1 text-3xl font-bold">이용약관</h1>
 
-      <section className="mb-10">
+      <section className="mb-6">
         <p className="text-sm">
           법적 근거: 「약관의 규제에 관한 법률」, 「전자상거래 등에서의
           소비자보호에 관한 법률」, 「정보통신망 이용촉진 및 정보보호 등에 관한
