@@ -6,11 +6,13 @@ import { useRouter } from 'next/navigation';
 import { FiBell, FiMail } from 'react-icons/fi';
 import { IoSearchOutline } from 'react-icons/io5';
 import { PiGlobe } from 'react-icons/pi';
+import useCurrentSession from '@/shared/model/useCurrentSession';
 import Input from './input';
 import { Button } from './button';
 import Dropdown from './dropdown';
 
 export default function UserHeader() {
+  const { session } = useCurrentSession();
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -50,18 +52,27 @@ export default function UserHeader() {
       </div>
 
       <div className="flex items-center gap-3.5 text-[12px]">
-        <Link href="/vendor">
-          <Button asChild={false} variant="vendor" className="h-7 text-[12px]">
-            밴더 전용 HOME
-          </Button>
-        </Link>
+        {session?.role === 'vendor' && (
+          <Link href="/vendor">
+            <Button
+              asChild={false}
+              variant="vendor"
+              className="h-7 text-[12px]"
+            >
+              밴더 전용 HOME
+            </Button>
+          </Link>
+        )}
         <Button asChild={false} variant="ghost" className="h-7 text-[12px]">
           <PiGlobe />
           <span className="font-normal">Language</span>
         </Button>
         <FiBell size={24} />
         <FiMail size={24} />
-        <Dropdown buttonText="스타트윗" items={[{ label: '내 정보' }]} />
+        <Dropdown
+          buttonText={session?.name || 'user'}
+          items={[{ label: '내 정보' }]}
+        />
       </div>
     </header>
   );

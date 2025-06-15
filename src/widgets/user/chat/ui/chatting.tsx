@@ -7,10 +7,13 @@ import Image from 'next/image';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
 import ChatsUser from '@/entities/chat/ui/chats-user';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
+import { useSearchParams } from 'next/navigation';
 
 function Chatting() {
-  const { consumerId, consumerName } = useChatMeta();
-  console.log('consumerId', consumerId, 'consumerName', consumerName);
+  const { consumerName } = useChatMeta();
+  const searchParams = useSearchParams();
+  const consumerId = searchParams.get('consumerId') as string;
+  const vendorId = searchParams.get('vendorId') as string;
 
   const {
     handleSubmit,
@@ -72,6 +75,7 @@ function Chatting() {
             onChange={handleFileChange}
           />
           <button
+            disabled={!consumerId || !vendorId}
             type="submit"
             className="bg-primary absolute top-1/2 right-2 flex size-[30px] -translate-y-1/2 items-center justify-center rounded-full p-1 text-white"
           >

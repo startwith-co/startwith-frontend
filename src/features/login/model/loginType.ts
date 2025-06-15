@@ -4,10 +4,14 @@ export interface LoginRequest {
 }
 
 export interface AuthData {
-  vendorSeq: any;
+  vendorSeq: number;
   consumerSeq: number;
   accessToken: string;
   refreshToken: string;
+  consumerUniqueType: string;
+  consumerName: string;
+  vendorUniqueType: string;
+  vendorName: string;
 }
 
 interface ApiResponse<T> {

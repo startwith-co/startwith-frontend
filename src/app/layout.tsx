@@ -3,6 +3,7 @@ import './globals.css';
 import localFont from 'next/font/local';
 import { ToastContainer } from 'react-toastify';
 import ChatMetaProvider from '@/shared/model/ChatMetaProvider';
+import { SessionProvider } from 'next-auth/react';
 import AmplitudeContextProvider from './_providers/amplitude-provider';
 import SentryProvider from './_providers/sentry-provider';
 
@@ -60,38 +61,30 @@ export default function RootLayout({
   return (
     <html lang="kr">
       <body className={`${PretendardFont.className}`}>
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+        <SessionProvider>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
 
-        <ChatMetaProvider
-          initialValues={{
-            consumerId: 'userA',
-            consumerName: 'userA',
-            vendorId: 'vendorC',
-            vendorName: 'vendorC',
-            consumerSeq: 1,
-            vendorSeq: 1,
-            paymentEventSeq: 0,
-          }}
-        >
-          <AmplitudeContextProvider userId="">
-            {process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? (
-              <> {children}</>
-            ) : (
-              <SentryProvider>{children}</SentryProvider>
-            )}
-          </AmplitudeContextProvider>
-        </ChatMetaProvider>
+          <ChatMetaProvider>
+            <AmplitudeContextProvider userId="">
+              {process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? (
+                <> {children}</>
+              ) : (
+                <SentryProvider>{children}</SentryProvider>
+              )}
+            </AmplitudeContextProvider>
+          </ChatMetaProvider>
+        </SessionProvider>
       </body>
     </html>
   );

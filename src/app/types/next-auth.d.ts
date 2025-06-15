@@ -7,6 +7,9 @@ declare module 'next-auth' {
     refreshToken?: string;
     consumerSeq?: number;
     vendorSeq?: number;
+    uniqueType?: string;
+    name?: string;
+    role: string;
   }
 
   interface User {
@@ -14,6 +17,8 @@ declare module 'next-auth' {
     refreshToken?: string;
     consumerSeq?: number;
     vendorSeq?: number;
+    name?: string;
+    role: string;
   }
 }
 
@@ -23,5 +28,8 @@ declare module 'next-auth/jwt' {
     refreshToken?: string;
     consumerSeq?: number;
     vendorSeq?: number;
+    uniqueType?: string;
+    name?: string;
+    role: string;
   }
 }

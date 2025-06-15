@@ -4,7 +4,7 @@ import { Star } from 'lucide-react';
 import SubmitCustomButton from '@/shared/ui/submit-custom-button';
 import CustomModal from '@/shared/ui/custommodal';
 import api from '@/shared/api/index-api';
-import { useSession } from 'next-auth/react';
+import useCurrentSession from '@/shared/model/useCurrentSession';
 
 export default function ReviewModal({
   open,
@@ -18,7 +18,7 @@ export default function ReviewModal({
   const [text, setText] = useState('');
   const solutionSeq = 8;
   const maxChars = 500;
-  const { data: session } = useSession();
+  const { session } = useCurrentSession();
   const handleSubmit = async () => {
     await api.post(`api/solution-service/review`, {
       body: JSON.stringify({

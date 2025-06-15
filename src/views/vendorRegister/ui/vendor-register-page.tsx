@@ -7,7 +7,7 @@ import VendorNormalInfo from '@/widgets/vendorRegister/ui/vendor-normal-info';
 import VendorSaleInfo from '@/widgets/vendorRegister/ui/vendor-sale-info';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
+import useCurrentSession from '@/shared/model/useCurrentSession';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import {
@@ -18,7 +18,7 @@ import VendorSubmitModal from './vendor-submit-modal';
 import registerSolution from '../api/register-solution';
 
 export default function VendorRegisterPage() {
-  const session = useSession();
+  const { session } = useCurrentSession();
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -27,7 +27,7 @@ export default function VendorRegisterPage() {
     defaultValues: {
       representImageUrl: new File([], ''),
       descriptionPdfUrl: new File([], ''),
-      vendorSeq: session.data?.vendorSeq || 0,
+      vendorSeq: session?.vendorSeq || 0,
       solutionName: '',
       solutionDetail: '',
       category: '',

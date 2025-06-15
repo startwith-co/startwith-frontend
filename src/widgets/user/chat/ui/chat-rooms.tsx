@@ -9,7 +9,6 @@ import {
   PaginationLink,
 } from '@/shared/ui/pagination';
 import { IoSearchOutline } from 'react-icons/io5';
-import formatTime from '@/shared/lib/chat-format-time';
 import useGetChatRooms from '@/shared/model/useGetChatRooms';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
 

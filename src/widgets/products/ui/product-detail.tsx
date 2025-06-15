@@ -44,9 +44,9 @@ export default function ProductDetail({
         <Image
           src={representImageUrl}
           alt="image"
-          width={100}
-          height={100}
-          className="bg-box-gray size-12 h-[210px] w-full rounded-md"
+          width={200}
+          height={170}
+          className="bg-box-gray size-12 h-[210px] w-full rounded-md object-cover object-center"
         />
         <div className="flex flex-col">
           <span className="text-xl font-semibold">{solutionName}</span>

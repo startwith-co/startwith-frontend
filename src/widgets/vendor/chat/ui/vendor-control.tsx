@@ -5,10 +5,13 @@ import { Button } from '@/shared/ui/button';
 import RequestPayModal from '@/features/vendorChat/ui/request-pay-modal';
 import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import ChatUserCard from '@/entities/chat/ui/chat-user-card';
+import { useSearchParams } from 'next/navigation';
 
 function VendorControl() {
   const { setOpen } = useVendorModal();
-
+  const searchParams = useSearchParams();
+  const consumerId = searchParams.get('consumerId') as string;
+  const vendorId = searchParams.get('vendorId') as string;
   return (
     <div className="flex h-full w-full flex-col gap-2.5 rounded-3xl bg-[#FFFFFF] px-8 pt-[19px] shadow-lg">
       <Avatar className="flex size-20 items-center justify-center self-center rounded-full">
@@ -26,6 +29,7 @@ function VendorControl() {
         <div className="mb-5 flex flex-col gap-2.5">
           <Button
             asChild={false}
+            disabled={!consumerId || !vendorId}
             variant="bgBlueGradient"
             className="h-[50px] w-[90%] self-center text-sm text-white"
             onClick={() => {

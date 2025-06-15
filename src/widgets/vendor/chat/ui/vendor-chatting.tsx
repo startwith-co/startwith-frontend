@@ -4,34 +4,66 @@ import Input from '@/shared/ui/input';
 import { MdOutlineAttachFile } from 'react-icons/md';
 import useMessageSend from '@/shared/model/useMessageSend';
 import { useEffect } from 'react';
-import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
 import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
 import ChatsVendor from '@/entities/chat/ui/chats-vendor';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
-import { notFound } from 'next/navigation';
+import useCurrentSession from '@/shared/model/useCurrentSession';
+import api from '@/shared/api/index-api';
+import { ConsumerDetailType } from '@/shared/model/consumerDetailType';
+import { ApiResponse } from '@/shared/model/apiType';
+import getRoomInformationById from '@/shared/api/get-room-information-by-id';
+import { useSearchParams } from 'next/navigation';
 
 function VendorChatting() {
   const { open } = useVendorModal();
-  const { vendorId, vendorName, consumerId } = useChatMeta();
+  const { vendorName, setChatMeta } = useChatMeta();
+  const searchParams = useSearchParams();
+  const consumerId = searchParams.get('consumerId') as string;
+  const vendorId = searchParams.get('vendorId') as string;
+
   const { handleSubmit, message, setMessage, messages, setMessages } =
     useMessageSend({
       messageId: vendorId,
       messageName: vendorName,
     });
 
+  const { session } = useCurrentSession();
+
+  useEffect(() => {
+    if (!consumerId || !vendorId) return;
+    const fetchConsumer = async () => {
+      const roomInfo = await getRoomInformationById(consumerId, vendorId);
+
+      if (!roomInfo || !session) return;
+      const res = await api
+        .get(`api/b2b-service/consumer?consumerSeq=${roomInfo.consumerSeq}`)
+        .json<ApiResponse<ConsumerDetailType>>();
+      setChatMeta({
+        vendorName: session.name,
+        vendorId: session.uniqueType,
+        vendorSeq: session.vendorSeq,
+        consumerName: res.data.consumerName,
+        consumerId: res.data.consumerUniqueType,
+        consumerSeq: res.data.consumerSeq,
+      });
+    };
+
+    fetchConsumer();
+  }, [session, setChatMeta, vendorId, vendorName, consumerId]);
+
   useEffect(() => {
     async function fetchMessages() {
-      if (!consumerId || !vendorId) notFound();
-      const roomId = await findChatExistingRoom(consumerId, vendorId);
-      if (!roomId) notFound();
-      const fetchedMessages = await getMessagesById(roomId);
+      if (!consumerId || !vendorId) return;
+      const roomInfo = await getRoomInformationById(consumerId, vendorId);
+      if (!roomInfo) return;
+      const fetchedMessages = await getMessagesById(roomInfo.roomId);
       setMessages(fetchedMessages);
     }
     if (open) return;
     fetchMessages();
-  }, [consumerId, vendorId, open]);
+  }, [consumerId, vendorId, open, setMessages]);
 
   const chatMainDate = formatMainDate(messages[0]?.createdAt) || '';
 
@@ -57,6 +89,7 @@ function VendorChatting() {
         />
         <MdOutlineAttachFile className="absolute top-1/2 right-16 size-5.5 -translate-y-1/2 transform text-white" />
         <button
+          disabled={!vendorId || !consumerId}
           type="submit"
           className="absolute top-1/2 right-7 flex size-[30px] -translate-y-1/2 transform items-center justify-center rounded-full bg-[#212121] p-1 text-center text-white"
         >

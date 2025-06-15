@@ -3,9 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from '../lib/utils';
 import DarkBox from './dark-box';
+import useGetChatRooms from '../model/useGetChatRooms';
 
 interface Route {
   label: string;
@@ -20,8 +21,20 @@ interface ProfileSideProps {
 
 function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
   const pathname = usePathname();
+  const rooms = useGetChatRooms({ targetId: 'vendorId' });
   const isActive = (path: string) => pathname === path;
-
+  const [dynamicRoute, setDynamicRoute] = useState({
+    label: '실시간 상담 관리',
+    href: '/vendor/chat',
+  });
+  useEffect(() => {
+    if (rooms.length > 0) {
+      setDynamicRoute({
+        label: '실시간 상담 관리',
+        href: `/vendor/chat?vendorId=${rooms[0].vendorId}&userId=${rooms[0].consumerId}`,
+      });
+    }
+  }, [rooms]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpen = () => setIsModalOpen(true);
@@ -102,6 +115,20 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
           {route.label}
         </Link>
       ))}
+      {mode === 'vendor' && dynamicRoute && (
+        <Link
+          key={dynamicRoute?.href}
+          href={dynamicRoute?.href}
+          className={cn(
+            'mb-5',
+            isActive(dynamicRoute?.href)
+              ? 'text-md font-bold'
+              : 'text-sm font-semibold',
+          )}
+        >
+          {dynamicRoute?.label}
+        </Link>
+      )}
     </aside>
   );
 }

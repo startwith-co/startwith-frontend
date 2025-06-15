@@ -31,6 +31,7 @@ async function sendMessageJson(
       messageId,
       message,
       messageName,
+      '',
     );
   }
 

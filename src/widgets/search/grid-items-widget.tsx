@@ -19,6 +19,7 @@ export default function GridItemsWidget({
           company={solution.vendorName}
           vendorSeq={String(solution.vendorSeq)}
           category={solution.category}
+          image={solution.representImageUrl}
         />
       ))}
     </div>

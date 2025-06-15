@@ -1,4 +1,5 @@
 import cn from '@/shared/lib/utils';
+import Link from 'next/link';
 
 interface FooterProps {
   mode?: 'vendor' | 'user';
@@ -21,11 +22,11 @@ export default function Footer({ mode = 'user' }: FooterProps) {
       )}
     >
       <ul className="border-[rgba(217, 217, 217, 1)] flex items-center justify-evenly border-y p-2.5 text-sm">
-        <li>SOLU</li>
-        <li>이용약관</li>
-        <li>운영정책</li>
-        <li>개인정보처리방침</li>
-        <li>광고제휴</li>
+        <Link href="/">SOLU</Link>
+        <Link href="/policy/terms-of-service">이용약관</Link>
+        <Link href="/policy/operation-policy">운영정책</Link>
+        <Link href="/policy/privacy-policy">개인정보처리방침</Link>
+        <Link href="/policy/advertising-policy">광고제휴</Link>
       </ul>
       <div className="text-vendor-secondary flex flex-col gap-2.5 pl-14">
         <h2 className="text-xl font-extrabold">스타트윗 사업자 정보</h2>
