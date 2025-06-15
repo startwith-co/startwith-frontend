@@ -4,6 +4,7 @@ import {
   apiAuthPrefix,
   publicRoutes,
   authRoutes,
+  vendorRoutes,
   DEFAULT_LOGIN_REDIRECT,
 } from 'route';
 
@@ -13,6 +14,9 @@ export default middleware(async (req) => {
   const isApiRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isVendorRoute = vendorRoutes.some((route) =>
+    nextUrl.pathname.startsWith(route),
+  );
 
   if (isApiRoute) {
     return NextResponse.next();
@@ -28,6 +32,11 @@ export default middleware(async (req) => {
   if (!isLoggedIn && !isPublicRoute) {
     return NextResponse.redirect(new URL('/login', nextUrl));
   }
+
+  if (isLoggedIn && isVendorRoute && auth.role !== 'vendor') {
+    return NextResponse.redirect(new URL('/', nextUrl));
+  }
+
   return NextResponse.next();
 });
 
