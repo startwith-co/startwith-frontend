@@ -22,7 +22,7 @@ export const authRoutes = [
   '/forget',
 ];
 
-export const vendorRoutes = ['/vendor'];
+export const vendorRoutes = '/vendor';
 
 /**
  * The prefix for API authentication routes
