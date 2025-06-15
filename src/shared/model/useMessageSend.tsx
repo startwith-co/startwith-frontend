@@ -95,7 +95,6 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     const targetRoomId = roomId || newRoomId;
 
     if (!roomId) {
-      if (!session) return;
       await createRoom(
         newRoomId,
         consumerId,
