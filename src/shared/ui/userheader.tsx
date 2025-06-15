@@ -52,11 +52,17 @@ export default function UserHeader() {
       </div>
 
       <div className="flex items-center gap-3.5 text-[12px]">
-        <Link href="/vendor">
-          <Button asChild={false} variant="vendor" className="h-7 text-[12px]">
-            밴더 전용 HOME
-          </Button>
-        </Link>
+        {session?.role === 'vendor' && (
+          <Link href="/vendor">
+            <Button
+              asChild={false}
+              variant="vendor"
+              className="h-7 text-[12px]"
+            >
+              밴더 전용 HOME
+            </Button>
+          </Link>
+        )}
         <Button asChild={false} variant="ghost" className="h-7 text-[12px]">
           <PiGlobe />
           <span className="font-normal">Language</span>

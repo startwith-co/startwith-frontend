@@ -9,6 +9,7 @@ declare module 'next-auth' {
     vendorSeq?: number;
     uniqueType?: string;
     name?: string;
+    role: string;
   }
 
   interface User {
@@ -17,6 +18,7 @@ declare module 'next-auth' {
     consumerSeq?: number;
     vendorSeq?: number;
     name?: string;
+    role: string;
   }
 }
 
@@ -28,5 +30,6 @@ declare module 'next-auth/jwt' {
     vendorSeq?: number;
     uniqueType?: string;
     name?: string;
+    role: string;
   }
 }
