@@ -1,4 +1,5 @@
 import { Button } from '@/shared/ui/button';
+import Link from 'next/link';
 
 export default function TotalPriceWidget({
   totalPrice,
@@ -28,9 +29,11 @@ export default function TotalPriceWidget({
             <span>총 결제 금액</span>
             <span>{actualAmount}원</span>
           </div>
-          <Button asChild={false} className="h-12 w-full">
-            결제하기
-          </Button>
+          <Link href="#pay">
+            <Button asChild={false} className="h-12 w-full">
+              결제하기
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
