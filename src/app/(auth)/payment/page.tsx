@@ -14,12 +14,12 @@ export default async function Page({
     paymentEventSeq: paymentEventSeq as string,
   });
 
-  if (
-    !session?.consumerSeq ||
-    session?.consumerSeq !== paymentInfo.consumerSeq
-  ) {
-    return redirect('/');
-  }
+  // if (
+  //   !session?.consumerSeq ||
+  //   session?.consumerSeq !== paymentInfo.consumerSeq
+  // ) {
+  //   return redirect('/');
+  // }
 
   return <PaymentPage paymentInfo={paymentInfo} />;
 }
