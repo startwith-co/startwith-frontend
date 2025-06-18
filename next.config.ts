@@ -8,6 +8,7 @@ let nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       new URL('https://way-s3.s3.ap-northeast-2.amazonaws.com/**'),
+      new URL('https://startwith-solu.s3.ap-northeast-2.amazonaws.com/**'),
     ],
   },
   webpack: (config) => {

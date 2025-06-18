@@ -1,6 +1,6 @@
 import serverApi from '@/shared/api/server-api';
 import { ApiResponse } from '@/shared/model/apiType';
-import SolutionProps from '../model/type';
+import SolutionProps from '../../../../views/search/model/type';
 
 export default async function getSolutionList({
   category,
@@ -15,6 +15,7 @@ export default async function getSolutionList({
   keyword?: string;
   page?: string;
 }) {
+  console.log(category, industry, budget, keyword, page);
   const start = (Number(page) - 1) * 15;
   const end = Number(page) * 15;
 
