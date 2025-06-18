@@ -2,6 +2,7 @@
 
 import { auth } from '@/auth';
 import serverApi from '@/shared/api/server-api';
+import { revalidateTag } from 'next/cache';
 import { VendorRegisterSchema } from '../model/vendor-register-schema';
 import vendorCategoryMapping from '../utils/vendor-category-mapping';
 
@@ -34,4 +35,5 @@ export default async function registerSolution(data: VendorRegisterSchema) {
   await serverApi.post(`api/solution-service/solution`, {
     body: formData,
   });
+  revalidateTag(`solutionList`);
 }

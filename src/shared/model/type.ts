@@ -8,4 +8,5 @@ export interface DropdownProps {
   buttonClassName?: string;
   menuClassName?: string;
   divClassName?: string;
+  isHeader?: boolean;
 }
