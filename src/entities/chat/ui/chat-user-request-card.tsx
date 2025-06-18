@@ -1,3 +1,5 @@
+'use client';
+
 import Solu from '@/shared/ui/solu';
 import { Button } from '@/shared/ui/button';
 import React, { useState, useEffect } from 'react';
@@ -27,7 +29,6 @@ function ChatUserRequestCard({
   const [paymentRequestData, setPaymentRequestData] =
     useState<PaymentRequestProps | null>(null);
   const router = useRouter();
-  console.log(paymentRequestData);
 
   useEffect(() => {
     const getPaymentRequestData = async () => {
@@ -44,7 +45,7 @@ function ChatUserRequestCard({
       <span className="flex items-center gap-1 font-bold">
         <Solu /> 결제 요청
       </span>
-      <div className="space-y-3 text-sm">
+      <div className="w-full space-y-3 text-sm">
         <div className="flex justify-between">
           <span className="font-semibold">계약명(솔루션명)</span>
           <span>{solutionName}</span>
@@ -59,28 +60,46 @@ function ChatUserRequestCard({
             {formatPrice(solutionPrice)}
           </span>
         </div>
+
         <div className="flex items-center justify-between">
           <span className="font-semibold">계약 확인서</span>
           <Button
             variant="textBlue"
             className="h-auto w-[180px] text-sm shadow-md"
-            asChild={false}
+            asChild
           >
-            PDF 파일 확인 완료
+            <a
+              href={paymentRequestData?.contractConfirmationUrl}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              PDF 파일 확인 완료
+            </a>
           </Button>
         </div>
+
         <div className="flex items-center justify-between">
           <span className="font-semibold">환불 정책</span>
           <Button
             variant="textBlue"
             className="h-auto w-[180px] text-sm shadow-md"
-            asChild={false}
+            asChild
           >
-            PDF 파일 확인 완료
+            <a
+              href={paymentRequestData?.refundPolicyUrl}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              PDF 파일 확인 완료
+            </a>
           </Button>
         </div>
+
         <CircleCheckbox checked={checked} onCheckedChange={setChecked} />
       </div>
+
       <Button
         disabled={!checked || !!paymentRequestData?.orderId}
         asChild={false}

@@ -36,7 +36,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
   const { session } = useCurrentSession();
   const { curRoomId, setCurRoomId } = useRoomId();
-  const { consumerName, vendorName } = useChatMeta();
+  const { consumerName, vendorName, vendorSeq } = useChatMeta();
 
   const searchParams = useSearchParams();
   const consumerId = searchParams.get('consumerId') as string;
@@ -94,9 +94,9 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     const newRoomId = uuidv4();
     const targetRoomId = roomId || newRoomId;
 
-    // chatting 방은 consumerSeq가 필요
     if (!roomId) {
       if (!session?.consumerSeq) return;
+      if (!vendorSeq) return;
       await createRoom(
         newRoomId,
         consumerId,
@@ -106,7 +106,8 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
         messageId,
         message,
         messageName,
-        session?.consumerSeq?.toString() || '',
+        session.consumerSeq.toString(),
+        vendorSeq.toString(),
       );
       setCurRoomId(newRoomId);
     }

@@ -19,7 +19,6 @@ export interface ChatRoomCardProps {
   consumerName: string;
   vendorName: string;
 }
-
 export default function ChatRoomCard({
   name,
   lastMessage,
