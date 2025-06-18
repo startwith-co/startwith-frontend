@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { Avatar, AvatarImage, AvatarFallback } from '@/shared/ui/avatar';
 import clsx from 'clsx';
+import renderLastMessage from '../lib/renderLastMessage';
 
 export interface ChatRoomCardProps {
   name: string;
@@ -64,7 +65,9 @@ export default function ChatRoomCard({
             {updatedDate}
           </span>
         </div>
-        <span className="truncate text-sm">{lastMessage}</span>
+        <span className="truncate text-sm">
+          {renderLastMessage(lastMessage)}
+        </span>
       </div>
     </div>
   );

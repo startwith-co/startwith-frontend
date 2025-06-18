@@ -67,7 +67,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
         setCurRoomId(roomId);
 
         const messagesRef = collection(db, 'chats', roomId, 'messages');
-        const q = query(messagesRef, orderBy('createdAt', 'asc')); // 정렬 추가
+        const q = query(messagesRef, orderBy('createdAt', 'asc'));
 
         unsubscribe = onSnapshot(q, (snapshot) => {
           const realTimeNewMessages = snapshot.docs.map((document) => ({

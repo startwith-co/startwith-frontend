@@ -6,9 +6,10 @@ import ChatUserCancelRequestCard from './chat-user-cancel-request-card';
 import ChatUserPayCompleteCard from './chat-user-payComplete-card';
 import ChatUserCancelCompleteCard from './chat-user-cancelComplete-card';
 import ChatUserRequestCard from './chat-user-request-card';
+import { ChatType } from '../model/type';
 
 interface ChatsUserProps {
-  messages: any[];
+  messages: ChatType[];
   consumerId: string;
 }
 
