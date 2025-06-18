@@ -5,7 +5,7 @@ import Solu from '@/shared/ui/solu';
 
 function HomeSecondSection() {
   return (
-    <section className="flex w-screen flex-col items-center justify-center gap-5 bg-gradient-to-b from-[#F0F8FF] to-[white] pt-5">
+    <section className="flex w-screen flex-col items-center justify-center gap-5 bg-gradient-to-b pt-5">
       <div className="flex h-screen w-full flex-col items-center justify-center gap-5">
         <h1 className="text-3xl font-bold">
           아직도 수십 개의 솔루션을 직접 비교하고 계신가요?
