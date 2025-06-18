@@ -8,6 +8,7 @@ export const publicRoutes = [
   '/signup/vendor',
   '/login',
   '/forget',
+  '/forget/reset',
 ];
 
 /**
