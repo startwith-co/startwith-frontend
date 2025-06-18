@@ -15,6 +15,7 @@ export default async function getSolutionList({
   keyword?: string;
   page?: string;
 }) {
+  console.log(category, industry, budget, keyword, page);
   const start = (Number(page) - 1) * 15;
   const end = Number(page) * 15;
 

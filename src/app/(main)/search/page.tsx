@@ -15,5 +15,12 @@ export default async function Page({
     keyword,
   });
 
-  return <SearchPage solutions={solutions} />;
+  return (
+    <SearchPage
+      solutions={solutions}
+      category={category as string}
+      industry={industry as string}
+      budget={budget as string}
+    />
+  );
 }
