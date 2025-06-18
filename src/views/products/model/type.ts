@@ -4,9 +4,15 @@ export interface SolutionEffectProps {
   direction: string;
 }
 
+export interface VendorCategoryProps {
+  solutionSeq: number;
+  category: string;
+}
+
 export interface SolutionDetailProps {
   solutionSeq: number;
   representImageUrl: string;
+  descriptionPdfUrl: string;
   solutionName: string;
   solutionDetail: string;
   amount: number;
@@ -15,9 +21,4 @@ export interface SolutionDetailProps {
   industry: string[];
   recommendedCompanySize: string[];
   solutionEffect: SolutionEffectProps[];
-}
-
-export interface VendorCategoryProps {
-  solutionSeq: number;
-  category: string;
 }
