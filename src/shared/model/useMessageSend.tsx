@@ -94,7 +94,9 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     const newRoomId = uuidv4();
     const targetRoomId = roomId || newRoomId;
 
+    // chatting 방은 consumerSeq가 필요
     if (!roomId) {
+      if (!session?.consumerSeq) return;
       await createRoom(
         newRoomId,
         consumerId,
