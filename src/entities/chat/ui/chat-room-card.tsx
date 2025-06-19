@@ -18,6 +18,7 @@ export interface ChatRoomCardProps {
   vendorId: string;
   consumerName: string;
   vendorName: string;
+  vendorSeq: string;
 }
 export default function ChatRoomCard({
   name,
@@ -31,12 +32,19 @@ export default function ChatRoomCard({
   vendorId,
   consumerName,
   vendorName,
+  vendorSeq,
 }: ChatRoomCardProps) {
   const router = useRouter();
   const { setChatMeta } = useChatMeta();
 
   const handleClick = () => {
-    setChatMeta({ consumerId, vendorId, consumerName, vendorName });
+    setChatMeta({
+      consumerId,
+      vendorId,
+      consumerName,
+      vendorName,
+      vendorSeq: Number(vendorSeq),
+    });
     router.push(link);
   };
 

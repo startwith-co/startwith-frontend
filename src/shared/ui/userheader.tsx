@@ -67,8 +67,10 @@ export default function UserHeader() {
           <PiGlobe />
           <span className="font-normal">Language</span>
         </Button>
-        <FiBell size={24} />
-        <FiMail size={24} />
+        {/* <FiBell size={24} href="/notification"/> */}
+        <Link href="/chat">
+          <FiMail size={24} />
+        </Link>
         <Dropdown
           buttonText={session?.name || 'user'}
           items={[{ label: '내 정보' }]}

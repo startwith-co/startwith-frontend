@@ -24,4 +24,5 @@ export interface ChatRoom {
   updatedAt: Timestamp;
   lastMessage: LastMessageType;
   consumerSeq: string;
+  vendorSeq: string;
 }

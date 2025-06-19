@@ -35,6 +35,7 @@ function ChatRooms() {
             vendorId={room.vendorId}
             consumerName={room.consumerName}
             vendorName={room.vendorName}
+            vendorSeq={room.vendorSeq}
             key={room.roomId}
             name={room.lastMessage.messageName}
             updatedDate={formatMainDate(room.lastMessage.updatedAt)}
