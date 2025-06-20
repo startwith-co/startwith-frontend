@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import useGetChatRooms from '@/shared/model/useGetChatRooms';
+import { useSession } from 'next-auth/react';
 
 function useDynamicRoute() {
   const rooms = useGetChatRooms({ targetId: 'vendorId' });
+  const { data: session } = useSession();
   const [dynamicRoute, setDynamicRoute] = useState({
     label: '실시간 상담 관리',
-    href: '/vendor/chat',
+    href: `/vendor/chat?vendorId=${session?.uniqueType}`,
   });
   useEffect(() => {
     if (rooms.length > 0) {

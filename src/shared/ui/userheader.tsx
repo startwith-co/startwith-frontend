@@ -68,7 +68,13 @@ export default function UserHeader() {
           <span className="font-normal">Language</span>
         </Button>
         {/* <FiBell size={24} href="/notification"/> */}
-        <Link href="/chat">
+        <Link
+          href={
+            session?.role === 'vendor'
+              ? `/vendor/chat?vendorId=${session?.uniqueType}`
+              : `/chat?consumerId=${session?.uniqueType}`
+          }
+        >
           <FiMail size={24} />
         </Link>
         <Dropdown

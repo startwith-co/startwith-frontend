@@ -6,6 +6,7 @@ import { VendorInfoProps } from '@/views/vendorMy/model/type';
 import { ApiResponse } from '@/shared/model/apiType';
 import { VendorCategoryProps } from '@/views/products/model/type';
 import api from '@/shared/api/index-api';
+import { useSearchParams } from 'next/navigation';
 
 interface VendorInfos {
   vendorInfo: VendorInfoProps | null;
@@ -15,8 +16,11 @@ interface VendorInfos {
 function useFetchVendor() {
   const { vendorSeq } = useChatMeta();
   const [vendorInfo, setVendorInfo] = useState<VendorInfos | null>(null);
+  const searchParams = useSearchParams();
+  const vendorId = searchParams.get('vendorId') as string;
+
   useEffect(() => {
-    if (!vendorSeq) return;
+    if (!vendorSeq || !vendorId) return;
 
     const fetchAllVendorData = async () => {
       try {
@@ -39,7 +43,7 @@ function useFetchVendor() {
     };
 
     fetchAllVendorData();
-  }, [vendorSeq]);
+  }, [vendorSeq, vendorId]);
 
   return vendorInfo;
 }

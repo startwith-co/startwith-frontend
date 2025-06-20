@@ -28,30 +28,34 @@ function ChatCompanyProfile() {
         </p>
         <div className="flex flex-col items-center justify-center rounded-md bg-gray-100 p-2.5 text-sm">
           <p className="text-gray-500">상담 가능 시간</p>
-          <p className="text-xs">
-            {vendorInfo?.vendorInfo?.weekdayAvailable
-              ? `평일 : ${formatTimeRange(
-                  vendorInfo.vendorInfo.weekdayStartTime,
-                  vendorInfo.vendorInfo.weekdayEndTime,
-                )}`
-              : '평일 : 불가'}
-          </p>
-          <p className="text-xs">
-            {vendorInfo?.vendorInfo?.weekendAvailable
-              ? `주말 : ${formatTimeRange(
-                  vendorInfo.vendorInfo.weekendStartTime,
-                  vendorInfo.vendorInfo.weekendEndTime,
-                )}`
-              : '주말 : 불가'}
-          </p>
-          <p className="text-xs">
-            {vendorInfo?.vendorInfo?.holidayAvailable
-              ? `공휴일 : ${formatTimeRange(
-                  vendorInfo.vendorInfo.holidayStartTime,
-                  vendorInfo.vendorInfo.holidayEndTime,
-                )}`
-              : '공휴일 : 불가'}
-          </p>
+          {vendorInfo?.vendorInfo && (
+            <>
+              <p className="text-xs">
+                {vendorInfo.vendorInfo.weekdayAvailable
+                  ? `평일 : ${formatTimeRange(
+                      vendorInfo.vendorInfo.weekdayStartTime,
+                      vendorInfo.vendorInfo.weekdayEndTime,
+                    )}`
+                  : '평일 : 불가'}
+              </p>
+              <p className="text-xs">
+                {vendorInfo?.vendorInfo?.weekendAvailable
+                  ? `주말 : ${formatTimeRange(
+                      vendorInfo.vendorInfo.weekendStartTime,
+                      vendorInfo.vendorInfo.weekendEndTime,
+                    )}`
+                  : '주말 : 불가'}
+              </p>
+              <p className="text-xs">
+                {vendorInfo?.vendorInfo?.holidayAvailable
+                  ? `공휴일 : ${formatTimeRange(
+                      vendorInfo.vendorInfo.holidayStartTime,
+                      vendorInfo.vendorInfo.holidayEndTime,
+                    )}`
+                  : '공휴일 : 불가'}
+              </p>
+            </>
+          )}
         </div>
         <ChatUserCard title="서비스 만족도" content="100%" />
         <div className="flex flex-col items-center justify-center rounded-md bg-gray-100 p-2.5 text-sm">

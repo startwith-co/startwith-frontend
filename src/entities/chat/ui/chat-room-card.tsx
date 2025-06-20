@@ -19,6 +19,7 @@ export interface ChatRoomCardProps {
   consumerName: string;
   vendorName: string;
   vendorSeq: string;
+  consumerSeq: string;
 }
 export default function ChatRoomCard({
   name,
@@ -33,6 +34,7 @@ export default function ChatRoomCard({
   consumerName,
   vendorName,
   vendorSeq,
+  consumerSeq,
 }: ChatRoomCardProps) {
   const router = useRouter();
   const { setChatMeta } = useChatMeta();
@@ -44,6 +46,7 @@ export default function ChatRoomCard({
       consumerName,
       vendorName,
       vendorSeq: Number(vendorSeq),
+      consumerSeq: Number(consumerSeq),
     });
     router.push(link);
   };

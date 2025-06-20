@@ -16,8 +16,7 @@ import createRoom from '@/shared/api/create-room';
 import { v4 as uuidv4 } from 'uuid';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import db, { storage } from 'fire-config';
+import db from 'fire-config';
 import { Message } from './roomType';
 import { useRoomId } from './RoomIdProvider';
 import { useChatMeta } from './ChatMetaProvider';
@@ -113,24 +112,6 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     }
 
     /* TODO: 파일 첨부 기능 구현 */
-
-    // let fileData = null;
-
-    // if (attachedFile) {
-    //   const fileRef = ref(
-    //     storage,
-    //     `chats/${targetRoomId}/${Date.now()}_${attachedFile.name}`,
-    //   );
-    //   console.log(fileData);
-    //   await uploadBytes(fileRef, attachedFile);
-    //   const fileUrl = await getDownloadURL(fileRef);
-
-    //   fileData = {
-    //     name: attachedFile.name,
-    //     type: attachedFile.type,
-    //     url: fileUrl,
-    //   };
-    // }
 
     const newMessage = {
       message,
