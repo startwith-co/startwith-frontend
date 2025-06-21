@@ -118,7 +118,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
       createdAt: serverTimestamp(),
       messageId,
       messageName,
-      // file: fileData,
+      file: !!attachedFile,
     };
 
     await addDoc(collection(db, 'chats', targetRoomId, 'messages'), newMessage);

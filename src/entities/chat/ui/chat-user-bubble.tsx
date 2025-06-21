@@ -3,6 +3,7 @@ interface ChatBubbleProps {
   messageId: string;
   consumerId: string;
   time: string;
+  file?: string;
 }
 
 export default function ChatUserBubble({
@@ -10,6 +11,7 @@ export default function ChatUserBubble({
   messageId,
   consumerId,
   time,
+  file,
 }: ChatBubbleProps) {
   const isMine = messageId === consumerId;
 
@@ -22,6 +24,11 @@ export default function ChatUserBubble({
       >
         {message}
       </div>
+      {file && (
+        <a href={file} download target="_blank" rel="noopener noreferrer">
+          파일 첨부
+        </a>
+      )}
       <span className="mt-4 text-xs text-gray-400">{time}</span>
     </div>
   );
