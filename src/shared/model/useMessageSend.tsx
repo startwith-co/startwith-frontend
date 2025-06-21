@@ -16,8 +16,7 @@ import createRoom from '@/shared/api/create-room';
 import { v4 as uuidv4 } from 'uuid';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import db, { storage } from 'fire-config';
+import db from 'fire-config';
 import { Message } from './roomType';
 import { useRoomId } from './RoomIdProvider';
 import { useChatMeta } from './ChatMetaProvider';
@@ -36,7 +35,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
   const { session } = useCurrentSession();
   const { curRoomId, setCurRoomId } = useRoomId();
-  const { consumerName, vendorName } = useChatMeta();
+  const { consumerName, vendorName, vendorSeq } = useChatMeta();
 
   const searchParams = useSearchParams();
   const consumerId = searchParams.get('consumerId') as string;
@@ -67,7 +66,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
         setCurRoomId(roomId);
 
         const messagesRef = collection(db, 'chats', roomId, 'messages');
-        const q = query(messagesRef, orderBy('createdAt', 'asc')); // 정렬 추가
+        const q = query(messagesRef, orderBy('createdAt', 'asc'));
 
         unsubscribe = onSnapshot(q, (snapshot) => {
           const realTimeNewMessages = snapshot.docs.map((document) => ({
@@ -94,9 +93,9 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     const newRoomId = uuidv4();
     const targetRoomId = roomId || newRoomId;
 
-    // chatting 방은 consumerSeq가 필요
     if (!roomId) {
       if (!session?.consumerSeq) return;
+      if (!vendorSeq) return;
       await createRoom(
         newRoomId,
         consumerId,
@@ -106,37 +105,20 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
         messageId,
         message,
         messageName,
-        session?.consumerSeq?.toString() || '',
+        session.consumerSeq.toString(),
+        vendorSeq.toString(),
       );
       setCurRoomId(newRoomId);
     }
 
     /* TODO: 파일 첨부 기능 구현 */
 
-    // let fileData = null;
-
-    // if (attachedFile) {
-    //   const fileRef = ref(
-    //     storage,
-    //     `chats/${targetRoomId}/${Date.now()}_${attachedFile.name}`,
-    //   );
-    //   console.log(fileData);
-    //   await uploadBytes(fileRef, attachedFile);
-    //   const fileUrl = await getDownloadURL(fileRef);
-
-    //   fileData = {
-    //     name: attachedFile.name,
-    //     type: attachedFile.type,
-    //     url: fileUrl,
-    //   };
-    // }
-
     const newMessage = {
       message,
       createdAt: serverTimestamp(),
       messageId,
       messageName,
-      // file: fileData,
+      file: !!attachedFile,
     };
 
     await addDoc(collection(db, 'chats', targetRoomId, 'messages'), newMessage);

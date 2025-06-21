@@ -11,6 +11,7 @@ async function createRoom(
   message: string,
   messageName: string,
   consumerSeq: string,
+  vendorSeq: string,
 ) {
   // chats 컬렉션 안에 roomId 문서 생성
   const roomRef = doc(db, 'chats', roomId);
@@ -23,6 +24,7 @@ async function createRoom(
     vendorName,
     vendorId,
     consumerSeq,
+    vendorSeq,
     lastMessage: {
       messageId,
       message,

@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 export default interface PaymentRequestProps {
   paymentEventSeq: number;
   paymentEventName: string;
@@ -7,4 +9,20 @@ export default interface PaymentRequestProps {
   refundPolicyUrl: string;
   createdAt: string;
   orderId: string | null;
+}
+
+export interface ChatJsonType {
+  type: string;
+  solutionName: string;
+  solutionPrice: string;
+  solutionCategory: string;
+}
+
+export interface ChatType {
+  id: string;
+  createdAt: Timestamp;
+  messageId: string;
+  messageName: string | ChatJsonType;
+  message: string;
+  file: boolean;
 }
