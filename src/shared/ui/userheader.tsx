@@ -80,6 +80,7 @@ export default function UserHeader() {
         <Dropdown
           buttonText={session?.name || 'user'}
           items={[{ label: '내 정보', href: '/my/profile' }]}
+          isLoginHeaderOption
         />
       </div>
     </header>

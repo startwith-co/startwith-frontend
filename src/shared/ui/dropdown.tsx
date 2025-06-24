@@ -13,6 +13,7 @@ export default function Dropdown({
   buttonClassName = '',
   menuClassName = '',
   divClassName = '',
+  isLoginHeaderOption = false,
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -55,7 +56,10 @@ export default function Dropdown({
               <button
                 key={item.label}
                 onClick={() => {
-                  router.push(item.href || '');
+                  item.onClick?.();
+                  if (item.href) {
+                    router.push(item.href);
+                  }
                   setIsOpen(false);
                 }}
                 className="w-full px-2 py-2 text-center text-sm text-gray-700 hover:bg-gray-100"
@@ -63,15 +67,17 @@ export default function Dropdown({
                 {item.label}
               </button>
             ))}
-            <button
-              className="w-full px-2 py-2 text-center text-sm text-red-500 hover:bg-gray-100"
-              onClick={async () => {
-                await logoutAction();
-                setIsOpen(false);
-              }}
-            >
-              로그아웃
-            </button>
+            {isLoginHeaderOption && (
+              <button
+                className="w-full px-2 py-2 text-center text-sm text-red-500 hover:bg-gray-100"
+                onClick={async () => {
+                  await logoutAction();
+                  setIsOpen(false);
+                }}
+              >
+                로그아웃
+              </button>
+            )}
           </div>
         </div>
       )}
