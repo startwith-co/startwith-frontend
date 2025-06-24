@@ -8,9 +8,13 @@ import SignupForm from '@/shared/ui/signup-form';
 import editInfoPost from '@/features/my/api/editInfoPost';
 import SignupIndustryModal from '@/features/signup/ui/signup-industry-modal';
 import { Button } from '@/shared/ui/button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useFileUpload from '@/shared/model/useFileUpload';
 import Image from 'next/image';
+import api from '@/shared/api/index-api';
+import { useSession } from 'next-auth/react';
+import { ApiResponse } from '@/shared/model/apiType';
+import { ConsumerInfoProps } from '@/views/vendorMy/model/type';
 
 const schema = z.object({
   company: z.string().min(1, '기업명 입력해주세요.'),
@@ -23,6 +27,7 @@ function EditInfo() {
   const {
     register,
     formState: { errors, isValid },
+    reset,
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
@@ -30,7 +35,7 @@ function EditInfo() {
 
   const [open, setOpen] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
-
+  const { data: session } = useSession();
   const {
     preview,
     file,
@@ -38,6 +43,25 @@ function EditInfo() {
     handleClickFileInput,
     handleFileChange,
   } = useFileUpload();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await api
+        .get(`api/b2b-service/consumer?consumerSeq=${session?.consumerSeq}`)
+        .json<ApiResponse<ConsumerInfoProps>>();
+
+      // 가져온 값으로 초기값 세팅
+      reset({
+        company: res.data.consumerName,
+        email: res.data.email,
+      });
+
+      // 예: 산업군 선택 상태도 함께 설정
+      setSelectedIndustry(res.data.industry);
+    };
+
+    fetchData();
+  }, [reset, session]);
 
   return (
     <SignupForm

@@ -5,6 +5,7 @@ import { ChevronDown } from 'lucide-react';
 import { DropdownProps } from '@/shared/model/type';
 import cn from '@/shared/lib/utils';
 import logoutAction from '@/shared/api/logoutAction';
+import { useRouter } from 'next/navigation';
 
 export default function Dropdown({
   buttonText,
@@ -15,6 +16,7 @@ export default function Dropdown({
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -53,6 +55,7 @@ export default function Dropdown({
               <button
                 key={item.label}
                 onClick={() => {
+                  router.push(item.href || '');
                   setIsOpen(false);
                 }}
                 className="w-full px-2 py-2 text-center text-sm text-gray-700 hover:bg-gray-100"
