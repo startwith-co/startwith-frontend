@@ -8,13 +8,19 @@ import SignupForm from '@/shared/ui/signup-form';
 import editInfoPost from '@/features/my/api/editInfoPost';
 import SignupIndustryModal from '@/features/signup/ui/signup-industry-modal';
 import { Button } from '@/shared/ui/button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useFileUpload from '@/shared/model/useFileUpload';
 import Image from 'next/image';
+import api from '@/shared/api/index-api';
+import { useSession } from 'next-auth/react';
+import { ApiResponse } from '@/shared/model/apiType';
+import { ConsumerInfoProps } from '@/views/vendorMy/model/type';
 
 const schema = z.object({
   company: z.string().min(1, '기업명 입력해주세요.'),
   email: z.string().email('올바른 이메일 형식이 아닙니다.'),
+  phoneNumber: z.string().min(1, '전화번호 입력해주세요.'),
+  password: z.string().min(1, '비밀번호 입력해주세요.'),
 });
 
 type FormSchema = z.infer<typeof schema>;
@@ -23,6 +29,7 @@ function EditInfo() {
   const {
     register,
     formState: { errors, isValid },
+    reset,
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
@@ -30,7 +37,7 @@ function EditInfo() {
 
   const [open, setOpen] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
-
+  const { data: session } = useSession();
   const {
     preview,
     file,
@@ -38,6 +45,27 @@ function EditInfo() {
     handleClickFileInput,
     handleFileChange,
   } = useFileUpload();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!session?.consumerSeq) return;
+      const res = await api
+        .get(`api/b2b-service/consumer?consumerSeq=${session.consumerSeq}`)
+        .json<ApiResponse<ConsumerInfoProps>>();
+
+      // 가져온 값으로 초기값 세팅
+      reset({
+        company: res.data.consumerName,
+        email: res.data.email,
+        phoneNumber: res.data.phoneNumber,
+      });
+
+      // 예: 산업군 선택 상태도 함께 설정
+      setSelectedIndustry(res.data.industry);
+    };
+
+    fetchData();
+  }, [reset, session]);
 
   return (
     <SignupForm
@@ -48,6 +76,7 @@ function EditInfo() {
       buttonWrapperClassName="flex justify-center"
       loadingText="수정 중.."
       disabled={!isValid || !selectedIndustry}
+      isServerAction
     >
       <div className="flex items-center">
         <div className="relative mb-7 h-[100px] w-[100px]">
@@ -112,6 +141,22 @@ function EditInfo() {
       </div>
 
       <div>
+        <label htmlFor="phoneNumber" className="text-sm text-[#A7A7A7]">
+          담당자 전화번호
+          <Input
+            id="phoneNumber"
+            type="string"
+            {...register('phoneNumber')}
+            name="phoneNumber"
+            className="mt-2 mb-2 h-[40px] w-[600px] border-0 bg-[#F9F9F9] indent-2"
+          />
+        </label>
+        {errors.phoneNumber && (
+          <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
+        )}
+      </div>
+
+      <div>
         <p className="text-sm text-[#A7A7A7]">종사 산업군</p>
         <Button
           type="button"
@@ -127,6 +172,22 @@ function EditInfo() {
           selectedIndustry={selectedIndustry}
           setSelectedIndustry={setSelectedIndustry}
         />
+      </div>
+
+      <div>
+        <label htmlFor="password" className="text-sm text-[#A7A7A7]">
+          비밀번호
+          <Input
+            id="password"
+            type="password"
+            {...register('password')}
+            name="password"
+            className="mt-2 mb-2 h-[40px] w-[600px] border-0 bg-[#F9F9F9] indent-2"
+          />
+        </label>
+        {errors.password && (
+          <p className="text-sm text-red-500">{errors.password.message}</p>
+        )}
       </div>
     </SignupForm>
   );

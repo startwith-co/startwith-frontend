@@ -26,3 +26,7 @@ export interface ChatType {
   message: string;
   file: boolean;
 }
+
+export interface FileRequestProps {
+  fileUrl: string;
+}

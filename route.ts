@@ -3,13 +3,7 @@
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = [
-  '/signup/user',
-  '/signup/vendor',
-  '/login',
-  '/forget',
-  '/forget/reset',
-];
+export const publicRoutes = ['/signup/user', '/signup/vendor', '/login'];
 
 /**
  * An array of routes that are used for authentication
@@ -21,6 +15,7 @@ export const authRoutes = [
   '/signup/vendor',
   '/login',
   '/forget',
+  '/forget/reset',
 ];
 
 export const vendorRoutes = '/vendor';

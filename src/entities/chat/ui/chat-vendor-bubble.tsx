@@ -1,8 +1,12 @@
+import useFileClick from '../model/useFileClick';
+
 interface ChatBubbleProps {
   message: string;
   messageId: string;
   vendorId: string;
   time: string;
+  file: boolean;
+  id: string;
 }
 
 export default function ChatVendorBubble({
@@ -10,9 +14,11 @@ export default function ChatVendorBubble({
   messageId,
   vendorId,
   time,
+  file,
+  id,
 }: ChatBubbleProps) {
   const isMine = messageId === vendorId;
-
+  const { handleFileClick } = useFileClick(id);
   return (
     <div
       className={`flex ${isMine ? 'mr-2 flex-row-reverse' : 'ml-2 flex-row'} mt-4 mb-2 gap-1.5`}
@@ -20,7 +26,13 @@ export default function ChatVendorBubble({
       <div
         className={`max-w-[70%] rounded-2xl px-4 py-2 text-sm ${isMine ? 'bg-[#DBE8FF]' : 'bg-[#F1F1F1]'} `}
       >
-        {message}
+        {file ? (
+          <button onClick={handleFileClick} className="text-blue-500 underline">
+            파일 첨부
+          </button>
+        ) : (
+          message
+        )}
       </div>
       <span className="mt-4 text-xs text-gray-400">{time}</span>
     </div>
