@@ -83,7 +83,8 @@ function ChatsUser({ messages, consumerId }: ChatsUserProps) {
             messageId={msg.messageId}
             consumerId={consumerId}
             time={formatTime(msg.createdAt)}
-            file={msg.file ? msg.message : undefined}
+            file={msg.file}
+            id={msg.id}
           />
         );
       })}

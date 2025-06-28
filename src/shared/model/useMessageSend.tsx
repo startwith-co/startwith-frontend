@@ -17,10 +17,11 @@ import { v4 as uuidv4 } from 'uuid';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
 import db from 'fire-config';
-import { Message } from './roomType';
+import { ChatType } from '@/entities/chat/model/type';
 import { useRoomId } from './RoomIdProvider';
 import { useChatMeta } from './ChatMetaProvider';
 import useCurrentSession from './useCurrentSession';
+import ChatFilePost from '../api/chat-file-post';
 
 interface UseMessageSendProps {
   messageId: string;
@@ -30,12 +31,12 @@ interface UseMessageSendProps {
 
 function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<ChatType[]>([]);
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
   const { session } = useCurrentSession();
   const { curRoomId, setCurRoomId } = useRoomId();
-  const { consumerName, vendorName, vendorSeq } = useChatMeta();
+  const { consumerName, vendorName, vendorSeq, consumerSeq } = useChatMeta();
 
   const searchParams = useSearchParams();
   const consumerId = searchParams.get('consumerId') as string;
@@ -59,6 +60,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     let unsubscribe: () => void;
 
     async function realTimeMessages() {
+      console.log('realTimeMessages');
       if (!consumerId || !vendorId || consumerId === vendorId) return;
 
       const roomId = await findChatExistingRoom(consumerId, vendorId);
@@ -67,12 +69,11 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
 
         const messagesRef = collection(db, 'chats', roomId, 'messages');
         const q = query(messagesRef, orderBy('createdAt', 'asc'));
-
-        unsubscribe = onSnapshot(q, (snapshot) => {
+        unsubscribe = onSnapshot(q, async (snapshot) => {
           const realTimeNewMessages = snapshot.docs.map((document) => ({
             id: document.id,
             ...document.data(),
-          })) as Message[];
+          })) as ChatType[];
           setMessages(realTimeNewMessages);
         });
       }
@@ -83,7 +84,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [curRoomId, setCurRoomId, consumerId, vendorId]);
+  }, [curRoomId, setCurRoomId, consumerId, vendorId, attachedFile]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -111,8 +112,6 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
       setCurRoomId(newRoomId);
     }
 
-    /* TODO: 파일 첨부 기능 구현 */
-
     const newMessage = {
       message,
       createdAt: serverTimestamp(),
@@ -121,7 +120,10 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
       file: !!attachedFile,
     };
 
-    await addDoc(collection(db, 'chats', targetRoomId, 'messages'), newMessage);
+    const docRef = await addDoc(
+      collection(db, 'chats', targetRoomId, 'messages'),
+      newMessage,
+    );
 
     await updateDoc(doc(db, 'chats', targetRoomId), {
       lastMessage: {
@@ -130,7 +132,19 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
       },
     });
 
-    setMessage('');
+    if (session?.role && attachedFile) {
+      await ChatFilePost(
+        consumerSeq,
+        vendorSeq,
+        docRef.id,
+        session?.role,
+        attachedFile,
+      );
+    }
+
+    if (!attachedFile) {
+      setMessage('');
+    }
     setAttachedFile(null);
     setFilePreviewUrl(null);
 
@@ -143,7 +157,6 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     message,
     setMessage,
     messages,
-    setMessages,
     handleFileChange,
     attachedFile,
     filePreviewUrl,
