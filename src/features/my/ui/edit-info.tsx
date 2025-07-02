@@ -5,7 +5,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '@/shared/ui/input';
 import SignupForm from '@/shared/ui/signup-form';
-import editInfoPost from '@/features/my/api/editInfoPost';
 import SignupIndustryModal from '@/features/signup/ui/signup-industry-modal';
 import { Button } from '@/shared/ui/button';
 import { useEffect, useState } from 'react';
@@ -15,6 +14,7 @@ import api from '@/shared/api/index-api';
 import { useSession } from 'next-auth/react';
 import { ApiResponse } from '@/shared/model/apiType';
 import { ConsumerInfoProps } from '@/views/vendorMy/model/type';
+import editInfoPost from '../api/editInfoPost';
 
 const schema = z.object({
   company: z.string().min(1, '기업명 입력해주세요.'),
@@ -69,13 +69,15 @@ function EditInfo() {
 
   return (
     <SignupForm
-      action={(prevState, formData) => editInfoPost(prevState, formData, file)}
+      action={(prevState, formData) =>
+        editInfoPost(prevState, formData, file, selectedIndustry)
+      }
       variant="bgBlueGradient"
       buttonProps="w-[180px] h-[35px] font-light text-sm"
       buttonName="수정하기"
       buttonWrapperClassName="flex justify-center"
       loadingText="수정 중.."
-      disabled={!isValid || !selectedIndustry}
+      disabled={!isValid || !selectedIndustry || !file}
       isServerAction
     >
       <div className="flex items-center">

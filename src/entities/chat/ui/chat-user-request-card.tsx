@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CircleCheckbox from './circle-check-box';
 import usePaymentRequest from '../model/usePaymentRequest';
-import getFileRequest from '../api/getFileRequest';
 import getPaymentRequest from '../api/getPaymentRequest';
 
 interface ChatRequestCardProps {
