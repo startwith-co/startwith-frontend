@@ -37,7 +37,7 @@ function ItemDetailSection() {
   }, [session, paymentStatus]);
 
   return (
-    <section className="mb-10 flex w-full flex-col space-y-5 rounded-2xl bg-white p-7 shadow-md">
+    <section className="mb-10 flex min-w-[895px] flex-col space-y-5 rounded-2xl bg-white p-7 shadow-md">
       <div className="mb-4 self-end">
         <Dropdown
           buttonText={selectedLabel}
@@ -60,10 +60,12 @@ function ItemDetailSection() {
           company={item.vendorName}
           solution={item.solutionName}
           price={item.amount.toString()}
+          solutionSeq={item.solutionSeq}
+          solutionImageUrl={item.representImageUrl}
         />
       ))}
 
-      <PaginationControl />
+      {/* <PaginationControl /> */}
     </section>
   );
 }

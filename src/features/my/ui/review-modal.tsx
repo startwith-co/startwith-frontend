@@ -9,14 +9,15 @@ import useCurrentSession from '@/shared/model/useCurrentSession';
 export default function ReviewModal({
   open,
   setOpen,
+  solutionSeq,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
+  solutionSeq: number;
 }) {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState<number | null>(null);
   const [text, setText] = useState('');
-  const solutionSeq = 8;
   const maxChars = 500;
   const { session } = useCurrentSession();
   const handleSubmit = async () => {

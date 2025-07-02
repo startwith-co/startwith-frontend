@@ -8,6 +8,7 @@ async function editInfo(
 ) {
   const form = new FormData();
   const data = await auth();
+
   if (file) {
     form.append('consumerImageUrl', file);
   }
@@ -20,6 +21,8 @@ async function editInfo(
     encodedPassword: formData.get('password'),
     industry,
   };
+
+  console.log('editInfo', jsonPart);
 
   form.append(
     'request',

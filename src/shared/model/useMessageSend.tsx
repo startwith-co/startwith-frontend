@@ -60,7 +60,6 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     let unsubscribe: () => void;
 
     async function realTimeMessages() {
-      console.log('realTimeMessages');
       if (!consumerId || !vendorId || consumerId === vendorId) return;
 
       const roomId = await findChatExistingRoom(consumerId, vendorId);
