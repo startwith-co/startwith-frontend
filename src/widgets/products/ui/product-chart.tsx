@@ -1,5 +1,3 @@
-'use client';
-
 import WhiteBox from '@/shared/ui/white-box';
 import PieChart from '@/entities/product/ui/pie-chart';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
@@ -12,8 +10,17 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/shared/ui/pagination';
+import getReviewList from '@/widgets/products/api/getReviewList';
+import { v4 as uuidv4 } from 'uuid';
+import { formatReviewTime } from '@/shared/lib/date-formatter';
 
-export default function ProductChart() {
+export default async function ProductChart({
+  solutionSeq,
+}: {
+  solutionSeq: number;
+}) {
+  const data = await getReviewList(solutionSeq);
+  console.log('solution', data, solutionSeq);
   return (
     <WhiteBox className="flex flex-col gap-[60px] p-8">
       <div className="flex flex-col gap-6.5">
@@ -35,42 +42,33 @@ export default function ProductChart() {
         <span className="text-xl font-bold">고객 리뷰</span>
         {/* TODO: 최상단 li pt제거, 마지막 li border-b 제거, 리뷰가 없을 때 UI 추가 */}
         <ul>
-          <li className="flex items-center justify-between border-b py-5">
-            <div className="flex items-center gap-5">
-              <Avatar className="size-12.5">
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center">
-                  <span className="mr-2.5 text-sm font-normal">더비즈온</span>
-                  <IoIosStar />
+          {data.map((review) => (
+            <li
+              key={review.consumerSeq}
+              className="flex items-center justify-between border-b py-5"
+            >
+              <div className="flex items-center gap-5">
+                <Avatar className="size-12.5">
+                  <AvatarImage src={review.consumerImageUrl} />
+                  <AvatarFallback>{review.consumerName}</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center">
+                    <span className="mr-2.5 text-sm font-normal">
+                      {review.consumerName}
+                    </span>
+                    {[...Array(review.start)].map((_) => (
+                      <IoIosStar key={uuidv4()} />
+                    ))}
+                  </div>
+                  <p>{review.comment}</p>
                 </div>
-                <p>리뷰 내용</p>
               </div>
-            </div>
-            <p className="self-end text-[13px] text-[#717171]">
-              작성일시 : 25.01.01 AM 11:38
-            </p>
-          </li>
-          <li className="flex items-center justify-between border-b pt-6.5 pb-5">
-            <div className="flex items-center gap-5">
-              <Avatar className="size-12.5">
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center">
-                  <span className="mr-2.5 text-sm font-normal">더비즈온</span>
-                  <IoIosStar />
-                </div>
-                <p>리뷰 내용</p>
-              </div>
-            </div>
-            <p className="self-end text-[13px] text-[#717171]">
-              작성일시 : 25.01.01 AM 11:38
-            </p>
-          </li>
+              <p className="self-end text-[13px] text-[#717171]">
+                작성일시: {formatReviewTime(review.createdAt)}
+              </p>
+            </li>
+          ))}
         </ul>
         <Pagination className="mt-8.5">
           <PaginationContent>
