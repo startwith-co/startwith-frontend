@@ -21,3 +21,21 @@ export function formatDateTime(date: string) {
 
   return `${yyyy}.${mm}.${dd} ${hh}:${min}:${ss}`;
 }
+
+export function formatReviewTime(date: string) {
+  const d = new Date(date);
+
+  const yy = String(d.getFullYear()).slice(2); // 두 자리 연도
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+
+  let hours = d.getHours();
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+
+  const ampm = hours < 12 ? 'AM' : 'PM';
+  hours %= 12;
+  if (hours === 0) hours = 12;
+  const hh = String(hours).padStart(2, '0');
+
+  return `${yy}.${mm}.${dd} ${ampm} ${hh}:${minutes}`;
+}
