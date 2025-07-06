@@ -1,25 +1,20 @@
-import { useEffect, useRef } from 'react';
 import formatTime from '@/shared/lib/chat-format-time';
 import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
+import useChatScroll from '@/shared/model/useChatScroll';
 import ChatVendorBubble from './chat-vendor-bubble';
 import ChatVendorRequestCard from './chat-vendor-request-card';
 import ChatVendorCancelCompleteCard from './chat-vendor-cancelComplete-card';
 import ChatVendorPayCompleteCard from './chat-vendor-payComplete-card';
 import ChatVendorCancelRequestCard from './chat-vendor-cancel-request-card';
+import { ChatType } from '../model/type';
 
 interface ChatsVendorProps {
-  messages: any[];
+  messages: ChatType[];
   vendorId: string;
 }
 
 function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
-  const scrollRef = useRef<HTMLDivElement>(null); // ✅ 스크롤 대상 ref
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages]);
+  const scrollRef = useChatScroll({ messages });
 
   return (
     <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
@@ -91,6 +86,8 @@ function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
             messageId={msg.messageId}
             vendorId={vendorId}
             time={formatTime(msg.createdAt)}
+            file={msg.file}
+            id={msg.id}
           />
         );
       })}

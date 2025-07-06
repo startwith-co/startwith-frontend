@@ -9,7 +9,6 @@ import useCurrentSession from './useCurrentSession';
 function useGetChatRooms({ targetId }: { targetId: string }) {
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
   const { session } = useCurrentSession();
-  console.log('session', session);
   useEffect(() => {
     let unsubscribe: () => void;
 

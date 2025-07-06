@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { Avatar, AvatarImage, AvatarFallback } from '@/shared/ui/avatar';
 import clsx from 'clsx';
+import renderLastMessage from '../lib/renderLastMessage';
 
 export interface ChatRoomCardProps {
   name: string;
@@ -17,8 +18,9 @@ export interface ChatRoomCardProps {
   vendorId: string;
   consumerName: string;
   vendorName: string;
+  vendorSeq: string;
+  consumerSeq: string;
 }
-
 export default function ChatRoomCard({
   name,
   lastMessage,
@@ -31,12 +33,21 @@ export default function ChatRoomCard({
   vendorId,
   consumerName,
   vendorName,
+  vendorSeq,
+  consumerSeq,
 }: ChatRoomCardProps) {
   const router = useRouter();
   const { setChatMeta } = useChatMeta();
 
   const handleClick = () => {
-    setChatMeta({ consumerId, vendorId, consumerName, vendorName });
+    setChatMeta({
+      consumerId,
+      vendorId,
+      consumerName,
+      vendorName,
+      vendorSeq: Number(vendorSeq),
+      consumerSeq: Number(consumerSeq),
+    });
     router.push(link);
   };
 
@@ -64,7 +75,9 @@ export default function ChatRoomCard({
             {updatedDate}
           </span>
         </div>
-        <span className="truncate text-sm">{lastMessage}</span>
+        <span className="truncate text-sm">
+          {renderLastMessage(lastMessage)}
+        </span>
       </div>
     </div>
   );

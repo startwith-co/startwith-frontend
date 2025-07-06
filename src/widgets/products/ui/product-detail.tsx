@@ -1,3 +1,5 @@
+'use client';
+
 import WhiteBox from '@/shared/ui/white-box';
 import scale from '@/entities/product/model/scale';
 import {
@@ -7,6 +9,7 @@ import {
 import cn from '@/shared/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
+import { downloadFile } from '@/widgets/products/api/downloadFile';
 
 export default function ProductDetail({
   solutionName,
@@ -18,6 +21,7 @@ export default function ProductDetail({
   recommendedCompanySize,
   solutionEffect,
   representImageUrl,
+  descriptionPdfUrl,
   category,
   vendorCategory,
   vendorSeq,
@@ -41,13 +45,20 @@ export default function ProductDetail({
         ))}
       </ul>
       <div className="mt-12.5 grid grid-cols-[1fr_1.8fr] gap-12.5">
-        <Image
-          src={representImageUrl}
-          alt="image"
-          width={200}
-          height={170}
-          className="bg-box-gray size-12 h-[210px] w-full rounded-md object-cover object-center"
-        />
+        <button
+          onClick={() => {
+            downloadFile(descriptionPdfUrl);
+          }}
+          className="cursor-pointer"
+        >
+          <Image
+            src={representImageUrl}
+            alt="image"
+            width={200}
+            height={170}
+            className="bg-box-gray size-12 h-[210px] w-full rounded-md object-cover object-center"
+          />
+        </button>
         <div className="flex flex-col">
           <span className="text-xl font-semibold">{solutionName}</span>
           <p className="mt-2.5">{solutionDetail}</p>

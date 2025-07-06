@@ -21,6 +21,9 @@ async function sendMessageJson(
 ) {
   const newRoomId = uuidv4();
   const roomId = await findChatExistingRoom(consumerId, vendorId);
+
+  // 벤더가 채팅을 먼저 걸일이 없음
+
   if (!roomId) {
     await createRoom(
       newRoomId,
@@ -31,6 +34,7 @@ async function sendMessageJson(
       messageId,
       message,
       messageName,
+      '',
       '',
     );
   }

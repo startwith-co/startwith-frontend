@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
 import ErrorMessage from '@/shared/ui/error-message';
 import CustomModal from '@/shared/ui/custommodal';
-import { redirect } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 import resetPost from '../api/resetPost';
 
 const passwordRegex = /^(?=.*[!@#])[A-Za-z\d!@#]{8,16}$/;
@@ -43,6 +43,10 @@ function ResetForm() {
   });
   const [open, setOpen] = useState(false);
   const [matchSuccess, setMatchSuccess] = useState(false);
+  const searchParams = useSearchParams();
+
+  const user = searchParams.get('user') as string;
+  const token = searchParams.get('token') as string;
 
   const handleConfirmClick = () => {
     const { password, confirmPassword } = getValues();
@@ -62,7 +66,7 @@ function ResetForm() {
     <>
       <SignupForm
         action={async (prevState, formData) => {
-          await resetPost(prevState, formData);
+          await resetPost(prevState, formData, user, token);
           setOpen(true);
         }}
         buttonProps="bg-gradient-to-t from-[#6E86FF] to-[#5B76FF] text-white w-full h-[55px] font-bold text-sm mt-4"

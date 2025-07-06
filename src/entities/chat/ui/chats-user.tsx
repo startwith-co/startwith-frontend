@@ -1,25 +1,20 @@
-import { useEffect, useRef } from 'react';
 import formatTime from '@/shared/lib/chat-format-time';
 import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
+import useChatScroll from '@/shared/model/useChatScroll';
 import ChatUserBubble from './chat-user-bubble';
 import ChatUserCancelRequestCard from './chat-user-cancel-request-card';
 import ChatUserPayCompleteCard from './chat-user-payComplete-card';
 import ChatUserCancelCompleteCard from './chat-user-cancelComplete-card';
 import ChatUserRequestCard from './chat-user-request-card';
+import { ChatType } from '../model/type';
 
 interface ChatsUserProps {
-  messages: any[];
+  messages: ChatType[];
   consumerId: string;
 }
 
 function ChatsUser({ messages, consumerId }: ChatsUserProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages]);
+  const scrollRef = useChatScroll({ messages });
 
   return (
     <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
@@ -88,6 +83,8 @@ function ChatsUser({ messages, consumerId }: ChatsUserProps) {
             messageId={msg.messageId}
             consumerId={consumerId}
             time={formatTime(msg.createdAt)}
+            file={msg.file}
+            id={msg.id}
           />
         );
       })}

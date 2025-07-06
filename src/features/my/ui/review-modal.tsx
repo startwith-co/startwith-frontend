@@ -9,14 +9,15 @@ import useCurrentSession from '@/shared/model/useCurrentSession';
 export default function ReviewModal({
   open,
   setOpen,
+  solutionSeq,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
+  solutionSeq: number;
 }) {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState<number | null>(null);
   const [text, setText] = useState('');
-  const solutionSeq = 8;
   const maxChars = 500;
   const { session } = useCurrentSession();
   const handleSubmit = async () => {
@@ -76,7 +77,7 @@ export default function ReviewModal({
         <SubmitCustomButton
           buttonName="리뷰 남기기"
           buttonProps="h-[50px] w-full bg-[#4f7df9] font-bold text-white hover:bg-[#3c62d6] mt-5"
-          disabled={text.length === 0 || rating === 0}
+          disabled={text.length <= 10 || rating === 0}
           loadingText="로딩 중"
           loadingTextProps="text-sm font-bold"
         />

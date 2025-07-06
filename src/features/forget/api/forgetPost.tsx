@@ -1,8 +1,12 @@
 'use server';
 
-import { redirect } from 'next/navigation';
+import postResetLink from './postResetLink';
 
-async function forgetPost(_prevState: void, formData: FormData): Promise<void> {
+async function forgetPost(
+  isVendor: boolean,
+  _prevState: void,
+  formData: FormData,
+): Promise<void> {
   const email = formData?.get('email') as string;
   const company = formData?.get('company') as string;
 
@@ -13,7 +17,7 @@ async function forgetPost(_prevState: void, formData: FormData): Promise<void> {
     return;
   }
 
-  redirect('/forget/reset');
+  await postResetLink(isVendor, email, company);
 }
 
 export default forgetPost;

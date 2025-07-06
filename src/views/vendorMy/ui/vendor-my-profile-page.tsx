@@ -10,19 +10,20 @@ import VendorCustomerOverview from '@/widgets/vendorMy/ui/vendor-customer-overvi
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 import {
   VendorUpdateSchema,
   vendorUpdateSchema,
 } from '../model/vendor-update-schema';
 import { VendorInfoProps } from '../model/type';
 import updateVendorInfo from '../api/updateVendorInfo';
+import urlToFile from '../api/urlToFile';
 
 function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
-  // TODO: vendorBannerIamgeUrl 파일로 안받고 오니 수정할때마다 파일 업로드를 하지 않으면 빈 파일로 대체되버림.
   const methods = useForm({
     resolver: zodResolver(vendorUpdateSchema),
     defaultValues: {
-      vendorBannerImageUrl: new File([], ''),
+      vendorBannerImageUrl: undefined,
       vendorSeq: vendorInfo?.vendorSeq || 0,
       vendorName: vendorInfo?.vendorName || '',
       managerName: vendorInfo?.managerName || '',
@@ -45,6 +46,14 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
       clientCount: vendorInfo?.clientCount || 0,
     },
   });
+
+  useEffect(() => {
+    if (vendorInfo.vendorBannerImageUrl) {
+      urlToFile(vendorInfo.vendorBannerImageUrl, 'banner.jpg').then((file) => {
+        methods.setValue('vendorBannerImageUrl', file);
+      });
+    }
+  }, [vendorInfo.vendorBannerImageUrl, methods]);
 
   const onSubmit = async (data: VendorUpdateSchema) => {
     try {

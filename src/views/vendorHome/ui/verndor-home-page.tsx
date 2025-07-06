@@ -3,13 +3,16 @@ import VendorChatWidget from '@/widgets/vendorHome/ui/vendor-chat-widget';
 import VendorNoticeWidget from '@/widgets/vendorHome/ui/vendor-notice-widget';
 import VendorStatistics from '@/widgets/vendorHome/ui/vendor-statistics';
 import VendorServiceBoard from '@/widgets/vendorHome/ui/vendor-service-board';
+import { auth } from '@/auth';
 
-export default function VendorHomePage() {
+export default async function VendorHomePage() {
+  const session = await auth();
+
   return (
     <div className="flex w-full flex-col gap-7.5 pr-8">
       <div className="grid grid-cols-[2.5fr_1fr_1fr] gap-7.5 2xl:grid-cols-[1.7fr_1fr_1fr]">
         <div className="flex flex-col gap-7.5">
-          <VendorBoard />
+          <VendorBoard vendorSeq={session?.vendorSeq || 0} />
           <VendorStatistics />
         </div>
         <VendorChatWidget />
