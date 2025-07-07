@@ -7,13 +7,14 @@ export default function VendorNoticeWidget() {
       <ul className="mt-5 flex flex-col gap-5">
         <li>
           <DarkBox className="flex flex-col gap-2.5 px-4 py-2.5 text-xs font-semibold">
-            <h2>전상품 95% 할인</h2>
+            공지사항이 없습니다.
+            {/* <h2>전상품 95% 할인</h2>
             <p className="text-vendor-secondary text-[10px] font-light">
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum
               nemo nulla ex illo, adipisci alias impedit aspernatur nobis,
               exercitationem minus ut quia laudantium dolore ducimus fugit
               soluta explicabo voluptatum voluptatibus.
-            </p>
+            </p> */}
           </DarkBox>
         </li>
       </ul>
