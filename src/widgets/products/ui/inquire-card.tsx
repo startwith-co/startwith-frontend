@@ -15,12 +15,14 @@ interface InquireCardProps {
   vendorName: string;
   vendorId: string;
   vendorSeq: number;
+  solutionName: string;
 }
 
 export default function InquireCard({
   vendorName,
   vendorId,
   vendorSeq,
+  solutionName,
 }: InquireCardProps) {
   const { setChatMeta, consumerId: curConsumerId } = useChatMeta();
   const router = useRouter();
@@ -42,6 +44,7 @@ export default function InquireCard({
         consumerName: res.data.consumerName,
         consumerId: res.data.consumerUniqueType,
         consumerSeq: res.data.consumerSeq,
+        solutionName,
       });
     };
 

@@ -25,4 +25,5 @@ export interface ChatRoom {
   lastMessage: LastMessageType;
   consumerSeq: string;
   vendorSeq: string;
+  solutionName: string;
 }
