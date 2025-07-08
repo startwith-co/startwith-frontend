@@ -13,6 +13,7 @@ async function createRoom(
   consumerSeq: string,
   vendorSeq: string,
   solutionName: string,
+  userImg: string,
 ) {
   // chats 컬렉션 안에 roomId 문서 생성
   const roomRef = doc(db, 'chats', roomId);
@@ -35,6 +36,7 @@ async function createRoom(
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
     solutionName,
+    userImg,
   });
 
   console.log('방 생성 완료:', roomRef.path);

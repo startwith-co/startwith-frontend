@@ -45,6 +45,7 @@ export default function InquireCard({
         consumerId: res.data.consumerUniqueType,
         consumerSeq: res.data.consumerSeq,
         solutionName,
+        userImg: res.data.consumerImageUrl,
       });
     };
 
