@@ -43,7 +43,7 @@ const datasetsByType = {
   },
 };
 
-export default function VendorLineChart() {
+export default function VendorLineChart({ title }: { title: string }) {
   const [period, setPeriod] = useState<'day' | 'week' | 'month'>('day');
 
   const chartData = {
@@ -69,7 +69,7 @@ export default function VendorLineChart() {
       )}
     >
       <div className="relative mb-2 flex w-full items-center">
-        <h3 className="mx-auto text-sm">매출</h3>
+        <h3 className="mx-auto text-sm">{title}</h3>
         <div className="absolute right-1 flex gap-0">
           {(['day', 'week', 'month'] as const).map((type, index) => (
             <button

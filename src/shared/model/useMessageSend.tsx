@@ -36,8 +36,14 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
   const { session } = useCurrentSession();
   const { curRoomId, setCurRoomId } = useRoomId();
-  const { consumerName, vendorName, vendorSeq, consumerSeq, solutionName } =
-    useChatMeta();
+  const {
+    consumerName,
+    vendorName,
+    vendorSeq,
+    consumerSeq,
+    solutionName,
+    userImg,
+  } = useChatMeta();
 
   const searchParams = useSearchParams();
   const consumerId = searchParams.get('consumerId') as string;
@@ -109,6 +115,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
         session.consumerSeq.toString(),
         vendorSeq.toString(),
         solutionName,
+        userImg,
       );
       setCurRoomId(newRoomId);
     }

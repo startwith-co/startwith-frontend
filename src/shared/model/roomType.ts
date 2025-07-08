@@ -26,4 +26,5 @@ export interface ChatRoom {
   consumerSeq: string;
   vendorSeq: string;
   solutionName: string;
+  userImg: string;
 }

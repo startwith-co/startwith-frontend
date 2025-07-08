@@ -2,7 +2,9 @@
 
 import useGetChatRooms from '@/shared/model/useGetChatRooms';
 import DarkBox from '@/shared/ui/dark-box';
+import Image from 'next/image';
 import Link from 'next/link';
+import defaultImage from 'public/images/dummy.png';
 
 export default function VendorChatWidget() {
   const rooms = useGetChatRooms({ targetId: 'vendorId' });
@@ -17,9 +19,17 @@ export default function VendorChatWidget() {
                 href={`vendor/chat?vendorId=${room.vendorId}&consumerId=${room.consumerId}`}
               >
                 <DarkBox className="flex h-17.5 w-full items-center px-2 text-center text-xs font-semibold">
-                  <div className="mr-3.5 size-12.5 rounded-full bg-black" />
+                  <Image
+                    src={room.userImg || defaultImage}
+                    alt="image"
+                    width={50}
+                    height={50}
+                    className="mr-2 size-10 rounded-full object-cover object-center"
+                  />
                   <div className="flex h-10 flex-col items-start justify-between">
-                    <span className="text-xs">상품명</span>
+                    <p className="max-w-[100px] truncate text-xs">
+                      {room.solutionName}
+                    </p>
                     <span className="text-vendor-secondary text-[10px]">
                       {room.consumerName}
                     </span>
