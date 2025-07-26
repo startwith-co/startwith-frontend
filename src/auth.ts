@@ -55,7 +55,6 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
             );
             const data: LoginResponse = await response.json();
             if (data) {
-              // 유저 정보와 토큰을 NextAuth.js 세션에 저장합니다.
               return {
                 vendorSeq: data.data.vendorSeq,
                 accessToken: data.data.accessToken,
