@@ -7,7 +7,6 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
   secret: '1004',
   providers: [
     CredentialsProvider({
-      // 이 부분은 자체 로그인 로직을 구현합니다.
       name: 'credentials',
       credentials: {
         email: { label: '이메일', type: 'text' },
@@ -31,7 +30,6 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
             );
             const data: LoginResponse = await response.json();
             if (data) {
-              // 유저 정보와 토큰을 NextAuth.js 세션에 저장합니다.
               return {
                 consumerSeq: data.data.consumerSeq,
                 accessToken: data.data.accessToken,
@@ -84,12 +82,17 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
           ...token,
           accessToken: user.accessToken,
           refreshToken: user.refreshToken,
+          accessTokenExpireAt: Date.now() + 86400 * 1000,
+          refreshTokenExpireAt: Date.now() + 2592000 * 1000,
           consumerSeq: user.consumerSeq,
           vendorSeq: user.vendorSeq,
           uniqueType: user.uniqueType,
           name: user.name,
           role: user.role,
         };
+      }
+      if (Date.now() > (token.accessTokenExpireAt as number)) {
+        return {};
       }
       return token;
     },
@@ -98,6 +101,8 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
         ...session,
         accessToken: token.accessToken,
         refreshToken: token.refreshToken,
+        accessTokenExpireAt: token.accessTokenExpireAt,
+        refreshTokenExpireAt: token.refreshTokenExpireAt,
         consumerSeq: token.consumerSeq,
         vendorSeq: token.vendorSeq,
         uniqueType: token.uniqueType,
