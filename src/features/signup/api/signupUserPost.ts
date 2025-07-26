@@ -6,7 +6,7 @@ import signupUser from './signupUser';
 async function signupUserPost(
   _prevState: void,
   formData: FormData,
-  industry: string | null,
+  industry: string | undefined,
 ): Promise<void> {
   const company = formData?.get('company') as string;
   const email = formData?.get('email') as string;

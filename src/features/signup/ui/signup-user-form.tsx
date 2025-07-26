@@ -87,7 +87,7 @@ function SignupUserForm() {
   return (
     <SignupForm
       action={(prevState, formData) =>
-        signupUserPost(prevState, formData, selectedIndustry?.value ?? null)
+        signupUserPost(prevState, formData, selectedIndustry?.value)
       }
       variant="textBlue"
       buttonProps=" w-full h-[60px] font-extrabold text-lg shadow-sm mb-8"

@@ -36,7 +36,10 @@ function EditInfo() {
   });
 
   const [open, setOpen] = useState(false);
-  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
+  const [selectedIndustry, setSelectedIndustry] = useState<{
+    label: string;
+    value: string;
+  } | null>(null);
   const { data: session } = useSession();
   const {
     preview,
@@ -61,7 +64,10 @@ function EditInfo() {
       });
 
       // 예: 산업군 선택 상태도 함께 설정
-      setSelectedIndustry(res.data.industry);
+      setSelectedIndustry({
+        label: res.data.industry,
+        value: res.data.industry,
+      });
     };
 
     fetchData();
@@ -70,7 +76,7 @@ function EditInfo() {
   return (
     <SignupForm
       action={(prevState, formData) =>
-        editInfoPost(prevState, formData, file, selectedIndustry)
+        editInfoPost(prevState, formData, file, selectedIndustry?.value)
       }
       variant="bgBlueGradient"
       buttonProps="w-[180px] h-[35px] font-light text-sm"
@@ -166,7 +172,7 @@ function EditInfo() {
           className="mt-2 h-[40px] w-full justify-start bg-[#F9F9F9] font-semibold text-black"
           onClick={() => setOpen(true)}
         >
-          {selectedIndustry || '종사 산업군 선택'}
+          {selectedIndustry?.label || '종사 산업군 선택'}
         </Button>
         <SignupIndustryModal
           open={open}
