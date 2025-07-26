@@ -184,6 +184,7 @@ function SignupVendorForm() {
               asChild={false}
               variant="textBlue"
               onClick={verifyEmail}
+              disabled={emailVerified}
               className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
             >
               인증코드 인증하기

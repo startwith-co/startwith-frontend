@@ -27,7 +27,7 @@ function VendorControl() {
             {consumerInfo?.consumerName}
           </p>
           <ChatUserCard
-            title="종사 산업군"
+            title="종사 산업군을 선택해주세요."
             content={consumerInfo?.industry ?? ''}
           />
         </div>
