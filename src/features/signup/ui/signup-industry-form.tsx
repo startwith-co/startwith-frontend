@@ -4,44 +4,35 @@ import cn from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
 
 const industries = [
-  '건설',
-  '공공',
-  '교육',
-  '금융',
-  '농업/어업/임업',
-  '물류/유통',
-  '부동산/임대',
-  '숙박',
-  '스포츠',
-  '요식/외식',
-  '예술',
-  '정보통신/IT',
-  '제조',
-  '환경/에너지',
+  { label: '금속 / 기계 / 자동차 부품 제조', value: 'Metal' },
+  { label: '금형 / 정밀가공 제조', value: 'Mold' },
+  { label: '식음료 / 식품 / 포장 제조', value: 'Food' },
+  { label: '전자 / 전기 / 배터리 제조', value: 'Electronics' },
 ];
 
 function IndustrySelectGrid({
   selectedIndustry,
   setSelectedIndustry,
 }: {
-  selectedIndustry: string | null;
-  setSelectedIndustry: (industry: string) => void;
+  selectedIndustry: { label: string; value: string } | null;
+  setSelectedIndustry: (industry: { label: string; value: string }) => void;
 }) {
   return (
-    <div className="flex flex-wrap justify-center gap-5">
+    <div className="flex w-full flex-col items-center gap-5">
       {industries.map((industry) => (
         <Button
-          key={industry}
+          key={industry.value}
           type="button"
           onClick={() => setSelectedIndustry(industry)}
           className={cn(
-            'rounded-md px-4 py-2 text-sm font-medium',
+            'h-[45px] w-full rounded-md py-2 text-sm font-medium',
             'bg-[#F5F5F5] text-black',
-            selectedIndustry === industry && 'bg-[#5B76FF] text-white',
+            selectedIndustry?.value === industry.value &&
+              'bg-[#5B76FF] text-white',
           )}
           asChild={false}
         >
-          {industry}
+          {industry.label}
         </Button>
       ))}
     </div>

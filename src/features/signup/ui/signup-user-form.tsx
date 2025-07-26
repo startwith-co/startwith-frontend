@@ -67,7 +67,10 @@ function SignupUserForm() {
   };
 
   const [open, setOpen] = useState(false);
-  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
+  const [selectedIndustry, setSelectedIndustry] = useState<{
+    label: string;
+    value: string;
+  } | null>(null);
   const { timer, isCounting, handleSendEmail } = useSendEmail();
   const email = watch('email');
   const code = watch('code');
@@ -84,7 +87,7 @@ function SignupUserForm() {
   return (
     <SignupForm
       action={(prevState, formData) =>
-        signupUserPost(prevState, formData, selectedIndustry)
+        signupUserPost(prevState, formData, selectedIndustry?.value ?? null)
       }
       variant="textBlue"
       buttonProps=" w-full h-[60px] font-extrabold text-lg shadow-sm mb-8"
@@ -198,7 +201,7 @@ function SignupUserForm() {
           className="h-[55px] w-full justify-start bg-white text-[#7A7A7A]"
           onClick={() => setOpen(true)}
         >
-          {selectedIndustry || '종사 산업군 선택'}
+          {selectedIndustry?.label || '종사 산업군 선택'}
         </Button>
         <SignupIndustryModal
           open={open}
