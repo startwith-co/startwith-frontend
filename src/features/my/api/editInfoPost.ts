@@ -7,7 +7,7 @@ async function editInfoPost(
   _prevState: void,
   formData: FormData,
   file: File | null,
-  selectedIndustry: string | null,
+  selectedIndustry: string | undefined,
 ): Promise<void> {
   const company = formData?.get('company') as string;
 
