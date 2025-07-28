@@ -77,6 +77,7 @@ export default function VendorNormalInfo() {
                   options={serviceCategory}
                   placeholder="솔루션 카테고리 선택"
                   triggerClassName="w-[220px] h-[40px]"
+                  itemsClassName="px-5"
                   {...field}
                 />
                 {errors.category && (
