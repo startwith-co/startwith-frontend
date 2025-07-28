@@ -33,7 +33,7 @@ export default function VendorRegisterPage() {
       category: '',
       industry: '',
       recommendedCompanySize: [],
-      solutionImplementationType: 'string',
+      solutionImplementationType: '',
       specialist: 'string',
       amount: '',
       duration: '',

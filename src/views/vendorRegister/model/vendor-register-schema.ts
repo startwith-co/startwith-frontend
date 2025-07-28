@@ -31,7 +31,11 @@ export const vendorRegisterSchema = z.object({
     }),
   industry: z.string().min(1, '산업 선택해주세요.'),
   recommendedCompanySize: z.array(z.string()).min(1, '기업 규모 선택해주세요.'),
-  solutionImplementationType: z.string(),
+  solutionImplementationType: z
+    .enum(['클라우드', '온프레미스', ''])
+    .refine((value) => value !== '', {
+      message: '솔루션 구축 형태 선택해주세요.',
+    }),
   specialist: z.string(),
   amount: z
     .string()
