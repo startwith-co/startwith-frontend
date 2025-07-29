@@ -67,7 +67,7 @@ export default function ProductDetail({
       <div className="mt-12.5 grid grid-cols-3 gap-16">
         <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">
           <span className="text-lg font-semibold">가격</span>
-          <span className="text-sm">{amount}원/월(VAT 별도)~</span>
+          <span className="text-sm">~ {amount}원/월(VAT 별도)</span>
         </div>
         <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">
           <span className="text-lg font-semibold">서비스 형태</span>

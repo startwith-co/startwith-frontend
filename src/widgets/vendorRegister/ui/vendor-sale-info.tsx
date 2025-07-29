@@ -18,7 +18,7 @@ export default function VendorSaleInfo() {
           <Input
             type="number"
             className="bg-vendor-gray w-[220px] border-none text-center"
-            placeholder="0원(VAT별도)"
+            placeholder="~ 0원(VAT별도)"
             {...register('amount')}
           />
           {errors.amount && (
