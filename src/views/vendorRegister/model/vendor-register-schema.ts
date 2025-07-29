@@ -1,19 +1,10 @@
 import { z } from 'zod';
 
 const categoryEnum = z.enum([
-  'BI(데이터 시각화)',
-  'BPM(업무 자동화)',
-  'CSM(콘텐츠 관리 시스템)',
-  'CRM(고객 관계 관리)',
-  'DMS(문서 관리 시스템)',
-  'EAM(전사적 콘텐츠 관리)',
-  'ERP(전사적 자원 관리)',
-  'HR(성과 및 조직 관리)',
-  'HRM(인사운영 관리)',
-  'KM(지식 관리)',
-  'SCM(공급망 관리)',
-  'SI(시스템 통합 및 구축)',
-  '보안',
+  '불량 검출·예측(비전 검사)',
+  '설비 이상 및 고장 예측(예지보전)',
+  '실시간 공정 상태 모니터링(공정 이상 감지)',
+  'MES 재고관리(공정 재고관리)',
 ]);
 
 export const vendorRegisterSchema = z.object({
@@ -39,8 +30,9 @@ export const vendorRegisterSchema = z.object({
     }),
   industry: z.string().min(1, '산업 선택해주세요.'),
   recommendedCompanySize: z.array(z.string()).min(1, '기업 규모 선택해주세요.'),
-  solutionImplementationType: z.string(),
-  specialist: z.string(),
+  solutionImplementationType: z
+    .array(z.string())
+    .min(1, '솔루션 구축 형태 선택해주세요.'),
   amount: z
     .string()
     .min(1, '최소 1원 이상의 가격을 입력해주세요.')

@@ -77,6 +77,7 @@ export default function VendorNormalInfo() {
                   options={serviceCategory}
                   placeholder="솔루션 카테고리 선택"
                   triggerClassName="w-[220px] h-[40px]"
+                  itemsClassName="px-5"
                   {...field}
                 />
                 {errors.category && (
@@ -167,6 +168,54 @@ export default function VendorNormalInfo() {
               return (
                 <div className="flex items-center gap-5">
                   {scaleCategory.map((item) => {
+                    const isSelected = value.includes(item);
+                    return (
+                      <button
+                        key={item}
+                        type="button"
+                        className={cn(
+                          'bg-vendor-gray hover:bg-primary rounded-md px-[15px] py-[13px] text-xs hover:text-white',
+                          {
+                            'bg-primary text-white': isSelected,
+                          },
+                        )}
+                        onClick={() => toggleSelection(item)}
+                      >
+                        {item}
+                      </button>
+                    );
+                  })}
+                  {errors.recommendedCompanySize && (
+                    <ErrorMessage
+                      message={`${errors.recommendedCompanySize.message}`}
+                    />
+                  )}
+                </div>
+              );
+            }}
+          />
+        </li>
+        <li>
+          <span>
+            솔루션 구축 형태<span className="text-red-500">*</span>
+          </span>
+          <Controller
+            control={control}
+            name="solutionImplementationType"
+            render={({ field }) => {
+              const { value = [], onChange } = field;
+
+              const toggleSelection = (item: string) => {
+                if (value.includes(item)) {
+                  onChange(value.filter((v: string) => v !== item));
+                } else {
+                  onChange([...value, item]);
+                }
+              };
+
+              return (
+                <div className="flex items-center gap-5">
+                  {['클라우드', '온프레미스'].map((item) => {
                     const isSelected = value.includes(item);
                     return (
                       <button
