@@ -2,7 +2,6 @@
 
 import EditButton from '@/features/vendorMy/ui/edit-button';
 import Input from '@/shared/ui/input';
-import VendorSelect from '@/shared/ui/vendor-select';
 
 export default function VendorCustomerOverview() {
   return (
@@ -32,32 +31,26 @@ export default function VendorCustomerOverview() {
           </ul>
         </div>
         <div>
-          <span>산업별 기업 고객 개요</span>
-          <div className="mt-5 flex flex-col gap-5">
-            <div className="grid grid-cols-2 items-center gap-5">
-              <VendorSelect
-                options={[
-                  'IT/인터넷',
-                  '금융',
-                  '제조',
-                  '서비스',
-                  '유통',
-                  '의료',
-                  '교육',
-                  '건설',
-                ]}
-                placeholder="산업군 카테고리 선택"
-                onChange={() => {}}
-              />
-              <Input
-                className="bg-vendor-gray h-12 text-center"
-                placeholder="0%"
-              />
-            </div>
-            <button className="bg-vendor-gray text-vendor-secondary rounded-md p-2 text-xl">
-              +
-            </button>
-          </div>
+          <span>고용인원 규모별 고객 개요</span>
+          <ul className="mt-5 flex flex-col gap-5">
+            {[
+              '10인 미만',
+              '10인 미만 30인 이상',
+              '30인 이상 50인 미만',
+              '50인 이상 100인 미만',
+              '100인 이상',
+            ].map((label) => (
+              <li key={label} className="grid grid-cols-2 items-center gap-5">
+                <div className="bg-vendor-gray flex h-12 items-center justify-center rounded-md px-2 py-1 text-sm">
+                  {label}
+                </div>
+                <Input
+                  className="bg-vendor-gray h-12 text-center"
+                  placeholder="0%"
+                />
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
       <div className="flex justify-center">
