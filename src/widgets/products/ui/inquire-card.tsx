@@ -10,12 +10,15 @@ import { ApiResponse } from '@/shared/model/apiType';
 import { ConsumerDetailType } from '@/shared/model/consumerDetailType';
 import { useRouter } from 'next/navigation';
 import useCurrentSession from '@/shared/model/useCurrentSession';
+import createPaymentEvent from '../api/createPaymentEvent';
 
 interface InquireCardProps {
   vendorName: string;
   vendorId: string;
   vendorSeq: number;
   solutionName: string;
+  amount: number;
+  category: string;
 }
 
 export default function InquireCard({
@@ -23,10 +26,26 @@ export default function InquireCard({
   vendorId,
   vendorSeq,
   solutionName,
+  amount,
+  category,
 }: InquireCardProps) {
   const { setChatMeta, consumerId: curConsumerId } = useChatMeta();
   const router = useRouter();
   const { session, status } = useCurrentSession();
+  const handlePaymentClick = async () => {
+    try {
+      const paymentEvent = await createPaymentEvent({
+        consumerSeq: session?.consumerSeq || 0,
+        vendorSeq,
+        category,
+        paymentEventName: solutionName,
+        amount,
+      });
+      router.push(`/payment?paymentEventSeq=${paymentEvent.paymentEventSeq}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const fetchConsumer = async () => {
@@ -76,11 +95,7 @@ export default function InquireCard({
             <Button
               asChild={false}
               className="mt-5 w-full rounded-3xl"
-              onClick={() => {
-                router.push(
-                  `/chat?vendorId=${vendorId}&consumerId=${curConsumerId}`,
-                );
-              }}
+              onClick={() => handlePaymentClick()}
             >
               구매하기
             </Button>
