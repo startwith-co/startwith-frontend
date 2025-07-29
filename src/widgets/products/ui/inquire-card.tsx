@@ -61,17 +61,30 @@ export default function InquireCard({
         </Avatar>
         <span className="text-xl font-bold">{vendorName}</span>
         {session?.uniqueType !== vendorId && status === 'authenticated' && (
-          <Button
-            asChild={false}
-            className="mt-4.5 w-full rounded-3xl"
-            onClick={() => {
-              router.push(
-                `/chat?vendorId=${vendorId}&consumerId=${curConsumerId}`,
-              );
-            }}
-          >
-            실시간 상담하기
-          </Button>
+          <div>
+            <Button
+              asChild={false}
+              className="text-primary border-primary mt-5 w-full rounded-3xl border-2 bg-white hover:text-white"
+              onClick={() => {
+                router.push(
+                  `/chat?vendorId=${vendorId}&consumerId=${curConsumerId}`,
+                );
+              }}
+            >
+              실시간 상담하기
+            </Button>
+            <Button
+              asChild={false}
+              className="mt-5 w-full rounded-3xl"
+              onClick={() => {
+                router.push(
+                  `/chat?vendorId=${vendorId}&consumerId=${curConsumerId}`,
+                );
+              }}
+            >
+              구매하기
+            </Button>
+          </div>
         )}
       </WhiteBox>
     </div>
