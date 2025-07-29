@@ -11,7 +11,7 @@ export default function TotalPriceWidget({
   tax: number;
 }) {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex h-[260px] flex-col gap-5">
       <h2 className="text-lg font-semibold">총 결제 금액</h2>
       <div className="flex w-full flex-1 flex-col gap-5 rounded-md bg-white p-6 shadow-md">
         <ul className="flex w-full flex-col *:flex *:flex-1 *:flex-row *:items-center *:justify-between">
