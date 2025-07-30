@@ -14,8 +14,7 @@ function MainSectionButtons() {
   const router = useRouter();
 
   const handleFirstSectionClick = (button: string) => {
-    const cleanedCategory = button.replace(/\(.*\)$/, '');
-    setSolutionCategory(cleanedCategory);
+    setSolutionCategory(button);
     setStep((prev) => prev + 1);
   };
 
