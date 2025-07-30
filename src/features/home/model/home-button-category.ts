@@ -6,8 +6,8 @@ export const firstSectionButtons = [
 ];
 
 export const secondSectionButtons = [
-  '금속 / 기계 / 자동차 부품 제조',
-  '금형 / 정밀가공 제조',
-  '식음료 / 식품 / 포장 제조',
-  '전자 / 전기 / 배터리 제조',
+  '금속/기계/자동차 부품 제조',
+  '금형/정밀가공 제조',
+  '식음료/식품/포장 제조',
+  '전자/전기/배터리 제조',
 ];
