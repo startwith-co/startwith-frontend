@@ -44,6 +44,30 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
       holidayEndTime: vendorInfo?.holidayEndTime || '23:59:59',
       orderCount: vendorInfo?.orderCount || 0,
       clientCount: vendorInfo?.clientCount || 0,
+      stats: [
+        { label: '10억 미만', percentage: 0, statType: 'SALES_SIZE' },
+        { label: '10억 ~ 50억', percentage: 0, statType: 'SALES_SIZE' },
+        { label: '50억 ~ 100억', percentage: 0, statType: 'SALES_SIZE' },
+        { label: '100억 ~ 150억', percentage: 0, statType: 'SALES_SIZE' },
+        { label: '150억 이상', percentage: 0, statType: 'SALES_SIZE' },
+        { label: '10인 미만', percentage: 0, statType: 'EMPLOYEES_SIZE' },
+        {
+          label: '10인 미만 30인 이상',
+          percentage: 0,
+          statType: 'EMPLOYEES_SIZE',
+        },
+        {
+          label: '30인 이상 50인 미만',
+          percentage: 0,
+          statType: 'EMPLOYEES_SIZE',
+        },
+        {
+          label: '50인 이상 100인 미만',
+          percentage: 0,
+          statType: 'EMPLOYEES_SIZE',
+        },
+        { label: '100인 이상', percentage: 0, statType: 'EMPLOYEES_SIZE' },
+      ],
     },
   });
 
@@ -63,6 +87,8 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
       toast.error(error.message);
     }
   };
+
+  console.log(methods.formState.errors);
 
   return (
     <FormProvider {...methods}>

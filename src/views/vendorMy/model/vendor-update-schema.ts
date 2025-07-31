@@ -22,6 +22,13 @@ export const vendorUpdateSchema = z.object({
   holidayEndTime: z.string().min(1, '시간을 입력해주세요.'),
   orderCount: z.number(),
   clientCount: z.number(),
+  stats: z.array(
+    z.object({
+      label: z.string(),
+      percentage: z.number(),
+      statType: z.enum(['SALES_SIZE', 'EMPLOYEES_SIZE']),
+    }),
+  ),
 });
 
 export type VendorUpdateSchema = z.infer<typeof vendorUpdateSchema>;
