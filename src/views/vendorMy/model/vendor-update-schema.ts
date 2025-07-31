@@ -2,6 +2,7 @@ import z from 'zod';
 
 export const vendorUpdateSchema = z.object({
   vendorBannerImageUrl: z.instanceof(File),
+  clientInfos: z.array(z.instanceof(File)),
   vendorSeq: z.number(),
   vendorName: z.string().min(1, '업체명 입력해주세요.'),
   managerName: z.string().min(1, '담당자 성함 입력해주세요.'),
