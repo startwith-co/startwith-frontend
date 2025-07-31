@@ -10,12 +10,15 @@ import { ApiResponse } from '@/shared/model/apiType';
 import { ConsumerDetailType } from '@/shared/model/consumerDetailType';
 import { useRouter } from 'next/navigation';
 import useCurrentSession from '@/shared/model/useCurrentSession';
+import createPaymentEvent from '../api/createPaymentEvent';
 
 interface InquireCardProps {
   vendorName: string;
   vendorId: string;
   vendorSeq: number;
   solutionName: string;
+  amount: number;
+  category: string;
 }
 
 export default function InquireCard({
@@ -23,10 +26,26 @@ export default function InquireCard({
   vendorId,
   vendorSeq,
   solutionName,
+  amount,
+  category,
 }: InquireCardProps) {
   const { setChatMeta, consumerId: curConsumerId } = useChatMeta();
   const router = useRouter();
   const { session, status } = useCurrentSession();
+  const handlePaymentClick = async () => {
+    try {
+      const paymentEvent = await createPaymentEvent({
+        consumerSeq: session?.consumerSeq || 0,
+        vendorSeq,
+        category,
+        paymentEventName: solutionName,
+        amount,
+      });
+      router.push(`/payment?paymentEventSeq=${paymentEvent.paymentEventSeq}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const fetchConsumer = async () => {
@@ -61,17 +80,26 @@ export default function InquireCard({
         </Avatar>
         <span className="text-xl font-bold">{vendorName}</span>
         {session?.uniqueType !== vendorId && status === 'authenticated' && (
-          <Button
-            asChild={false}
-            className="mt-4.5 w-full rounded-3xl"
-            onClick={() => {
-              router.push(
-                `/chat?vendorId=${vendorId}&consumerId=${curConsumerId}`,
-              );
-            }}
-          >
-            실시간 상담하기
-          </Button>
+          <div>
+            <Button
+              asChild={false}
+              className="text-primary border-primary mt-5 w-full rounded-3xl border-2 bg-white hover:text-white"
+              onClick={() => {
+                router.push(
+                  `/chat?vendorId=${vendorId}&consumerId=${curConsumerId}`,
+                );
+              }}
+            >
+              실시간 상담하기
+            </Button>
+            <Button
+              asChild={false}
+              className="mt-5 w-full rounded-3xl"
+              onClick={() => handlePaymentClick()}
+            >
+              구매하기
+            </Button>
+          </div>
         )}
       </WhiteBox>
     </div>

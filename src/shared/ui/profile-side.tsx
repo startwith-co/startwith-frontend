@@ -43,28 +43,27 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
       </Avatar>
       <h1
         className={cn(
-          'mb-14.5 text-2xl font-bold',
+          'mb-14.5 text-lg font-bold',
           mode === 'user' ? 'text-[#000000]' : 'text-white',
         )}
       >
         {companyName}
       </h1>
 
-      {routes.map((route) => (
-        <Link
-          key={route.href}
-          href={route.href}
-          className={cn(
-            'mb-5',
-            isActive(route.href)
-              ? 'text-md font-bold'
-              : 'text-sm font-semibold',
-            mode === 'user' ? 'text-[#000000]' : 'text-white',
-          )}
-        >
-          {route.label}
-        </Link>
-      ))}
+      <Link
+        key={routes[0].href}
+        href={routes[0].href}
+        className={cn(
+          'mb-5',
+          isActive(routes[0].href)
+            ? 'text-md font-bold'
+            : 'text-sm font-semibold',
+          mode === 'user' ? 'text-[#000000]' : 'text-white',
+        )}
+      >
+        {routes[0].label}
+      </Link>
+
       {mode === 'vendor' && dynamicRoute && (
         <Link
           key={dynamicRoute?.href}
@@ -80,6 +79,21 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
           {dynamicRoute?.label}
         </Link>
       )}
+      {routes.slice(1).map((route) => (
+        <Link
+          key={route.href}
+          href={route.href}
+          className={cn(
+            'mb-5',
+            isActive(route.href)
+              ? 'text-md font-bold'
+              : 'text-sm font-semibold',
+            mode === 'user' ? 'text-[#000000]' : 'text-white',
+          )}
+        >
+          {route.label}
+        </Link>
+      ))}
     </aside>
   );
 }
