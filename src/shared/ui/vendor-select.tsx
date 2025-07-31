@@ -40,7 +40,7 @@ export default function VendorSelect({
             key={option}
             value={option}
             className={cn(
-              'hover:bg-vendor-secondary h-10 cursor-pointer justify-center text-sm',
+              'hover:bg-vendor-secondary cursor-pointer text-left text-sm leading-5',
               itemsClassName,
             )}
           >

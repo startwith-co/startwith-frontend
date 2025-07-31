@@ -1,3 +1,4 @@
+import formatVATPrice from '@/shared/lib/formatVATPrice';
 import Solu from '@/shared/ui/solu';
 
 interface ChatUserCancelRequestCardProps {
@@ -5,10 +6,6 @@ interface ChatUserCancelRequestCardProps {
   solutionCategory: string;
   solutionPrice: number;
 }
-
-const formatPrice = (num: number) => {
-  return `${num.toLocaleString('ko-KR')}(VAT 별도)`;
-};
 
 function ChatUserCancelRequestCard({
   solutionName,
@@ -31,7 +28,7 @@ function ChatUserCancelRequestCard({
         </div>
         <div className="flex justify-between">
           <span className="font-bold">결제 금액</span>
-          <span>{formatPrice(solutionPrice)}</span>
+          <span>{formatVATPrice(solutionPrice)}</span>
         </div>
       </div>
     </div>

@@ -23,7 +23,7 @@ export const scaleCategory = [
 ];
 
 export const applyTagCategory = [
-  '고객 맞춤형(커스터마이징 가능)',
+  '고객 맞춤형\n(커스터마이징 가능)',
   'AI기술 적용',
   '없음',
 ];

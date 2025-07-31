@@ -8,12 +8,30 @@ const categoryMap: Record<string, string> = {
   'MES 재고관리(공정 재고관리)': 'MES_INVENTORY_MANAGEMENT',
 };
 
+const industryMap: Record<string, string> = {
+  범용: 'BASIC',
+  '금속/기계/자동차 부품 제조': 'METAL',
+  '금형/정밀가공 제조': 'MOLD',
+  '식음료/식품/포장 제조': 'FOOD',
+  '전자·전기·배터리 제조': 'ELECTRONIC',
+};
+
 export default async function Page({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const { category, industry, budget, page, keyword } = await searchParams;
+
+  const mappedCategory = category
+    ? categoryMap[category] || category
+    : undefined;
+  const mappedIndustry = industry
+    ? industryMap[industry] || industry
+    : undefined;
+
+  console.log('category', mappedCategory, 'industry', mappedIndustry);
+
   const solutions = await getSolutionList({
     category: categoryMap[category as string],
     industry,

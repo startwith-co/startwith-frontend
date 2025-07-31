@@ -3,6 +3,7 @@ import Solu from '@/shared/ui/solu';
 import { useState, useEffect } from 'react';
 import { useSolution } from '@/shared/model/SolutionProvider';
 import { Timestamp } from 'firebase/firestore';
+import formatVATPrice from '@/shared/lib/formatVATPrice';
 import ChatVendorCancelModal from './chat-vendor-cancel-modal';
 
 interface ChatVendorCancelRequestCardProps {
@@ -11,10 +12,6 @@ interface ChatVendorCancelRequestCardProps {
   solutionPrice: number;
   createdAt: Timestamp;
 }
-
-const formatPrice = (num: number) => {
-  return `${num.toLocaleString('ko-KR')}(VAT 별도)`;
-};
 
 function ChatVendorCancelRequestCard({
   solutionName,
@@ -53,7 +50,7 @@ function ChatVendorCancelRequestCard({
         </div>
         <div className="flex justify-between">
           <span className="font-bold">결제 금액</span>
-          <span>{formatPrice(solutionPrice)}</span>
+          <span>{formatVATPrice(solutionPrice)}</span>
         </div>
       </div>
       <div className="mt-4 flex justify-end">
