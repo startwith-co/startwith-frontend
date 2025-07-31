@@ -7,6 +7,13 @@ import { VendorUpdateSchema } from '../model/vendor-update-schema';
 export default async function updateVendorInfo(data: VendorUpdateSchema) {
   const formData = new FormData();
   formData.append('vendorBannerImageUrl', data.vendorBannerImageUrl);
+  if (data.clientInfos && data.clientInfos.length > 0) {
+    data.clientInfos.forEach((file) => {
+      if (file) {
+        formData.append('clientInfos', file);
+      }
+    });
+  }
   const jsonPart = {
     vendorSeq: data.vendorSeq,
     vendorName: data.vendorName,
@@ -28,6 +35,7 @@ export default async function updateVendorInfo(data: VendorUpdateSchema) {
     holidayEndTime: data.holidayEndTime,
     orderCount: data.orderCount,
     clientCount: data.clientCount,
+    stats: data.stats,
   };
 
   formData.append(
