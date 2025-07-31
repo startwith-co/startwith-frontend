@@ -76,7 +76,7 @@ export default function VendorNormalInfo() {
                 <VendorSelect
                   options={serviceCategory}
                   placeholder="솔루션 카테고리 선택"
-                  triggerClassName="w-[220px] h-[40px]"
+                  triggerClassName="w-[300px] h-[40px]"
                   {...field}
                 />
                 {errors.category && (

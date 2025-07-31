@@ -4,6 +4,7 @@ import Solu from '@/shared/ui/solu';
 import { Button } from '@/shared/ui/button';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import formatVATPrice from '@/shared/lib/formatVATPrice';
 import CircleCheckbox from './circle-check-box';
 import usePaymentRequest from '../model/usePaymentRequest';
 import getPaymentRequest from '../api/getPaymentRequest';
@@ -11,10 +12,6 @@ import getPaymentRequest from '../api/getPaymentRequest';
 interface ChatRequestCardProps {
   uuid: string;
 }
-
-const formatPrice = (num: number) => {
-  return `${num.toLocaleString('ko-KR')}원(VAT 별도)`;
-};
 
 function ChatUserRequestCard({ uuid }: ChatRequestCardProps) {
   const [checked, setChecked] = useState(false);
@@ -65,7 +62,7 @@ function ChatUserRequestCard({ uuid }: ChatRequestCardProps) {
         <div className="flex justify-between">
           <span className="font-semibold">결제 요청 금액</span>
           <span className="text-lg font-bold">
-            {formatPrice(paymentRequestData?.amount ?? 0)}
+            {formatVATPrice(paymentRequestData?.amount ?? 0)}
           </span>
         </div>
 

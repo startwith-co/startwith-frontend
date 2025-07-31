@@ -7,13 +7,9 @@ import Input from '@/shared/ui/input';
 import SignupForm from '@/shared/ui/signup-form';
 import SignupIndustryModal from '@/features/signup/ui/signup-industry-modal';
 import { Button } from '@/shared/ui/button';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useFileUpload from '@/shared/model/useFileUpload';
 import Image from 'next/image';
-import api from '@/shared/api/index-api';
-import { useSession } from 'next-auth/react';
-import { ApiResponse } from '@/shared/model/apiType';
-import { ConsumerInfoProps } from '@/views/vendorMy/model/type';
 import editInfoPost from '../api/editInfoPost';
 
 const schema = z.object({
@@ -25,14 +21,24 @@ const schema = z.object({
 
 type FormSchema = z.infer<typeof schema>;
 
-function EditInfo() {
+interface EditInfoProps {
+  company: string;
+  email: string;
+  phoneNumber: string;
+}
+
+function EditInfo({ company, email, phoneNumber }: EditInfoProps) {
   const {
     register,
     formState: { errors, isValid },
-    reset,
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
+    defaultValues: {
+      company,
+      email,
+      phoneNumber,
+    },
   });
 
   const [open, setOpen] = useState(false);
@@ -40,7 +46,6 @@ function EditInfo() {
     label: string;
     value: string;
   } | null>(null);
-  const { data: session } = useSession();
   const {
     preview,
     file,
@@ -48,30 +53,6 @@ function EditInfo() {
     handleClickFileInput,
     handleFileChange,
   } = useFileUpload();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!session?.consumerSeq) return;
-      const res = await api
-        .get(`api/b2b-service/consumer?consumerSeq=${session.consumerSeq}`)
-        .json<ApiResponse<ConsumerInfoProps>>();
-
-      // 가져온 값으로 초기값 세팅
-      reset({
-        company: res.data.consumerName,
-        email: res.data.email,
-        phoneNumber: res.data.phoneNumber,
-      });
-
-      // 예: 산업군 선택 상태도 함께 설정
-      setSelectedIndustry({
-        label: res.data.industry,
-        value: res.data.industry,
-      });
-    };
-
-    fetchData();
-  }, [reset, session]);
 
   return (
     <SignupForm
@@ -117,14 +98,14 @@ function EditInfo() {
       </div>
 
       <div>
-        <label htmlFor="company" className="text-sm text-[#A7A7A7]">
+        <label htmlFor="company" className="text-sm text-[#5D5D5D]">
           기업명(사업자명)
           <Input
             id="company"
             type="string"
             {...register('company')}
             name="company"
-            className="mt-2 mb-2 h-[40px] w-[600px] border-0 bg-[#F9F9F9] indent-2 text-black"
+            className="mt-2 mb-2 h-[40px] w-[600px] border-0 bg-[#F9F9F9] indent-2"
           />
         </label>
         {errors.company && (
@@ -133,7 +114,7 @@ function EditInfo() {
       </div>
 
       <div>
-        <label htmlFor="email" className="text-sm text-[#A7A7A7]">
+        <label htmlFor="email" className="text-sm text-[#5D5D5D]">
           담당자 이메일
           <Input
             id="email"
@@ -149,7 +130,7 @@ function EditInfo() {
       </div>
 
       <div>
-        <label htmlFor="phoneNumber" className="text-sm text-[#A7A7A7]">
+        <label htmlFor="phoneNumber" className="text-sm text-[#5D5D5D]">
           담당자 전화번호
           <Input
             id="phoneNumber"
@@ -165,11 +146,11 @@ function EditInfo() {
       </div>
 
       <div>
-        <p className="text-sm text-[#A7A7A7]">종사 산업군</p>
+        <p className="text-sm text-[#5D5D5D]">종사 산업군</p>
         <Button
           type="button"
           asChild={false}
-          className="mt-2 h-[40px] w-full justify-start bg-[#F9F9F9] font-semibold text-black"
+          className="mt-2 h-[40px] w-full justify-start bg-[#F9F9F9] font-semibold text-[#5D5D5D]"
           onClick={() => setOpen(true)}
         >
           {selectedIndustry?.label || '종사 산업군 선택'}

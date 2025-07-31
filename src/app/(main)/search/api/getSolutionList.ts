@@ -36,6 +36,6 @@ export default async function getSolutionList({
       },
     })
     .json();
-
+  console.log(response.data);
   return response.data;
 }

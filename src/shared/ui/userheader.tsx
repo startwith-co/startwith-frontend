@@ -79,7 +79,15 @@ export default function UserHeader() {
         </Link>
         <Dropdown
           buttonText={session?.name || 'user'}
-          items={[{ label: '내 정보', href: '/my/profile' }]}
+          items={[
+            {
+              label: '내 정보',
+              href:
+                session?.role === 'vendor'
+                  ? '/vendor/my/profile'
+                  : '/my/profile',
+            },
+          ]}
           isLoginHeaderOption
         />
       </div>

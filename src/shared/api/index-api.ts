@@ -3,14 +3,14 @@ import { toast } from 'react-toastify';
 import { getSession } from 'next-auth/react';
 import { getErrorDataFromKyError } from '../lib/error-handler';
 
-const session = await getSession();
 const api = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_URL,
   hooks: {
     beforeRequest: [
       async (req) => {
-        if (!req.headers.get('Authorization')) {
-          req.headers.set('Authorization', `Bearer ${session?.accessToken}`);
+        const session = await getSession();
+        if (session?.accessToken && !req.headers.get('Authorization')) {
+          req.headers.set('Authorization', `Bearer ${session.accessToken}`);
         }
       },
     ],
