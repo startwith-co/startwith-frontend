@@ -6,7 +6,7 @@ function HomeFirstSection() {
     <section className="flex h-screen w-screen items-center justify-center bg-gradient-to-b from-[#F8F4FF] to-[#F4F8FF]">
       <div className="relative flex h-screen w-[900px] flex-col items-center justify-center gap-5">
         <div className="absolute left-[1px] z-10 flex w-[450px] flex-col items-center justify-center gap-5">
-          <h1 className="text-3xl font-bold">
+          <h1 className="text-3xl leading-normal font-semibold">
             기업 솔루션 탐색,
             <br />
             이제 <span className="text-3xl text-[#4f7df9]">SOLU</span>에서

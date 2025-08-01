@@ -13,6 +13,13 @@ function formatTimeRange(start: any, end: any) {
     .padStart(2, '0')}`;
 }
 
+const categoryMapKo: Record<string, string> = {
+  DEFECT_INSPECTION: '불량 검출 · 예측\n(비전 검사)\n',
+  PREDICTIVE_MAINTENANCE: '설비 이상 및 고장 예측\n(예지보전)\n',
+  PROCESS_MONITORING: '실시간 공정 상태 모니터링\n(공정 이상 감지)\n',
+  MES_INVENTORY_MANAGEMENT: 'MES 재고관리\n(공정 재고관리)\n',
+};
+
 function ChatCompanyProfile() {
   const vendorInfo = useFetchVendor();
 
@@ -30,7 +37,7 @@ function ChatCompanyProfile() {
           <p className="text-gray-500">상담 가능 시간</p>
           {vendorInfo?.vendorInfo && (
             <>
-              <p className="text-xs">
+              <p className="text-xs text-black">
                 {vendorInfo.vendorInfo.weekdayAvailable
                   ? `평일 : ${formatTimeRange(
                       vendorInfo.vendorInfo.weekdayStartTime,
@@ -38,7 +45,7 @@ function ChatCompanyProfile() {
                     )}`
                   : '평일 : 불가'}
               </p>
-              <p className="text-xs">
+              <p className="text-xs text-black">
                 {vendorInfo?.vendorInfo?.weekendAvailable
                   ? `주말 : ${formatTimeRange(
                       vendorInfo.vendorInfo.weekendStartTime,
@@ -46,7 +53,7 @@ function ChatCompanyProfile() {
                     )}`
                   : '주말 : 불가'}
               </p>
-              <p className="text-xs">
+              <p className="text-xs text-black">
                 {vendorInfo?.vendorInfo?.holidayAvailable
                   ? `공휴일 : ${formatTimeRange(
                       vendorInfo.vendorInfo.holidayStartTime,
@@ -60,10 +67,13 @@ function ChatCompanyProfile() {
         <ChatUserCard title="서비스 만족도" content="100%" />
         <div className="flex flex-col items-center justify-center rounded-md bg-gray-100 p-2.5 text-sm">
           <p className="text-gray-500">솔루션 카테고리</p>
-          <p className="text-xs">
+          <p className="text-center text-xs whitespace-pre-wrap text-black">
             {vendorInfo?.vendorCategory
-              ?.map((category) => category.category)
-              .join(', ')}
+              ?.map(
+                (category) =>
+                  categoryMapKo[category.category] ?? category.category,
+              )
+              .join(' ')}
           </p>
         </div>
       </div>

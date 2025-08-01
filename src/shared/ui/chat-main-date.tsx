@@ -2,7 +2,8 @@ import { ChatType } from '@/entities/chat/model/type';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
 
 function ChatMainDate({ messages }: { messages: ChatType[] }) {
-  const chatMainDate = formatMainDate(messages[0]?.createdAt) || '';
+  const chatMainDate =
+    formatMainDate(messages[messages.length - 1]?.createdAt) || '';
 
   return (
     <div className="flex items-center justify-center">

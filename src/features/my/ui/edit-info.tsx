@@ -150,7 +150,7 @@ function EditInfo({ company, email, phoneNumber }: EditInfoProps) {
         <Button
           type="button"
           asChild={false}
-          className="mt-2 h-[40px] w-full justify-start bg-[#F9F9F9] font-semibold text-[#5D5D5D]"
+          className="mt-2 h-[40px] w-full justify-start bg-[#F9F9F9] text-[#5D5D5D] hover:text-white"
           onClick={() => setOpen(true)}
         >
           {selectedIndustry?.label || '종사 산업군 선택'}

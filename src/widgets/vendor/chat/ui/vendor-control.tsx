@@ -6,6 +6,7 @@ import RequestPayModal from '@/features/vendorChat/ui/request-pay-modal';
 import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import ChatUserCard from '@/entities/chat/ui/chat-user-card';
 import { useSearchParams } from 'next/navigation';
+import { industryToKo } from '@/shared/model/industryMap';
 import useFetchConsumer from '../model/useFetchConsumer';
 
 function VendorControl() {
@@ -27,8 +28,12 @@ function VendorControl() {
             {consumerInfo?.consumerName}
           </p>
           <ChatUserCard
-            title="종사 산업군을 선택해주세요."
-            content={consumerInfo?.industry ?? ''}
+            title="종사 산업군"
+            content={
+              industryToKo[consumerInfo?.industry ?? ''] ??
+              consumerInfo?.industry ??
+              ''
+            }
           />
         </div>
         <div className="mb-5 flex flex-col gap-2.5">

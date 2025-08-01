@@ -10,7 +10,7 @@ function HomePage() {
         우리 기업을 위한 단 하나의 기업 솔루션 플랫폼,
         <span className="font-bold">SOLU</span>
       </h1>
-      <h2 className="mt-5 text-2xl font-bold">어떤 솔루션을 찾고 계신가요?</h2>
+      <h2 className="mt-2 text-2xl font-bold">어떤 솔루션을 찾고 계신가요?</h2>
       <MainSectionButtons />
       <h3 className="mt-25 text-lg font-bold">도입 예정 솔루션</h3>
       <MainCategoryButtons />
