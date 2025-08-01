@@ -43,7 +43,7 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
       </Avatar>
       <h1
         className={cn(
-          'mb-14.5 text-lg font-bold',
+          'mb-14.5 text-lg font-semibold',
           mode === 'user' ? 'text-[#000000]' : 'text-white',
         )}
       >
@@ -54,10 +54,8 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
         key={routes[0].href}
         href={routes[0].href}
         className={cn(
-          'mb-5',
-          isActive(routes[0].href)
-            ? 'text-md font-bold'
-            : 'text-sm font-semibold',
+          'mb-5 font-semibold',
+          isActive(routes[0].href) ? 'text-[#4f7df9]!' : '',
           mode === 'user' ? 'text-[#000000]' : 'text-white',
         )}
       >
@@ -69,11 +67,9 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
           key={dynamicRoute?.href}
           href={dynamicRoute?.href}
           className={cn(
-            'mb-5',
+            'mb-5 font-semibold',
             'text-white',
-            isActive(dynamicRoute?.href)
-              ? 'text-md font-bold'
-              : 'text-sm font-semibold',
+            isActive(dynamicRoute?.href) ? 'text-[#4f7df9]!' : '',
           )}
         >
           {dynamicRoute?.label}
@@ -84,10 +80,8 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
           key={route.href}
           href={route.href}
           className={cn(
-            'mb-5',
-            isActive(route.href)
-              ? 'text-md font-bold'
-              : 'text-sm font-semibold',
+            'mb-5 font-semibold',
+            isActive(route.href) ? 'text-[#4f7df9]!' : '',
             mode === 'user' ? 'text-[#000000]' : 'text-white',
           )}
         >

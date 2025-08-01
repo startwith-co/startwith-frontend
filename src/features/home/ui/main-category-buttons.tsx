@@ -24,7 +24,7 @@ function MainCategoryButtons() {
             <Button
               key={button.label + suffix}
               variant="home"
-              className="h-[60px] w-[150px]"
+              className="h-[60px] w-[150px] font-semibold"
               asChild={false}
             >
               {button.label}

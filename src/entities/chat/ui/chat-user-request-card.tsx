@@ -5,6 +5,7 @@ import { Button } from '@/shared/ui/button';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import formatVATPrice from '@/shared/lib/formatVATPrice';
+import { categoryToKo } from '@/shared/model/categoryMap';
 import CircleCheckbox from './circle-check-box';
 import usePaymentRequest from '../model/usePaymentRequest';
 import getPaymentRequest from '../api/getPaymentRequest';
@@ -38,7 +39,7 @@ function ChatUserRequestCard({ uuid }: ChatRequestCardProps) {
         [type === 'contract' ? 'first' : 'second']: true,
       }));
     } catch (err) {
-      alert('파일 링크를 가져오는 데 실패했습니다.');
+      console.error('파일 링크를 가져오는 데 실패했습니다.', err);
     }
   };
 
@@ -56,7 +57,10 @@ function ChatUserRequestCard({ uuid }: ChatRequestCardProps) {
 
         <div className="flex justify-between">
           <span className="font-semibold">솔루션 카테고리</span>
-          <span>{paymentRequestData?.category}</span>
+          <span>
+            {paymentRequestData?.category &&
+              categoryToKo[paymentRequestData.category]}
+          </span>
         </div>
 
         <div className="flex justify-between">

@@ -216,3 +216,12 @@ input::-webkit-outer-spin-button {
 .float-up-down {
   animation: float 2s ease-in-out infinite;
 }
+
+input[type='search']::-webkit-search-cancel-button {
+  display: none;
+}
+
+/* 파이어폭스 */
+input[type='search']::-moz-search-clear {
+  display: none;
+}

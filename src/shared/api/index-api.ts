@@ -8,8 +8,11 @@ const api = ky.create({
   hooks: {
     beforeRequest: [
       async (req) => {
-        const session = await getSession();
-        if (session?.accessToken && !req.headers.get('Authorization')) {
+        if (!req.headers.get('Authorization')) {
+          const session = await getSession();
+          if (!session) {
+            return;
+          }
           req.headers.set('Authorization', `Bearer ${session.accessToken}`);
         }
       },
