@@ -1,5 +1,5 @@
-import VendorUpdatePage from '@/views/vendorUpdate/ui/vendor-update-page';
+import VendorUpdateTable from '@/views/vendorUpdate/ui/vendor-update-table';
 
 export default function Page() {
-  return <VendorUpdatePage />;
+  return <VendorUpdateTable />;
 }

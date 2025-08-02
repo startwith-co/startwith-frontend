@@ -19,7 +19,7 @@ export default async function Layout({
   return (
     <div className="bg-vendor-bg flex w-screen flex-col overflow-y-scroll">
       <Header mode="vendor" />
-      <main className="mt-10 mb-60 flex w-full">
+      <main className="mt-10 mb-60 flex w-full items-start">
         <ProfileSide
           routes={routes}
           companyName={session?.name || ''}
