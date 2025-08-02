@@ -49,39 +49,40 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
       >
         {companyName}
       </h1>
-
-      <Link
-        key={routes[0].href}
-        href={routes[0].href}
-        className={cn(
-          'mb-5 font-semibold',
-          isActive(routes[0].href) ? 'text-[#4f7df9]!' : '',
-          mode === 'user' ? 'text-[#000000]' : 'text-white',
-        )}
-      >
-        {routes[0].label}
-      </Link>
+      {routes.slice(0, 2).map((route) => (
+        <Link
+          key={route.href}
+          href={route.href}
+          className={cn(
+            'mb-5 text-sm font-semibold',
+            isActive(route.href) ? 'font-extrabold' : '',
+            mode === 'user' ? 'text-[#000000]' : 'text-white',
+          )}
+        >
+          {route.label}
+        </Link>
+      ))}
 
       {mode === 'vendor' && dynamicRoute && (
         <Link
           key={dynamicRoute?.href}
           href={dynamicRoute?.href}
           className={cn(
-            'mb-5 font-semibold',
+            'mb-5 text-sm font-semibold',
             'text-white',
-            isActive(dynamicRoute?.href) ? 'text-[#4f7df9]!' : '',
+            isActive(dynamicRoute?.href) ? 'font-extrabold' : '',
           )}
         >
           {dynamicRoute?.label}
         </Link>
       )}
-      {routes.slice(1).map((route) => (
+      {routes.slice(2).map((route) => (
         <Link
           key={route.href}
           href={route.href}
           className={cn(
-            'mb-5 font-semibold',
-            isActive(route.href) ? 'text-[#4f7df9]!' : '',
+            'mb-5 text-sm font-semibold',
+            isActive(route.href) ? 'font-extrabold' : '',
             mode === 'user' ? 'text-[#000000]' : 'text-white',
           )}
         >
