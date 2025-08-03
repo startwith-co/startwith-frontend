@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import DarkBox from '@/shared/ui/dark-box';
+import cn from '@/shared/lib/utils';
 
-function VendorProfileSide() {
+function VendorProfileSide({ audit }: { audit: boolean }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpen = () => setIsModalOpen(true);
@@ -12,8 +13,15 @@ function VendorProfileSide() {
   return (
     <div className="mb-4 flex items-center gap-2.5 rounded-3xl border-2 border-white px-2.5 py-1.5">
       <div className="flex items-center gap-1.5">
-        <div className="size-3.5 rounded-full bg-orange-500" />
-        <span className="text-[13px] text-white">입점 심사중</span>
+        <div
+          className={cn(
+            'size-3.5 rounded-full bg-orange-500',
+            audit ? 'bg-green-500' : 'bg-orange-500',
+          )}
+        />
+        <span className="text-[13px] text-white">
+          {audit ? '입점 심사 완료' : '입점 심사 중'}
+        </span>
       </div>
       <div
         className="flex size-3.5 cursor-pointer items-center justify-center rounded-full bg-black"

@@ -2,10 +2,17 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import VendorProfileSide from '@/entities/my/ui/vendor-profile-side';
+import {
+  ConsumerInfoProps,
+  VendorInfoProps,
+} from '@/views/vendorMy/model/type';
 import cn from '../lib/utils';
 import useDynamicRoute from '../model/useDynamicRoute';
+import api from '../api/index-api';
+import { ApiResponse } from '../model/apiType';
 
 interface Route {
   label: string;
@@ -16,14 +23,47 @@ interface ProfileSideProps {
   routes: Route[];
   companyName: string;
   mode?: 'vendor' | 'user';
+  id: number;
 }
 
-function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
+function ProfileSide({
+  routes,
+  companyName,
+  mode = 'user',
+  id,
+}: ProfileSideProps) {
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
 
   const dynamicRoute = useDynamicRoute();
+
+  const [vendorInfo, setVendorInfo] = useState<VendorInfoProps>();
+  const [userInfo, setUserInfo] = useState<ConsumerInfoProps>();
+
+  useEffect(() => {
+    if (mode === 'vendor') {
+      const fetchVendorInfo = async () => {
+        const res = await api
+          .get<
+            ApiResponse<VendorInfoProps>
+          >(`api/b2b-service/vendor?vendorSeq=${id}`)
+          .json();
+        setVendorInfo(res.data);
+      };
+      fetchVendorInfo();
+    } else {
+      const fetchUserInfo = async () => {
+        const res = await api
+          .get<
+            ApiResponse<ConsumerInfoProps>
+          >(`api/b2b-service/consumer?consumerSeq=${id}`)
+          .json();
+        setUserInfo(res.data);
+      };
+      fetchUserInfo();
+    }
+  }, []);
 
   return (
     // TODO: 사이드바 높이 수정
@@ -35,10 +75,16 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
           : 'bg-vendor-primary relative h-auto',
       )}
     >
-      {mode === 'vendor' && <VendorProfileSide />}
+      {mode === 'vendor' && (
+        <VendorProfileSide audit={vendorInfo?.audit || false} />
+      )}
 
       <Avatar className="mb-2.5 flex size-30 rounded-full">
-        <AvatarImage src="/image/image.png" />
+        <AvatarImage
+          src={
+            vendorInfo?.vendorBannerImageUrl || userInfo?.consumerImageUrl || ''
+          }
+        />
         <AvatarFallback>스타트윗</AvatarFallback>
       </Avatar>
       <h1

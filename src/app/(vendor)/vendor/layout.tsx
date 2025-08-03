@@ -23,6 +23,7 @@ export default async function Layout({
         <ProfileSide
           routes={routes}
           companyName={session?.name || ''}
+          id={session?.vendorSeq || 0}
           mode="vendor"
         />
         {children}
