@@ -6,8 +6,8 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: { id: string };
-  searchParams: { category: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { id } = await params;
   const { category } = await searchParams;
@@ -19,7 +19,7 @@ export default async function Page({
     <VendorUpdatePage
       solution={solution}
       vendorId={session?.vendorSeq || 0}
-      category={category}
+      category={category as string}
     />
   );
 }
