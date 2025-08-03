@@ -21,17 +21,11 @@ interface Route {
 
 interface ProfileSideProps {
   routes: Route[];
-  companyName: string;
   mode?: 'vendor' | 'user';
   id: number;
 }
 
-function ProfileSide({
-  routes,
-  companyName,
-  mode = 'user',
-  id,
-}: ProfileSideProps) {
+function ProfileSide({ routes, mode = 'user', id }: ProfileSideProps) {
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
@@ -93,7 +87,7 @@ function ProfileSide({
           mode === 'user' ? 'text-[#000000]' : 'text-white',
         )}
       >
-        {companyName}
+        {userInfo?.consumerName}
       </h1>
       {routes.slice(0, 2).map((route) => (
         <Link

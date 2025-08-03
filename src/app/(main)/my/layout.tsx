@@ -19,11 +19,7 @@ export default async function Layout({
       <Header />
       <div className="flex w-screen justify-center overflow-y-scroll bg-[rgba(250,252,255,1)]">
         <main className="mt-20 mb-10 flex flex-row justify-center">
-          <ProfileSide
-            routes={routes}
-            companyName="스타트윗"
-            id={session?.consumerSeq || 0}
-          />
+          <ProfileSide routes={routes} id={session?.consumerSeq || 0} />
           <div className="flex grow">{children}</div>
         </main>
       </div>
