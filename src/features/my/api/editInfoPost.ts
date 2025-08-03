@@ -30,9 +30,13 @@ async function editInfoPost(
   if (!password || password.trim().length === 0) {
     return;
   }
-
-  await editInfo(formData, selectedIndustry, file);
-  revalidatePath('/my/profile');
+  try {
+    await editInfo(formData, selectedIndustry, file);
+    revalidatePath('/my/profile');
+  } catch (error) {
+    console.error('수정 중 오류가 발생했습니다.', error);
+    throw error;
+  }
 }
 
 export default editInfoPost;

@@ -15,10 +15,16 @@ interface Route {
 interface ProfileSideProps {
   routes: Route[];
   companyName: string;
+  imageUrl: string;
   mode?: 'vendor' | 'user';
 }
 
-function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
+function ProfileSide({
+  routes,
+  companyName,
+  imageUrl,
+  mode = 'user',
+}: ProfileSideProps) {
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
@@ -38,7 +44,7 @@ function ProfileSide({ routes, companyName, mode = 'user' }: ProfileSideProps) {
       {mode === 'vendor' && <VendorProfileSide />}
 
       <Avatar className="mb-2.5 flex size-30 rounded-full">
-        <AvatarImage src="/image/image.png" />
+        <AvatarImage src={imageUrl} />
         <AvatarFallback>스타트윗</AvatarFallback>
       </Avatar>
       <h1

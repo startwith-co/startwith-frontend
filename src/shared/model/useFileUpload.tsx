@@ -25,6 +25,7 @@ function useFileUpload() {
     fileInputRef,
     handleFileChange,
     handleClickFileInput,
+    setPreview,
   };
 }
 

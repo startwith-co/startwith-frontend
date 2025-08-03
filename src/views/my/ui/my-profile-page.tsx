@@ -19,6 +19,7 @@ async function MyProfile() {
           company={res.data.consumerName}
           email={res.data.email}
           phoneNumber={res.data.phoneNumber}
+          industry={res.data.industry}
         />
       </div>
     </section>

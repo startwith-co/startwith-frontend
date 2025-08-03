@@ -11,6 +11,11 @@ let nextConfig: NextConfig = {
       new URL('https://startwith-solu.s3.ap-northeast-2.amazonaws.com/**'),
     ],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
+  },
   webpack: (config) => {
     const newConfig = { ...config };
 

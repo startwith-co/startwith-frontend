@@ -1,20 +1,34 @@
 'use client';
 
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { FiBell, FiMail } from 'react-icons/fi';
+import { FiMail } from 'react-icons/fi';
 import { IoSearchOutline } from 'react-icons/io5';
 import { PiGlobe } from 'react-icons/pi';
 import useCurrentSession from '@/shared/model/useCurrentSession';
+import { ApiResponse } from '@/shared/model/apiType';
+import { ConsumerInfoProps } from '@/views/vendorMy/model/type';
 import Input from './input';
 import { Button } from './button';
 import Dropdown from './dropdown';
+import api from '../api/index-api';
 
 export default function UserHeader() {
-  const { session } = useCurrentSession();
+  const { session, status } = useCurrentSession();
+  const [name, setName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  useEffect(() => {
+    const fetchData = async () => {
+      if (status === 'loading' || !session) return;
+      const res = await api
+        .get(`api/b2b-service/consumer?consumerSeq=${session.consumerSeq}`)
+        .json<ApiResponse<ConsumerInfoProps>>();
+      setName(res.data.consumerName);
+    };
+    fetchData();
+  }, [session, status]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -78,7 +92,7 @@ export default function UserHeader() {
           <FiMail size={24} />
         </Link>
         <Dropdown
-          buttonText={session?.name || 'user'}
+          buttonText={name || 'user'}
           items={[
             {
               label: '내 정보',

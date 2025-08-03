@@ -21,6 +21,7 @@ const api = ky.create({
     beforeError: [
       async (error: HTTPError) => {
         const errorData = await getErrorDataFromKyError(error);
+        toast.dismiss();
         toast.error(`${errorData.message}`);
         return error;
       },
