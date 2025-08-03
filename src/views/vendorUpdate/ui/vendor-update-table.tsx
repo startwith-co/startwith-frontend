@@ -1,16 +1,25 @@
+'use client';
+
+import useCurrentSession from '@/shared/model/useCurrentSession';
 import { Button } from '@/shared/ui/button';
 import Link from 'next/link';
-
-const vendorTable = [
-  {
-    solutionSeq: 1,
-    solutionName: '솔루션명',
-    solutionCategory: '솔루션 카테고리',
-    solutionAmount: '솔루션 가격',
-  },
-];
+import { useEffect, useState } from 'react';
+import { categoryToKo } from '@/shared/model/categoryMap';
+import getVendorSolutions from '../api/getVendorSolutions';
+import { VendorSolutionType } from '../model/vendorSolutionType';
 
 export default function VendorUpdateTable() {
+  const { session } = useCurrentSession();
+  const [vendorTable, setVendorTable] = useState<VendorSolutionType[]>([]);
+  useEffect(() => {
+    if (!session?.vendorSeq) return;
+    const fetchData = async () => {
+      const res = await getVendorSolutions(String(session.vendorSeq));
+      setVendorTable(res);
+    };
+    fetchData();
+  }, [session?.vendorSeq]);
+
   return (
     <div className="mr-8 w-full rounded-md shadow-md">
       <table className="w-full border-separate border-spacing-0 text-center text-[13px]">
@@ -28,8 +37,8 @@ export default function VendorUpdateTable() {
             vendorTable.map((item) => (
               <tr key={item.solutionSeq}>
                 <td>{item.solutionName}</td>
-                <td>{item.solutionCategory}</td>
-                <td>{item.solutionAmount}</td>
+                <td>{categoryToKo[item.category]}</td>
+                <td>{item.amount}</td>
                 <td>
                   <Link href={`/vendor/update/${item.solutionSeq}`}>
                     <Button asChild={false}>수정하기</Button>
