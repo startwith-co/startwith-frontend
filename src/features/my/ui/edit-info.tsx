@@ -10,6 +10,8 @@ import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
 import useFileUpload from '@/shared/model/useFileUpload';
 import Image from 'next/image';
+import { industryToKo } from '@/shared/model/industryMap';
+import { toast } from 'react-toastify';
 import editInfoPost from '../api/editInfoPost';
 
 const schema = z.object({
@@ -25,9 +27,10 @@ interface EditInfoProps {
   company: string;
   email: string;
   phoneNumber: string;
+  industry: string;
 }
 
-function EditInfo({ company, email, phoneNumber }: EditInfoProps) {
+function EditInfo({ company, email, phoneNumber, industry }: EditInfoProps) {
   const {
     register,
     formState: { errors, isValid },
@@ -42,30 +45,44 @@ function EditInfo({ company, email, phoneNumber }: EditInfoProps) {
   });
 
   const [open, setOpen] = useState(false);
+
   const [selectedIndustry, setSelectedIndustry] = useState<{
     label: string;
     value: string;
-  } | null>(null);
+  } | null>({ label: industryToKo[industry], value: industry });
   const {
     preview,
     file,
     fileInputRef,
     handleClickFileInput,
     handleFileChange,
+    setPreview,
   } = useFileUpload();
 
   return (
     <SignupForm
-      action={(prevState, formData) =>
-        editInfoPost(prevState, formData, file, selectedIndustry?.value)
-      }
+      action={async (prevState, formData) => {
+        try {
+          await editInfoPost(
+            prevState,
+            formData,
+            file,
+            selectedIndustry?.value,
+          );
+          // TODO: 나중에 수정 예정
+          // setSelectedIndustry(null);
+          // setPreview(null);
+          window.location.reload();
+        } catch (error) {
+          toast.error('수정 중 오류가 발생했습니다.');
+        }
+      }}
       variant="bgBlueGradient"
       buttonProps="w-[180px] h-[35px] font-light text-sm"
       buttonName="수정하기"
       buttonWrapperClassName="flex justify-center"
       loadingText="수정 중.."
       disabled={!isValid || !selectedIndustry || !file}
-      isServerAction
     >
       <div className="flex items-center">
         <div className="relative mb-7 h-[100px] w-[100px]">

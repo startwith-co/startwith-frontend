@@ -22,7 +22,6 @@ export default async function Layout({
       <main className="mt-10 mb-60 flex w-full items-start">
         <ProfileSide
           routes={routes}
-          companyName={session?.name || ''}
           id={session?.vendorSeq || 0}
           mode="vendor"
         />

@@ -18,11 +18,9 @@ async function editInfo(
     consumerName: formData.get('company'),
     phoneNumber: formData.get('phoneNumber'),
     email: formData.get('email'),
-    encodedPassword: formData.get('password'),
+    password: formData.get('password'),
     industry,
   };
-
-  console.log('editInfo', jsonPart);
 
   form.append(
     'request',

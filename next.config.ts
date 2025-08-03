@@ -12,6 +12,11 @@ let nextConfig: NextConfig = {
       new URL('https://example.com/**'),
     ],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
+  },
   webpack: (config) => {
     const newConfig = { ...config };
 
