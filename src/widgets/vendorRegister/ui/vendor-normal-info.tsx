@@ -21,8 +21,6 @@ export default function VendorNormalInfo() {
 
   const solutionName = watch('solutionName');
   const solutionDetail = watch('solutionDetail');
-  const category = watch('category');
-  console.log(category);
 
   return (
     <div className="rounded-md bg-white px-[35px] py-7.5 shadow-md 2xl:pr-[104px]">

@@ -26,8 +26,17 @@ export default function VendorSelect({
   itemsClassName,
   value,
 }: VendorSelectProps) {
+  const parseValue = (input: string) => {
+    if (input === 'INCREASE') {
+      return '증가';
+    }
+    if (input === 'DECREASE') {
+      return '감소';
+    }
+    return input;
+  };
   return (
-    <Select onValueChange={onChange} value={value}>
+    <Select onValueChange={onChange} value={parseValue(value || '')}>
       <SelectTrigger
         className={cn(
           'bg-vendor-gray h-12 w-full rounded-lg text-xs font-medium',

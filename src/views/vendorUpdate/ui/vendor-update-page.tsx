@@ -6,16 +6,18 @@ import VendorKeyword from '@/widgets/vendorRegister/ui/vendor-keyword';
 import VendorSaleInfo from '@/widgets/vendorRegister/ui/vendor-sale-info';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import VendorNormalInfo from '@/widgets/vendorRegister/ui/vendor-normal-info';
 import { UpdateSolutionProps } from '@/app/(vendor)/vendor/update/[id]/model/updateSolutionType';
 import { categoryToKo } from '@/shared/model/categoryMap';
+import urlToFile from '@/views/vendorMy/api/urlToFile';
 import {
   VendorRegisterSchema,
   vendorRegisterSchema,
 } from '../model/vendor-update-schema';
 import VendorSubmitModal from './vendor-submit-modal';
+import updateSolution from '../api/updateSolution';
 
 export default function VendorUpdatePage({
   solution,
@@ -38,7 +40,7 @@ export default function VendorUpdatePage({
       solutionDetail: solution.solutionDetail,
       category: (categoryToKo[category] || '') as
         | ''
-        | '불량 검출·예측(비전 검사)'
+        | '불량 검출 · 예측(비전 검사)'
         | '설비 이상 및 고장 예측(예지보전)'
         | '실시간 공정 상태 모니터링(공정 이상 감지)'
         | 'MES 재고관리(공정 재고관리)'
@@ -46,20 +48,45 @@ export default function VendorUpdatePage({
       industry: solution.industry.join(','),
       recommendedCompanySize: solution.recommendedCompanySize,
       solutionImplementationType: solution.solutionImplementationType,
-      amount: solution.amount,
+      amount: solution.amount.toString(),
       duration: solution.duration.toString(),
-      solutionEffect: [],
+      solutionEffect: solution.solutionEffect,
       keyword: [],
     },
   });
 
+  useEffect(() => {
+    const loadFiles = async () => {
+      try {
+        const [representFile, pdfFile] = await Promise.all([
+          solution.representImageUrl
+            ? urlToFile(solution.representImageUrl, 'represent-image.jpg')
+            : new File([], ''),
+          solution.descriptionPdfUrl
+            ? urlToFile(solution.descriptionPdfUrl, 'description.pdf')
+            : new File([], ''),
+        ]);
+
+        methods.reset({
+          ...methods.getValues(),
+          representImageUrl: representFile,
+          descriptionPdfUrl: pdfFile,
+        });
+      } catch (e) {
+        toast.error('파일을 불러오는데 실패했습니다.');
+      }
+    };
+
+    loadFiles();
+  }, [solution.representImageUrl, solution.descriptionPdfUrl]);
+
   const onSubmit = async (data: VendorRegisterSchema) => {
-    // try {
-    //   await registerSolution(data);
-    //   setOpenDialog(true);
-    // } catch (error: any) {
-    //   toast.error(error.message);
-    // }
+    try {
+      await updateSolution(data);
+      setOpenDialog(true);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -80,7 +107,7 @@ export default function VendorUpdatePage({
             취소
           </Button>
           <Button asChild={false} type="submit">
-            등록하기
+            수정하기
           </Button>
         </div>
       </form>

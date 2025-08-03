@@ -17,8 +17,8 @@ export default function VendorSubmitModal({
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogContent className="flex h-[200px] w-[500px] flex-col items-center justify-center">
-        <DialogTitle className="sr-only">솔루션 등록 완료</DialogTitle>
-        <p className="text-lg font-semibold">솔루션이 등록되었습니다</p>
+        <DialogTitle className="sr-only">솔루션 수정 완료</DialogTitle>
+        <p className="text-lg font-semibold">솔루션이 수정되었습니다</p>
         <DialogFooter className="mt-4 flex gap-7.5">
           <Link href="/">
             <Button
