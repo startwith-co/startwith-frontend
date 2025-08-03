@@ -1,6 +1,6 @@
 export default function vendorCategoryMapping(category: string) {
   switch (category) {
-    case '불량 검출·예측(비전 검사)':
+    case '불량 검출 · 예측(비전 검사)':
       return 'DEFECT_INSPECTION';
     case '설비 이상 및 고장 예측(예지보전)':
       return 'PREDICTIVE_MAINTENANCE';

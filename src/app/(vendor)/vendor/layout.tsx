@@ -5,6 +5,7 @@ import ProfileSide from '@/shared/ui/profile-side';
 
 const routes = [
   { label: '솔루션 등록 관리', href: '/vendor/register' },
+  { label: '솔루션 수정 관리', href: '/vendor/update' },
   { label: '정산 관리', href: '/vendor/calculate' },
   { label: '밴더 정보 관리', href: '/vendor/my/profile' },
 ];
@@ -18,10 +19,11 @@ export default async function Layout({
   return (
     <div className="bg-vendor-bg flex w-screen flex-col overflow-y-scroll">
       <Header mode="vendor" />
-      <main className="mt-10 mb-60 flex w-full">
+      <main className="mt-10 mb-60 flex w-full items-start">
         <ProfileSide
           routes={routes}
           companyName={session?.name || ''}
+          id={session?.vendorSeq || 0}
           mode="vendor"
         />
         {children}

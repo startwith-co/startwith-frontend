@@ -1,3 +1,5 @@
+// TODO: \n 처리 필요
+
 export const firstSectionButtons = [
   '불량 검출 · 예측\n(비전 검사)',
   '설비 이상 및 고장 예측\n(예지보전)',

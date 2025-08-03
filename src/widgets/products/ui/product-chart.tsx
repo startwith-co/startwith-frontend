@@ -20,7 +20,6 @@ export default async function ProductChart({
   solutionSeq: number;
 }) {
   const data = await getReviewList(solutionSeq);
-  console.log('solution', data, solutionSeq);
   return (
     <WhiteBox className="flex flex-col gap-[60px] p-8">
       <div className="flex flex-col gap-6.5">

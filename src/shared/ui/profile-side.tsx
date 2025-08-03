@@ -2,10 +2,17 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import VendorProfileSide from '@/entities/my/ui/vendor-profile-side';
+import {
+  ConsumerInfoProps,
+  VendorInfoProps,
+} from '@/views/vendorMy/model/type';
 import cn from '../lib/utils';
 import useDynamicRoute from '../model/useDynamicRoute';
+import api from '../api/index-api';
+import { ApiResponse } from '../model/apiType';
 
 interface Route {
   label: string;
@@ -15,21 +22,48 @@ interface Route {
 interface ProfileSideProps {
   routes: Route[];
   companyName: string;
-  imageUrl: string;
   mode?: 'vendor' | 'user';
+  id: number;
 }
 
 function ProfileSide({
   routes,
   companyName,
-  imageUrl,
   mode = 'user',
+  id,
 }: ProfileSideProps) {
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
 
   const dynamicRoute = useDynamicRoute();
+
+  const [vendorInfo, setVendorInfo] = useState<VendorInfoProps>();
+  const [userInfo, setUserInfo] = useState<ConsumerInfoProps>();
+
+  useEffect(() => {
+    if (mode === 'vendor') {
+      const fetchVendorInfo = async () => {
+        const res = await api
+          .get<
+            ApiResponse<VendorInfoProps>
+          >(`api/b2b-service/vendor?vendorSeq=${id}`)
+          .json();
+        setVendorInfo(res.data);
+      };
+      fetchVendorInfo();
+    } else {
+      const fetchUserInfo = async () => {
+        const res = await api
+          .get<
+            ApiResponse<ConsumerInfoProps>
+          >(`api/b2b-service/consumer?consumerSeq=${id}`)
+          .json();
+        setUserInfo(res.data);
+      };
+      fetchUserInfo();
+    }
+  }, []);
 
   return (
     // TODO: 사이드바 높이 수정
@@ -41,10 +75,16 @@ function ProfileSide({
           : 'bg-vendor-primary relative h-auto',
       )}
     >
-      {mode === 'vendor' && <VendorProfileSide />}
+      {mode === 'vendor' && (
+        <VendorProfileSide audit={vendorInfo?.audit || false} />
+      )}
 
       <Avatar className="mb-2.5 flex size-30 rounded-full">
-        <AvatarImage src={imageUrl} />
+        <AvatarImage
+          src={
+            vendorInfo?.vendorBannerImageUrl || userInfo?.consumerImageUrl || ''
+          }
+        />
         <AvatarFallback>스타트윗</AvatarFallback>
       </Avatar>
       <h1
@@ -55,39 +95,40 @@ function ProfileSide({
       >
         {companyName}
       </h1>
-
-      <Link
-        key={routes[0].href}
-        href={routes[0].href}
-        className={cn(
-          'mb-5 font-semibold',
-          isActive(routes[0].href) ? 'text-[#4f7df9]!' : '',
-          mode === 'user' ? 'text-[#000000]' : 'text-white',
-        )}
-      >
-        {routes[0].label}
-      </Link>
+      {routes.slice(0, 2).map((route) => (
+        <Link
+          key={route.href}
+          href={route.href}
+          className={cn(
+            'mb-5 text-sm font-semibold',
+            isActive(route.href) ? 'font-extrabold' : '',
+            mode === 'user' ? 'text-[#000000]' : 'text-white',
+          )}
+        >
+          {route.label}
+        </Link>
+      ))}
 
       {mode === 'vendor' && dynamicRoute && (
         <Link
           key={dynamicRoute?.href}
           href={dynamicRoute?.href}
           className={cn(
-            'mb-5 font-semibold',
+            'mb-5 text-sm font-semibold',
             'text-white',
-            isActive(dynamicRoute?.href) ? 'text-[#4f7df9]!' : '',
+            isActive(dynamicRoute?.href) ? 'font-extrabold' : '',
           )}
         >
           {dynamicRoute?.label}
         </Link>
       )}
-      {routes.slice(1).map((route) => (
+      {routes.slice(2).map((route) => (
         <Link
           key={route.href}
           href={route.href}
           className={cn(
-            'mb-5 font-semibold',
-            isActive(route.href) ? 'text-[#4f7df9]!' : '',
+            'mb-5 text-sm font-semibold',
+            isActive(route.href) ? 'font-extrabold' : '',
             mode === 'user' ? 'text-[#000000]' : 'text-white',
           )}
         >

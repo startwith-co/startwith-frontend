@@ -36,9 +36,16 @@ export default function Sidebar({
   const router = useRouter();
 
   const handleFilter = () => {
-    router.push(
-      `/search?category=${categoryMap[filterList.category as string]}&industry=${filterList.industry}&budget=${filterList.budget}`,
-    );
+    const params = new URLSearchParams();
+
+    const categoryValue = categoryMap[filterList.category as string];
+    if (categoryValue) params.set('category', categoryValue);
+
+    if (filterList.industry) params.set('industry', filterList.industry);
+    if (filterList.budget) params.set('budget', filterList.budget);
+
+    const query = params.toString();
+    router.push(`/search${query ? `?${query}` : ''}`);
   };
 
   return (
