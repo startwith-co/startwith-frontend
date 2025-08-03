@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { categoryToKo } from '@/shared/model/categoryMap';
 import getVendorSolutions from '../api/getVendorSolutions';
 import { VendorSolutionType } from '../model/vendorSolutionType';
+import deleteSolution from '../api/deleteSolution';
 
 export default function VendorUpdateTable() {
   const { session } = useCurrentSession();
@@ -19,6 +20,18 @@ export default function VendorUpdateTable() {
     };
     fetchData();
   }, [session?.vendorSeq]);
+
+  const handleDelete = async (solutionSeq: string) => {
+    const confirmed = window.confirm(
+      '정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.',
+    );
+    if (!confirmed) return;
+
+    await deleteSolution(solutionSeq);
+    if (!session?.vendorSeq) return;
+    const res = await getVendorSolutions(String(session.vendorSeq));
+    setVendorTable(res);
+  };
 
   return (
     <div className="mr-8 w-full rounded-md shadow-md">
@@ -49,6 +62,7 @@ export default function VendorUpdateTable() {
                 <td>
                   <Button
                     asChild={false}
+                    onClick={() => handleDelete(String(item.solutionSeq))}
                     className="border-2 border-red-500 bg-white text-red-500 hover:bg-red-500 hover:text-white"
                   >
                     삭제하기
