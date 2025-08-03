@@ -40,7 +40,9 @@ export default function VendorUpdateTable() {
                 <td>{categoryToKo[item.category]}</td>
                 <td>{item.amount}</td>
                 <td>
-                  <Link href={`/vendor/update/${item.solutionSeq}`}>
+                  <Link
+                    href={`/vendor/update/${item.solutionSeq}?category=${item.category}`}
+                  >
                     <Button asChild={false}>수정하기</Button>
                   </Link>
                 </td>
