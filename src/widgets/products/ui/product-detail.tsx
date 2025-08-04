@@ -11,6 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { downloadFile } from '@/widgets/products/api/downloadFile';
 import categoryTrans from '@/widgets/products/utils/categoryTrans';
+import formatLocalPrice from '@/shared/lib/formatLocalPrice';
 
 export default function ProductDetail({
   solutionName,
@@ -71,7 +72,9 @@ export default function ProductDetail({
       <div className="mt-12.5 grid grid-cols-3 gap-16">
         <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">
           <span className="text-lg font-semibold">가격</span>
-          <span className="text-sm">~ {amount}원/월(VAT 별도)</span>
+          <span className="text-sm">
+            ~ {formatLocalPrice(amount)}원/월(VAT 별도)
+          </span>
         </div>
         <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">
           <span className="text-lg font-semibold">솔루션 구축 형태</span>

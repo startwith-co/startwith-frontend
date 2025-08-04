@@ -1,3 +1,4 @@
+import formatLocalPrice from '@/shared/lib/formatLocalPrice';
 import { Avatar, AvatarImage } from '@/shared/ui/avatar';
 import { PaymentInfoProps } from '@/views/payment/model/type';
 import categoryTrans from '@/widgets/products/utils/categoryTrans';
@@ -35,7 +36,7 @@ export default function OrderDetailsWidget({
             <div className="flex w-[300px] flex-col gap-2">
               <div className="flex justify-between">
                 <span className="text-[#7A7A7A]">가격</span>
-                <span>{amount}원(VAT제외)</span>
+                <span>{formatLocalPrice(amount)}원(VAT제외)</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-[#7A7A7A]">솔루션 카테고리</span>
