@@ -29,7 +29,7 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
               },
             );
             const data: LoginResponse = await response.json();
-            console.log('loginData', data);
+
             if (data) {
               return {
                 consumerSeq: data.data.consumerSeq,
@@ -97,7 +97,6 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
       return token;
     },
     session: async ({ session, token }: any) => {
-      console.log('session', token);
       return {
         ...session,
         accessToken: token.accessToken,
