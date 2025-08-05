@@ -20,10 +20,12 @@ import updateVendorInfo from '../api/updateVendorInfo';
 import urlToFile from '../api/urlToFile';
 
 function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
+  console.log(vendorInfo);
   const methods = useForm({
     resolver: zodResolver(vendorUpdateSchema),
     defaultValues: {
       vendorBannerImageUrl: undefined,
+      clientInfos: [],
       vendorSeq: vendorInfo?.vendorSeq || 0,
       vendorName: vendorInfo?.vendorName || '',
       managerName: vendorInfo?.managerName || '',
@@ -44,6 +46,38 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
       holidayEndTime: vendorInfo?.holidayEndTime || '23:59:59',
       orderCount: vendorInfo?.orderCount || 0,
       clientCount: vendorInfo?.clientCount || 0,
+      stats: [
+        { label: '10억 미만', percentage: 0, statType: 'SALES_SIZE' },
+        { label: '10억 초과 50억 미만', percentage: 0, statType: 'SALES_SIZE' },
+        {
+          label: '50억 초과 100억 미만',
+          percentage: 0,
+          statType: 'SALES_SIZE',
+        },
+        {
+          label: '100억 초과 150억 미만',
+          percentage: 0,
+          statType: 'SALES_SIZE',
+        },
+        { label: '150억 초과', percentage: 0, statType: 'SALES_SIZE' },
+        { label: '10인 미만', percentage: 0, statType: 'EMPLOYEES_SIZE' },
+        {
+          label: '10인 이상 30인 미만',
+          percentage: 0,
+          statType: 'EMPLOYEES_SIZE',
+        },
+        {
+          label: '30인 이상 50인 미만',
+          percentage: 0,
+          statType: 'EMPLOYEES_SIZE',
+        },
+        {
+          label: '50인 이상 100인 미만',
+          percentage: 0,
+          statType: 'EMPLOYEES_SIZE',
+        },
+        { label: '100인 이상', percentage: 0, statType: 'EMPLOYEES_SIZE' },
+      ],
     },
   });
 

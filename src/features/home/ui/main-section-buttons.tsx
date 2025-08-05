@@ -14,8 +14,7 @@ function MainSectionButtons() {
   const router = useRouter();
 
   const handleFirstSectionClick = (button: string) => {
-    const cleanedCategory = button.replace(/\(.*\)$/, '');
-    setSolutionCategory(cleanedCategory);
+    setSolutionCategory(button);
     setStep((prev) => prev + 1);
   };
 
@@ -30,7 +29,7 @@ function MainSectionButtons() {
             <Button
               key={button}
               variant="textBlue"
-              className="h-[110px] w-full rounded-xl shadow-md"
+              className="h-[110px] w-full rounded-xl whitespace-pre-line shadow-md"
               asChild={false}
               onClick={() => handleFirstSectionClick(button)}
             >

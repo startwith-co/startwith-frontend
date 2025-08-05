@@ -1,19 +1,30 @@
+import { auth } from '@/auth';
 import Footer from '@/shared/ui/footer';
 import Header from '@/shared/ui/header';
 import ProfileSide from '@/shared/ui/profile-side';
 
 const routes = [
   { label: '솔루션 등록 관리', href: '/vendor/register' },
+  { label: '솔루션 수정 관리', href: '/vendor/update' },
   { label: '정산 관리', href: '/vendor/calculate' },
-  { label: '판매자 정보 관리', href: '/vendor/my/profile' },
+  { label: '밴더 정보 관리', href: '/vendor/my/profile' },
 ];
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await auth();
   return (
     <div className="bg-vendor-bg flex w-screen flex-col overflow-y-scroll">
       <Header mode="vendor" />
-      <main className="mt-10 mb-60 flex w-full">
-        <ProfileSide routes={routes} companyName="스타트 윗" mode="vendor" />
+      <main className="mt-10 mb-60 flex w-full items-start">
+        <ProfileSide
+          routes={routes}
+          id={session?.vendorSeq || 0}
+          mode="vendor"
+        />
         {children}
       </main>
       <Footer mode="vendor" />

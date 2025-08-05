@@ -36,6 +36,9 @@ export default async function ProductsDetailPage({
           vendorName={vendorInfo.vendorName || ''}
           vendorId={vendorInfo.vendorUniqueType || ''}
           vendorSeq={Number(vendorSeq)}
+          solutionName={solution.solutionName || ''}
+          amount={solution.amount}
+          category={category}
         />
         <div className="flex min-w-0 flex-col gap-10">
           <ProductDetail

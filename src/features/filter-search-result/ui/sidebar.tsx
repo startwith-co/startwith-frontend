@@ -11,6 +11,13 @@ import {
 import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+const categoryMap: Record<string, string> = {
+  '비전 검사': '불량 검출 · 예측(비전 검사)',
+  예지보전: '설비 이상 및 고장 예측(예지보전)',
+  '공정 이상 감지': '실시간 공정 상태 모니터링(공정 이상 감지)',
+  '공정 재고관리': 'MES 재고관리(공정 재고관리)',
+};
+
 export default function Sidebar({
   category = '',
   industry = '',
@@ -22,32 +29,27 @@ export default function Sidebar({
 }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterList, setFilterList] = useState({
-    category,
+    category: category.match(/\(([^)]+)\)/)?.[1],
     industry,
     budget,
   });
   const router = useRouter();
 
   const handleFilter = () => {
-    router.push(
-      `/search?category=${filterList.category}&industry=${filterList.industry}&budget=${filterList.budget}`,
-    );
+    const params = new URLSearchParams();
+
+    const categoryValue = categoryMap[filterList.category as string];
+    if (categoryValue) params.set('category', categoryValue);
+
+    if (filterList.industry) params.set('industry', filterList.industry);
+    if (filterList.budget) params.set('budget', filterList.budget);
+
+    const query = params.toString();
+    router.push(`/search${query ? `?${query}` : ''}`);
   };
 
   return (
     <div className="mt-23.5 flex w-[241px] flex-col gap-12.5">
-      <div className="flex flex-col">
-        <div className="flex flex-col">
-          <h2 className="mb-3 text-lg font-semibold">ERP 기능별 기업 분류</h2>
-          <ul className="flex flex-col gap-3.5 text-sm">
-            <li>전체</li>
-            <li>재무/회계 특화</li>
-            <li>구매/발주 특화</li>
-            <li>재고/물류 특화</li>
-            <li>영업/판매 특화</li>
-          </ul>
-        </div>
-      </div>
       <div className="flex flex-col">
         <h2 className="mb-3 text-lg font-semibold">상세 검색</h2>
         <button
@@ -64,7 +66,7 @@ export default function Sidebar({
             <ul className="mt-5 flex flex-col gap-7.5 [&>li>div]:mt-2.5">
               <li>
                 <span>솔루션 카테고리 선택</span>
-                <div className="flex gap-3.5">
+                <div className="grid grid-cols-2 gap-3.5">
                   {solutionCategories.map((solutionCategory) => (
                     <FilterButton
                       key={solutionCategory}
@@ -134,6 +136,7 @@ export default function Sidebar({
         <div className="flex flex-wrap gap-3.5">
           {Object.entries(filterList).map(
             ([key, value]) =>
+              value &&
               value.length > 0 && (
                 <Button key={key} asChild={false} variant="category">
                   {value}

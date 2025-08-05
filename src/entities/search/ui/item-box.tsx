@@ -2,6 +2,7 @@ import { IoIosStar } from 'react-icons/io';
 import Link from 'next/link';
 import Image from 'next/image';
 import defaultImage from 'public/images/404.png';
+import formatLocalPrice from '@/shared/lib/formatLocalPrice';
 import ItemBoxProps from '../model/type';
 
 export default function ItemBox({
@@ -27,7 +28,9 @@ export default function ItemBox({
       />
       <div className="flex flex-col gap-1">
         <span className="text-[15px] font-bold">{name}</span>
-        <span className="text-[15px]">{price}원/월(VAT 별도)~</span>
+        <span className="text-[15px]">
+          {formatLocalPrice(price)}원/월(VAT 별도)~
+        </span>
         <p className="flex items-center gap-1">
           <IoIosStar />
           <span className="text-xs">{rating}</span>

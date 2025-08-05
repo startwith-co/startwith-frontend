@@ -20,13 +20,13 @@ export default async function registerSolution(data: VendorRegisterSchema) {
     category: vendorCategoryMapping(data.category),
     industry: data.industry,
     recommendedCompanySize: data.recommendedCompanySize.join(','),
-    solutionImplementationType: data.solutionImplementationType,
-    specialist: data.specialist,
+    solutionImplementationType: data.solutionImplementationType.join(','),
     amount: Number(data.amount),
     duration: Number(data.duration),
     solutionEffect: data.solutionEffect,
     keyword: data.keyword,
   };
+
   formData.append(
     'request',
     new Blob([JSON.stringify(jsonPart)], { type: 'application/json' }),

@@ -7,13 +7,11 @@ import Input from '@/shared/ui/input';
 import SignupForm from '@/shared/ui/signup-form';
 import SignupIndustryModal from '@/features/signup/ui/signup-industry-modal';
 import { Button } from '@/shared/ui/button';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useFileUpload from '@/shared/model/useFileUpload';
 import Image from 'next/image';
-import api from '@/shared/api/index-api';
-import { useSession } from 'next-auth/react';
-import { ApiResponse } from '@/shared/model/apiType';
-import { ConsumerInfoProps } from '@/views/vendorMy/model/type';
+import { industryToKo } from '@/shared/model/industryMap';
+import { toast } from 'react-toastify';
 import editInfoPost from '../api/editInfoPost';
 
 const schema = z.object({
@@ -25,60 +23,66 @@ const schema = z.object({
 
 type FormSchema = z.infer<typeof schema>;
 
-function EditInfo() {
+interface EditInfoProps {
+  company: string;
+  email: string;
+  phoneNumber: string;
+  industry: string;
+}
+
+function EditInfo({ company, email, phoneNumber, industry }: EditInfoProps) {
   const {
     register,
     formState: { errors, isValid },
-    reset,
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
+    defaultValues: {
+      company,
+      email,
+      phoneNumber,
+    },
   });
 
   const [open, setOpen] = useState(false);
-  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
-  const { data: session } = useSession();
+
+  const [selectedIndustry, setSelectedIndustry] = useState<{
+    label: string;
+    value: string;
+  } | null>({ label: industryToKo[industry], value: industry });
   const {
     preview,
     file,
     fileInputRef,
     handleClickFileInput,
     handleFileChange,
+    setPreview,
   } = useFileUpload();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!session?.consumerSeq) return;
-      const res = await api
-        .get(`api/b2b-service/consumer?consumerSeq=${session.consumerSeq}`)
-        .json<ApiResponse<ConsumerInfoProps>>();
-
-      // 가져온 값으로 초기값 세팅
-      reset({
-        company: res.data.consumerName,
-        email: res.data.email,
-        phoneNumber: res.data.phoneNumber,
-      });
-
-      // 예: 산업군 선택 상태도 함께 설정
-      setSelectedIndustry(res.data.industry);
-    };
-
-    fetchData();
-  }, [reset, session]);
 
   return (
     <SignupForm
-      action={(prevState, formData) =>
-        editInfoPost(prevState, formData, file, selectedIndustry)
-      }
+      action={async (prevState, formData) => {
+        try {
+          await editInfoPost(
+            prevState,
+            formData,
+            file,
+            selectedIndustry?.value,
+          );
+          // TODO: 나중에 수정 예정
+          // setSelectedIndustry(null);
+          // setPreview(null);
+          window.location.reload();
+        } catch (error) {
+          toast.error('수정 중 오류가 발생했습니다.');
+        }
+      }}
       variant="bgBlueGradient"
       buttonProps="w-[180px] h-[35px] font-light text-sm"
       buttonName="수정하기"
       buttonWrapperClassName="flex justify-center"
       loadingText="수정 중.."
       disabled={!isValid || !selectedIndustry || !file}
-      isServerAction
     >
       <div className="flex items-center">
         <div className="relative mb-7 h-[100px] w-[100px]">
@@ -111,14 +115,14 @@ function EditInfo() {
       </div>
 
       <div>
-        <label htmlFor="company" className="text-sm text-[#A7A7A7]">
+        <label htmlFor="company" className="text-sm text-[#5D5D5D]">
           기업명(사업자명)
           <Input
             id="company"
             type="string"
             {...register('company')}
             name="company"
-            className="mt-2 mb-2 h-[40px] w-[600px] border-0 bg-[#F9F9F9] indent-2 text-black"
+            className="mt-2 mb-2 h-[40px] w-[600px] border-0 bg-[#F9F9F9] indent-2"
           />
         </label>
         {errors.company && (
@@ -127,7 +131,7 @@ function EditInfo() {
       </div>
 
       <div>
-        <label htmlFor="email" className="text-sm text-[#A7A7A7]">
+        <label htmlFor="email" className="text-sm text-[#5D5D5D]">
           담당자 이메일
           <Input
             id="email"
@@ -143,7 +147,7 @@ function EditInfo() {
       </div>
 
       <div>
-        <label htmlFor="phoneNumber" className="text-sm text-[#A7A7A7]">
+        <label htmlFor="phoneNumber" className="text-sm text-[#5D5D5D]">
           담당자 전화번호
           <Input
             id="phoneNumber"
@@ -159,14 +163,14 @@ function EditInfo() {
       </div>
 
       <div>
-        <p className="text-sm text-[#A7A7A7]">종사 산업군</p>
+        <p className="text-sm text-[#5D5D5D]">종사 산업군</p>
         <Button
           type="button"
           asChild={false}
-          className="mt-2 h-[40px] w-full justify-start bg-[#F9F9F9] font-semibold text-black"
+          className="mt-2 h-[40px] w-full justify-start bg-[#F9F9F9] text-[#5D5D5D] hover:text-white"
           onClick={() => setOpen(true)}
         >
-          {selectedIndustry || '종사 산업군 선택'}
+          {selectedIndustry?.label || '종사 산업군 선택'}
         </Button>
         <SignupIndustryModal
           open={open}

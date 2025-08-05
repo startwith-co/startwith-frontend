@@ -3,6 +3,7 @@ import VendorChatWidget from '@/widgets/vendorHome/ui/vendor-chat-widget';
 import VendorNoticeWidget from '@/widgets/vendorHome/ui/vendor-notice-widget';
 import VendorStatistics from '@/widgets/vendorHome/ui/vendor-statistics';
 import VendorServiceBoard from '@/widgets/vendorHome/ui/vendor-service-board';
+import VendorMarketingStatistics from '@/widgets/vendorHome/ui/vendor-marketing-statistics copy';
 import { auth } from '@/auth';
 
 export default async function VendorHomePage() {
@@ -21,7 +22,7 @@ export default async function VendorHomePage() {
 
       <div className="grid grid-cols-[2.5fr_1fr_1fr] gap-7.5 2xl:grid-cols-[1.7fr_1fr_1fr]">
         <div className="col-start-1 col-end-2">
-          <VendorStatistics />
+          <VendorMarketingStatistics />
         </div>
         <div className="col-start-2 col-end-4 h-full">
           <VendorServiceBoard />

@@ -9,7 +9,13 @@ let nextConfig: NextConfig = {
     remotePatterns: [
       new URL('https://way-s3.s3.ap-northeast-2.amazonaws.com/**'),
       new URL('https://startwith-solu.s3.ap-northeast-2.amazonaws.com/**'),
+      new URL('https://example.com/**'),
     ],
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
   },
   webpack: (config) => {
     const newConfig = { ...config };

@@ -3,13 +3,13 @@
 import { Button } from '@/shared/ui/button';
 import VendorDetailInfo from '@/widgets/vendorRegister/ui/vendor-detail-info';
 import VendorKeyword from '@/widgets/vendorRegister/ui/vendor-keyword';
-import VendorNormalInfo from '@/widgets/vendorRegister/ui/vendor-normal-info';
 import VendorSaleInfo from '@/widgets/vendorRegister/ui/vendor-sale-info';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCurrentSession from '@/shared/model/useCurrentSession';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import VendorNormalInfo from '@/widgets/vendorRegister/ui/vendor-normal-info';
 import {
   VendorRegisterSchema,
   vendorRegisterSchema,
@@ -33,8 +33,7 @@ export default function VendorRegisterPage() {
       category: '',
       industry: '',
       recommendedCompanySize: [],
-      solutionImplementationType: 'string',
-      specialist: 'string',
+      solutionImplementationType: [],
       amount: '',
       duration: '',
       solutionEffect: [],

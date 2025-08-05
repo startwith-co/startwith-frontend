@@ -109,27 +109,21 @@ function SignupVendorForm() {
             className="hidden"
             onChange={handleFileChange}
           />
-
-          <div className="relative h-[55px] w-full">
-            <Button
-              type="button"
-              asChild={false}
-              variant="textBlue"
-              onClick={handleClickFileInput}
-              className="h-[40px] w-full text-sm text-[#5B76FF] shadow-sm"
-            >
-              사업자 등록증 첨부하기
-            </Button>
+          <Button
+            type="button"
+            asChild={false}
+            variant="textBlue"
+            onClick={handleClickFileInput}
+            className="h-[55px] w-full text-sm text-[#5B76FF] shadow-sm"
+          >
             {file ? (
-              <p className="mt-1 truncate text-center text-[8px] text-gray-600">
-                ({file.name})
+              <p className="truncate text-center text-xs text-gray-600">
+                {file.name}
               </p>
             ) : (
-              <p className="mt-1 truncate text-center text-[8px] text-gray-600">
-                PDF 파일을 첨부해주세요.
-              </p>
+              '사업자 등록증 첨부하기'
             )}
-          </div>
+          </Button>
         </div>
 
         {errors.company && <ErrorMessage message={errors.company.message} />}
@@ -184,6 +178,7 @@ function SignupVendorForm() {
               asChild={false}
               variant="textBlue"
               onClick={verifyEmail}
+              disabled={emailVerified}
               className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
             >
               인증코드 인증하기

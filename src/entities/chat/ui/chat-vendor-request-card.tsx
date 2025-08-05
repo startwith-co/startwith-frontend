@@ -1,4 +1,5 @@
 import Solu from '@/shared/ui/solu';
+import { categoryToKo } from '@/shared/model/categoryMap';
 
 interface ChatVendorRequestCardProps {
   solutionName: string;
@@ -22,16 +23,18 @@ function ChatVendorRequestCard({
       </div>
       <div className="space-y-2 text-sm text-black">
         <div className="flex justify-between">
-          <span className="font-bold">계약명(솔루션명)</span>
+          <span className="font-semibold">계약명(솔루션명)</span>
           <span>{solutionName}</span>
         </div>
         <div className="flex justify-between">
-          <span className="font-bold">솔루션 카테고리</span>
-          <span>{solutionCategory}</span>
+          <span className="font-semibold">솔루션 카테고리</span>
+          <span>{categoryToKo[solutionCategory]}</span>
         </div>
         <div className="flex justify-between">
-          <span className="font-bold">결제 요청 금액</span>
-          <span className="font-bold">{formatPrice(solutionPrice)}</span>
+          <span className="font-semibold">결제 요청 금액</span>
+          <span className="font-semibold text-[#5B76FF]">
+            {formatPrice(solutionPrice)}
+          </span>
         </div>
       </div>
     </div>

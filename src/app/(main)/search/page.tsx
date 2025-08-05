@@ -1,4 +1,5 @@
 import SearchPage from '@/views/search/ui/search-page';
+import { categoryToEn } from '@/shared/model/categoryMap';
 import getSolutionList from './api/getSolutionList';
 
 export default async function Page({
@@ -7,8 +8,13 @@ export default async function Page({
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const { category, industry, budget, page, keyword } = await searchParams;
+
+  const mappedCategory = category
+    ? categoryToEn[category] || category
+    : undefined;
+
   const solutions = await getSolutionList({
-    category,
+    category: mappedCategory,
     industry,
     budget,
     page,
@@ -18,9 +24,9 @@ export default async function Page({
   return (
     <SearchPage
       solutions={solutions}
-      category={category as string}
-      industry={industry as string}
-      budget={budget as string}
+      category={category || ''}
+      industry={industry || ''}
+      budget={budget || ''}
     />
   );
 }

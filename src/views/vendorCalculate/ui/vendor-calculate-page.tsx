@@ -3,23 +3,22 @@
 import VendorCalculateBoard from '@/widgets/vendorCalculate/ui/vendor-calculate-board';
 import VendorPolicy from '@/widgets/vendorCalculate/ui/vendor-policy';
 import VendorSelect from '@/shared/ui/vendor-select';
-import BoardCountProps from '@/widgets/vendorHome/model/type';
 import React, { useEffect, useState } from 'react';
 import getVendorTable from '../api/getVendorTable';
 import VendorTableProps from '../model/type';
 import renameStatus from '../utils/renameStatus';
 
 export default function VendorCalculatePage({
-  boardCount,
+  vendorSeq,
 }: {
-  boardCount: BoardCountProps;
+  vendorSeq: number;
 }) {
   const [vendorTable, setVendorTable] = useState<VendorTableProps[]>([]);
   const [setPaymentStatus, setSetPaymentStatus] = useState<string>('');
   useEffect(() => {
     const fetchData = async () => {
       const res = await getVendorTable(
-        String(boardCount.vendorSeq),
+        String(vendorSeq),
         setPaymentStatus,
         '',
         '',
@@ -27,13 +26,13 @@ export default function VendorCalculatePage({
       setVendorTable(res.data);
     };
     fetchData();
-  }, [boardCount.vendorSeq, setPaymentStatus]);
+  }, [vendorSeq, setPaymentStatus]);
 
   return (
     <div className="flex w-full flex-col gap-7.5 pr-7.5">
       <div className="grid h-[374px] w-full grid-cols-2 gap-7.5">
         <div className="flex flex-col gap-7.5">
-          <VendorCalculateBoard boardCount={boardCount} />
+          <VendorCalculateBoard vendorSeq={vendorSeq} />
           <div className="h-[139px] w-full rounded-md bg-white px-8 py-7.5 shadow-md">
             <h2 className="mb-5 text-lg font-semibold">정산 처리 상태</h2>
             <div className="flex items-center gap-22">

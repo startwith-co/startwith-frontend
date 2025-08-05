@@ -2,20 +2,10 @@ export interface PaymentInfoProps {
   paymentEventSeq: number;
   paymentEventName: string;
   category:
-    | 'BI'
-    | 'BPM'
-    | 'CMS'
-    | 'CRM'
-    | 'DMS'
-    | 'EAM'
-    | 'ECM'
-    | 'ERP'
-    | 'HR'
-    | 'HRM'
-    | 'KM'
-    | 'SCM'
-    | 'SI'
-    | 'SECURITY';
+    | 'DEFECT_INSPECTION'
+    | 'PREDICTIVE_MAINTENANCE'
+    | 'PROCESS_MONITORING'
+    | 'MES_INVENTORY_MANAGEMENT';
   vendorName: string;
   vendorBannerImageUrl: string;
   representImageUrl: string;
@@ -40,18 +30,8 @@ export interface PaymentSuccessProps {
   cardType: string;
   receiptUrl: string;
   category:
-    | 'BI'
-    | 'BPM'
-    | 'CMS'
-    | 'CRM'
-    | 'DMS'
-    | 'EAM'
-    | 'ECM'
-    | 'ERP'
-    | 'HR'
-    | 'HRM'
-    | 'KM'
-    | 'SCM'
-    | 'SI'
-    | 'SECURITY';
+    | 'DEFECT_INSPECTION'
+    | 'PREDICTIVE_MAINTENANCE'
+    | 'PROCESS_MONITORING'
+    | 'MES_INVENTORY_MANAGEMENT';
 }

@@ -16,14 +16,14 @@ function HomeSecondSection() {
           height={600}
           alt="login-second"
         />
-        <p className="text-3xl font-bold">
+        <p className="text-center text-3xl leading-normal font-semibold">
           우리 기업에게 꼭 맞는 솔루션은 무엇인지
           <br />
           <Solu />가 대신 분석해서 제안해드려요
         </p>
       </div>
       <div className="flex h-[500px] w-full flex-col items-center gap-5 pt-10">
-        <p className="text-3xl font-bold">
+        <p className="text-center text-3xl leading-normal font-semibold">
           <span className="font-bold">ERP, CRM, HRM </span>등 우리 기업에게 꼭
           맞는
           <br /> 프리미엄 기업 솔루션은 <Solu />에 있습니다
@@ -32,7 +32,7 @@ function HomeSecondSection() {
           asChild
           type="button"
           variant="bgBlueGradient"
-          className="mt-4 h-[60px] w-[550px] text-sm font-bold shadow-lg"
+          className="mt-4 h-[60px] w-[550px] text-lg font-bold shadow-lg"
         >
           <Link href="#top">지금 바로 SOLU 시작하기</Link>
         </Button>

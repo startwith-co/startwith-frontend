@@ -8,7 +8,7 @@ export default function VendorStatistics() {
         매출 통계
       </h2>
       <div className="grid h-[260px] w-full grid-cols-[3fr_1fr] gap-4">
-        <VendorLineChart />
+        <VendorLineChart title="매출" />
         <div className="flex flex-col justify-between">
           <DarkBox className="flex w-full flex-col items-center justify-between px-4 py-3">
             <span className="text-vendor-secondary text-xs">Today 매출</span>

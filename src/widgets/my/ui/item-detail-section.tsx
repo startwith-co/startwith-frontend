@@ -1,7 +1,6 @@
 'use client';
 
 import DetailItem from '@/entities/my/ui/detail-item';
-import PaginationControl from '@/features/my/ui/pagination-control';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Dropdown from '@/shared/ui/dropdown';

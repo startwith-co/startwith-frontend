@@ -10,6 +10,8 @@ import cn from '@/shared/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { downloadFile } from '@/widgets/products/api/downloadFile';
+import categoryTrans from '@/widgets/products/utils/categoryTrans';
+import formatLocalPrice from '@/shared/lib/formatLocalPrice';
 
 export default function ProductDetail({
   solutionName,
@@ -32,14 +34,17 @@ export default function ProductDetail({
 }) {
   return (
     <WhiteBox className="px-15 py-10 pb-8">
-      <ul className="text-vendor-secondary flex items-center justify-around text-2xl">
+      <ul className="text-vendor-secondary flex items-center justify-around text-lg">
         {vendorCategory.map((item) => (
           <li
             key={item.solutionSeq}
             className={cn(item.category === category && 'text-black')}
           >
             <Link href={`/products/${vendorSeq}?category=${item.category}`}>
-              {item.category}
+              <div className="flex flex-col text-center">
+                <span>{categoryTrans(item.category)[0]}</span>
+                <span>{categoryTrans(item.category)[1]}</span>
+              </div>
             </Link>
           </li>
         ))}
@@ -67,13 +72,31 @@ export default function ProductDetail({
       <div className="mt-12.5 grid grid-cols-3 gap-16">
         <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">
           <span className="text-lg font-semibold">가격</span>
-          <span className="text-sm">{amount}원/월(VAT 별도)~</span>
+          <span className="text-sm">
+            ~ {formatLocalPrice(amount)}원/월(VAT 별도)
+          </span>
         </div>
         <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">
-          <span className="text-lg font-semibold">서비스 형태</span>
-          <span className="text-sm">
-            {solutionImplementationType.join('/')}
-          </span>
+          <span className="text-lg font-semibold">솔루션 구축 형태</span>
+          <p className="text-sm">
+            <span
+              className={cn(
+                !solutionImplementationType.includes('클라우드') &&
+                  'text-vendor-secondary',
+              )}
+            >
+              클라우드
+            </span>
+            /
+            <span
+              className={cn(
+                !solutionImplementationType.includes('온프레미스') &&
+                  'text-vendor-secondary',
+              )}
+            >
+              온프레미스
+            </span>
+          </p>
         </div>
         <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">
           <span className="text-lg font-semibold">개발기간</span>

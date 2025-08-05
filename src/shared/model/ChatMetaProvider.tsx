@@ -18,6 +18,8 @@ interface ChatMetaContextType {
   vendorSeq: number;
   consumerSeq: number;
   paymentEventSeq: number;
+  solutionName: string;
+  userImg: string;
   setChatMeta: (
     meta: Partial<Omit<ChatMetaContextType, 'setChatMeta'>>,
   ) => void;
@@ -36,6 +38,8 @@ const initialValues = {
   consumerSeq: 0,
   vendorSeq: 0,
   paymentEventSeq: 0,
+  solutionName: '',
+  userImg: '',
 };
 
 function ChatMetaProvider({ children }: { children: ReactNode }) {
