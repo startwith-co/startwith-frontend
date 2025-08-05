@@ -63,7 +63,7 @@ function ProfileSide({ routes, mode = 'user', id }: ProfileSideProps) {
     // TODO: 사이드바 높이 수정
     <aside
       className={cn(
-        'mr-7.5 flex max-h-[580px] min-w-[200px] flex-col items-center rounded-r-2xl px-3.5 py-9 shadow-md',
+        'mr-7.5 flex max-h-[580px] min-w-[200px] flex-col items-center rounded-2xl px-3.5 py-9 shadow-md',
         mode === 'user'
           ? 'h-[400px] bg-white'
           : 'bg-vendor-primary relative h-auto',

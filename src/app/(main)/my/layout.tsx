@@ -1,7 +1,8 @@
 import Footer from '@/shared/ui/footer';
-import Header from '@/shared/ui/header';
+
 import ProfileSide from '@/shared/ui/profile-side';
 import { auth } from '@/auth';
+import Header from '@/shared/ui/header';
 
 const routes = [
   { label: '상세 정보', href: '/my/detail' },

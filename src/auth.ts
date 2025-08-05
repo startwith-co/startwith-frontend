@@ -29,6 +29,7 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
               },
             );
             const data: LoginResponse = await response.json();
+            console.log('loginData', data);
             if (data) {
               return {
                 consumerSeq: data.data.consumerSeq,
@@ -65,7 +66,6 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
               };
             }
           }
-
           return null;
         } catch (error) {
           console.error('로그인 실패:', error);
@@ -91,11 +91,13 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
         };
       }
       if (Date.now() > (token.accessTokenExpireAt as number)) {
-        return {};
+        signOut();
+        return null;
       }
       return token;
     },
     session: async ({ session, token }: any) => {
+      console.log('session', token);
       return {
         ...session,
         accessToken: token.accessToken,
