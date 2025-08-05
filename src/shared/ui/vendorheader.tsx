@@ -19,10 +19,10 @@ export default function VendorHeader() {
             플랫폼 HOME
           </Button>
         </Link>
-        <Button asChild={false} variant="ghost" className="h-7 text-[12px]">
+        {/* <Button asChild={false} variant="ghost" className="h-7 text-[12px]">
           <PiGlobe />
           <span className="font-normal">Language</span>
-        </Button>
+        </Button> */}
       </div>
     </header>
   );

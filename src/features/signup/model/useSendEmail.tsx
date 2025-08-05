@@ -18,6 +18,9 @@ function useSendEmail() {
   }, [isCounting, timer]);
 
   const handleSendEmail = async (email: string, target: 'vendor' | 'user') => {
+    setTimer(300);
+    setIsCounting(true);
+
     if (target === 'vendor') {
       await api.post('api/b2b-service/vendor/email/send', {
         json: { email },
@@ -27,8 +30,6 @@ function useSendEmail() {
         json: { email },
       });
     }
-    setTimer(300);
-    setIsCounting(true);
   };
 
   return {
