@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import Footer from '@/shared/ui/footer';
 import Header from '@/shared/ui/header';
+
 import ProfileSide from '@/shared/ui/profile-side';
 
 const routes = [
@@ -18,7 +19,7 @@ export default async function Layout({
   const session = await auth();
   return (
     <div className="bg-vendor-bg flex w-screen flex-col overflow-y-scroll">
-      <Header mode="vendor" />
+      <Header />
       <main className="mt-10 mb-60 flex w-full items-start">
         <ProfileSide
           routes={routes}
