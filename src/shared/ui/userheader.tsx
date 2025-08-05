@@ -8,7 +8,10 @@ import { IoSearchOutline } from 'react-icons/io5';
 import { PiGlobe } from 'react-icons/pi';
 import useCurrentSession from '@/shared/model/useCurrentSession';
 import { ApiResponse } from '@/shared/model/apiType';
-import { ConsumerInfoProps } from '@/views/vendorMy/model/type';
+import {
+  ConsumerInfoProps,
+  VendorInfoProps,
+} from '@/views/vendorMy/model/type';
 import Input from './input';
 import { Button } from './button';
 import Dropdown from './dropdown';
@@ -16,16 +19,24 @@ import api from '../api/index-api';
 
 export default function UserHeader() {
   const { session, status } = useCurrentSession();
+  console.log(session);
   const [name, setName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   useEffect(() => {
     const fetchData = async () => {
       if (status === 'loading' || !session) return;
-      const res = await api
-        .get(`api/b2b-service/consumer?consumerSeq=${session.consumerSeq}`)
-        .json<ApiResponse<ConsumerInfoProps>>();
-      setName(res.data.consumerName);
+      if (session.role === 'vendor') {
+        const res = await api
+          .get(`api/b2b-service/vendor?vendorSeq=${session.vendorSeq}`)
+          .json<ApiResponse<VendorInfoProps>>();
+        setName(res.data.vendorName || 'user');
+      } else {
+        const res = await api
+          .get(`api/b2b-service/consumer?consumerSeq=${session.consumerSeq}`)
+          .json<ApiResponse<ConsumerInfoProps>>();
+        setName(res.data.consumerName || 'user');
+      }
     };
     fetchData();
   }, [session, status]);
