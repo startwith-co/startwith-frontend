@@ -37,8 +37,8 @@ function DetailItem({
 
   return (
     <>
+      <h1 className="text-2xl font-extrabold">{formatDate(titleDate)}</h1>
       <div className="flex h-[300px] w-[840px] flex-col rounded-2xl bg-[#F5F5F5] p-5">
-        <h1 className="text-2xl font-extrabold">{formatDate(titleDate)}</h1>
         <div className="align-center mt-5 flex flex-row space-x-10">
           <span className="text-lg font-bold">
             {status === 'Done' ? '개발 완료' : '구매 확정'}
@@ -65,15 +65,7 @@ function DetailItem({
               </span>
             </div>
           </div>
-          <div className="flex flex-row space-x-2">
-            <Button
-              variant="login"
-              asChild={false}
-              className="w-[100px] rounded-sm bg-[#4f7df9] text-white"
-              onClick={() => setOpen(true)}
-            >
-              리뷰 남기기
-            </Button>
+          <div className="flex flex-col space-y-4">
             <Button
               variant="login"
               asChild={false}
@@ -82,9 +74,17 @@ function DetailItem({
                   `/chat?vendorId=${vendorUniqueType}&consumerId=${session?.uniqueType}`,
                 );
               }}
-              className="w-[100px] rounded-sm bg-white text-[#7A7A7A]"
+              className="w-[150px] rounded-sm border-1 border-[#7A7A7A] bg-white text-[#7A7A7A]"
             >
               문의하기
+            </Button>
+            <Button
+              variant="login"
+              asChild={false}
+              className="w-[150px] rounded-sm bg-[#4f7df9] text-white"
+              onClick={() => setOpen(true)}
+            >
+              리뷰 남기기
             </Button>
           </div>
         </div>
