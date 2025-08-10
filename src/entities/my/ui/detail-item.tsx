@@ -6,6 +6,7 @@ import { Button } from '@/shared/ui/button';
 import ReviewModal from '@/features/my/ui/review-modal';
 import formatDate, { formatDateTime } from '@/shared/lib/date-formatter';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 interface DetailItemProps {
   titleDate: string;
@@ -16,6 +17,7 @@ interface DetailItemProps {
   price: string;
   solutionSeq: number;
   solutionImageUrl: string;
+  vendorUniqueType: string;
 }
 
 function DetailItem({
@@ -27,9 +29,11 @@ function DetailItem({
   price,
   solutionSeq,
   solutionImageUrl,
+  vendorUniqueType,
 }: DetailItemProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
 
   return (
     <>
@@ -73,7 +77,11 @@ function DetailItem({
             <Button
               variant="login"
               asChild={false}
-              onClick={() => router.push('/chat')}
+              onClick={() => {
+                router.push(
+                  `/chat?vendorId=${vendorUniqueType}&consumerId=${session?.uniqueType}`,
+                );
+              }}
               className="w-[100px] rounded-sm bg-white text-[#7A7A7A]"
             >
               문의하기

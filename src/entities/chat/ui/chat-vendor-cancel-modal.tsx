@@ -39,7 +39,16 @@ export default function ChatVendorCancelModal({
       uuidv4(),
     );
     setOpen(false);
-  }, [solutionName, solutionPrice, solutionCategory, setOpen]);
+  }, [
+    solutionName,
+    solutionPrice,
+    solutionCategory,
+    vendorId,
+    vendorName,
+    consumerId,
+    consumerName,
+    setOpen,
+  ]);
 
   const handleCancel = useCallback(() => {
     setOpen(false);

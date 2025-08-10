@@ -35,7 +35,7 @@ function ChatsUser({ messages, consumerId }: ChatsUserProps) {
               isMine={isMine}
               msg={msg}
             >
-              <ChatUserRequestCard {...parsed} />
+              <ChatUserRequestCard {...parsed} isMine={isMine} />
             </ChatCardWrapper>
           );
         }
@@ -47,7 +47,7 @@ function ChatsUser({ messages, consumerId }: ChatsUserProps) {
               isMine={isMine}
               msg={msg}
             >
-              <ChatUserPayCompleteCard {...parsed} />
+              <ChatUserPayCompleteCard {...parsed} isMine={isMine} />
             </ChatCardWrapper>
           );
         }
@@ -59,7 +59,7 @@ function ChatsUser({ messages, consumerId }: ChatsUserProps) {
               isMine={isMine}
               msg={msg}
             >
-              <ChatUserCancelRequestCard {...parsed} />
+              <ChatUserCancelRequestCard {...parsed} isMine={isMine} />
             </ChatCardWrapper>
           );
         }
@@ -71,7 +71,7 @@ function ChatsUser({ messages, consumerId }: ChatsUserProps) {
               isMine={isMine}
               msg={msg}
             >
-              <ChatUserCancelCompleteCard {...parsed} />
+              <ChatUserCancelCompleteCard {...parsed} isMine={isMine} />
             </ChatCardWrapper>
           );
         }

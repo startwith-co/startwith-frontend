@@ -37,7 +37,12 @@ async function signupVendorPost(
   if (!file) {
     return;
   }
-  await signupVendor(formData, file);
+  try {
+    await signupVendor(formData, file);
+  } catch (error) {
+    console.error('서버 응답 에러 본문:', error);
+    throw error;
+  }
 
   redirect('/signup/success');
 }

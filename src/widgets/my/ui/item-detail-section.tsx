@@ -61,6 +61,7 @@ function ItemDetailSection() {
           price={item.amount.toString()}
           solutionSeq={item.solutionSeq}
           solutionImageUrl={item.representImageUrl}
+          vendorUniqueType={item.vendorUniqueType}
         />
       ))}
 

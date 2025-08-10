@@ -24,11 +24,18 @@ export const getErrorDataFromKyError = async (error: ky.HTTPError) => {
     const json = (await error.response.json()) as {
       code?: string | number;
       message?: string;
-      status?: number;
+      httpStatus?: number;
     };
     console.log('에러 메시지', error.message);
 
-    const httpStatusCode = json?.status || 500;
+    const httpStatusCode = json?.httpStatus || 500;
+
+    if (json?.message) {
+      return {
+        message: json.message,
+        status: httpStatusCode,
+      };
+    }
 
     if (httpStatusCode in ERROR_CODE) {
       return ERROR_CODE[httpStatusCode];

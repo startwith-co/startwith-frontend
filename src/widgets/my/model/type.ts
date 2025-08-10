@@ -9,4 +9,5 @@ export type PaymentInfoProps = {
   method: 'CARD' | 'BANK_TRANSFER' | 'KAKAOPAY';
   amount: number;
   existReview: boolean;
+  vendorUniqueType: string;
 };

@@ -1,10 +1,12 @@
 import Solu from '@/shared/ui/solu';
 import { categoryToKo } from '@/shared/model/categoryMap';
+import cn from '@/shared/lib/utils';
 
 interface ChatVendorRequestCardProps {
   solutionName: string;
   solutionCategory: string;
   solutionPrice: number;
+  isMine: boolean;
 }
 
 const formatPrice = (num: number) => {
@@ -15,9 +17,15 @@ function ChatVendorRequestCard({
   solutionName,
   solutionCategory,
   solutionPrice,
+  isMine,
 }: ChatVendorRequestCardProps) {
   return (
-    <div className="h-auto w-[300px] rounded-xl bg-[#EAF0FF] p-4 shadow-md">
+    <div
+      className={cn(
+        'h-auto w-[300px] rounded-xl p-4 shadow-md',
+        isMine ? 'bg-[#DBE8FF]' : 'bg-[#F1F1F1]',
+      )}
+    >
       <div className="mb-3 text-center text-lg font-bold">
         <Solu /> 결제 요청
       </div>

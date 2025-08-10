@@ -35,7 +35,7 @@ function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
               isMine={isMine}
               msg={msg}
             >
-              <ChatVendorRequestCard {...parsed} />
+              <ChatVendorRequestCard {...parsed} isMine={isMine} />
             </ChatCardWrapper>
           );
         }
@@ -47,7 +47,7 @@ function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
               isMine={isMine}
               msg={msg}
             >
-              <ChatVendorPayCompleteCard {...parsed} />
+              <ChatVendorPayCompleteCard {...parsed} isMine={isMine} />
             </ChatCardWrapper>
           );
         }
@@ -59,7 +59,7 @@ function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
               isMine={isMine}
               msg={msg}
             >
-              <ChatVendorCancelCompleteCard {...parsed} />
+              <ChatVendorCancelCompleteCard {...parsed} isMine={isMine} />
             </ChatCardWrapper>
           );
         }
@@ -74,6 +74,7 @@ function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
               <ChatVendorCancelRequestCard
                 {...parsed}
                 createdAt={msg.createdAt}
+                isMine={isMine}
               />
             </ChatCardWrapper>
           );

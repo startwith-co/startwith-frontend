@@ -3,12 +3,14 @@ import { Button } from '@/shared/ui/button';
 import React, { useState } from 'react';
 import { useSolution } from '@/shared/model/SolutionProvider';
 import { categoryToKo } from '@/shared/model/categoryMap';
+import cn from '@/shared/lib/utils';
 import ChatUserCancelModal from './chat-user-cancel-modal';
 
 interface ChatCompleteCardProps {
   solutionName: string;
   solutionCategory: string;
   solutionPrice: number;
+  isMine: boolean;
 }
 
 const formatPrice = (num: number) => {
@@ -19,11 +21,17 @@ function ChatUserPayCompleteCard({
   solutionName,
   solutionCategory,
   solutionPrice,
+  isMine,
 }: ChatCompleteCardProps) {
   const [open, setOpen] = useState(false);
   const { setSolution } = useSolution();
   return (
-    <div className="w-[360px] space-y-4 rounded-xl border bg-[#F5F5F5] p-6">
+    <div
+      className={cn(
+        'w-[360px] space-y-4 rounded-xl border p-6',
+        isMine ? 'bg-[#DBE8FF]' : 'bg-[#F1F1F1]',
+      )}
+    >
       <div className="flex items-center justify-center gap-2 font-bold">
         <Solu /> 결제 완료
       </div>
