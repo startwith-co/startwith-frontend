@@ -5,13 +5,17 @@ import Input from '@/shared/ui/input';
 import { useFormContext } from 'react-hook-form';
 import Image from 'next/image';
 
-function EditVendorInfo() {
+function EditVendorInfo({ onSave }: { onSave: () => void }) {
   const {
     register,
+    handleSubmit,
     formState: { errors, isDirty },
   } = useFormContext();
   return (
-    <div className="relative flex flex-col justify-between rounded-xl bg-white p-8 shadow-md">
+    <form
+      onSubmit={handleSubmit(() => onSave())}
+      className="relative flex flex-col justify-between rounded-xl bg-white p-8 shadow-md"
+    >
       <Image
         src="/images/profileAdd.png"
         alt="image"
@@ -112,7 +116,7 @@ function EditVendorInfo() {
       >
         수정 완료
       </Button>
-    </div>
+    </form>
   );
 }
 

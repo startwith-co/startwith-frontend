@@ -8,10 +8,11 @@ import cn from '@/shared/lib/utils';
 import ErrorMessage from '@/shared/ui/error-message';
 import { formatTime, deformatTime } from '../utils/formatTime';
 
-export default function VendorTimeSetting() {
+export default function VendorTimeSetting({ onSave }: { onSave: () => void }) {
   const {
     control,
     watch,
+    handleSubmit,
     formState: { errors },
   } = useFormContext();
 
@@ -20,7 +21,10 @@ export default function VendorTimeSetting() {
   const holidayAvailable = watch('holidayAvailable');
 
   return (
-    <div className="rounded-md bg-white p-8 shadow-md">
+    <form
+      className="rounded-md bg-white p-8 shadow-md"
+      onSubmit={handleSubmit(() => onSave())}
+    >
       <h2 className="mb-4 font-semibold">상담가능 요일 및 시간 설정</h2>
       <ErrorMessage
         message={
@@ -187,6 +191,6 @@ export default function VendorTimeSetting() {
       <div className="flex justify-center">
         <EditButton onClick={() => {}} title="수정 완료" />
       </div>
-    </div>
+    </form>
   );
 }
