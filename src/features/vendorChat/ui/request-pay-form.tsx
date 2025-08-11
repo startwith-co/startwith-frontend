@@ -177,7 +177,7 @@ function RequestPayForm() {
           <input
             ref={contractRef}
             type="file"
-            accept="image/*,.pdf"
+            accept=".pdf"
             className="hidden"
             onChange={(e) =>
               e.target.files && setContractFile(e.target.files[0])
@@ -187,9 +187,9 @@ function RequestPayForm() {
             asChild={false}
             type="button"
             onClick={() => contractRef.current?.click()}
-            className="h-[45px] w-full bg-[#F5F5F5] text-sm text-[#7A7A7A]"
+            className="h-[45px] w-full bg-[#F5F5F5] text-xs text-[#7A7A7A]"
           >
-            {contractFile ? ' 업로드 완료' : '+ 업로드하기(pdf만 가능)'}
+            {contractFile ? contractFile.name : '+ 업로드하기(pdf만 가능)'}
           </Button>
           {contractFile && contractFile.type.startsWith('image') && (
             <Image
@@ -216,9 +216,9 @@ function RequestPayForm() {
             asChild={false}
             type="button"
             onClick={() => refundRef.current?.click()}
-            className="h-[45px] w-full bg-[#F5F5F5] text-sm text-[#7A7A7A]"
+            className="h-[45px] w-full bg-[#F5F5F5] text-xs text-[#7A7A7A]"
           >
-            {refundFile ? '업로드 완료' : '+ 업로드하기(pdf만 가능)'}
+            {refundFile ? refundFile.name : '+ 업로드하기(pdf만 가능)'}
           </Button>
           {refundFile && refundFile.type.startsWith('image') && (
             <Image
