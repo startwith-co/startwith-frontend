@@ -68,23 +68,56 @@ export default function VendorCalculatePage({
                 <tr key={item.solutionSeq}>
                   <td>{renameStatus(item.paymentStatus)}</td>
                   <td>{item.solutionName}</td>
-                  <td>{item.solutionAmount}</td>
-                  <td>
-                    {new Date(item.settlementDueDate).toLocaleDateString()}
-                    <br />
-                    <span className="text-vendor-secondary">
-                      ({new Date(item.settlementDueDate).toLocaleDateString()}
-                      예정)
-                    </span>
-                  </td>
-                  <td>
-                    {item.solutionAmount}
-                    <br />
-                    <span className="text-vendor-secondary">
-                      ({new Date(item.settlementAmount).toLocaleDateString()}
-                      예정)
-                    </span>
-                  </td>
+                  <td>{item.solutionAmount}원</td>
+                  {item.paymentStatus !== 'SETTLED' ? (
+                    <td>
+                      N
+                      <br />
+                      <span className="text-vendor-secondary">
+                        (
+                        {new Date(item.settlementDueDate).toLocaleDateString(
+                          'ko-KR',
+                          {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          },
+                        )}
+                        예정)
+                      </span>
+                    </td>
+                  ) : (
+                    <td>
+                      {new Date(item.settlementAmount).toLocaleDateString(
+                        'ko-KR',
+                        {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                        },
+                      )}
+                    </td>
+                  )}
+                  {item.paymentStatus !== 'SETTLED' ? (
+                    <td>
+                      N
+                      <br />
+                      <span className="text-vendor-secondary">
+                        (
+                        {new Date(item.settlementAmount).toLocaleDateString(
+                          'ko-KR',
+                          {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          },
+                        )}
+                        예정)
+                      </span>
+                    </td>
+                  ) : (
+                    <td>{item.solutionAmount}원</td>
+                  )}
                   <td>{item.consumerName}</td>
                 </tr>
               ))
