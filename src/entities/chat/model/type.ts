@@ -30,3 +30,7 @@ export interface ChatType {
 export interface FileRequestProps {
   fileUrl: string;
 }
+
+export interface PaymentConflictProps {
+  data: boolean;
+}

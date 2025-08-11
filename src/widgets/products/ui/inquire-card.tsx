@@ -75,8 +75,8 @@ export default function InquireCard({
     <div className="flex flex-col gap-6">
       <WhiteBox className="flex flex-col items-center justify-center p-6">
         <Avatar className="mb-3.5 size-26">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage src="/images/default-profile.svg" />
+          <AvatarFallback>{vendorName[0]}</AvatarFallback>
         </Avatar>
         <span className="text-xl font-bold">{vendorName}</span>
         {session?.uniqueType !== vendorId && status === 'authenticated' && (

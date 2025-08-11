@@ -1,5 +1,6 @@
 import Solu from '@/shared/ui/solu';
 import cn from '@/shared/lib/utils';
+import { categoryToKo } from '@/shared/model/categoryMap';
 
 interface ChatVendorCancelCompleteCardProps {
   solutionName: string;
@@ -35,7 +36,7 @@ function ChatVendorCancelCompleteCard({
         </div>
         <div className="flex justify-between">
           <span className="font-bold">솔루션 카테고리</span>
-          <span>{solutionCategory}</span>
+          <span>{categoryToKo[solutionCategory]}</span>
         </div>
         <div className="flex justify-between">
           <span className="font-bold">결제 금액</span>

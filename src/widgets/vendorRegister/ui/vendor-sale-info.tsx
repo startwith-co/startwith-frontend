@@ -1,6 +1,7 @@
 import Input from '@/shared/ui/input';
 import { useFormContext } from 'react-hook-form';
 import ErrorMessage from '@/shared/ui/error-message';
+import formatLocalPrice from '@/shared/lib/formatLocalPrice';
 
 export default function VendorSaleInfo() {
   const {
@@ -16,10 +17,20 @@ export default function VendorSaleInfo() {
             판매가<span className="text-red-500">*</span>
           </span>
           <Input
-            type="number"
+            type="text"
             className="bg-vendor-gray w-[220px] border-none text-center"
             placeholder="~ 0원(VAT별도)"
-            {...register('amount')}
+            {...register('amount', {
+              setValueAs: (v) => {
+                if (!v) return '';
+                const onlyDigits = String(v).replace(/[^0-9]/g, '');
+                return onlyDigits;
+              },
+            })}
+            onChange={(e) => {
+              const onlyNum = e.target.value.replace(/[^0-9]/g, '');
+              e.target.value = formatLocalPrice(onlyNum);
+            }}
           />
           {errors.amount && (
             <ErrorMessage

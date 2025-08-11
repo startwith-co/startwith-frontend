@@ -1,6 +1,7 @@
 import formatVATPrice from '@/shared/lib/formatVATPrice';
 import Solu from '@/shared/ui/solu';
 import cn from '@/shared/lib/utils';
+import { categoryToKo } from '@/shared/model/categoryMap';
 
 interface ChatUserCancelRequestCardProps {
   solutionName: string;
@@ -32,7 +33,7 @@ function ChatUserCancelRequestCard({
         </div>
         <div className="flex justify-between">
           <span className="font-bold">솔루션 카테고리</span>
-          <span>{solutionCategory}</span>
+          <span>{categoryToKo[solutionCategory]}</span>
         </div>
         <div className="flex justify-between">
           <span className="font-bold">결제 금액</span>

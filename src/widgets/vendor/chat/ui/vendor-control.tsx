@@ -19,7 +19,9 @@ function VendorControl() {
   return (
     <div className="flex h-full w-full flex-col gap-2.5 rounded-3xl bg-[#FFFFFF] px-8 pt-[19px] shadow-lg">
       <Avatar className="flex size-20 items-center justify-center self-center rounded-full">
-        <AvatarImage src={consumerInfo?.consumerImageUrl ?? ''} />
+        <AvatarImage
+          src={consumerInfo?.consumerImageUrl ?? '/images/default-profile.svg'}
+        />
         <AvatarFallback>{consumerInfo?.consumerName}</AvatarFallback>
       </Avatar>
       <div className="flex h-full flex-col justify-between">

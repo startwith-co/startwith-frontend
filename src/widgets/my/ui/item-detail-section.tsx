@@ -16,8 +16,8 @@ function ItemDetailSection() {
 
   const statusOptions = [
     { label: '전체 상태', value: null },
-    { label: '구매 확정', value: 'SETTLED' },
-    { label: '정산 완료', value: 'DONE' },
+    { label: '구매 확정', value: 'DONE' },
+    { label: '정산 완료', value: 'SETTLED' },
   ];
 
   useEffect(() => {
@@ -63,6 +63,8 @@ function ItemDetailSection() {
           solutionSeq={item.solutionSeq}
           solutionImageUrl={item.representImageUrl}
           vendorUniqueType={item.vendorUniqueType}
+          vendorSeq={item.vendorSeq}
+          category={item.category}
         />
       ))}
 
