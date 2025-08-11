@@ -1,9 +1,11 @@
 import CustomModal from '@/shared/ui/custommodal';
 import { Button } from '@/shared/ui/button';
 import React, { useCallback } from 'react';
+import { toast } from 'react-toastify';
 import requestPost from '@/shared/api/request-post';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { v4 as uuidv4 } from 'uuid';
+import cancelPayment from '../api/cancelPayment';
 
 interface ChatVendorCancelModalProps {
   open: boolean;
@@ -24,9 +26,25 @@ export default function ChatVendorCancelModal({
   solutionPrice,
   solutionCategory,
 }: ChatVendorCancelModalProps) {
-  const { vendorId, vendorName, consumerId, consumerName } = useChatMeta();
+  const {
+    vendorId,
+    vendorName,
+    consumerId,
+    consumerName,
+    consumerSeq,
+    vendorSeq,
+  } = useChatMeta();
 
   const onCancelAcceptPayment = useCallback(async () => {
+    const res = await cancelPayment(solutionCategory, consumerSeq, vendorSeq);
+    if (res.data) {
+      toast.warn('이미 환불이 완료된 상품입니다.');
+      return;
+    }
+    if (res.code) {
+      toast.error('환불 오류 발생');
+      return;
+    }
     await requestPost(
       solutionName,
       solutionPrice.toString(),

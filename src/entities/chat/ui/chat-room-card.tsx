@@ -14,7 +14,6 @@ import {
 import renderLastMessage from '../lib/renderLastMessage';
 
 export interface ChatRoomCardProps {
-  name: string;
   lastMessage: string;
   link: string;
   className?: string;
@@ -29,7 +28,6 @@ export interface ChatRoomCardProps {
   role?: string;
 }
 export default function ChatRoomCard({
-  name,
   lastMessage,
   link,
   className = '',
@@ -45,6 +43,7 @@ export default function ChatRoomCard({
 }: ChatRoomCardProps) {
   const router = useRouter();
   const [img, setImg] = useState('');
+  const [name, setName] = useState('');
 
   useEffect(() => {
     const getData = async () => {
@@ -57,6 +56,7 @@ export default function ChatRoomCard({
         setImg(
           data?.data?.vendorBannerImageUrl || '/images/default-profile.svg',
         );
+        setName(data?.data?.vendorName || 'user');
       } else {
         const data = await api
           .get<
@@ -64,6 +64,7 @@ export default function ChatRoomCard({
           >(`api/b2b-service/consumer?consumerSeq=${String(consumerSeq)}`)
           .json();
         setImg(data?.data?.consumerImageUrl || '/images/default-profile.svg');
+        setName(data?.data?.consumerName || 'user');
       }
     };
     getData();

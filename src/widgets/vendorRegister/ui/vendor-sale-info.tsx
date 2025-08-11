@@ -23,8 +23,8 @@ export default function VendorSaleInfo() {
             {...register('amount', {
               setValueAs: (v) => {
                 if (!v) return '';
-                const num = Number(String(v).replace(/[^0-9]/g, ''));
-                return num;
+                const onlyDigits = String(v).replace(/[^0-9]/g, '');
+                return onlyDigits;
               },
             })}
             onChange={(e) => {

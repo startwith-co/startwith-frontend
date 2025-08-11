@@ -63,6 +63,8 @@ function ItemDetailSection() {
           solutionSeq={item.solutionSeq}
           solutionImageUrl={item.representImageUrl}
           vendorUniqueType={item.vendorUniqueType}
+          vendorSeq={item.vendorSeq}
+          category={item.category}
         />
       ))}
 

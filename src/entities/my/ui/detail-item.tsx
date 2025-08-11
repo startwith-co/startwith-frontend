@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { Button } from '@/shared/ui/button';
 import ReviewModal from '@/features/my/ui/review-modal';
 import formatDate, { formatDateTime } from '@/shared/lib/date-formatter';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
@@ -18,6 +19,8 @@ interface DetailItemProps {
   solutionSeq: number;
   solutionImageUrl: string;
   vendorUniqueType: string;
+  vendorSeq: number;
+  category: string;
 }
 
 function DetailItem({
@@ -30,13 +33,15 @@ function DetailItem({
   solutionSeq,
   solutionImageUrl,
   vendorUniqueType,
+  vendorSeq,
+  category,
 }: DetailItemProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
 
   return (
-    <>
+    <Link href={`/products/${vendorSeq}?category=${category}`}>
       <h1 className="text-2xl font-extrabold">{formatDate(titleDate)}</h1>
       <div className="flex h-[300px] w-[840px] flex-col rounded-2xl bg-[#F5F5F5] p-5">
         <div className="align-center mt-5 flex flex-row space-x-10">
@@ -90,7 +95,7 @@ function DetailItem({
         </div>
       </div>
       <ReviewModal open={open} setOpen={setOpen} solutionSeq={solutionSeq} />
-    </>
+    </Link>
   );
 }
 

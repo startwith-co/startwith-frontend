@@ -80,7 +80,7 @@ function ChatVendorPayCompleteCard({
         </div>
 
         {isCancelable && (
-          <div className="rounded-md bg-white/50 p-2 text-xs text-[#0F172A]">
+          <div className="rounded-md p-2 text-xs text-[#0F172A]">
             <div className="flex items-center justify-between">
               <b>취소 가능 기한</b>
               <span>{expireAt.toLocaleString('ko-KR')}</span>
