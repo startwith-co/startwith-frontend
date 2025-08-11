@@ -47,7 +47,11 @@ function ChatsUser({ messages, consumerId }: ChatsUserProps) {
               isMine={isMine}
               msg={msg}
             >
-              <ChatUserPayCompleteCard {...parsed} isMine={isMine} />
+              <ChatUserPayCompleteCard
+                {...parsed}
+                isMine={isMine}
+                createdAt={msg.createdAt}
+              />
             </ChatCardWrapper>
           );
         }
