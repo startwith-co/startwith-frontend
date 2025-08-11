@@ -51,7 +51,7 @@ export default function VendorUpdatePage({
       amount: solution.amount.toString(),
       duration: solution.duration.toString(),
       solutionEffect: solution.solutionEffect,
-      keyword: [],
+      keyword: solution.keywords || [],
     },
   });
 
