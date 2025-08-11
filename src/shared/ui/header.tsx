@@ -7,13 +7,21 @@ import { FiMail } from 'react-icons/fi';
 import { IoSearchOutline } from 'react-icons/io5';
 import useCurrentSession from '@/shared/model/useCurrentSession';
 import { ApiResponse } from '@/shared/model/apiType';
-import { ConsumerInfoProps } from '@/views/vendorMy/model/type';
+import {
+  ConsumerInfoProps,
+  VendorInfoProps,
+} from '@/views/vendorMy/model/type';
+import cn from '@/shared/lib/utils';
 import Input from './input';
 import { Button } from './button';
 import Dropdown from './dropdown';
 import api from '../api/index-api';
 
-export default function Header() {
+interface HeaderProps {
+  className?: string;
+}
+
+export default function Header({ className }: HeaderProps) {
   const { session, status } = useCurrentSession();
   const [name, setName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -22,14 +30,19 @@ export default function Header() {
   useLayoutEffect(() => {
     const fetchData = async () => {
       if (status === 'loading' || !session) return;
-      const res = await api
-        .get(`api/b2b-service/consumer?consumerSeq=${session.consumerSeq}`)
-        .json<ApiResponse<ConsumerInfoProps>>();
-      setName(res.data.consumerName);
+      if (session.role === 'vendor') {
+        const res = await api
+          .get(`api/b2b-service/vendor?vendorSeq=${session.vendorSeq}`)
+          .json<ApiResponse<VendorInfoProps>>();
+        setName(res.data.vendorName || 'user');
+      } else {
+        const res = await api
+          .get(`api/b2b-service/consumer?consumerSeq=${session.consumerSeq}`)
+          .json<ApiResponse<ConsumerInfoProps>>();
+        setName(res.data.consumerName || 'user');
+      }
     };
-    if (session?.role === 'user') {
-      fetchData();
-    }
+    fetchData();
   }, [session, status]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +54,12 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between bg-transparent px-4 pt-[35px] sm:px-8 md:px-16 lg:px-32 2xl:px-[300px]">
+    <header
+      className={cn(
+        'flex items-center justify-between bg-transparent px-4 pt-[35px] sm:px-8 md:px-16 lg:px-32 2xl:px-[300px]',
+        className,
+      )}
+    >
       <div className="flex items-center gap-8">
         <Link href="/">
           <h1 className="text-primary text-3xl font-bold">SOLU</h1>

@@ -1,12 +1,15 @@
 import Solu from '@/shared/ui/solu';
 import { Button } from '@/shared/ui/button';
 import React, { useState } from 'react';
+import { categoryToKo } from '@/shared/model/categoryMap';
+import cn from '@/shared/lib/utils';
 import ChatVendorCancelModal from './chat-vendor-cancel-modal';
 
 interface ChatCompleteCardProps {
   solutionName: string;
   solutionCategory: string;
   solutionPrice: number;
+  isMine: boolean;
 }
 
 const formatPrice = (num: number) => {
@@ -17,10 +20,16 @@ function ChatVendorPayCompleteCard({
   solutionName,
   solutionCategory,
   solutionPrice,
+  isMine,
 }: ChatCompleteCardProps) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="w-[360px] space-y-4 rounded-xl border bg-[#DBE8FF] p-6 shadow-md">
+    <div
+      className={cn(
+        'w-[360px] space-y-4 rounded-xl border p-6 shadow-md',
+        isMine ? 'bg-[#DBE8FF]' : 'bg-[#F1F1F1]',
+      )}
+    >
       <div className="flex items-center justify-center gap-2 font-bold">
         <Solu /> 결제 완료
       </div>
@@ -31,7 +40,7 @@ function ChatVendorPayCompleteCard({
         </div>
         <div className="flex justify-between">
           <span className="font-bold">솔루션 카테고리</span>
-          <span>{solutionCategory}</span>
+          <span>{categoryToKo[solutionCategory]}</span>
         </div>
         <div className="flex justify-between">
           <span className="font-bold">결제 금액</span>

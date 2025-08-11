@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import Spinner from '@/shared/ui/spinner';
 import loginAction from '../api/loginAction';
 
 const schema = z.object({
@@ -22,7 +23,7 @@ function LoginForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
@@ -101,6 +102,11 @@ function LoginForm() {
           기업 고객으로 로그인
         </Button>
       </div>
+      {isSubmitting && (
+        <div className="flex w-full items-center justify-center">
+          <Spinner />
+        </div>
+      )}
     </form>
   );
 }

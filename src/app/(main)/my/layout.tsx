@@ -17,7 +17,7 @@ export default async function Layout({
   const session = await auth();
   return (
     <>
-      <Header />
+      <Header className="bg-[rgba(250,252,255,1)]" />
       <div className="flex w-screen justify-center overflow-y-scroll bg-[rgba(250,252,255,1)]">
         <main className="mt-20 mb-10 flex flex-row justify-center">
           <ProfileSide routes={routes} id={session?.consumerSeq || 0} />

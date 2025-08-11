@@ -42,7 +42,7 @@ function SignupUserForm() {
     setValue,
     getValues,
     watch,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',

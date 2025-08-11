@@ -107,7 +107,6 @@ function RequestPayForm() {
 
   return (
     <SignupForm
-      isServerAction={false}
       action={onSubmit}
       buttonProps="w-full h-[45px] text-white font-semibold mt-2 disabled:opacity-50"
       buttonName="결제 요청하기"
@@ -190,7 +189,7 @@ function RequestPayForm() {
             onClick={() => contractRef.current?.click()}
             className="h-[45px] w-full bg-[#F5F5F5] text-sm text-[#7A7A7A]"
           >
-            {contractFile ? ' 업로드 완료' : '+ 업로드하기'}
+            {contractFile ? ' 업로드 완료' : '+ 업로드하기(pdf만 가능)'}
           </Button>
           {contractFile && contractFile.type.startsWith('image') && (
             <Image
@@ -219,7 +218,7 @@ function RequestPayForm() {
             onClick={() => refundRef.current?.click()}
             className="h-[45px] w-full bg-[#F5F5F5] text-sm text-[#7A7A7A]"
           >
-            {refundFile ? '업로드 완료' : '+ 업로드하기'}
+            {refundFile ? '업로드 완료' : '+ 업로드하기(pdf만 가능)'}
           </Button>
           {refundFile && refundFile.type.startsWith('image') && (
             <Image

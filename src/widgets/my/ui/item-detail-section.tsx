@@ -16,8 +16,8 @@ function ItemDetailSection() {
 
   const statusOptions = [
     { label: '전체 상태', value: null },
-    { label: '결제 확정', value: 'SETTLED' },
-    { label: '결제 완료', value: 'DONE' },
+    { label: '구매 확정', value: 'SETTLED' },
+    { label: '정산 완료', value: 'DONE' },
   ];
 
   useEffect(() => {
@@ -37,9 +37,10 @@ function ItemDetailSection() {
 
   return (
     <section className="mb-10 flex min-w-[895px] flex-col space-y-5 rounded-2xl bg-white p-7 shadow-md">
-      <div className="mb-4 self-end">
+      <div className="mb-4">
         <Dropdown
           buttonText={selectedLabel}
+          divClassName=" bg-[#F9F9F9] p-3 rounded-xl w-[130px]"
           items={statusOptions.map((item) => ({
             label: item.label,
             onClick: () => {
@@ -61,6 +62,7 @@ function ItemDetailSection() {
           price={item.amount.toString()}
           solutionSeq={item.solutionSeq}
           solutionImageUrl={item.representImageUrl}
+          vendorUniqueType={item.vendorUniqueType}
         />
       ))}
 

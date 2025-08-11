@@ -1,9 +1,11 @@
 import Solu from '@/shared/ui/solu';
+import cn from '@/shared/lib/utils';
 
 interface ChatVendorCancelCompleteCardProps {
   solutionName: string;
   solutionCategory: string;
   solutionPrice: number;
+  isMine: boolean;
 }
 
 const formatPrice = (num: number) => {
@@ -14,9 +16,15 @@ function ChatVendorCancelCompleteCard({
   solutionName,
   solutionCategory,
   solutionPrice,
+  isMine,
 }: ChatVendorCancelCompleteCardProps) {
   return (
-    <div className="h-auto w-[300px] rounded-xl bg-[#EAF0FF] p-4 shadow-md">
+    <div
+      className={cn(
+        'h-auto w-[300px] rounded-xl p-4 shadow-md',
+        isMine ? 'bg-[#DBE8FF]' : 'bg-[#F1F1F1]',
+      )}
+    >
       <div className="mb-3 text-center text-lg font-bold">
         <Solu /> 결제 취소 완료
       </div>
