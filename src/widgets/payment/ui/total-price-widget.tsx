@@ -1,5 +1,6 @@
 import { Button } from '@/shared/ui/button';
 import Link from 'next/link';
+import formatLocalPrice from '@/shared/lib/formatLocalPrice';
 
 export default function TotalPriceWidget({
   totalPrice,
@@ -17,17 +18,17 @@ export default function TotalPriceWidget({
         <ul className="flex w-full flex-col *:flex *:flex-1 *:flex-row *:items-center *:justify-between">
           <li>
             <span>주문 금액</span>
-            <span>{totalPrice}원</span>
+            <span>{formatLocalPrice(totalPrice)}원</span>
           </li>
           <li>
             <span>부가세(10%)</span>
-            <span>{tax}원</span>
+            <span>{formatLocalPrice(tax)}원</span>
           </li>
         </ul>
         <div className="flex flex-col gap-5">
           <div className="text-primary flex items-center justify-between font-bold">
             <span>총 결제 금액</span>
-            <span>{actualAmount}원</span>
+            <span>{formatLocalPrice(actualAmount)}원</span>
           </div>
           <Link href="#pay">
             <Button asChild={false} className="h-12 w-full">

@@ -136,9 +136,30 @@ function SignupVendorForm() {
         {errors.name && <ErrorMessage message={errors.name.message} />}
 
         <Input
-          {...register('phoneNumber')}
+          {...register('phoneNumber', {
+            setValueAs: (v) => {
+              if (!v) return '';
+              const digits = String(v).replace(/\D/g, '');
+              if (digits.length < 4) return digits;
+              if (digits.length < 7)
+                return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+              if (digits.length < 11)
+                return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+              return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+            },
+          })}
           placeholder="담당자 연락처(휴대폰)"
           className="mt-5 mb-0 h-[55px] w-full bg-white indent-2"
+          onChange={(e) => {
+            const digits = e.target.value.replace(/\D/g, '');
+            if (digits.length < 4) e.target.value = digits;
+            else if (digits.length < 7)
+              e.target.value = `${digits.slice(0, 3)}-${digits.slice(3)}`;
+            else if (digits.length < 11)
+              e.target.value = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+            else
+              e.target.value = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+          }}
         />
         {errors.phoneNumber && (
           <ErrorMessage message={errors.phoneNumber.message} />

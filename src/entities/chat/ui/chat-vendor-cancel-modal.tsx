@@ -1,30 +1,50 @@
 import CustomModal from '@/shared/ui/custommodal';
 import { Button } from '@/shared/ui/button';
 import React, { useCallback } from 'react';
+import { toast } from 'react-toastify';
 import requestPost from '@/shared/api/request-post';
-import { useSolution } from '@/shared/model/SolutionProvider';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { v4 as uuidv4 } from 'uuid';
+import cancelPayment from '../api/cancelPayment';
 
 interface ChatVendorCancelModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  solutionName: string;
+  solutionPrice: number;
+  solutionCategory: string;
 }
 
-const formatPrice = (num: number) => {
-  return `${num.toLocaleString('ko-KR')}(VAT 포함)`;
+const formatPrice = (num: string) => {
+  return `${Number(num).toLocaleString('ko-KR')}(VAT 포함)`;
 };
 
 export default function ChatVendorCancelModal({
   open,
   setOpen,
+  solutionName,
+  solutionPrice,
+  solutionCategory,
 }: ChatVendorCancelModalProps) {
-  const { solutionName, solutionPrice, solutionCategory } = useSolution();
-
-  console.log(solutionName, solutionPrice, solutionCategory);
-  const { vendorId, vendorName, consumerId, consumerName } = useChatMeta();
+  const {
+    vendorId,
+    vendorName,
+    consumerId,
+    consumerName,
+    consumerSeq,
+    vendorSeq,
+  } = useChatMeta();
 
   const onCancelAcceptPayment = useCallback(async () => {
+    const res = await cancelPayment(solutionCategory, consumerSeq, vendorSeq);
+    if (res.data) {
+      toast.warn('이미 환불이 완료된 상품입니다.');
+      return;
+    }
+    if (res.code) {
+      toast.error('환불 오류 발생');
+      return;
+    }
     await requestPost(
       solutionName,
       solutionPrice.toString(),
@@ -65,7 +85,9 @@ export default function ChatVendorCancelModal({
       <div className="space-y-4 text-sm text-black">
         <div className="flex justify-between">
           <span className="font-semibold">결제 금액</span>
-          <span className="font-semibold">{formatPrice(solutionPrice)}</span>
+          <span className="font-semibold">
+            {formatPrice(solutionPrice.toString())}
+          </span>
         </div>
         <div className="flex justify-between">
           <div className="flex items-center gap-1">
@@ -73,7 +95,7 @@ export default function ChatVendorCancelModal({
             <span className="font-semibold text-red-500">*</span>
           </div>
           <span className="rounded-md bg-[#F1F1F1] px-4 py-2 text-sm font-medium">
-            {formatPrice(solutionPrice)}
+            {formatPrice(solutionPrice.toString())}
           </span>
         </div>
         <p className="text-xs leading-5 text-gray-600">

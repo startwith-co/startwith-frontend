@@ -10,4 +10,6 @@ export type PaymentInfoProps = {
   amount: number;
   existReview: boolean;
   vendorUniqueType: string;
+  vendorSeq: number;
+  category: string;
 };

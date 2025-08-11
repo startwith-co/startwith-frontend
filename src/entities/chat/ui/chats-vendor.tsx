@@ -47,7 +47,11 @@ function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
               isMine={isMine}
               msg={msg}
             >
-              <ChatVendorPayCompleteCard {...parsed} isMine={isMine} />
+              <ChatVendorPayCompleteCard
+                {...parsed}
+                isMine={isMine}
+                createdAt={msg.createdAt}
+              />
             </ChatCardWrapper>
           );
         }

@@ -75,7 +75,13 @@ function ChatVendorCancelRequestCard({
           {isExpired ? '취소 불가 (24시간 초과)' : '결제 취소하기'}
         </Button>
       </div>
-      <ChatVendorCancelModal open={open} setOpen={setOpen} />
+      <ChatVendorCancelModal
+        open={open}
+        setOpen={setOpen}
+        solutionName={solutionName}
+        solutionPrice={solutionPrice}
+        solutionCategory={solutionCategory}
+      />
     </div>
   );
 }

@@ -76,7 +76,9 @@ function ProfileSide({ routes, mode = 'user', id }: ProfileSideProps) {
       <Avatar className="mb-2.5 flex size-30 rounded-full">
         <AvatarImage
           src={
-            vendorInfo?.vendorBannerImageUrl || userInfo?.consumerImageUrl || ''
+            vendorInfo?.vendorBannerImageUrl ||
+            userInfo?.consumerImageUrl ||
+            '/images/default-profile.svg'
           }
         />
         <AvatarFallback>스타트윗</AvatarFallback>

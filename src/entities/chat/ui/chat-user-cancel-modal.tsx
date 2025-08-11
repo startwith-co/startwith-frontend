@@ -5,6 +5,11 @@ import requestPost from '@/shared/api/request-post';
 import { useSolution } from '@/shared/model/SolutionProvider';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { v4 as uuidv4 } from 'uuid';
+import api from '@/shared/api/index-api';
+import { ApiResponse } from '@/shared/model/apiType';
+import { toast } from 'react-toastify';
+import { PaymentConflictProps } from '../model/type';
+import cancelPayment from '../api/cancelPayment';
 
 interface ChatUserCancelModalProps {
   open: boolean;
@@ -17,9 +22,17 @@ export default function ChatUserCancelModal({
 }: ChatUserCancelModalProps) {
   const { solutionName, solutionPrice, solutionCategory } = useSolution();
 
-  const { vendorId, vendorName, consumerId, consumerName } = useChatMeta();
+  const {
+    vendorId,
+    vendorName,
+    consumerId,
+    consumerName,
+    consumerSeq,
+    vendorSeq,
+  } = useChatMeta();
 
   const onCancelPayment = useCallback(async () => {
+    cancelPayment(solutionCategory, consumerSeq, vendorSeq);
     await requestPost(
       solutionName,
       solutionPrice.toString(),
