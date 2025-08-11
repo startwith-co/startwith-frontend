@@ -7,7 +7,10 @@ import { FiMail } from 'react-icons/fi';
 import { IoSearchOutline } from 'react-icons/io5';
 import useCurrentSession from '@/shared/model/useCurrentSession';
 import { ApiResponse } from '@/shared/model/apiType';
-import { ConsumerInfoProps } from '@/views/vendorMy/model/type';
+import {
+  ConsumerInfoProps,
+  VendorInfoProps,
+} from '@/views/vendorMy/model/type';
 import cn from '@/shared/lib/utils';
 import Input from './input';
 import { Button } from './button';
@@ -27,14 +30,19 @@ export default function Header({ className }: HeaderProps) {
   useLayoutEffect(() => {
     const fetchData = async () => {
       if (status === 'loading' || !session) return;
-      const res = await api
-        .get(`api/b2b-service/consumer?consumerSeq=${session.consumerSeq}`)
-        .json<ApiResponse<ConsumerInfoProps>>();
-      setName(res.data.consumerName);
+      if (session.role === 'vendor') {
+        const res = await api
+          .get(`api/b2b-service/vendor?vendorSeq=${session.vendorSeq}`)
+          .json<ApiResponse<VendorInfoProps>>();
+        setName(res.data.vendorName || 'user');
+      } else {
+        const res = await api
+          .get(`api/b2b-service/consumer?consumerSeq=${session.consumerSeq}`)
+          .json<ApiResponse<ConsumerInfoProps>>();
+        setName(res.data.consumerName || 'user');
+      }
     };
-    if (session?.role === 'user') {
-      fetchData();
-    }
+    fetchData();
   }, [session, status]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
