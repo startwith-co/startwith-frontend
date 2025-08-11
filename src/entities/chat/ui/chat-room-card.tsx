@@ -4,12 +4,18 @@ import { useRouter } from 'next/navigation';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { Avatar, AvatarImage, AvatarFallback } from '@/shared/ui/avatar';
 import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import api from '@/shared/api/index-api';
+import { ApiResponse } from '@/shared/model/apiType';
+import {
+  ConsumerInfoProps,
+  VendorInfoProps,
+} from '@/views/vendorMy/model/type';
 import renderLastMessage from '../lib/renderLastMessage';
 
 export interface ChatRoomCardProps {
   name: string;
   lastMessage: string;
-  img: string;
   link: string;
   className?: string;
   avatarSize?: string;
@@ -20,11 +26,11 @@ export interface ChatRoomCardProps {
   vendorName: string;
   vendorSeq: string;
   consumerSeq: string;
+  role?: string;
 }
 export default function ChatRoomCard({
   name,
   lastMessage,
-  img,
   link,
   className = '',
   avatarSize = 'size-15',
@@ -35,8 +41,34 @@ export default function ChatRoomCard({
   vendorName,
   vendorSeq,
   consumerSeq,
+  role,
 }: ChatRoomCardProps) {
   const router = useRouter();
+  const [img, setImg] = useState('');
+
+  useEffect(() => {
+    const getData = async () => {
+      if (role === 'vendor') {
+        const data = await api
+          .get<
+            ApiResponse<VendorInfoProps>
+          >(`api/b2b-service/vendor?vendorSeq=${String(vendorSeq)}`)
+          .json();
+        setImg(
+          data?.data?.vendorBannerImageUrl || '/images/default-profile.svg',
+        );
+      } else {
+        const data = await api
+          .get<
+            ApiResponse<ConsumerInfoProps>
+          >(`api/b2b-service/consumer?consumerSeq=${String(consumerSeq)}`)
+          .json();
+        setImg(data?.data?.consumerImageUrl || '/images/default-profile.svg');
+      }
+    };
+    getData();
+  }, [vendorSeq, consumerSeq, role]);
+
   const { setChatMeta } = useChatMeta();
 
   const handleClick = () => {
@@ -65,7 +97,7 @@ export default function ChatRoomCard({
       <Avatar
         className={clsx('mr-3 flex rounded-full bg-[#D9D9D9]', avatarSize)}
       >
-        <AvatarImage src={img} />
+        <AvatarImage src={img || '/images/default-profile.svg'} />
         <AvatarFallback>{name[0]}</AvatarFallback>
       </Avatar>
       <div className="flex min-w-0 flex-col gap-1">

@@ -1,5 +1,5 @@
 import formatLocalPrice from '@/shared/lib/formatLocalPrice';
-import { Avatar, AvatarImage } from '@/shared/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { PaymentInfoProps } from '@/views/payment/model/type';
 import categoryTrans from '@/widgets/products/utils/categoryTrans';
 import Image from 'next/image';
@@ -28,7 +28,8 @@ export default function OrderDetailsWidget({
               <span className="font-semibold">{paymentEventName}</span>
               <div className="flex items-center gap-2">
                 <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarImage src="/images/default-profile.svg" />
+                  <AvatarFallback>{paymentEventName[0]}</AvatarFallback>
                 </Avatar>
                 <span className="text-[rgba(167,167,167,1)]">더비즈온</span>
               </div>

@@ -51,10 +51,10 @@ function ChatPagination({ rooms }: { rooms: ChatRoom[] }) {
             vendorName={room.vendorName}
             vendorSeq={String(room.vendorSeq)}
             key={room.roomId}
+            role={session?.role}
             name={room.lastMessage.messageName}
             updatedDate={formatMainDate(room.lastMessage.updatedAt)}
             lastMessage={room.lastMessage.message}
-            img={room.vendorId || ''}
             link={
               session?.role === 'vendor'
                 ? `/vendor/chat?vendorId=${room.vendorId}&consumerId=${room.consumerId}`
