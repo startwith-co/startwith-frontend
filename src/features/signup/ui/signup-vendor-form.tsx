@@ -24,8 +24,8 @@ const schema = z.object({
   name: z.string().min(1, '담당자 성함 입력해주세요.'),
   password: z
     .string()
-    .min(8)
-    .max(16)
+    .min(8, '비밀번호는 8자 이상이어야 합니다.')
+    .max(16, '비밀번호는 16자 이하여야 합니다.')
     .regex(
       passwordRegex,
       '비밀번호는 특수문자(!@#)를 1개 이상 포함해야 합니다.',

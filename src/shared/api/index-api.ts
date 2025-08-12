@@ -1,7 +1,7 @@
 import ky, { HTTPError } from 'ky';
 import { toast } from 'react-toastify';
 import { getSession } from 'next-auth/react';
-import { getErrorDataFromKyError } from '../lib/error-handler';
+import getErrorDataFromKyError from '../lib/error-handler';
 
 const api = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_URL,
