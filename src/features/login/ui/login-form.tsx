@@ -33,12 +33,12 @@ function LoginForm() {
   const router = useRouter();
 
   const onValid = async (data: FormSchema) => {
-    const result = await loginAction({ ...data, target });
+    const { success, message } = await loginAction({ ...data, target });
 
-    if (result.success) {
+    if (success) {
       router.push('/');
     } else {
-      toast.error(`로그인 실패: ${result.message}`);
+      toast.error(message);
     }
   };
 
