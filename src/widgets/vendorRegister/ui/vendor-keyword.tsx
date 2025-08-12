@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, KeyboardEvent, ChangeEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Input from '@/shared/ui/input';

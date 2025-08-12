@@ -1,8 +1,8 @@
 import z from 'zod';
 
 export const vendorUpdateSchema = z.object({
-  vendorBannerImageUrl: z.instanceof(File),
-  clientInfos: z.array(z.instanceof(File)),
+  vendorBannerImageUrl: z.instanceof(File).optional().nullable(),
+  clientInfos: z.array(z.instanceof(File)).optional().nullable(),
   vendorSeq: z.number(),
   vendorName: z.string().min(1, '업체명 입력해주세요.'),
   managerName: z.string().min(1, '담당자 성함 입력해주세요.'),
@@ -31,5 +31,11 @@ export const vendorUpdateSchema = z.object({
     }),
   ),
 });
+
+export function getPartialSchema(fields: (keyof VendorUpdateSchema)[]) {
+  return vendorUpdateSchema.pick(
+    fields.reduce((acc, field) => ({ ...acc, [field]: true }), {}),
+  );
+}
 
 export type VendorUpdateSchema = z.infer<typeof vendorUpdateSchema>;

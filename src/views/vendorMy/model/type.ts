@@ -1,3 +1,8 @@
+export interface StatsProps {
+  statsType: string;
+  percentage: number;
+  label: string;
+}
 export interface VendorInfoProps {
   vendorSeq: number;
   vendorName: string | null;
@@ -21,6 +26,13 @@ export interface VendorInfoProps {
   orderCount: number | null;
   clientCount: number | null;
   vendorUniqueType: string;
+  stats: StatsProps[];
+  clientResponse: ClientResponseProps[];
+}
+
+export interface ClientResponseProps {
+  clientSeq: number;
+  logoImageUrl: string;
 }
 
 export interface ConsumerInfoProps {

@@ -3,11 +3,20 @@
 import { Button } from '@/shared/ui/button';
 import { useFormContext } from 'react-hook-form';
 
-function EditVendorTextArea() {
-  const { register, setValue } = useFormContext();
+function EditVendorTextArea({
+  onSave,
+  isLoading,
+}: {
+  onSave: () => void;
+  isLoading: boolean;
+}) {
+  const { register, setValue, handleSubmit } = useFormContext();
 
   return (
-    <div className="relative h-full rounded-2xl bg-white p-8 shadow-md">
+    <form
+      className="relative h-full rounded-2xl bg-white p-8 shadow-md"
+      onSubmit={handleSubmit(() => onSave())}
+    >
       <h1 className="mb-5 text-lg font-semibold">기업 상세 소개</h1>
       <textarea
         {...register('vendorExplanation')}
@@ -26,11 +35,12 @@ function EditVendorTextArea() {
           asChild={false}
           className="bg-vendor-gray h-[40px] w-[185px] font-bold text-black hover:bg-[#3c62d6] hover:text-white"
           type="submit"
+          disabled={isLoading}
         >
-          수정 완료
+          {isLoading ? '수정 중...' : '수정 완료'}
         </Button>
       </div>
-    </div>
+    </form>
   );
 }
 

@@ -14,19 +14,19 @@ export default function VendorCalculatePage({
   vendorSeq: number;
 }) {
   const [vendorTable, setVendorTable] = useState<VendorTableProps[]>([]);
-  const [setPaymentStatus, setSetPaymentStatus] = useState<string>('');
+  const [paymentStatus, setPaymentStatus] = useState<string>('');
   useEffect(() => {
     const fetchData = async () => {
       const res = await getVendorTable(
         String(vendorSeq),
-        setPaymentStatus,
+        paymentStatus,
         '',
         '',
       );
       setVendorTable(res.data);
     };
     fetchData();
-  }, [vendorSeq, setPaymentStatus]);
+  }, [vendorSeq, paymentStatus]);
 
   return (
     <div className="flex w-full flex-col gap-7.5 pr-7.5">
@@ -38,7 +38,8 @@ export default function VendorCalculatePage({
             <div className="flex items-center gap-22">
               <span>처리 상태</span>
               <VendorSelect
-                onChange={(value) => setSetPaymentStatus(value)}
+                onChange={(value) => setPaymentStatus(value)}
+                value={paymentStatus}
                 options={['전체', '정산 완료', '정산 대기']}
                 placeholder="전체"
                 triggerClassName="h-[40px] w-[220px] rounded-md bg-vendor-gray font-light items-center flex text-xs"
@@ -67,23 +68,56 @@ export default function VendorCalculatePage({
                 <tr key={item.solutionSeq}>
                   <td>{renameStatus(item.paymentStatus)}</td>
                   <td>{item.solutionName}</td>
-                  <td>{item.solutionAmount}</td>
-                  <td>
-                    {new Date(item.settlementDueDate).toLocaleDateString()}
-                    <br />
-                    <span className="text-vendor-secondary">
-                      ({new Date(item.settlementDueDate).toLocaleDateString()}
-                      예정)
-                    </span>
-                  </td>
-                  <td>
-                    {item.solutionAmount}
-                    <br />
-                    <span className="text-vendor-secondary">
-                      ({new Date(item.settlementAmount).toLocaleDateString()}
-                      예정)
-                    </span>
-                  </td>
+                  <td>{item.solutionAmount}원</td>
+                  {item.paymentStatus !== 'SETTLED' ? (
+                    <td>
+                      N
+                      <br />
+                      <span className="text-vendor-secondary">
+                        (
+                        {new Date(item.settlementDueDate).toLocaleDateString(
+                          'ko-KR',
+                          {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          },
+                        )}
+                        예정)
+                      </span>
+                    </td>
+                  ) : (
+                    <td>
+                      {new Date(item.settlementAmount).toLocaleDateString(
+                        'ko-KR',
+                        {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                        },
+                      )}
+                    </td>
+                  )}
+                  {item.paymentStatus !== 'SETTLED' ? (
+                    <td>
+                      N
+                      <br />
+                      <span className="text-vendor-secondary">
+                        (
+                        {new Date(item.settlementAmount).toLocaleDateString(
+                          'ko-KR',
+                          {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          },
+                        )}
+                        예정)
+                      </span>
+                    </td>
+                  ) : (
+                    <td>{item.solutionAmount}원</td>
+                  )}
                   <td>{item.consumerName}</td>
                 </tr>
               ))
