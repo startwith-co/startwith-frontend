@@ -44,14 +44,19 @@ export default function VendorCustomerOverview({
                 <div className="bg-vendor-gray flex h-12 items-center justify-center rounded-md px-2 py-1 text-sm">
                   {field.label}
                 </div>
-                <Input
-                  className="bg-vendor-gray h-12 text-center"
-                  placeholder="0%"
-                  defaultValue={field.percentage}
-                  {...register(`stats.${fields.indexOf(field)}.percentage`, {
-                    valueAsNumber: true,
-                  })}
-                />
+                <div className="relative w-full">
+                  <Input
+                    className="bg-vendor-gray h-12 pr-6 text-center"
+                    placeholder="0"
+                    defaultValue={field.percentage}
+                    {...register(`stats.${fields.indexOf(field)}.percentage`, {
+                      valueAsNumber: true,
+                    })}
+                  />
+                  <span className="absolute top-1/2 right-2 -translate-y-1/2 text-gray-500">
+                    %
+                  </span>
+                </div>
               </li>
             ))}
           </ul>
@@ -68,14 +73,19 @@ export default function VendorCustomerOverview({
                 <div className="bg-vendor-gray flex h-12 items-center justify-center rounded-md px-2 py-1 text-sm">
                   {field.label}
                 </div>
-                <Input
-                  className="bg-vendor-gray h-12 text-center"
-                  placeholder="0%"
-                  defaultValue={field.percentage}
-                  {...register(`stats.${fields.indexOf(field)}.percentage`, {
-                    valueAsNumber: true,
-                  })}
-                />
+                <div className="relative w-full">
+                  <Input
+                    className="bg-vendor-gray h-12 pr-6 text-center"
+                    placeholder="0"
+                    defaultValue={field.percentage}
+                    {...register(`stats.${fields.indexOf(field)}.percentage`, {
+                      valueAsNumber: true,
+                    })}
+                  />
+                  <span className="absolute top-1/2 right-2 -translate-y-1/2 text-gray-500">
+                    %
+                  </span>
+                </div>
               </li>
             ))}
           </ul>

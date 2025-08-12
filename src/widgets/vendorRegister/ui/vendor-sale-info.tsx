@@ -1,12 +1,14 @@
 import Input from '@/shared/ui/input';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import ErrorMessage from '@/shared/ui/error-message';
 
 export default function VendorSaleInfo() {
   const {
+    control,
     register,
     formState: { errors },
   } = useFormContext();
+
   return (
     <div className="rounded-md bg-white px-[35px] py-7.5 shadow-md 2xl:pr-[104px]">
       <h2 className="mb-6 text-lg font-semibold">판매 정보 입력</h2>
@@ -15,11 +17,23 @@ export default function VendorSaleInfo() {
           <span>
             판매가<span className="text-red-500">*</span>
           </span>
-          <Input
-            type="number"
-            className="bg-vendor-gray w-[220px] border-none text-center"
-            placeholder="~ 0원(VAT별도)"
-            {...register('amount')}
+          <Controller
+            name="amount"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="text"
+                className="bg-vendor-gray w-[220px] border-none text-center"
+                placeholder="~ 0원(VAT별도)"
+                value={
+                  field.value ? Number(field.value).toLocaleString('ko-KR') : ''
+                }
+                onChange={(e) => {
+                  const raw = e.target.value.replace(/,/g, '');
+                  field.onChange(raw === '' ? '' : raw);
+                }}
+              />
+            )}
           />
           {errors.amount && (
             <ErrorMessage
