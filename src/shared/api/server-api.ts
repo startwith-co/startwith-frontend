@@ -15,7 +15,6 @@ const serverApi = ky.create({
     ],
     beforeError: [
       async (error) => {
-        console.log(error);
         if (error instanceof HTTPError) {
           switch (error.response.status) {
             case 400:
