@@ -55,7 +55,7 @@ export const vendorRegisterSchema = z.object({
         direction: z.enum(['INCREASE', 'DECREASE']),
       }),
     )
-    .min(1, '도입 성과를 추가해주세요.'),
+    .optional(),
   keyword: z.array(z.string()).min(1, '키워드 입력해주세요.'),
 });
 

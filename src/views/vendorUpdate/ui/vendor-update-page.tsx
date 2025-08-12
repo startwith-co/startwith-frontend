@@ -29,6 +29,7 @@ export default function VendorUpdatePage({
   category: string;
 }) {
   const [openDialog, setOpenDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const methods = useForm({
     resolver: zodResolver(vendorRegisterSchema),
@@ -81,12 +82,14 @@ export default function VendorUpdatePage({
   }, [solution.representImageUrl, solution.descriptionPdfUrl]);
 
   const onSubmit = async (data: VendorRegisterSchema) => {
+    setIsLoading(true);
     try {
       await updateSolution(data);
       setOpenDialog(true);
     } catch (error: any) {
       toast.error(error.message);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -106,8 +109,8 @@ export default function VendorUpdatePage({
           >
             취소
           </Button>
-          <Button asChild={false} type="submit">
-            수정하기
+          <Button asChild={false} type="submit" disabled={isLoading}>
+            {isLoading ? '수정 중...' : '수정하기'}
           </Button>
         </div>
       </form>
