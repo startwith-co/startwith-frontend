@@ -22,8 +22,8 @@ const schema = z.object({
   email: z.string().email('올바른 이메일 형식이 아닙니다.'),
   password: z
     .string()
-    .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
-    .max(16, '비밀번호는 최대 16자까지 가능합니다.')
+    .min(8, '비밀번호는 8자 이상이어야 합니다.')
+    .max(16, '비밀번호는 16자 이하여야 합니다.')
     .regex(
       passwordRegex,
       '비밀번호는 특수문자(!@#)를 1개 이상 포함해야 합니다.',
@@ -42,7 +42,7 @@ function SignupUserForm() {
     setValue,
     getValues,
     watch,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isValid },
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
