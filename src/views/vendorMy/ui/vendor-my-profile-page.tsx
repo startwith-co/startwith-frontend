@@ -9,7 +9,7 @@ import VendorUploadLogo from '@/widgets/vendorMy/ui/vendor-upload-logo';
 import VendorCustomerOverview from '@/widgets/vendorMy/ui/vendor-customer-overview';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   VendorUpdateSchema,
   getPartialSchema,
@@ -95,7 +95,10 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
     }
   }, [vendorInfo, methods]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit = async (fields: (keyof VendorUpdateSchema)[]) => {
+    setIsLoading(true);
     const partialSchema = getPartialSchema(fields);
 
     const currentValues = methods.getValues();
@@ -135,6 +138,7 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
     } catch (error: any) {
       toast.error(error.message);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -152,8 +156,12 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
                 'bank',
               ])
             }
+            isLoading={isLoading}
           />
-          <EditVendorTextArea onSave={() => onSubmit(['vendorExplanation'])} />
+          <EditVendorTextArea
+            onSave={() => onSubmit(['vendorExplanation'])}
+            isLoading={isLoading}
+          />
         </div>
         <div className="grid grid-cols-[1fr_2fr] gap-7.5">
           <VendorTimeSetting
@@ -170,16 +178,25 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
                 'holidayEndTime',
               ])
             }
+            isLoading={isLoading}
           />
           <VendorUploadBanner
             onSave={() => onSubmit(['vendorBannerImageUrl'])}
+            isLoading={isLoading}
           />
           <VendorTotalSetting
             onSave={() => onSubmit(['orderCount', 'clientCount'])}
+            isLoading={isLoading}
           />
-          <VendorUploadLogo onSave={() => onSubmit(['clientInfos'])} />
+          <VendorUploadLogo
+            onSave={() => onSubmit(['clientInfos'])}
+            isLoading={isLoading}
+          />
         </div>
-        <VendorCustomerOverview onSave={() => onSubmit(['stats'])} />
+        <VendorCustomerOverview
+          onSave={() => onSubmit(['stats'])}
+          isLoading={isLoading}
+        />
       </div>
     </FormProvider>
   );

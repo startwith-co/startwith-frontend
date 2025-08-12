@@ -8,7 +8,13 @@ import cn from '@/shared/lib/utils';
 import ErrorMessage from '@/shared/ui/error-message';
 import { formatTime, deformatTime } from '../utils/formatTime';
 
-export default function VendorTimeSetting({ onSave }: { onSave: () => void }) {
+export default function VendorTimeSetting({
+  onSave,
+  isLoading,
+}: {
+  onSave: () => void;
+  isLoading: boolean;
+}) {
   const {
     control,
     watch,
@@ -189,7 +195,11 @@ export default function VendorTimeSetting({ onSave }: { onSave: () => void }) {
         </div>
       </div>
       <div className="flex justify-center">
-        <EditButton onClick={() => {}} title="수정 완료" />
+        <EditButton
+          onClick={() => {}}
+          title="수정 완료"
+          isLoading={isLoading}
+        />
       </div>
     </form>
   );

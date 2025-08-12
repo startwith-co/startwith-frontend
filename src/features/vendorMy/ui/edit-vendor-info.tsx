@@ -5,15 +5,24 @@ import Input from '@/shared/ui/input';
 import { useFormContext } from 'react-hook-form';
 import Image from 'next/image';
 
-function EditVendorInfo({ onSave }: { onSave: () => void }) {
+function EditVendorInfo({
+  onSave,
+  isLoading,
+}: {
+  onSave: () => void;
+  isLoading: boolean;
+}) {
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty },
   } = useFormContext();
+
   return (
     <form
-      onSubmit={handleSubmit(() => onSave())}
+      onSubmit={handleSubmit(() => {
+        onSave();
+      })}
       className="relative flex flex-col justify-between rounded-xl bg-white p-8 shadow-md"
     >
       <Image
@@ -112,9 +121,9 @@ function EditVendorInfo({ onSave }: { onSave: () => void }) {
         className="bg-vendor-gray mt-5 h-[40px] w-[185px] self-center font-bold text-black hover:bg-[#3c62d6] hover:text-white"
         onClick={() => {}}
         type="submit"
-        disabled={!isDirty}
+        disabled={!isDirty || isLoading}
       >
-        수정 완료
+        {isLoading ? '수정 중...' : '수정 완료'}
       </Button>
     </form>
   );

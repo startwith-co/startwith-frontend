@@ -4,7 +4,13 @@ import EditButton from '@/features/vendorMy/ui/edit-button';
 import Input from '@/shared/ui/input';
 import { useFormContext } from 'react-hook-form';
 
-export default function VendorTotalSetting({ onSave }: { onSave: () => void }) {
+export default function VendorTotalSetting({
+  onSave,
+  isLoading,
+}: {
+  onSave: () => void;
+  isLoading: boolean;
+}) {
   const { register, handleSubmit } = useFormContext();
 
   return (
@@ -32,7 +38,11 @@ export default function VendorTotalSetting({ onSave }: { onSave: () => void }) {
         </div>
       </div>
       <div className="mt-7.5 flex justify-center">
-        <EditButton onClick={() => {}} title="수정 완료" />
+        <EditButton
+          onClick={() => {}}
+          title="수정 완료"
+          isLoading={isLoading}
+        />
       </div>
     </form>
   );

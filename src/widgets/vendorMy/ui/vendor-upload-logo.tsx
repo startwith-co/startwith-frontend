@@ -6,10 +6,15 @@ import { useFormContext } from 'react-hook-form';
 import { useEffect, useMemo } from 'react';
 import Image from 'next/image';
 
-export default function VendorUploadLogo({ onSave }: { onSave: () => void }) {
+export default function VendorUploadLogo({
+  onSave,
+  isLoading,
+}: {
+  onSave: () => void;
+  isLoading: boolean;
+}) {
   const { setValue, watch, handleSubmit } = useFormContext();
   const clientInfos = watch('clientInfos') || [];
-  console.log(clientInfos);
 
   const previewUrls = useMemo(() => {
     const urls: (string | null)[] = [];
@@ -92,7 +97,11 @@ export default function VendorUploadLogo({ onSave }: { onSave: () => void }) {
         ))}
       </div>
       <div className="flex justify-center">
-        <EditButton onClick={() => {}} title="수정 완료" />
+        <EditButton
+          onClick={() => {}}
+          title="수정 완료"
+          isLoading={isLoading}
+        />
       </div>
     </form>
   );
