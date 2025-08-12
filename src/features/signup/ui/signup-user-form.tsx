@@ -22,8 +22,8 @@ const schema = z.object({
   email: z.string().email('올바른 이메일 형식이 아닙니다.'),
   password: z
     .string()
-    .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
-    .max(16, '비밀번호는 최대 16자까지 가능합니다.')
+    .min(8, '비밀번호는 8자 이상이어야 합니다.')
+    .max(16, '비밀번호는 16자 이하여야 합니다.')
     .regex(
       passwordRegex,
       '비밀번호는 특수문자(!@#)를 1개 이상 포함해야 합니다.',
@@ -109,11 +109,30 @@ function SignupUserForm() {
 
       <div>
         <Input
-          type="string"
-          {...register('phoneNumber')}
-          name="phoneNumber"
+          {...register('phoneNumber', {
+            setValueAs: (v) => {
+              if (!v) return '';
+              const digits = String(v).replace(/\D/g, '');
+              if (digits.length < 4) return digits;
+              if (digits.length < 7)
+                return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+              if (digits.length < 11)
+                return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+              return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+            },
+          })}
           placeholder="담당자 연락처"
-          className="h-[55px] w-full bg-white indent-2"
+          className="mt-5 mb-0 h-[55px] w-full bg-white indent-2"
+          onChange={(e) => {
+            const digits = e.target.value.replace(/\D/g, '');
+            if (digits.length < 4) e.target.value = digits;
+            else if (digits.length < 7)
+              e.target.value = `${digits.slice(0, 3)}-${digits.slice(3)}`;
+            else if (digits.length < 11)
+              e.target.value = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+            else
+              e.target.value = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+          }}
         />
         {errors.phoneNumber && (
           <ErrorMessage message={errors.phoneNumber.message} />

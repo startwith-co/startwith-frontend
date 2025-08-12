@@ -4,6 +4,7 @@ import Solu from '@/shared/ui/solu';
 import { Button } from '@/shared/ui/button';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import cn from '@/shared/lib/utils';
 import formatVATPrice from '@/shared/lib/formatVATPrice';
 import { categoryToKo } from '@/shared/model/categoryMap';
 import CircleCheckbox from './circle-check-box';
@@ -12,9 +13,10 @@ import getPaymentRequest from '../api/getPaymentRequest';
 
 interface ChatRequestCardProps {
   uuid: string;
+  isMine: boolean;
 }
 
-function ChatUserRequestCard({ uuid }: ChatRequestCardProps) {
+function ChatUserRequestCard({ uuid, isMine }: ChatRequestCardProps) {
   const [checked, setChecked] = useState(false);
   const [fileChecked, setFileChecked] = useState({
     first: false,
@@ -44,7 +46,12 @@ function ChatUserRequestCard({ uuid }: ChatRequestCardProps) {
   };
 
   return (
-    <div className="flex w-[360px] flex-col items-center justify-center space-y-4 rounded-xl border bg-[#F5F5F5] p-6 shadow-md">
+    <div
+      className={cn(
+        'flex w-[360px] flex-col items-center justify-center space-y-4 rounded-xl border p-6 shadow-md',
+        isMine ? 'bg-[#DBE8FF]' : 'bg-[#F1F1F1]',
+      )}
+    >
       <span className="flex items-center gap-1 font-bold">
         <Solu /> 결제 요청
       </span>

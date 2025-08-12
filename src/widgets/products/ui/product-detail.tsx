@@ -111,7 +111,7 @@ export default function ProductDetail({
               key={item}
               className="item-center text-primary flex h-[85px] w-[130px] items-center justify-center gap-3.5 rounded-md bg-white p-4 shadow-md"
             >
-              <span className="text-center text-lg font-semibold">{item}</span>
+              <span className="text-center text-sm font-semibold">{item}</span>
             </div>
           ))}
         </div>

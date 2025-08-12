@@ -1,9 +1,12 @@
 import Solu from '@/shared/ui/solu';
+import cn from '@/shared/lib/utils';
+import { categoryToKo } from '@/shared/model/categoryMap';
 
 interface ChatVendorCancelCompleteCardProps {
   solutionName: string;
   solutionCategory: string;
   solutionPrice: number;
+  isMine: boolean;
 }
 
 const formatPrice = (num: number) => {
@@ -14,9 +17,15 @@ function ChatUserCancelCompleteCard({
   solutionName,
   solutionCategory,
   solutionPrice,
+  isMine,
 }: ChatVendorCancelCompleteCardProps) {
   return (
-    <div className="h-auto w-[300px] rounded-xl bg-[#F5F5F5] p-4 shadow-md">
+    <div
+      className={cn(
+        'h-auto w-[300px] rounded-xl p-4 shadow-md',
+        isMine ? 'bg-[#DBE8FF]' : 'bg-[#F1F1F1]',
+      )}
+    >
       <div className="mb-3 text-center text-lg font-bold">
         <Solu /> 결제 취소 완료
       </div>
@@ -27,7 +36,7 @@ function ChatUserCancelCompleteCard({
         </div>
         <div className="flex justify-between">
           <span className="font-bold">솔루션 카테고리</span>
-          <span>{solutionCategory}</span>
+          <span>{categoryToKo[solutionCategory]}</span>
         </div>
         <div className="flex justify-between">
           <span className="font-bold">결제 금액</span>

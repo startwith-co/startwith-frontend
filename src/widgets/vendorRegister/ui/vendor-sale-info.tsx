@@ -1,6 +1,7 @@
 import Input from '@/shared/ui/input';
 import { Controller, useFormContext } from 'react-hook-form';
 import ErrorMessage from '@/shared/ui/error-message';
+import formatLocalPrice from '@/shared/lib/formatLocalPrice';
 
 export default function VendorSaleInfo() {
   const {

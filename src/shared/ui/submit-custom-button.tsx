@@ -2,6 +2,7 @@
 
 import { Button } from '@/shared/ui/button';
 import { useFormStatus } from 'react-dom';
+import Spinner from './spinner';
 
 interface SubmitCustomButtonProps {
   buttonName: string;
@@ -33,7 +34,9 @@ function SubmitCustomButton({
 
   if (status.pending) {
     return (
-      <p className={loadingTextProps || 'text-sm font-bold'}>{loadingText}</p>
+      <div className="flex w-full items-center justify-center">
+        <Spinner />
+      </div>
     );
   }
 
