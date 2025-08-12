@@ -81,10 +81,13 @@ export default function VendorUpdatePage({
     loadFiles();
   }, [solution.representImageUrl, solution.descriptionPdfUrl]);
 
-  const onSubmit = async (data: VendorRegisterSchema) => {
+  const onSubmit = async (
+    updateData: VendorRegisterSchema,
+    prevCategory: string,
+  ) => {
     setIsLoading(true);
     try {
-      await updateSolution(data);
+      await updateSolution(updateData, prevCategory);
       setOpenDialog(true);
     } catch (error: any) {
       toast.error(error.message);
@@ -95,7 +98,9 @@ export default function VendorUpdatePage({
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onSubmit)}
+        onSubmit={methods.handleSubmit((updateData) =>
+          onSubmit(updateData, category),
+        )}
         className="flex w-full flex-col gap-7.5 pr-10"
       >
         <VendorNormalInfo />

@@ -6,7 +6,10 @@ import vendorCategoryMapping from '@/views/vendorRegister/utils/vendor-category-
 import { revalidateTag } from 'next/cache';
 import { VendorRegisterSchema } from '../model/vendor-update-schema';
 
-export default async function updateSolution(data: VendorRegisterSchema) {
+export default async function updateSolution(
+  data: VendorRegisterSchema,
+  prevCategory: string,
+) {
   const session = await auth();
   const formData = new FormData();
 
@@ -17,7 +20,8 @@ export default async function updateSolution(data: VendorRegisterSchema) {
     vendorSeq: session?.vendorSeq || 0,
     solutionName: data.solutionName,
     solutionDetail: data.solutionDetail,
-    category: vendorCategoryMapping(data.category),
+    prevCategory,
+    nextCategory: vendorCategoryMapping(data.category),
     industry: data.industry,
     recommendedCompanySize: data.recommendedCompanySize.join(','),
     solutionImplementationType: data.solutionImplementationType.join(','),
