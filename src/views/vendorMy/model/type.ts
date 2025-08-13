@@ -1,5 +1,5 @@
 export interface StatsProps {
-  statsType: string;
+  statType: string;
   percentage: number;
   label: string;
 }
