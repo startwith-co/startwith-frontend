@@ -3,40 +3,49 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { StatsProps } from '@/views/vendorMy/model/type';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
-// TODO: 실제 데이터로 변경
-export const data = {
-  labels: [
-    '5억원 이하',
-    '5억원 이상 10억원 미만',
-    '10억원 이상 20억원 미만',
-    '20억원 이상',
-  ],
-  datasets: [
-    {
-      label: '# of Votes',
-      data: [12, 19, 3, 5],
-      backgroundColor: ['#717171'],
-      borderColor: ['white'],
-      borderWidth: 1.5,
-    },
-  ],
-};
+export default function PieChart({ stats }: { stats: StatsProps[] }) {
+  const isAllZero = stats.every((stat) => stat.percentage === 0);
 
-export default function PieChart() {
+  const defaultData = {
+    labels: ['데이터 없음'],
+    datasets: [
+      {
+        label: '%',
+        data: [100],
+        backgroundColor: ['#E5E5E5'],
+        borderColor: ['white'],
+        borderWidth: 1.5,
+      },
+    ],
+  };
+
+  const chartData = isAllZero
+    ? defaultData
+    : {
+        labels: stats.map((stat) => stat.label),
+        datasets: [
+          {
+            label: '%',
+            data: stats.map((stat) => stat.percentage),
+            backgroundColor: ['#717171'],
+            borderColor: ['white'],
+            borderWidth: 1.5,
+          },
+        ],
+      };
+
   return (
     <div className="relative -translate-y-20">
       <Pie
-        data={data}
+        data={chartData}
         options={{
           cutout: '55%',
           layout: {
-            padding: {
-              left: 100,
-              right: 100,
-            },
+            padding: { left: 100, right: 100 },
           },
           responsive: true,
           plugins: {
@@ -44,29 +53,24 @@ export default function PieChart() {
               display: false,
             },
             datalabels: {
+              display: (context) => {
+                const value = context.dataset.data[context.dataIndex];
+                return value !== 0;
+              },
               formatter: (value, context) => {
                 const label =
                   context.chart.data.labels?.[context.dataIndex] || '';
-                return `${label}\n${value}%`;
+                return isAllZero ? '데이터 없음' : `${label}\n${value}%`;
               },
               color: 'white',
               backgroundColor: '#23224C',
               textAlign: 'center',
-              padding: {
-                left: 10,
-                right: 10,
-                top: 4.5,
-                bottom: 4.5,
-              },
+              padding: { left: 10, right: 10, top: 4.5, bottom: 4.5 },
               borderRadius: 5,
               anchor: 'end',
               align: 'center',
               clip: false,
-              font: {
-                size: 12,
-                weight: 'bold',
-                lineHeight: 1.5,
-              },
+              font: { size: 12, weight: 'bold', lineHeight: 1.5 },
             },
           },
         }}
@@ -74,7 +78,9 @@ export default function PieChart() {
         height={250}
       />
       <p className="absolute left-1/2 -translate-x-1/2 -translate-y-18 text-center text-[16px]">
-        매출 규모별 이용자 개요
+        {stats[0].statType === 'SALES_SIZE'
+          ? '매출 규모별 기업 고객 개요'
+          : '고용 인원 규모별 기업 고객 개요'}
       </p>
     </div>
   );

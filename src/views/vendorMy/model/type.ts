@@ -1,5 +1,5 @@
 export interface StatsProps {
-  statsType: string;
+  statType: 'SALES_SIZE' | 'EMPLOYEES_SIZE';
   percentage: number;
   label: string;
 }
