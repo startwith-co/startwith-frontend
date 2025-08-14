@@ -6,6 +6,7 @@ import requestPost from '@/shared/api/request-post';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { v4 as uuidv4 } from 'uuid';
 import cancelPayment from '../api/cancelPayment';
+import refundPayment from '../api/refundPayment';
 
 interface ChatVendorCancelModalProps {
   open: boolean;
@@ -13,6 +14,8 @@ interface ChatVendorCancelModalProps {
   solutionName: string;
   solutionPrice: number;
   solutionCategory: string;
+  orderId: string;
+  paymentEventSeq: string;
 }
 
 const formatPrice = (num: string) => {
@@ -25,6 +28,8 @@ export default function ChatVendorCancelModal({
   solutionName,
   solutionPrice,
   solutionCategory,
+  orderId,
+  paymentEventSeq,
 }: ChatVendorCancelModalProps) {
   const {
     vendorId,
@@ -36,15 +41,7 @@ export default function ChatVendorCancelModal({
   } = useChatMeta();
 
   const onCancelAcceptPayment = useCallback(async () => {
-    const res = await cancelPayment(solutionCategory, consumerSeq, vendorSeq);
-    if (res.data) {
-      toast.warn('이미 환불이 완료된 상품입니다.');
-      return;
-    }
-    if (res.code) {
-      toast.error('환불 오류 발생');
-      return;
-    }
+    await refundPayment({ orderId, paymentEventSeq });
     await requestPost(
       solutionName,
       solutionPrice.toString(),

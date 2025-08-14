@@ -47,6 +47,8 @@ export default function SuccessPage({
           vendorName,
           'pay-complete-card',
           uuidv4(),
+          orderId,
+          paymentEventSeq,
         );
         router.push(`/chat?vendorId=${vendorId}&consumerId=${consumerId}`);
       } catch (error: any) {

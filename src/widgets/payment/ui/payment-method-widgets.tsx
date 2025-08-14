@@ -75,7 +75,7 @@ export default function PaymentMethodWidgets({
 
   return (
     <div className="grid grid-cols-[2fr_1fr] gap-8">
-      <div className="box_section rounded-md py-8 shadow-md" id="pay">
+      <div className="box_section rounded-md pb-8 shadow-md" id="pay">
         {/* 결제 UI */}
         <div id="payment-method" />
         {/* 이용약관 UI */}

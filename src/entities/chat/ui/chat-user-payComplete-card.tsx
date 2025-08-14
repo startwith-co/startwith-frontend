@@ -18,6 +18,8 @@ interface ChatCompleteCardProps {
   solutionCategory: string;
   solutionPrice: number;
   createdAt: FirestoreTS;
+  orderId: string;
+  paymentEventSeq: string;
   isMine: boolean;
 }
 
@@ -41,6 +43,8 @@ function ChatUserPayCompleteCard({
   solutionCategory,
   solutionPrice,
   createdAt,
+  orderId,
+  paymentEventSeq,
   isMine,
 }: ChatCompleteCardProps) {
   const [open, setOpen] = useState(false);
@@ -154,6 +158,8 @@ function ChatUserPayCompleteCard({
         solutionName={solutionName}
         solutionPrice={solutionPrice}
         solutionCategory={solutionCategory}
+        orderId={orderId}
+        paymentEventSeq={paymentEventSeq}
       />
     </div>
   );
