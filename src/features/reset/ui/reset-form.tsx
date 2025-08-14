@@ -10,7 +10,8 @@ import { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
 import ErrorMessage from '@/shared/ui/error-message';
 import CustomModal from '@/shared/ui/custommodal';
-import { redirect, useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 import resetPost from '../api/resetPost';
 
 const passwordRegex = /^(?=.*[!@#])[A-Za-z\d!@#]{8,16}$/;
@@ -18,8 +19,8 @@ const passwordRegex = /^(?=.*[!@#])[A-Za-z\d!@#]{8,16}$/;
 const schema = z.object({
   password: z
     .string()
-    .min(8)
-    .max(16)
+    .min(8, '비밀번호는 8자 이상이어야 합니다.')
+    .max(16, '비밀번호는 16자 이하여야 합니다.')
     .regex(
       passwordRegex,
       '비밀번호는 특수문자(!@#)를 1개 이상 포함해야 합니다.',
@@ -44,6 +45,7 @@ function ResetForm() {
   const [open, setOpen] = useState(false);
   const [matchSuccess, setMatchSuccess] = useState(false);
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const user = searchParams.get('user') as string;
   const token = searchParams.get('token') as string;
@@ -66,8 +68,12 @@ function ResetForm() {
     <>
       <SignupForm
         action={async (prevState, formData) => {
-          await resetPost(prevState, formData, user, token);
-          setOpen(true);
+          try {
+            await resetPost(prevState, formData, user, token);
+            setOpen(true);
+          } catch (error) {
+            toast.error('비밀번호 재설정 중 오류가 발생했습니다.');
+          }
         }}
         buttonProps="bg-gradient-to-t from-[#6E86FF] to-[#5B76FF] text-white w-full h-[55px] font-bold text-sm mt-4"
         buttonName="비밀번호 재설정 완료"
@@ -130,7 +136,7 @@ function ResetForm() {
           <Button
             asChild={false}
             type="button"
-            onClick={() => redirect('/login')}
+            onClick={() => router.replace('/login')}
             variant="bgBlueGradient"
             className="h-[50px] w-full shadow-md"
           >

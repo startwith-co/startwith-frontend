@@ -22,14 +22,19 @@ function useSendEmail() {
   const handleSendEmail = async (email: string, target: 'vendor' | 'user') => {
     setTimer(300);
     setIsCounting(true);
+    try {
+      const res = await api.get(
+        `api/b2b-service/vendor/conflict?email=${email}&type=${target === 'user' ? 'consumer' : 'vendor'}`,
+      );
+      const data: ApiResponse<boolean> = await res.json();
+      if (data.data) {
+        toast.error('이미 사용 중인 이메일입니다.');
+        setIsCounting(false);
+        return;
+      }
+    } catch (error) {
+      toast.error('이메일 인증 중 오류가 발생했습니다.');
 
-    const res = await api.get(
-      `api/b2b-service/vendor/conflict?email=${email}&type=${target}`,
-    );
-    const data: ApiResponse<boolean> = await res.json();
-    if (data.data) {
-      toast.error('이미 사용 중인 이메일입니다.');
-      setIsCounting(false);
       return;
     }
 
