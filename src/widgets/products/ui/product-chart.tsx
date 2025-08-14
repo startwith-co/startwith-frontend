@@ -13,11 +13,14 @@ import {
 import getReviewList from '@/widgets/products/api/getReviewList';
 import { v4 as uuidv4 } from 'uuid';
 import { formatReviewTime } from '@/shared/lib/date-formatter';
+import { StatsProps } from '@/views/vendorMy/model/type';
 
 export default async function ProductChart({
   solutionSeq,
+  stats,
 }: {
   solutionSeq: number;
+  stats: StatsProps[];
 }) {
   const data = await getReviewList(solutionSeq);
   return (
@@ -25,8 +28,12 @@ export default async function ProductChart({
       <div className="flex flex-col gap-6.5">
         <span className="text-xl font-semibold">이용자 개요 분석</span>
         <div className="flex items-center justify-around">
-          <PieChart />
-          <PieChart />
+          <PieChart
+            stats={stats.filter((stat) => stat.statType === 'SALES_SIZE')}
+          />
+          <PieChart
+            stats={stats.filter((stat) => stat.statType === 'EMPLOYEES_SIZE')}
+          />
         </div>
       </div>
       <div className="relative -top-32 flex flex-col">

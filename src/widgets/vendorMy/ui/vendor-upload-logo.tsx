@@ -6,10 +6,15 @@ import { useFormContext } from 'react-hook-form';
 import { useEffect, useMemo } from 'react';
 import Image from 'next/image';
 
-export default function VendorUploadLogo() {
-  const { setValue, watch } = useFormContext();
+export default function VendorUploadLogo({
+  onSave,
+  isLoading,
+}: {
+  onSave: () => void;
+  isLoading: boolean;
+}) {
+  const { setValue, watch, handleSubmit } = useFormContext();
   const clientInfos = watch('clientInfos') || [];
-  console.log(clientInfos);
 
   const previewUrls = useMemo(() => {
     const urls: (string | null)[] = [];
@@ -55,7 +60,10 @@ export default function VendorUploadLogo() {
   };
 
   return (
-    <div className="flex w-full flex-col justify-between gap-7.5 rounded-md bg-white px-6.5 py-7.5 shadow-md">
+    <form
+      className="flex w-full flex-col justify-between gap-7.5 rounded-md bg-white px-6.5 py-7.5 shadow-md"
+      onSubmit={handleSubmit(() => onSave())}
+    >
       <h2 className="font-semibold">주요 기업 고객 로고 관리</h2>
       <div className="grid grid-cols-5 gap-5">
         {Array.from({ length: 5 }).map((_, i) => (
@@ -89,8 +97,12 @@ export default function VendorUploadLogo() {
         ))}
       </div>
       <div className="flex justify-center">
-        <EditButton onClick={() => {}} title="수정 완료" />
+        <EditButton
+          onClick={() => {}}
+          title="수정 완료"
+          isLoading={isLoading}
+        />
       </div>
-    </div>
+    </form>
   );
 }

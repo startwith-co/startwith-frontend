@@ -6,8 +6,14 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-export default function VendorUploadBanner() {
-  const { setValue, control } = useFormContext();
+export default function VendorUploadBanner({
+  onSave,
+  isLoading,
+}: {
+  onSave: () => void;
+  isLoading: boolean;
+}) {
+  const { setValue, control, handleSubmit } = useFormContext();
   const file = useWatch({ control, name: 'vendorBannerImageUrl' });
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -25,7 +31,10 @@ export default function VendorUploadBanner() {
   }, [file]);
 
   return (
-    <div className="flex w-full flex-col gap-7.5 rounded-md bg-white px-6.5 py-7.5 shadow-md">
+    <form
+      className="flex w-full flex-col gap-7.5 rounded-md bg-white px-6.5 py-7.5 shadow-md"
+      onSubmit={handleSubmit(() => onSave())}
+    >
       <h2 className="font-semibold">밴더 상세페이지 배너 이미지</h2>
 
       <div className="relative h-[215px] w-full overflow-hidden rounded-md border bg-gray-50">
@@ -58,8 +67,12 @@ export default function VendorUploadBanner() {
       </div>
 
       <div className="flex justify-center">
-        <EditButton onClick={() => {}} title="수정 완료" />
+        <EditButton
+          onClick={() => {}}
+          title="수정 완료"
+          isLoading={isLoading}
+        />
       </div>
-    </div>
+    </form>
   );
 }

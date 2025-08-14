@@ -21,6 +21,7 @@ export default function VendorRegisterPage() {
   const { session } = useCurrentSession();
 
   const [openDialog, setOpenDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const methods = useForm({
     resolver: zodResolver(vendorRegisterSchema),
@@ -42,12 +43,14 @@ export default function VendorRegisterPage() {
   });
 
   const onSubmit = async (data: VendorRegisterSchema) => {
+    setIsLoading(true);
     try {
       await registerSolution(data);
       setOpenDialog(true);
     } catch (error: any) {
       toast.error(error.message);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -67,8 +70,8 @@ export default function VendorRegisterPage() {
           >
             취소
           </Button>
-          <Button asChild={false} type="submit">
-            등록하기
+          <Button asChild={false} type="submit" disabled={isLoading}>
+            {isLoading ? '등록 중...' : '등록하기'}
           </Button>
         </div>
       </form>

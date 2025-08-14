@@ -16,4 +16,5 @@ export interface UpdateSolutionProps {
       direction: 'INCREASE' | 'DECREASE';
     },
   ];
+  keywords: string[];
 }
