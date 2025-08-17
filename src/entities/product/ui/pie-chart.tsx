@@ -7,7 +7,13 @@ import { StatsProps } from '@/views/vendorMy/model/type';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
-export default function PieChart({ stats }: { stats: StatsProps[] }) {
+export default function PieChart({
+  stats,
+  title,
+}: {
+  stats: StatsProps[];
+  title: string;
+}) {
   const isAllZero = stats.every((stat) => stat.percentage === 0);
 
   const defaultData = {
@@ -78,9 +84,7 @@ export default function PieChart({ stats }: { stats: StatsProps[] }) {
         height={250}
       />
       <p className="absolute left-1/2 -translate-x-1/2 -translate-y-18 text-center text-[16px]">
-        {stats[0].statType === 'SALES_SIZE'
-          ? '매출 규모별 기업 고객 개요'
-          : '고용 인원 규모별 기업 고객 개요'}
+        {title}
       </p>
     </div>
   );
