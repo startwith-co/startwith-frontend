@@ -4,15 +4,12 @@ import ChatUserCard from '@/entities/chat/ui/chat-user-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import useFetchVendor from '@/widgets/user/chat/model/useFetchVendor';
 
-function formatTimeRange(start: any, end: any) {
+function formatTimeRange(start: string | null, end: string | null) {
   if (!start || !end) return '';
-  return `${start.hour.toString().padStart(2, '0')}:${start.minute
-    .toString()
-    .padStart(2, '0')}~${end.hour.toString().padStart(2, '0')}:${end.minute
-    .toString()
-    .padStart(2, '0')}`;
+  const [sh, sm] = start.split(':');
+  const [eh, em] = end.split(':');
+  return `${sh.padStart(2, '0')}:${sm.padStart(2, '0')}~${eh.padStart(2, '0')}:${em.padStart(2, '0')}`;
 }
-
 const categoryMapKo: Record<string, string> = {
   DEFECT_INSPECTION: '불량 검출 · 예측\n(비전 검사)\n',
   PREDICTIVE_MAINTENANCE: '설비 이상 및 고장 예측\n(예지보전)\n',
@@ -22,6 +19,7 @@ const categoryMapKo: Record<string, string> = {
 
 function ChatCompanyProfile() {
   const vendorInfo = useFetchVendor();
+  console.log('vendorInfo', vendorInfo);
 
   return (
     <div className="flex h-full w-full flex-col gap-2.5 rounded-3xl bg-white px-8 pt-[19px] shadow-md">
@@ -40,24 +38,24 @@ function ChatCompanyProfile() {
               <p className="text-xs text-black">
                 {vendorInfo.vendorInfo.weekdayAvailable
                   ? `평일 : ${formatTimeRange(
-                      vendorInfo.vendorInfo.weekdayStartTime,
-                      vendorInfo.vendorInfo.weekdayEndTime,
+                      vendorInfo.vendorInfo.weekdayStartTime ?? '',
+                      vendorInfo.vendorInfo.weekdayEndTime ?? '',
                     )}`
                   : '평일 : 불가'}
               </p>
               <p className="text-xs text-black">
                 {vendorInfo?.vendorInfo?.weekendAvailable
                   ? `주말 : ${formatTimeRange(
-                      vendorInfo.vendorInfo.weekendStartTime,
-                      vendorInfo.vendorInfo.weekendEndTime,
+                      vendorInfo.vendorInfo.weekendStartTime ?? '',
+                      vendorInfo.vendorInfo.weekendEndTime ?? '',
                     )}`
                   : '주말 : 불가'}
               </p>
               <p className="text-xs text-black">
                 {vendorInfo?.vendorInfo?.holidayAvailable
                   ? `공휴일 : ${formatTimeRange(
-                      vendorInfo.vendorInfo.holidayStartTime,
-                      vendorInfo.vendorInfo.holidayEndTime,
+                      vendorInfo.vendorInfo.holidayStartTime ?? '',
+                      vendorInfo.vendorInfo.holidayEndTime ?? '',
                     )}`
                   : '공휴일 : 불가'}
               </p>
