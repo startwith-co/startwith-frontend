@@ -57,7 +57,7 @@ function VendorChatting() {
   }, [session, setChatMeta, vendorId, vendorName, consumerId]);
 
   return (
-    <div className="flex h-[calc(100vh-200px)] w-full flex-col rounded-3xl bg-[#FFFFFF] shadow-lg">
+    <div className="flex w-full flex-col rounded-3xl bg-[#FFFFFF] shadow-lg">
       <ChatMainDate messages={messages} />
       <ChatsVendor messages={messages} vendorId={vendorId} />
 

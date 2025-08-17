@@ -12,7 +12,7 @@ export default function VendorChatPage() {
     <SolutionProvider>
       <RoomIdProvider>
         <VendorModalProvider>
-          <div className="grid w-full grid-cols-[2fr_4fr_1.5fr] gap-6 pr-8">
+          <div className="grid h-[650px] w-full grid-cols-[2fr_4fr_1.5fr] gap-6 pr-8">
             <VendorChatRooms />
             <VendorChatting />
             <VendorControl />
