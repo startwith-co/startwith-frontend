@@ -16,6 +16,7 @@ export interface PaymentInfoProps {
   consumerName: string;
   phoneNumber: string;
   email: string;
+  vendorSeq: string;
 }
 
 export interface PaymentSuccessProps {
