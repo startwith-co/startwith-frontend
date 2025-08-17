@@ -13,6 +13,8 @@ interface ChatVendorCancelRequestCardProps {
   solutionPrice: number;
   createdAt: Timestamp;
   isMine: boolean;
+  orderId: string;
+  paymentEventSeq: string;
 }
 
 function ChatVendorCancelRequestCard({
@@ -21,6 +23,8 @@ function ChatVendorCancelRequestCard({
   solutionPrice,
   createdAt,
   isMine,
+  orderId,
+  paymentEventSeq,
 }: ChatVendorCancelRequestCardProps) {
   const [open, setOpen] = useState(false);
   const { setSolution } = useSolution();
@@ -81,6 +85,8 @@ function ChatVendorCancelRequestCard({
         solutionName={solutionName}
         solutionPrice={solutionPrice}
         solutionCategory={solutionCategory}
+        orderId={orderId}
+        paymentEventSeq={paymentEventSeq}
       />
     </div>
   );
