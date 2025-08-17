@@ -18,6 +18,9 @@ async function sendMessageJson(
   vendorId: string,
   consumerName: string,
   vendorName: string,
+  vendorSeq?: string,
+  consumerSeq?: string,
+  solutionName?: string,
 ) {
   const newRoomId = uuidv4();
   const roomId = await findChatExistingRoom(consumerId, vendorId);
@@ -34,9 +37,9 @@ async function sendMessageJson(
       messageId,
       message,
       messageName,
-      '',
-      '',
-      '',
+      consumerSeq || '',
+      vendorSeq || '',
+      solutionName || '',
       '',
     );
   }

@@ -14,6 +14,7 @@ export default function PaymentMethodWidgets({
   email,
   vendorName,
   paymentEventSeq,
+  vendorSeq,
 }: PaymentInfoProps) {
   const [ready, setReady] = useState(false);
   const [widgets, setWidgets] = useState<WidgetsProps>();
@@ -96,8 +97,8 @@ export default function PaymentMethodWidgets({
                   await widgets?.requestPayment({
                     orderId: uuidv4(),
                     orderName: `${paymentEventName}`,
-                    successUrl: `${window.location.origin}/payment/success?paymentEventSeq=${paymentEventSeq}`,
-                    failUrl: `${window.location.origin}/payment/fail?paymentEventSeq=${paymentEventSeq}`,
+                    successUrl: `${window.location.origin}/payment/success?paymentEventSeq=${paymentEventSeq}&vendorSeq=${vendorSeq}`,
+                    failUrl: `${window.location.origin}/payment/fail?paymentEventSeq=${paymentEventSeq}&vendorSeq=${vendorSeq}`,
                     customerEmail: email,
                     customerName: vendorName,
                     customerMobilePhone: phoneNumber.replace(/-/g, ''),

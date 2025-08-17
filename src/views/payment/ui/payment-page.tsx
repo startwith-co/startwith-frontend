@@ -10,8 +10,10 @@ import { useState } from 'react';
 
 export default function PaymentPage({
   paymentInfo,
+  vendorSeq,
 }: {
   paymentInfo: PaymentInfoProps;
+  vendorSeq: string;
 }) {
   const [paymentMethod, setPaymentMethod] = useState<
     'creditCard' | 'virtualAccount'
@@ -34,7 +36,7 @@ export default function PaymentPage({
       />
       <div className="flex flex-col gap-5">
         <h2 className="text-lg font-semibold">결제 수단 선택</h2>
-        <PaymentMethodWidgets {...paymentInfo} />
+        <PaymentMethodWidgets {...paymentInfo} vendorSeq={vendorSeq} />
       </div>
     </div>
   );

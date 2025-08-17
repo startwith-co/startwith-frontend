@@ -6,28 +6,31 @@ import { useRouter } from 'next/navigation';
 import requestPost from '@/shared/api/request-post';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from '@/shared/ui/button';
+import useCurrentSession from '@/shared/model/useCurrentSession';
 import paymentRequest from '../api/paymentRequest';
+import { PaymentSuccessProps } from '../model/type';
 
 export default function SuccessPage({
   paymentKey,
   orderId,
   paymentEventSeq,
   amount,
+  vendorSeq,
 }: {
   paymentKey: string;
   orderId: string;
   paymentEventSeq: string;
   amount: string;
+  vendorSeq: string;
 }) {
   const router = useRouter();
+  const { session } = useCurrentSession();
+
   const [isSuccess, setIsSuccess] = useState(true);
+  const [paymentData, setPaymentData] = useState<PaymentSuccessProps>();
 
   useEffect(() => {
-    const chatMeta = sessionStorage.getItem('chatMeta');
-    const { vendorId, consumerId, vendorName, consumerName } = JSON.parse(
-      chatMeta || '{}',
-    );
-    const fetchData = async () => {
+    const fetchPayment = async () => {
       try {
         const res = await paymentRequest({
           paymentKey,
@@ -35,10 +38,29 @@ export default function SuccessPage({
           paymentEventSeq,
           amount,
         });
+        setPaymentData(res.data);
+      } catch (error) {
+        setIsSuccess(false);
+      }
+    };
+
+    fetchPayment();
+  }, [paymentKey, orderId, paymentEventSeq, amount]);
+
+  useEffect(() => {
+    if (!session || !paymentData) return;
+
+    const chatMeta = sessionStorage.getItem('chatMeta');
+    const { vendorId, consumerId, vendorName, consumerName } = JSON.parse(
+      chatMeta || '{}',
+    );
+
+    const sendRequestPost = async () => {
+      try {
         await requestPost(
-          res.data.orderName,
+          paymentData.orderName,
           amount,
-          res.data.category,
+          paymentData.category,
           consumerId,
           consumerName,
           consumerId,
@@ -49,15 +71,26 @@ export default function SuccessPage({
           uuidv4(),
           orderId,
           paymentEventSeq,
+          session?.consumerSeq?.toString() || '',
+          vendorSeq,
         );
+
         router.push(`/chat?vendorId=${vendorId}&consumerId=${consumerId}`);
-      } catch (error: any) {
+      } catch (error) {
         setIsSuccess(false);
       }
     };
 
-    fetchData();
-  }, []);
+    sendRequestPost();
+  }, [
+    session,
+    paymentData,
+    amount,
+    orderId,
+    paymentEventSeq,
+    vendorSeq,
+    router,
+  ]);
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">

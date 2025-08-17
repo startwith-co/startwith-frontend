@@ -33,6 +33,8 @@ async function requestPost(
   uuid: string,
   orderId?: string,
   paymentEventSeq?: string,
+  consumerSeq?: string,
+  vendorSeq?: string,
 ): Promise<void> {
   const messagePayload = {
     type,
@@ -52,6 +54,9 @@ async function requestPost(
     vendorId,
     consumerName,
     vendorName,
+    vendorSeq || '',
+    consumerSeq || '',
+    solutionName,
   );
 }
 
