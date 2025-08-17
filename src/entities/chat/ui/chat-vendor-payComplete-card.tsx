@@ -11,6 +11,8 @@ interface ChatCompleteCardProps {
   solutionPrice: number;
   isMine: boolean;
   createdAt: { seconds: number; nanoseconds: number };
+  orderId: string;
+  paymentEventSeq: string;
 }
 
 const formatPrice = (num: number) => `${num.toLocaleString('ko-KR')}(VAT 포함)`;
@@ -34,6 +36,8 @@ function ChatVendorPayCompleteCard({
   solutionPrice,
   isMine,
   createdAt,
+  orderId,
+  paymentEventSeq,
 }: ChatCompleteCardProps) {
   const [open, setOpen] = useState(false);
 
@@ -115,6 +119,8 @@ function ChatVendorPayCompleteCard({
         solutionName={solutionName}
         solutionPrice={solutionPrice}
         solutionCategory={solutionCategory}
+        orderId={orderId}
+        paymentEventSeq={paymentEventSeq}
       />
     </div>
   );
