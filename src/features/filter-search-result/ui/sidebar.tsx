@@ -87,6 +87,7 @@ export default function Sidebar({
                 <div className="flex flex-wrap gap-3.5">
                   {industryCategories.map((industryCategory) => (
                     <FilterButton
+                      className="w-full text-sm"
                       key={industryCategory}
                       value={industryCategory}
                       isActive={industryCategory === filterList.industry}
@@ -107,7 +108,7 @@ export default function Sidebar({
                     <FilterButton
                       key={scaleCategory}
                       value={scaleCategory}
-                      className="text-xs"
+                      className="text-sm"
                       isActive={scaleCategory === filterList.budget}
                       onClick={() =>
                         setFilterList({

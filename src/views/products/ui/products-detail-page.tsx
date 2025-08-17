@@ -48,7 +48,10 @@ export default async function ProductsDetailPage({
             vendorSeq={vendorSeq}
           />
           <VendorInfo {...vendorInfo} />
-          <ProductChart solutionSeq={Number(solution.solutionSeq)} />
+          <ProductChart
+            stats={vendorInfo.stats}
+            solutionSeq={Number(solution.solutionSeq)}
+          />
         </div>
       </div>
     </div>

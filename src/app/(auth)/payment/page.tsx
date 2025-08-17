@@ -8,7 +8,7 @@ export default async function Page({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const { paymentEventSeq } = await searchParams;
+  const { paymentEventSeq, vendorSeq } = await searchParams;
   const session = await auth();
   const paymentInfo = await getPaymentInfo({
     paymentEventSeq: paymentEventSeq as string,
@@ -21,5 +21,7 @@ export default async function Page({
   //   return redirect('/');
   // }
 
-  return <PaymentPage paymentInfo={paymentInfo} />;
+  return (
+    <PaymentPage paymentInfo={paymentInfo} vendorSeq={vendorSeq as string} />
+  );
 }

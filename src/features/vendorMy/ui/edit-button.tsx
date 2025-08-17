@@ -4,10 +4,12 @@ import cn from '@/shared/lib/utils';
 export default function EditButton({
   onClick,
   title,
+  isLoading,
   className,
 }: {
   onClick: () => void;
   title: string;
+  isLoading: boolean;
   className?: string;
 }) {
   return (
@@ -17,9 +19,10 @@ export default function EditButton({
         'bg-vendor-gray text-vendor-secondary hover:bg-vendor-primary h-[47px] w-[240px] border-none text-center hover:text-white',
         className,
       )}
-      onClick={onClick}
+      onClick={isLoading ? undefined : onClick}
+      disabled={isLoading}
     >
-      {title}
+      {isLoading ? '수정 중...' : title}
     </Button>
   );
 }

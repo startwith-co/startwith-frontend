@@ -25,15 +25,13 @@ function ItemDetailSection() {
     const fetchData = async () => {
       const dashboardData = await api
         .get(
-          `api/b2b-service/dashboard/consumer?consumerSeq=${session.consumerSeq}&${
-            paymentStatus ? `paymentStatus=${paymentStatus}` : ''
-          }&start=0&end=4`,
+          `api/b2b-service/dashboard/consumer?consumerSeq=${session.consumerSeq}&${paymentStatus ? `paymentStatus=${paymentStatus}` : ''}`,
         )
         .json<ApiResponse<PaymentInfoProps[]>>();
       setDashboard(dashboardData.data);
     };
     fetchData();
-  }, [session, paymentStatus]);
+  }, [paymentStatus, session?.consumerSeq]);
 
   return (
     <section className="mb-10 flex min-w-[895px] flex-col space-y-5 rounded-2xl bg-white p-7 shadow-md">
@@ -65,6 +63,7 @@ function ItemDetailSection() {
           vendorUniqueType={item.vendorUniqueType}
           vendorSeq={item.vendorSeq}
           category={item.category}
+          method={item.method}
         />
       ))}
 

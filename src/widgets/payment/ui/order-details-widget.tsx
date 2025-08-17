@@ -10,6 +10,7 @@ export default function OrderDetailsWidget({
   category,
   amount,
   representImageUrl,
+  vendorName,
 }: PaymentInfoProps) {
   return (
     <div className="flex flex-col gap-5">
@@ -23,7 +24,7 @@ export default function OrderDetailsWidget({
             height={170}
             className="h-full w-[320px] rounded-md bg-gray-300 object-cover object-center"
           />
-          <div className="flex flex-col justify-between gap-3">
+          <div className="flex flex-col justify-between gap-3 text-[14px]">
             <div>
               <span className="font-semibold">{paymentEventName}</span>
               <div className="flex items-center gap-2">
@@ -31,19 +32,22 @@ export default function OrderDetailsWidget({
                   <AvatarImage src="/images/default-profile.svg" />
                   <AvatarFallback>{paymentEventName[0]}</AvatarFallback>
                 </Avatar>
-                <span className="text-[rgba(167,167,167,1)]">더비즈온</span>
+                <span className="text-[rgba(167,167,167,1)]">{vendorName}</span>
               </div>
             </div>
-            <div className="flex w-[300px] flex-col gap-2">
-              <div className="flex justify-between">
+            <div className="flex flex-col gap-2">
+              <div className="grid grid-cols-2 gap-3">
                 <span className="text-[#7A7A7A]">가격</span>
                 <span>{formatLocalPrice(amount)}원(VAT제외)</span>
               </div>
-              <div className="flex justify-between">
+              <div className="grid grid-cols-2 gap-3">
                 <span className="text-[#7A7A7A]">솔루션 카테고리</span>
-                <span>{categoryTrans(category)}</span>
+                <p className="flex flex-col">
+                  <span>{categoryTrans(category)[0]}</span>
+                  <span>{categoryTrans(category)[1]}</span>
+                </p>
               </div>
-              <div className="flex justify-between">
+              <div className="grid grid-cols-2 gap-3">
                 <span className="text-[#7A7A7A]">최대 서비스 제공일</span>
                 <span>6개월</span>
               </div>

@@ -18,6 +18,8 @@ interface ChatCompleteCardProps {
   solutionCategory: string;
   solutionPrice: number;
   createdAt: FirestoreTS;
+  orderId: string;
+  paymentEventSeq: string;
   isMine: boolean;
 }
 
@@ -41,6 +43,8 @@ function ChatUserPayCompleteCard({
   solutionCategory,
   solutionPrice,
   createdAt,
+  orderId,
+  paymentEventSeq,
   isMine,
 }: ChatCompleteCardProps) {
   const [open, setOpen] = useState(false);
@@ -89,7 +93,7 @@ function ChatUserPayCompleteCard({
         </div>
 
         {isCancelable ? (
-          <div className="rounded-md p-2 text-xs text-[#0F172A]">
+          <div className="rounded-md text-xs text-[#0F172A]">
             <div className="flex items-center justify-between">
               <b>취소 가능 기한</b>
               <span>{expireAt.toLocaleString('ko-KR')}</span>
@@ -154,6 +158,8 @@ function ChatUserPayCompleteCard({
         solutionName={solutionName}
         solutionPrice={solutionPrice}
         solutionCategory={solutionCategory}
+        orderId={orderId}
+        paymentEventSeq={paymentEventSeq}
       />
     </div>
   );

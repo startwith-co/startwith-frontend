@@ -31,6 +31,10 @@ async function requestPost(
     | 'cancel-complete-card'
     | 'pay-complete-card',
   uuid: string,
+  orderId?: string,
+  paymentEventSeq?: string,
+  consumerSeq?: string,
+  vendorSeq?: string,
 ): Promise<void> {
   const messagePayload = {
     type,
@@ -38,6 +42,8 @@ async function requestPost(
     solutionCategory,
     solutionPrice,
     uuid,
+    orderId,
+    paymentEventSeq,
   };
 
   await sendMessageJson(
@@ -48,6 +54,9 @@ async function requestPost(
     vendorId,
     consumerName,
     vendorName,
+    vendorSeq || '',
+    consumerSeq || '',
+    solutionName,
   );
 }
 

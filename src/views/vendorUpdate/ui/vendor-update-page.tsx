@@ -29,6 +29,7 @@ export default function VendorUpdatePage({
   category: string;
 }) {
   const [openDialog, setOpenDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const methods = useForm({
     resolver: zodResolver(vendorRegisterSchema),
@@ -51,7 +52,7 @@ export default function VendorUpdatePage({
       amount: solution.amount.toString(),
       duration: solution.duration.toString(),
       solutionEffect: solution.solutionEffect,
-      keyword: [],
+      keyword: solution.keywords || [],
     },
   });
 
@@ -80,19 +81,26 @@ export default function VendorUpdatePage({
     loadFiles();
   }, [solution.representImageUrl, solution.descriptionPdfUrl]);
 
-  const onSubmit = async (data: VendorRegisterSchema) => {
+  const onSubmit = async (
+    updateData: VendorRegisterSchema,
+    prevCategory: string,
+  ) => {
+    setIsLoading(true);
     try {
-      await updateSolution(data);
+      await updateSolution(updateData, prevCategory);
       setOpenDialog(true);
     } catch (error: any) {
       toast.error(error.message);
     }
+    setIsLoading(false);
   };
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onSubmit)}
+        onSubmit={methods.handleSubmit((updateData) =>
+          onSubmit(updateData, category),
+        )}
         className="flex w-full flex-col gap-7.5 pr-10"
       >
         <VendorNormalInfo />
@@ -106,8 +114,8 @@ export default function VendorUpdatePage({
           >
             취소
           </Button>
-          <Button asChild={false} type="submit">
-            수정하기
+          <Button asChild={false} type="submit" disabled={isLoading}>
+            {isLoading ? '수정 중...' : '수정하기'}
           </Button>
         </div>
       </form>

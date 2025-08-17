@@ -41,7 +41,9 @@ export default function InquireCard({
         paymentEventName: solutionName,
         amount,
       });
-      router.push(`/payment?paymentEventSeq=${paymentEvent.paymentEventSeq}`);
+      router.push(
+        `/payment?paymentEventSeq=${paymentEvent.paymentEventSeq}&vendorSeq=${vendorSeq}`,
+      );
     } catch (error) {
       console.error(error);
     }

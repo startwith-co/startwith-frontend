@@ -73,7 +73,7 @@ export default function ProductDetail({
         <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">
           <span className="text-lg font-semibold">가격</span>
           <span className="text-sm">
-            ~ {formatLocalPrice(amount)}원/월(VAT 별도)
+            ~ {formatLocalPrice(amount)}원(VAT 별도)
           </span>
         </div>
         <div className="bg-box-gray flex flex-col items-center justify-center gap-3.5 rounded-md p-4">

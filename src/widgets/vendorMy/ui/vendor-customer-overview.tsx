@@ -1,15 +1,24 @@
 'use client';
 
 import EditButton from '@/features/vendorMy/ui/edit-button';
+import ErrorMessage from '@/shared/ui/error-message';
 import Input from '@/shared/ui/input';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useState } from 'react';
 
-export default function VendorCustomerOverview() {
-  const { register, control } = useFormContext();
+export default function VendorCustomerOverview({
+  onSave,
+  isLoading,
+}: {
+  onSave: () => void;
+  isLoading: boolean;
+}) {
+  const { register, control, handleSubmit, getValues } = useFormContext();
   const { fields } = useFieldArray({
     control,
     name: 'stats',
   }) as any;
+  const [errorMessage, setError] = useState<string | undefined>(undefined);
 
   // 매출 규모 필터링
   const salesStats = fields.filter(
@@ -20,9 +29,44 @@ export default function VendorCustomerOverview() {
     (item: any) => item.statType === 'EMPLOYEES_SIZE',
   );
 
+  const onSubmit = () => {
+    const values = getValues().stats;
+
+    const salesTotal = salesStats.reduce(
+      (sum: number, s: any) =>
+        sum + (values[fields.indexOf(s)].percentage || 0),
+      0,
+    );
+
+    const employeeTotal = employeeStats.reduce(
+      (sum: number, s: any) =>
+        sum + (values[fields.indexOf(s)].percentage || 0),
+      0,
+    );
+
+    if (salesTotal !== 100) {
+      setError(`매출 규모별 합계가 100%가 아닙니다. (현재 ${salesTotal}%)`);
+      return;
+    }
+
+    if (employeeTotal !== 100) {
+      setError(
+        `고용인원 규모별 합계가 100%가 아닙니다. (현재 ${employeeTotal}%)`,
+      );
+      return;
+    }
+
+    onSave();
+    setError(undefined);
+  };
+
   return (
-    <div className="flex w-2/3 flex-col gap-7.5 rounded-md bg-white px-6.5 py-7.5 shadow-md">
+    <form
+      className="flex w-2/3 flex-col gap-7.5 rounded-md bg-white px-6.5 py-7.5 shadow-md"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <h2 className="font-semibold">자사 기업 고객 개요</h2>
+      {errorMessage && <ErrorMessage message={errorMessage} />}
       <div className="grid grid-cols-2 gap-14.5">
         <div className="flex flex-col">
           <span>매출 규모별 기업 고객 개요</span>
@@ -35,14 +79,19 @@ export default function VendorCustomerOverview() {
                 <div className="bg-vendor-gray flex h-12 items-center justify-center rounded-md px-2 py-1 text-sm">
                   {field.label}
                 </div>
-                <Input
-                  className="bg-vendor-gray h-12 text-center"
-                  placeholder="0%"
-                  defaultValue={field.percentage}
-                  {...register(`stats.${fields.indexOf(field)}.percentage`, {
-                    valueAsNumber: true,
-                  })}
-                />
+                <div className="relative w-full">
+                  <Input
+                    className="bg-vendor-gray h-12 pr-6 text-center"
+                    placeholder="0"
+                    defaultValue={field.percentage}
+                    {...register(`stats.${fields.indexOf(field)}.percentage`, {
+                      valueAsNumber: true,
+                    })}
+                  />
+                  <span className="absolute top-1/2 right-2 -translate-y-1/2 text-gray-500">
+                    %
+                  </span>
+                </div>
               </li>
             ))}
           </ul>
@@ -59,14 +108,19 @@ export default function VendorCustomerOverview() {
                 <div className="bg-vendor-gray flex h-12 items-center justify-center rounded-md px-2 py-1 text-sm">
                   {field.label}
                 </div>
-                <Input
-                  className="bg-vendor-gray h-12 text-center"
-                  placeholder="0%"
-                  defaultValue={field.percentage}
-                  {...register(`stats.${fields.indexOf(field)}.percentage`, {
-                    valueAsNumber: true,
-                  })}
-                />
+                <div className="relative w-full">
+                  <Input
+                    className="bg-vendor-gray h-12 pr-6 text-center"
+                    placeholder="0"
+                    defaultValue={field.percentage}
+                    {...register(`stats.${fields.indexOf(field)}.percentage`, {
+                      valueAsNumber: true,
+                    })}
+                  />
+                  <span className="absolute top-1/2 right-2 -translate-y-1/2 text-gray-500">
+                    %
+                  </span>
+                </div>
               </li>
             ))}
           </ul>
@@ -74,8 +128,12 @@ export default function VendorCustomerOverview() {
       </div>
 
       <div className="flex justify-center">
-        <EditButton onClick={() => {}} title="수정 완료" />
+        <EditButton
+          onClick={() => {}}
+          title="수정 완료"
+          isLoading={isLoading}
+        />
       </div>
-    </div>
+    </form>
   );
 }

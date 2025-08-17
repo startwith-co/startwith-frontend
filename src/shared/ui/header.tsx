@@ -12,6 +12,7 @@ import {
   VendorInfoProps,
 } from '@/views/vendorMy/model/type';
 import cn from '@/shared/lib/utils';
+import { signOut } from 'next-auth/react';
 import Input from './input';
 import { Button } from './button';
 import Dropdown from './dropdown';
@@ -30,6 +31,16 @@ export default function Header({ className }: HeaderProps) {
   useLayoutEffect(() => {
     const fetchData = async () => {
       if (status === 'loading' || !session) return;
+      if (!session.uniqueType) {
+        signOut();
+        return;
+      }
+      if (session.role === 'consumer' && !session.consumerSeq) {
+        signOut();
+      }
+      if (session.role === 'vendor' && !session.vendorSeq) {
+        signOut();
+      }
       if (session.role === 'vendor') {
         const res = await api
           .get(`api/b2b-service/vendor?vendorSeq=${session.vendorSeq}`)
