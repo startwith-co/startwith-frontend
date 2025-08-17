@@ -1,6 +1,6 @@
 import Footer from '@/shared/ui/footer';
 
-import ProfileSide from '@/shared/ui/profile-side';
+import ConsumerProfileSide from '@/widgets/my/ui/consumer-profile-side';
 import { auth } from '@/auth';
 import Header from '@/shared/ui/header';
 
@@ -20,7 +20,7 @@ export default async function Layout({
       <Header className="bg-[rgba(250,252,255,1)]" />
       <div className="flex w-screen justify-center overflow-y-scroll bg-[rgba(250,252,255,1)]">
         <main className="mt-20 mb-10 flex flex-row justify-center">
-          <ProfileSide routes={routes} id={session?.consumerSeq || 0} />
+          <ConsumerProfileSide routes={routes} id={session?.consumerSeq || 0} />
           <div className="flex grow">{children}</div>
         </main>
       </div>
