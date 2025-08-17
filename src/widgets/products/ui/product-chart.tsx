@@ -30,9 +30,11 @@ export default async function ProductChart({
         <div className="flex items-center justify-around">
           <PieChart
             stats={stats.filter((stat) => stat.statType === 'SALES_SIZE')}
+            title="매출 규모별 기업 고객 개요"
           />
           <PieChart
             stats={stats.filter((stat) => stat.statType === 'EMPLOYEES_SIZE')}
+            title="매출 규모별 기업 고객 개요"
           />
         </div>
       </div>
