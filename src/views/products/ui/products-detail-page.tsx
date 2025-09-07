@@ -51,6 +51,7 @@ export default async function ProductsDetailPage({
           <ProductChart
             stats={vendorInfo.stats}
             solutionSeq={Number(solution.solutionSeq)}
+            vendorName={vendorInfo.vendorName || ''}
           />
         </div>
       </div>
