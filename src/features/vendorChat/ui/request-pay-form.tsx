@@ -22,7 +22,7 @@ import { useRoomId } from '@/shared/model/RoomIdProvider';
 import deleteLastMessage from '@/shared/api/delete-last-message';
 import { v4 as uuidv4 } from 'uuid';
 import requestServerPost from '../api/requestServerPost';
-import useRequestCategory from '../model/requestCategory';
+import useRequestPaymentDetails from '../model/useRequestPaymentDetails';
 
 const schema = z.object({
   solutionName: z.string().min(1, '계약명을 입력해주세요.'),
@@ -37,12 +37,16 @@ function RequestPayForm() {
     register,
     formState: { errors, isValid },
     control,
+    setValue,
     getValues,
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     mode: 'onChange',
+    defaultValues: {
+      solutionPrice: '0',
+    },
   });
-  const solutionCategoryOptions = useRequestCategory();
+  const { solutionDetails } = useRequestPaymentDetails();
 
   const [contractFile, setContractFile] = useState<File | null>(null);
   const [refundFile, setRefundFile] = useState<File | null>(null);
@@ -105,6 +109,8 @@ function RequestPayForm() {
     }
   };
 
+  console.log(getValues());
+
   return (
     <SignupForm
       action={onSubmit}
@@ -138,14 +144,35 @@ function RequestPayForm() {
             control={control}
             rules={{ required: '솔루션 카테고리를 선택해주세요.' }}
             render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
+              <Select
+                value={field.value}
+                onValueChange={(selectedCategory) => {
+                  // 카테고리 선택 시 로직 실행
+                  field.onChange(selectedCategory); // 카테고리 필드 값을 업데이트
+
+                  // 선택된 카테고리에 해당하는 솔루션 정보 찾기
+                  const selectedSolution = solutionDetails.find(
+                    (solution) => solution.serverCategory === selectedCategory,
+                  );
+
+                  // 해당하는 솔루션이 있으면 금액 자동 설정
+                  if (selectedSolution) {
+                    setValue('solutionPrice', String(selectedSolution.amount), {
+                      shouldValidate: true, // 값을 변경한 후 유효성 검사 실행
+                    });
+                  }
+                }}
+              >
                 <SelectTrigger className="mt-1 h-[45px] w-full rounded-md border border-[#BEBEBE] bg-[#F5F5F5] indent-2 text-black">
                   <SelectValue placeholder="솔루션 카테고리 선택" />
                 </SelectTrigger>
                 <SelectContent className="max-h-[300px] overflow-auto">
-                  {solutionCategoryOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
+                  {solutionDetails.map((solution) => (
+                    <SelectItem
+                      key={solution.solutionSeq}
+                      value={solution.serverCategory}
+                    >
+                      {solution.category}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -162,10 +189,7 @@ function RequestPayForm() {
 
       <div className="grid grid-cols-[3fr_6fr] items-center">
         <p className="text-sm font-semibold text-black">결제 요청 금액 *</p>
-        <Input
-          {...register('solutionPrice')}
-          className="mt-1 h-[45px] w-full rounded-md bg-[#F5F5F5] indent-2 text-black"
-        />
+        {Number(getValues('solutionPrice')).toLocaleString('ko-KR')}원
         {errors.solutionPrice && (
           <p className="text-xs text-red-500">{errors.solutionPrice.message}</p>
         )}
