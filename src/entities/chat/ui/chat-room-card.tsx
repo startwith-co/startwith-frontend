@@ -47,7 +47,7 @@ export default function ChatRoomCard({
 
   useEffect(() => {
     const getData = async () => {
-      if (role === 'vendor') {
+      if (role === 'consumer') {
         const data = await api
           .get<
             ApiResponse<VendorInfoProps>
