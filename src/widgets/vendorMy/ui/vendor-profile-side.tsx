@@ -49,9 +49,7 @@ export default function VendorProfileSide({
 
       <Avatar className="mb-2.5 flex size-30 rounded-full">
         <AvatarImage
-          src={
-            vendorInfo?.vendorBannerImageUrl || '/images/default-profile.svg'
-          }
+          src={vendorInfo?.profileImage || '/images/default-profile.svg'}
         />
         <AvatarFallback>스타트윗</AvatarFallback>
       </Avatar>

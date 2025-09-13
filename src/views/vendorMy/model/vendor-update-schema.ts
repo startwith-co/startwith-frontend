@@ -1,6 +1,7 @@
 import z from 'zod';
 
 export const vendorUpdateSchema = z.object({
+  profileImage: z.instanceof(File).optional().nullable(),
   vendorBannerImageUrl: z.instanceof(File).optional().nullable(),
   clientInfos: z.array(z.instanceof(File)).optional().nullable(),
   vendorSeq: z.number(),

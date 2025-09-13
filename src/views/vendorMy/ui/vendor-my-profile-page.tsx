@@ -21,6 +21,7 @@ import urlToFile from '../api/urlToFile';
 function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
   const methods = useForm<VendorUpdateSchema>({
     defaultValues: {
+      profileImage: undefined,
       vendorBannerImageUrl: undefined,
       clientInfos: [],
       vendorSeq: vendorInfo?.vendorSeq || 0,
@@ -95,6 +96,11 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
         methods.setValue('vendorBannerImageUrl', file);
       });
     }
+    if (vendorInfo.profileImage) {
+      urlToFile(vendorInfo.profileImage, 'profile.jpg').then((file) => {
+        methods.setValue('profileImage', file);
+      });
+    }
     if (vendorInfo.clientResponse?.length) {
       Promise.all(
         vendorInfo.clientResponse.map((client) =>
@@ -159,6 +165,7 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
           <EditVendorInfo
             onSave={() =>
               onSubmit([
+                'profileImage',
                 'vendorName',
                 'managerName',
                 'phoneNumber',
