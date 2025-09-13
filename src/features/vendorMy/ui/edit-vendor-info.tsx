@@ -2,8 +2,9 @@
 
 import { Button } from '@/shared/ui/button';
 import Input from '@/shared/ui/input';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 function EditVendorInfo({
   onSave,
@@ -12,11 +13,44 @@ function EditVendorInfo({
   onSave: () => void;
   isLoading: boolean;
 }) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty },
+    setValue,
+    control,
   } = useFormContext();
+
+  const file = useWatch({ control, name: 'profileImage' });
+
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (file instanceof File && file.name) {
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+
+      return () => URL.revokeObjectURL(url);
+    }
+
+    setPreviewUrl(null);
+    return () => null;
+  }, [file]);
+
+  const handleVendorUploadImageClick = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const newFile = e.target.files?.[0] ?? null;
+    if (newFile) {
+      setValue('profileImage', newFile, { shouldDirty: true });
+    }
+    e.target.value = '';
+  };
+
+  const onPlusImageClick = () => {
+    fileInputRef.current?.click();
+  };
 
   return (
     <form
@@ -25,19 +59,39 @@ function EditVendorInfo({
       })}
       className="relative flex flex-col justify-between rounded-xl bg-white p-8 shadow-md"
     >
-      <Image
-        src="/images/profileAdd.png"
-        alt="image"
-        width={100}
-        height={100}
-        className="mb-7"
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        onChange={handleVendorUploadImageClick}
+        className="hidden"
       />
+
+      {previewUrl ? (
+        <Image
+          src={previewUrl}
+          alt="Profile image placeholder"
+          width={100}
+          height={100}
+          className="mb-7 size-24 rounded-full object-cover object-center"
+          onError={() => setPreviewUrl(null)}
+        />
+      ) : (
+        <Image
+          src="/images/profileAdd.png"
+          alt="Profile image placeholder"
+          width={100}
+          height={100}
+          className="mb-7"
+        />
+      )}
       <Image
         src="/images/add.png"
-        alt="image"
+        alt="Add image icon"
         width={20}
         height={20}
-        className="absolute top-27 left-25 z-10"
+        className="absolute top-27 left-25 z-10 cursor-pointer"
+        onClick={onPlusImageClick}
       />
       <div>
         <label htmlFor="vendorName" className="text-sm">

@@ -36,6 +36,7 @@ export default async function ProductsDetailPage({
           vendorName={vendorInfo.vendorName || ''}
           vendorId={vendorInfo.vendorUniqueType || ''}
           vendorSeq={Number(vendorSeq)}
+          profileImage={vendorInfo.profileImage || ''}
           solutionName={solution.solutionName || ''}
           amount={solution.amount}
           category={category}
@@ -51,6 +52,7 @@ export default async function ProductsDetailPage({
           <ProductChart
             stats={vendorInfo.stats}
             solutionSeq={Number(solution.solutionSeq)}
+            vendorName={vendorInfo.vendorName || ''}
           />
         </div>
       </div>

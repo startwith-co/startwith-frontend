@@ -19,6 +19,7 @@ interface InquireCardProps {
   solutionName: string;
   amount: number;
   category: string;
+  profileImage: string;
 }
 
 export default function InquireCard({
@@ -28,6 +29,7 @@ export default function InquireCard({
   solutionName,
   amount,
   category,
+  profileImage,
 }: InquireCardProps) {
   const { setChatMeta, consumerId: curConsumerId } = useChatMeta();
   const router = useRouter();
@@ -77,7 +79,7 @@ export default function InquireCard({
     <div className="flex flex-col gap-6">
       <WhiteBox className="flex flex-col items-center justify-center p-6">
         <Avatar className="mb-3.5 size-26">
-          <AvatarImage src="/images/default-profile.svg" />
+          <AvatarImage src={profileImage || '/images/default-profile.svg'} />
           <AvatarFallback>{vendorName[0]}</AvatarFallback>
         </Avatar>
         <span className="text-xl font-bold">{vendorName}</span>
