@@ -23,6 +23,7 @@ export default function VendorInfo({
   holidayAvailable,
   holidayStartTime,
   holidayEndTime,
+  profileImage,
 }: VendorInfoProps) {
   const weekday = formatTimeRange(
     weekdayAvailable,
@@ -47,7 +48,7 @@ export default function VendorInfo({
       <div className="flex flex-wrap items-start justify-between gap-6">
         <div className="flex items-center gap-6">
           <Avatar className="size-24 shrink-0">
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src={profileImage || '/images/default-profile.svg'} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-2">

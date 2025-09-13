@@ -7,7 +7,7 @@ export interface PaymentInfoProps {
     | 'PROCESS_MONITORING'
     | 'MES_INVENTORY_MANAGEMENT';
   vendorName: string;
-  vendorBannerImageUrl: string;
+  profileImage: string;
   representImageUrl: string;
   amount: number;
   tax: number;
