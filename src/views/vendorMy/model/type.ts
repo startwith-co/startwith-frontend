@@ -27,6 +27,7 @@ export interface VendorInfoProps {
   clientCount: number | null;
   vendorUniqueType: string;
   stats: StatsProps[];
+  profileImage: string | null;
   clientResponse: ClientResponseProps[];
 }
 

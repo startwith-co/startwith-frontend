@@ -39,6 +39,10 @@ export const vendorRegisterSchema = z.object({
     .refine(
       (value) => Number(value) > 0,
       '최소 1원 이상의 가격을 입력해주세요.',
+    )
+    .refine(
+      (value) => Number(value) <= 10000000,
+      '최대 1000만원까지 입력 가능합니다.',
     ),
   duration: z
     .string()
@@ -46,6 +50,10 @@ export const vendorRegisterSchema = z.object({
     .refine(
       (value) => Number(value) > 0,
       '최소 1일 이상의 기간을 입력해주세요.',
+    )
+    .refine(
+      (value) => Number(value) <= 42,
+      '개발 기한은 42일 이하로 입력해주세요.',
     ),
   solutionEffect: z
     .array(

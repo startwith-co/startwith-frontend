@@ -11,6 +11,7 @@ export default function OrderDetailsWidget({
   amount,
   representImageUrl,
   vendorName,
+  profileImage,
 }: PaymentInfoProps) {
   return (
     <div className="flex flex-col gap-5">
@@ -29,7 +30,9 @@ export default function OrderDetailsWidget({
               <span className="font-semibold">{paymentEventName}</span>
               <div className="flex items-center gap-2">
                 <Avatar>
-                  <AvatarImage src="/images/default-profile.svg" />
+                  <AvatarImage
+                    src={profileImage || '/images/default-profile.svg'}
+                  />
                   <AvatarFallback>{paymentEventName[0]}</AvatarFallback>
                 </Avatar>
                 <span className="text-[rgba(167,167,167,1)]">{vendorName}</span>

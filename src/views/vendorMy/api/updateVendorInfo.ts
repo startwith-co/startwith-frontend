@@ -31,6 +31,10 @@ export default async function updateVendorInfo(data: VendorUpdateSchema) {
     stats: data.stats,
   };
 
+  if (data.profileImage) {
+    formData.append('profileImage', data.profileImage);
+  }
+
   if (data.vendorBannerImageUrl) {
     formData.append('vendorBannerImageUrl', data.vendorBannerImageUrl);
   }
@@ -47,8 +51,6 @@ export default async function updateVendorInfo(data: VendorUpdateSchema) {
     'request',
     new Blob([JSON.stringify(jsonPart)], { type: 'application/json' }),
   );
-
-  console.log(formData);
 
   await serverApi
     .put(`api/b2b-service/vendor`, {

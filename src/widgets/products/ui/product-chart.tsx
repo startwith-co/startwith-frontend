@@ -18,9 +18,11 @@ import { StatsProps } from '@/views/vendorMy/model/type';
 export default async function ProductChart({
   solutionSeq,
   stats,
+  vendorName,
 }: {
   solutionSeq: number;
   stats: StatsProps[];
+  vendorName: string;
 }) {
   const data = await getReviewList(solutionSeq);
   return (
@@ -40,7 +42,7 @@ export default async function ProductChart({
       </div>
       <div className="relative -top-32 flex flex-col">
         <span className="mb-6.5 text-xl font-bold">
-          스타트윗 주요 기업 고객
+          {vendorName} 주요 기업 고객
         </span>
         <div className="grid grid-cols-6">
           <div className="bg-vendor-gray aspect-square" />
