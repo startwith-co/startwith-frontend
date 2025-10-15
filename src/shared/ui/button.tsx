@@ -35,6 +35,8 @@ const buttonVariants = cva(
           'bg-gradient-to-t from-[#6E86FF] to-[#5B76FF] text-white hover:brightness-110 hover:shadow-md rounded-sm',
         home: 'bg-white text-black font-bold shadow-lg rounded-xl',
         category: 'bg-[#DBE8FF] text-black',
+        graySubmit:
+          'bg-vendor-gray text-vendor-secondary hover:bg-vendor-primary h-[47px] w-[240px] border-none text-center hover:text-white',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

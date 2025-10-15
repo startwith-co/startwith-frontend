@@ -17,6 +17,13 @@ let nextConfig: NextConfig = {
       bodySizeLimit: '30mb',
     },
   },
+  logging: {
+    incomingRequests: {
+      ignore: [
+        /\/api\/auth\/session/, // NextAuth 세션 체크 무시
+      ],
+    },
+  },
   webpack: (config) => {
     const newConfig = { ...config };
 

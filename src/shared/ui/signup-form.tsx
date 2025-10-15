@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useActionState, FormEvent } from 'react';
+import { ReactNode, FormEvent } from 'react';
 import SubmitCustomButton from './submit-custom-button';
 
 interface SignupFormProps {
@@ -10,8 +10,6 @@ interface SignupFormProps {
   action: (prevState: void, formData: FormData) => Promise<void> | void;
   formProps?: string;
   buttonWrapperClassName?: string;
-  loadingText?: string;
-  loadingTextProps?: string;
   disabled?: boolean;
   variant?:
     | 'default'
@@ -32,14 +30,10 @@ function SignupForm({
   children,
   buttonProps,
   formProps,
-  loadingText,
   variant,
-  loadingTextProps,
   buttonWrapperClassName = '',
   disabled,
 }: SignupFormProps) {
-  const [state, formAction] = useActionState(action, undefined);
-
   const handleClientSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -53,8 +47,6 @@ function SignupForm({
         <SubmitCustomButton
           buttonName={buttonName}
           buttonProps={buttonProps}
-          loadingText={loadingText || '로딩 중'}
-          loadingTextProps={loadingTextProps}
           variant={variant || 'default'}
           disabled={disabled}
         />

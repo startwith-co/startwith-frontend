@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Dropdown from '@/shared/ui/dropdown';
 import { ApiResponse } from '@/shared/model/apiType';
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import { PaymentInfoProps } from '../model/type';
 
 function ItemDetailSection() {

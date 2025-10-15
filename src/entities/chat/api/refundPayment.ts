@@ -1,4 +1,4 @@
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 
 export default async function refundPayment({
   orderId,

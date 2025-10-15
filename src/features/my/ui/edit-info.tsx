@@ -81,7 +81,6 @@ function EditInfo({ company, email, phoneNumber, industry }: EditInfoProps) {
       buttonProps="w-[180px] h-[35px] font-light text-sm"
       buttonName="수정하기"
       buttonWrapperClassName="flex justify-center"
-      loadingText="수정 중.."
       disabled={!isValid || !selectedIndustry || !file}
     >
       <div className="flex items-center">

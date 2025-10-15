@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Star } from 'lucide-react';
 import SubmitCustomButton from '@/shared/ui/submit-custom-button';
 import CustomModal from '@/shared/ui/custommodal';
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import useCurrentSession from '@/shared/model/useCurrentSession';
 
 export default function ReviewModal({

@@ -25,7 +25,8 @@ function EditVendorTextArea({
       <div className="align-center flex w-full flex-row justify-center gap-5">
         <Button
           asChild={false}
-          className="bg-vendor-gray h-[40px] w-[185px] font-bold text-black hover:bg-[#3c62d6] hover:text-white"
+          className="h-[40px] w-[185px]"
+          variant="graySubmit"
           onClick={() => setValue('vendorExplanation', '')}
           type="button"
         >
@@ -33,7 +34,8 @@ function EditVendorTextArea({
         </Button>
         <Button
           asChild={false}
-          className="bg-vendor-gray h-[40px] w-[185px] font-bold text-black hover:bg-[#3c62d6] hover:text-white"
+          className="h-[40px] w-[185px]"
+          variant="graySubmit"
           type="submit"
           disabled={isLoading}
         >

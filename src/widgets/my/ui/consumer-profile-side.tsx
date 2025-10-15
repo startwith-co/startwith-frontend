@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import cn from '@/shared/lib/utils';
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import { ApiResponse } from '@/shared/model/apiType';
 import { ConsumerInfoProps } from '@/views/vendorMy/model/type';
 

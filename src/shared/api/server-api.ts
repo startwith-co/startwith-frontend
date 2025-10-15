@@ -1,6 +1,5 @@
 import ky, { HTTPError } from 'ky';
 import { auth } from '@/auth';
-import getErrorDataFromKyError from '../lib/error-handler';
 
 const serverApi = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_URL,

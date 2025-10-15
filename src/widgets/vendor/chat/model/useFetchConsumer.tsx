@@ -2,7 +2,7 @@
 
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { useState, useEffect } from 'react';
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import { ApiResponse } from '@/shared/model/apiType';
 import { ConsumerInfoProps } from '@/views/vendorMy/model/type';
 import { useSearchParams } from 'next/navigation';

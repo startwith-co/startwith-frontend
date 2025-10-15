@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import ChatsVendor from '@/entities/chat/ui/chats-vendor';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import useCurrentSession from '@/shared/model/useCurrentSession';
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import { ConsumerDetailType } from '@/shared/model/consumerDetailType';
 import { ApiResponse } from '@/shared/model/apiType';
 import getRoomInformationById from '@/shared/api/get-room-information-by-id';

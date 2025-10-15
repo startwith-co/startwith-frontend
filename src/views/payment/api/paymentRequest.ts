@@ -1,5 +1,5 @@
 import { ApiResponse } from '@/shared/model/apiType';
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import { PaymentSuccessProps } from '../model/type';
 
 export default async function paymentRequest({

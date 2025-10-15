@@ -1,4 +1,3 @@
-import { auth } from '@/auth';
 import Footer from '@/shared/ui/footer';
 import Header from '@/shared/ui/header';
 
@@ -16,12 +15,11 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
   return (
     <div className="bg-vendor-bg flex w-screen flex-col overflow-y-scroll">
       <Header />
       <main className="mt-10 mb-60 flex w-full items-start">
-        <VendorProfileSide routes={routes} id={session?.vendorSeq || 0} />
+        <VendorProfileSide routes={routes} />
         {children}
       </main>
       <Footer mode="vendor" />
