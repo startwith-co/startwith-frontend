@@ -1,4 +1,4 @@
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import { v4 as uuid } from 'uuid';
 import { ApiResponse } from '@/shared/model/apiType';
 import { PaymentEventResponse, PaymentEvent } from '../model/type';

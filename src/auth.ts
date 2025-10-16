@@ -92,7 +92,6 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
         };
       }
       if (Date.now() > (token.accessTokenExpireAt as number)) {
-        signOut();
         redirect('/login');
       }
       return token;

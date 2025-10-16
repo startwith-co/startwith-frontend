@@ -30,7 +30,7 @@ function VendorProfileSide({ audit }: { audit: boolean }) {
       >
         <span className="text-[13px] text-white">?</span>
         {isModalOpen && (
-          <DarkBox className="absolute top-0 left-full z-10 flex w-[338px] p-7.5 shadow-md">
+          <DarkBox className="absolute top-0 left-full z-50 flex w-[338px] p-7.5 shadow-md">
             <div className="flex w-full flex-col items-center gap-5">
               <h2 className="font-semibold">입점 심사란?</h2>
               <p className="text-center text-sm text-[#7A7A7A] [&>span]:font-bold">

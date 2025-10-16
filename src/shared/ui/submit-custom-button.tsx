@@ -7,8 +7,6 @@ import Spinner from './spinner';
 interface SubmitCustomButtonProps {
   buttonName: string;
   buttonProps: string;
-  loadingText: string;
-  loadingTextProps?: string;
   disabled?: boolean;
   variant?:
     | 'default'
@@ -25,8 +23,6 @@ interface SubmitCustomButtonProps {
 function SubmitCustomButton({
   buttonName,
   buttonProps,
-  loadingText,
-  loadingTextProps,
   variant,
   disabled,
 }: SubmitCustomButtonProps) {

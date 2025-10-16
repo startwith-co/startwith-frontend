@@ -1,4 +1,4 @@
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import deleteLastMessage from './delete-last-message';
 
 export default async function ChatFilePost(

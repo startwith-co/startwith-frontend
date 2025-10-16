@@ -5,7 +5,7 @@ import requestPost from '@/shared/api/request-post';
 import { useSolution } from '@/shared/model/SolutionProvider';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { v4 as uuidv4 } from 'uuid';
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import { ApiResponse } from '@/shared/model/apiType';
 import { toast } from 'react-toastify';
 import { PaymentConflictProps } from '../model/type';

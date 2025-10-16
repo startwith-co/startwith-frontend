@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { industryToKo } from '@/shared/model/industryMap';
 import { toast } from 'react-toastify';
 import editInfoPost from '../api/editInfoPost';
+import revalidateConsumerProfile from '../api/revalidateConsumerProfile';
 
 const schema = z.object({
   company: z.string().min(1, '기업명 입력해주세요.'),
@@ -72,7 +73,7 @@ function EditInfo({ company, email, phoneNumber, industry }: EditInfoProps) {
           // TODO: 나중에 수정 예정
           // setSelectedIndustry(null);
           // setPreview(null);
-          window.location.reload();
+          revalidateConsumerProfile();
         } catch (error) {
           toast.error('수정 중 오류가 발생했습니다.');
         }
@@ -81,7 +82,6 @@ function EditInfo({ company, email, phoneNumber, industry }: EditInfoProps) {
       buttonProps="w-[180px] h-[35px] font-light text-sm"
       buttonName="수정하기"
       buttonWrapperClassName="flex justify-center"
-      loadingText="수정 중.."
       disabled={!isValid || !selectedIndustry || !file}
     >
       <div className="flex items-center">

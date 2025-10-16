@@ -88,7 +88,6 @@ function SignupVendorForm() {
       }
       buttonProps="bg-gradient-to-r from-[#2D2D2D] to-[#404040] text-white w-full h-[60px] font-extrabold text-lg shadow-sm mb-8 mt-5"
       buttonName="솔루션 공급사로 파트너쉽 시작"
-      loadingText="신청 중.."
       disabled={!isValid || !matchSuccess || !emailVerified || !file}
     >
       <div className="w-[700px] space-y-4">

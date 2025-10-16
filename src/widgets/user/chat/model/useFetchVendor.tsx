@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { VendorInfoProps } from '@/views/vendorMy/model/type';
 import { ApiResponse } from '@/shared/model/apiType';
 import { VendorCategoryProps } from '@/views/products/model/type';
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import { useSearchParams } from 'next/navigation';
 
 interface VendorInfos {
