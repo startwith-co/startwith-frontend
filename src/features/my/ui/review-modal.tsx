@@ -78,8 +78,6 @@ export default function ReviewModal({
           buttonName="리뷰 남기기"
           buttonProps="h-[50px] w-full bg-[#4f7df9] font-bold text-white hover:bg-[#3c62d6] mt-5"
           disabled={text.length <= 10 || rating === 0}
-          loadingText="로딩 중"
-          loadingTextProps="text-sm font-bold"
         />
       </form>
     </CustomModal>

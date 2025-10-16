@@ -78,7 +78,6 @@ function ResetForm() {
         buttonProps="bg-gradient-to-t from-[#6E86FF] to-[#5B76FF] text-white w-full h-[55px] font-bold text-sm mt-4"
         buttonName="비밀번호 재설정 완료"
         buttonWrapperClassName="flex justify-center"
-        loadingText="재설정 중.."
         formProps="border-0 space-y-4 w-[500px]"
         disabled={!isValid || !matchSuccess}
       >

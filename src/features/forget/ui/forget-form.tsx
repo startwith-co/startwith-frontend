@@ -38,7 +38,6 @@ function ForgetForm() {
       buttonProps="bg-gradient-to-t from-[#6E86FF] to-[#5B76FF] text-white w-full h-[55px] font-bold text-sm mt-4 "
       buttonName="이메일로 비밀번호 재설정 링크 전송"
       buttonWrapperClassName="flex justify-center"
-      loadingText="전송 중.."
       formProps="border-0 space-y-4 w-[500px]"
       disabled={!isValid}
     >
