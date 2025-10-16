@@ -92,7 +92,6 @@ function SignupUserForm() {
       variant="textBlue"
       buttonProps=" w-full h-[60px] font-extrabold text-lg shadow-sm mb-8"
       buttonName="기업 고객으로 편리한 솔루션 탐색 시작"
-      loadingText="신청 중.."
       formProps="w-[700px] space-y-6"
       disabled={!isValid || !matchSuccess || !emailVerified}
     >

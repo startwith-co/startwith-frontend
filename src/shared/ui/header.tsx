@@ -16,7 +16,7 @@ import { signOut } from 'next-auth/react';
 import Input from './input';
 import { Button } from './button';
 import Dropdown from './dropdown';
-import api from '../api/index-api';
+import api from '../api/client-api';
 
 interface HeaderProps {
   className?: string;

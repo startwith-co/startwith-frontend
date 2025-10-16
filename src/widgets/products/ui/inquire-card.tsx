@@ -5,7 +5,7 @@ import { Button } from '@/shared/ui/button';
 import WhiteBox from '@/shared/ui/white-box';
 import { useEffect } from 'react';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import { ApiResponse } from '@/shared/model/apiType';
 import { ConsumerDetailType } from '@/shared/model/consumerDetailType';
 import { useRouter } from 'next/navigation';

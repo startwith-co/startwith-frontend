@@ -10,6 +10,7 @@ import VendorCustomerOverview from '@/widgets/vendorMy/ui/vendor-customer-overvi
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
+import revalidateVendorProfile from '@/features/vendorMy/api/revalidateVendorProfile';
 import {
   VendorUpdateSchema,
   getPartialSchema,
@@ -163,7 +164,7 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
       <div className="flex flex-col gap-7.5 pr-10">
         <div className="grid grid-cols-2 gap-7.5">
           <EditVendorInfo
-            onSave={() =>
+            onSave={() => {
               onSubmit([
                 'profileImage',
                 'vendorName',
@@ -172,8 +173,9 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
                 'email',
                 'accountNumber',
                 'bank',
-              ])
-            }
+              ]);
+              revalidateVendorProfile();
+            }}
             isLoading={isLoading}
           />
           <EditVendorTextArea

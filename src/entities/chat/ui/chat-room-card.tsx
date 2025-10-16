@@ -5,7 +5,7 @@ import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { Avatar, AvatarImage, AvatarFallback } from '@/shared/ui/avatar';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import { ApiResponse } from '@/shared/model/apiType';
 import {
   ConsumerInfoProps,

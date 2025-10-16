@@ -172,7 +172,8 @@ function EditVendorInfo({
       </div>
       <Button
         asChild={false}
-        className="bg-vendor-gray mt-5 h-[40px] w-[185px] self-center font-bold text-black hover:bg-[#3c62d6] hover:text-white"
+        className="mt-5 h-[40px] w-[185px] self-center"
+        variant="graySubmit"
         onClick={() => {}}
         type="submit"
         disabled={!isDirty || isLoading}

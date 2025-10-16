@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Star } from 'lucide-react';
 import SubmitCustomButton from '@/shared/ui/submit-custom-button';
 import CustomModal from '@/shared/ui/custommodal';
-import api from '@/shared/api/index-api';
+import api from '@/shared/api/client-api';
 import useCurrentSession from '@/shared/model/useCurrentSession';
 
 export default function ReviewModal({
@@ -78,8 +78,6 @@ export default function ReviewModal({
           buttonName="리뷰 남기기"
           buttonProps="h-[50px] w-full bg-[#4f7df9] font-bold text-white hover:bg-[#3c62d6] mt-5"
           disabled={text.length <= 10 || rating === 0}
-          loadingText="로딩 중"
-          loadingTextProps="text-sm font-bold"
         />
       </form>
     </CustomModal>

@@ -117,7 +117,6 @@ function RequestPayForm() {
       buttonProps="w-full h-[45px] text-white font-semibold mt-2 disabled:opacity-50"
       buttonName="결제 요청하기"
       buttonWrapperClassName="mt-4"
-      loadingText="요청 중..."
       formProps="w-full px-4 py-4 space-y-6"
       variant="bgBlueGradient"
       disabled={!isValid || !contractFile || !refundFile}
