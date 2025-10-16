@@ -9,7 +9,8 @@ async function getVendorProfile(vendorSeq: number) {
   try {
     const response: ApiResponse<VendorInfoProps> = await serverApi
       .get(`api/b2b-service/vendor?vendorSeq=${vendorSeq}`, {
-        next: { tags: ['vendor/my/profile'] },
+        cache: 'force-cache',
+        next: { revalidate: 3600, tags: ['vendor/my/profile'] },
       })
       .json();
     return {
