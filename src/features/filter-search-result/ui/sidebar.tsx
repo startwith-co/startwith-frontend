@@ -11,11 +11,9 @@ import {
 import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-const categoryMap: Record<string, string> = {
-  '비전 검사': '불량 검출 · 예측(비전 검사)',
-  예지보전: '설비 이상 및 고장 예측(예지보전)',
-  '공정 이상 감지': '실시간 공정 상태 모니터링(공정 이상 감지)',
-  '공정 재고관리': 'MES 재고관리(공정 재고관리)',
+const industryMap: Record<string, string> = {
+  IT: 'IT',
+  이커머스: '이커머스(쿠팡, 네이버 등)',
 };
 
 export default function Sidebar({
@@ -29,7 +27,7 @@ export default function Sidebar({
 }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterList, setFilterList] = useState({
-    category: category.match(/\(([^)]+)\)/)?.[1],
+    category,
     industry,
     budget,
   });
@@ -38,10 +36,9 @@ export default function Sidebar({
   const handleFilter = () => {
     const params = new URLSearchParams();
 
-    const categoryValue = categoryMap[filterList.category as string];
-    if (categoryValue) params.set('category', categoryValue);
-
-    if (filterList.industry) params.set('industry', filterList.industry);
+    if (filterList.category) params.set('category', filterList.category);
+    if (filterList.industry)
+      params.set('industry', industryMap[filterList.industry]);
     if (filterList.budget) params.set('budget', filterList.budget);
 
     const query = params.toString();
@@ -65,29 +62,10 @@ export default function Sidebar({
           <div>
             <ul className="mt-5 flex flex-col gap-7.5 [&>li>div]:mt-2.5">
               <li>
-                <span>솔루션 카테고리 선택</span>
-                <div className="grid grid-cols-2 gap-3.5">
-                  {solutionCategories.map((solutionCategory) => (
-                    <FilterButton
-                      key={solutionCategory}
-                      value={solutionCategory}
-                      isActive={solutionCategory === filterList.category}
-                      onClick={() =>
-                        setFilterList({
-                          ...filterList,
-                          category: solutionCategory,
-                        })
-                      }
-                    />
-                  ))}
-                </div>
-              </li>
-              <li>
                 <span>산업군 카테고리 선택</span>
-                <div className="flex flex-wrap gap-3.5">
+                <div className="grid grid-cols-2 gap-3.5">
                   {industryCategories.map((industryCategory) => (
                     <FilterButton
-                      className="w-full text-sm"
                       key={industryCategory}
                       value={industryCategory}
                       isActive={industryCategory === filterList.industry}
@@ -95,6 +73,25 @@ export default function Sidebar({
                         setFilterList({
                           ...filterList,
                           industry: industryCategory,
+                        })
+                      }
+                    />
+                  ))}
+                </div>
+              </li>
+              <li>
+                <span>솔루션 카테고리 선택</span>
+                <div className="flex flex-wrap gap-3.5">
+                  {solutionCategories.map((solutionCategory) => (
+                    <FilterButton
+                      className="w-full text-sm"
+                      key={solutionCategory}
+                      value={solutionCategory}
+                      isActive={solutionCategory === filterList.category}
+                      onClick={() =>
+                        setFilterList({
+                          ...filterList,
+                          category: solutionCategory,
                         })
                       }
                     />
