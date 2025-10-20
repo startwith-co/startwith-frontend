@@ -3,8 +3,8 @@
 import { auth } from '@/auth';
 import serverApi from '@/shared/api/server-api';
 import { revalidateTag } from 'next/cache';
+import { categoryToEn } from '@/shared/model/categoryMap';
 import { VendorRegisterSchema } from '../model/vendor-register-schema';
-import vendorCategoryMapping from '../utils/vendor-category-mapping';
 
 export default async function registerSolution(data: VendorRegisterSchema) {
   const session = await auth();
@@ -17,7 +17,7 @@ export default async function registerSolution(data: VendorRegisterSchema) {
     vendorSeq: session?.vendorSeq || 0,
     solutionName: data.solutionName,
     solutionDetail: data.solutionDetail,
-    category: vendorCategoryMapping(data.category),
+    category: categoryToEn[data.category],
     industry: data.industry,
     recommendedCompanySize: data.recommendedCompanySize.join(','),
     solutionImplementationType: data.solutionImplementationType.join(','),
