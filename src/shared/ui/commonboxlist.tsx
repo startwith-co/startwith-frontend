@@ -2,8 +2,8 @@ import Image from 'next/image';
 
 const images = Array.from({ length: 10 }, (_, i) => ({
   id: i,
-  src: '/images/profileAdd.png',
-  alt: `유저 ${i + 1}`,
+  src: i % 2 === 0 ? '/images/musaic-logo.png' : '/images/solu-logo.png',
+  alt: i % 2 === 0 ? `뮤직 로고 ${i + 1}` : `솔루 로고 ${i + 1}`,
 }));
 
 const columnStructure = [3, 4, 3];

@@ -4,10 +4,10 @@ function LoginThirdLeftSection() {
   return (
     <section className="flex h-screen w-full flex-col items-center justify-center gap-5 bg-white pt-5">
       <h1 className="text-3xl font-bold">
-        <span className="text-3xl text-[#4f7df9]">SOLU</span>는 검증된 기업
-        솔루션만
+        <span className="text-3xl text-[#4f7df9]">SOLU</span>는 검증된 비지니스
+        도구만을
         <br />
-        <span className="font-extrabold">‘선별하여 제안’</span>합니다
+        여러분께 보여드립니다.
       </h1>
       <Image
         src="/images/login-third.png"

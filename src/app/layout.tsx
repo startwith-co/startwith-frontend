@@ -7,49 +7,19 @@ import { SessionProvider } from 'next-auth/react';
 import AmplitudeContextProvider from './_providers/amplitude-provider';
 import SentryProvider from './_providers/sentry-provider';
 
-const PretendardFont = localFont({
+const pretendardFont = localFont({
   src: [
     {
-      path: '../shared/fonts/Pretendard-Black.woff2',
-      weight: '900',
-    },
-    {
-      path: '../shared/fonts/Pretendard-ExtraBold.woff2',
-      weight: '800',
-    },
-    {
-      path: '../shared/fonts/Pretendard-Bold.woff2',
-      weight: '700',
-    },
-    {
-      path: '../shared/fonts/Pretendard-SemiBold.woff2',
-      weight: '600',
-    },
-    {
-      path: '../shared/fonts/Pretendard-Medium.woff2',
-      weight: '500',
-    },
-    {
-      path: '../shared/fonts/Pretendard-Regular.woff2',
-      weight: '400',
-    },
-    {
-      path: '../shared/fonts/Pretendard-Light.woff2',
-      weight: '300',
-    },
-    {
-      path: '../shared/fonts/Pretendard-ExtraLight.woff2',
-      weight: '200',
-    },
-    {
-      path: '../shared/fonts/Pretendard-Thin.woff2',
-      weight: '100',
+      path: '../shared/fonts/PretendardVariable.woff2',
     },
   ],
+  variable: '--font-pretendard',
+  weight: '100 900',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: '제조 SME 전용 B2B 솔루션 중개 플랫폼, SOLU',
+  title: 'SME B2B SaaS 마켓플레이스,SOLU',
   description:
     '기업 고객에게는 더 나은 의사 결정을 지원하며, 밴더에게는 더 나은 기회를 제공합니다.',
 };
@@ -61,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="kr">
-      <body className={`${PretendardFont.className}`}>
+      <body className={`${pretendardFont.className}`}>
         <SessionProvider>
           <ToastContainer
             position="top-right"
