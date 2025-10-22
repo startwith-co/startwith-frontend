@@ -1,11 +1,10 @@
 import Image from 'next/image';
 import '@/app/globals.css';
 
-// 30개의 더미 이미지 생성
 const dummyImages = Array.from({ length: 30 }, (_, i) => ({
   id: i,
-  src: '/images/profileAdd.png',
-  alt: `이미지 ${i + 1}`,
+  src: i % 2 === 0 ? '/images/musaic-logo.png' : '/images/solu-logo.png',
+  alt: i % 2 === 0 ? `뮤직 로고 ${i + 1}` : `솔루 로고 ${i + 1}`,
 }));
 
 // 3개의 열로 나누기
@@ -40,7 +39,7 @@ function LoginCustomSection() {
               {pair.map(({ id, src, alt }) => (
                 <div
                   key={id}
-                  className="relative h-32 w-32 rounded-xl bg-white shadow-md"
+                  className="relative h-40 w-40 rounded-xl bg-white shadow-md"
                 >
                   <Image src={src} alt={alt} layout="fill" objectFit="cover" />
                 </div>
