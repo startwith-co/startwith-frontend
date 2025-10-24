@@ -102,8 +102,8 @@ importers:
         specifier: 5.0.0-beta.28
         version: 5.0.0-beta.28(next@15.3.1(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       next-fetch-logger:
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.0.9
+        version: 1.0.9(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       pnpm:
         specifier: ^10.9.0
         version: 10.11.1
@@ -5040,8 +5040,11 @@ packages:
       nodemailer:
         optional: true
 
-  next-fetch-logger@1.0.5:
-    resolution: {integrity: sha512-dZgHN+5NwPwjJun5QEcRDUmr2iF8e4BtAuJedr2WJwoGNQ0DsNvhQ+JR9hMjr6npUVrwaCPNbjzR/kMC4RuT+A==}
+  next-fetch-logger@1.0.9:
+    resolution: {integrity: sha512-mUstP4WzhUJ+Lpw1gSQb9DfFYMsyiFnvoIodpDVPRInfScgfGWeL0m66lEEj1YsPYLsKzaEsXBrHl/A0BWB00Q==}
+    peerDependencies:
+      react: ^18 || ^19
+      react-dom: ^18 || ^19
 
   next@15.3.1:
     resolution: {integrity: sha512-8+dDV0xNLOgHlyBxP1GwHGVaNXsmp+2NhZEYrXr24GWLHtt27YrBPbPuHvzlhi7kZNYjeJNR93IF5zfFu5UL0g==}
@@ -11716,7 +11719,10 @@ snapshots:
       next: 15.3.1(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
 
-  next-fetch-logger@1.0.5: {}
+  next-fetch-logger@1.0.9(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   next@15.3.1(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
