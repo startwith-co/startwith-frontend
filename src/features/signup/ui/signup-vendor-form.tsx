@@ -4,13 +4,13 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '@/shared/ui/input';
-import SignupForm from '@/shared/ui/signup-form';
 import signupVendorPost from '@/features/signup/api/signupVendorPost';
 import { CheckCircle } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 import useFileUpload from '@/shared/model/useFileUpload';
 import { useState } from 'react';
-import ErrorMessage from '@/shared/ui/error-message';
+import CustomForm from '@/shared/ui/custom-form';
+import ValidatedInput from '@/shared/ui/validated-input';
 import useSendEmail from '../model/useSendEmail';
 import useVerifyEmail from '../model/useVerifyEmail';
 
@@ -49,13 +49,8 @@ function SignupVendorForm() {
     mode: 'onChange',
   });
 
-  const {
-    file,
-    fileInputRef,
-    handleFileChange,
-    handleClickFileInput,
-    preview,
-  } = useFileUpload();
+  const { file, fileInputRef, handleFileChange, handleClickFileInput } =
+    useFileUpload();
   const [matchSuccess, setMatchSuccess] = useState(false);
   const [hasTriedConfirm, setHasTriedConfirm] = useState(false);
 
@@ -82,16 +77,23 @@ function SignupVendorForm() {
   };
 
   return (
-    <SignupForm
-      action={(prevState, formData) =>
-        signupVendorPost(prevState, formData, file)
+    <CustomForm
+      onSubmit={(formData) => signupVendorPost(formData, file)}
+      button={
+        <Button
+          type="submit"
+          asChild={false}
+          className="mb-8 h-[60px] w-full text-lg font-extrabold shadow-sm"
+          variant="textBlue"
+          disabled={!isValid || !matchSuccess || !emailVerified || !file}
+        >
+          솔루션 공급사로 파트너쉽 시작
+        </Button>
       }
-      buttonProps="bg-gradient-to-r from-[#2D2D2D] to-[#404040] text-white w-full h-[60px] font-extrabold text-lg shadow-sm mb-8 mt-5"
-      buttonName="솔루션 공급사로 파트너쉽 시작"
-      disabled={!isValid || !matchSuccess || !emailVerified || !file}
+      className="w-[700px] space-y-6"
     >
-      <div className="w-[700px] space-y-4">
-        <div className="mb-0 grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
+      <ValidatedInput
+        input={
           <div className="relative w-full">
             <Input
               {...register('company')}
@@ -99,81 +101,92 @@ function SignupVendorForm() {
               className="h-[55px] w-full bg-white indent-2"
             />
           </div>
+        }
+        errorMessage={errors.company?.message}
+        button={
+          <>
+            <input
+              id="file"
+              ref={fileInputRef}
+              type="file"
+              accept="application/pdf"
+              className="hidden"
+              onChange={handleFileChange}
+            />
+            <Button
+              type="button"
+              asChild={false}
+              variant="textBlue"
+              onClick={handleClickFileInput}
+              className="h-[55px] w-full text-sm text-[#5B76FF] shadow-sm"
+            >
+              {file ? (
+                <p className="truncate text-center text-xs text-gray-600">
+                  {file.name}
+                </p>
+              ) : (
+                '사업자 등록증 첨부하기'
+              )}
+            </Button>
+          </>
+        }
+      />
 
-          <input
-            id="file"
-            ref={fileInputRef}
-            type="file"
-            accept="application/pdf"
-            className="hidden"
-            onChange={handleFileChange}
+      <ValidatedInput
+        input={
+          <Input
+            {...register('name')}
+            placeholder="담당자 성함"
+            className="mt-5 mb-0 h-[55px] w-full bg-white indent-2"
           />
-          <Button
-            type="button"
-            asChild={false}
-            variant="textBlue"
-            onClick={handleClickFileInput}
-            className="h-[55px] w-full text-sm text-[#5B76FF] shadow-sm"
-          >
-            {file ? (
-              <p className="truncate text-center text-xs text-gray-600">
-                {file.name}
-              </p>
-            ) : (
-              '사업자 등록증 첨부하기'
-            )}
-          </Button>
-        </div>
+        }
+        errorMessage={errors.name?.message}
+      />
 
-        {errors.company && <ErrorMessage message={errors.company.message} />}
+      <ValidatedInput
+        input={
+          <Input
+            {...register('phoneNumber', {
+              setValueAs: (v) => {
+                if (!v) return '';
+                const digits = String(v).replace(/\D/g, '');
+                if (digits.length < 4) return digits;
+                if (digits.length < 7)
+                  return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+                if (digits.length < 11)
+                  return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+                return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+              },
+            })}
+            placeholder="담당자 연락처(휴대폰)"
+            className="mt-5 mb-0 h-[55px] w-full bg-white indent-2"
+            onChange={(e) => {
+              const digits = e.target.value.replace(/\D/g, '');
+              if (digits.length < 4) e.target.value = digits;
+              else if (digits.length < 7)
+                e.target.value = `${digits.slice(0, 3)}-${digits.slice(3)}`;
+              else if (digits.length < 11)
+                e.target.value = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+              else
+                e.target.value = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+            }}
+          />
+        }
+        errorMessage={errors.phoneNumber?.message}
+      />
 
-        <Input
-          {...register('name')}
-          placeholder="담당자 성함"
-          className="mt-5 mb-0 h-[55px] w-full bg-white indent-2"
-        />
-        {errors.name && <ErrorMessage message={errors.name.message} />}
-
-        <Input
-          {...register('phoneNumber', {
-            setValueAs: (v) => {
-              if (!v) return '';
-              const digits = String(v).replace(/\D/g, '');
-              if (digits.length < 4) return digits;
-              if (digits.length < 7)
-                return `${digits.slice(0, 3)}-${digits.slice(3)}`;
-              if (digits.length < 11)
-                return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
-              return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
-            },
-          })}
-          placeholder="담당자 연락처(휴대폰)"
-          className="mt-5 mb-0 h-[55px] w-full bg-white indent-2"
-          onChange={(e) => {
-            const digits = e.target.value.replace(/\D/g, '');
-            if (digits.length < 4) e.target.value = digits;
-            else if (digits.length < 7)
-              e.target.value = `${digits.slice(0, 3)}-${digits.slice(3)}`;
-            else if (digits.length < 11)
-              e.target.value = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
-            else
-              e.target.value = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
-          }}
-        />
-        {errors.phoneNumber && (
-          <ErrorMessage message={errors.phoneNumber.message} />
-        )}
-
-        <div className="mt-5 mb-0 grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
+      <ValidatedInput
+        input={
           <Input
             {...register('email')}
             placeholder="담당자 이메일 입력"
             className="h-[55px] w-full bg-white indent-2"
           />
-
+        }
+        button={
           <Button
             type="button"
-            disabled={isCounting || !emailRegex.test(watch('email'))}
+            disabled={!emailRegex.test(watch('email'))}
             asChild={false}
             variant="textBlue"
             onClick={() => handleSendEmail(watch('email'), 'vendor')}
@@ -183,45 +196,56 @@ function SignupVendorForm() {
               ? `전송 완료 (${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, '0')})`
               : '이메일 인증코드 전송'}
           </Button>
+        }
+        errorMessage={errors.email?.message}
+        message={isCounting ? '인증코드 전송 완료' : ''}
+      />
+      <div className="h-[60px]">
+        <div
+          className={`grid grid-cols-[3fr_1fr] items-center justify-center gap-4 transition-all duration-500 ${
+            isCounting ? 'opacity-100' : 'pointer-events-none opacity-50'
+          }`}
+        >
+          <Input
+            placeholder="인증코드 입력"
+            className="h-[55px] w-full bg-white indent-2"
+            {...register('code')}
+          />
+          <Button
+            type="button"
+            asChild={false}
+            variant="textBlue"
+            onClick={verifyEmail}
+            disabled={emailVerified}
+            className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
+          >
+            인증코드 인증하기
+          </Button>
         </div>
-        {errors.email && <ErrorMessage message={errors.email.message} />}
+      </div>
+      <ValidatedInput
+        input={
+          <Input
+            type="password"
+            {...register('password')}
+            placeholder="비밀번호 입력 *8~16자리 입력, 특수기호(!@#) 1개 포함"
+            className="mt-5 mb-0 h-[55px] w-full bg-white indent-2"
+          />
+        }
+        errorMessage={errors.password?.message}
+      />
 
-        {isCounting && (
-          <div className="mt-5 grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
-            <Input
-              placeholder="인증코드 입력"
-              className="h-[55px] w-full bg-white indent-2"
-              {...register('code')}
-            />
-            <Button
-              type="button"
-              asChild={false}
-              variant="textBlue"
-              onClick={verifyEmail}
-              disabled={emailVerified}
-              className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
-            >
-              인증코드 인증하기
-            </Button>
-          </div>
-        )}
-
-        <Input
-          type="password"
-          {...register('password')}
-          placeholder="비밀번호 입력 *8~16자리 입력, 특수기호(!@#) 1개 포함"
-          className="mt-5 mb-0 h-[55px] w-full bg-white indent-2"
-        />
-        {errors.password && <ErrorMessage message={errors.password.message} />}
-
-        <div className="mt-5 mb-0 grid grid-cols-[3fr_1fr] items-center justify-center gap-4">
+      <ValidatedInput
+        input={
           <Input
             placeholder="비밀번호 확인"
             className="h-[55px] w-full bg-white indent-2"
             type="password"
             {...register('confirmPassword')}
           />
-
+        }
+        errorMessage={errors.confirmPassword?.message}
+        button={
           <Button
             type="button"
             asChild={false}
@@ -238,12 +262,9 @@ function SignupVendorForm() {
               <CheckCircle className="ml-1 h-5 w-5 text-green-500" />
             )}
           </Button>
-        </div>
-        {hasTriedConfirm && !matchSuccess && (
-          <ErrorMessage message="비밀번호를 다시 확인해주세요." />
-        )}
-      </div>
-    </SignupForm>
+        }
+      />
+    </CustomForm>
   );
 }
 

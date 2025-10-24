@@ -3,7 +3,7 @@ export interface ApiResponse<T> {
   message: string;
   data: T;
   code?: string;
-  httpStatus?: number;
+  httpStatus: number;
 }
 
 export interface ApiErrorResponse {
