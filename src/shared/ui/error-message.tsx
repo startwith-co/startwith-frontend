@@ -8,7 +8,9 @@ function ErrorMessage({
   className?: string;
 }) {
   return (
-    <p className={cn('inset-2 text-xs text-red-500', className)}>{message}</p>
+    <p className={cn('mt-1 indent-2 text-xs text-red-500', className)}>
+      {message}
+    </p>
   );
 }
 

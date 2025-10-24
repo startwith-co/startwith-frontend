@@ -1,4 +1,4 @@
-import * as ky from 'ky';
+import ky, { HTTPError } from 'ky';
 import { getMessageByCode } from '../model/backend-error-map';
 
 type ParsedError = {
@@ -17,7 +17,7 @@ const FALLBACK_BY_STATUS: Record<number, string> = {
   500: '서버 오류가 발생했습니다.',
 };
 const getErrorDataFromKyError = async (
-  error: ky.HTTPError,
+  error: HTTPError,
 ): Promise<ParsedError> => {
   try {
     const json = (await error.response.json()) as {
@@ -25,6 +25,8 @@ const getErrorDataFromKyError = async (
       message?: string;
       httpStatus?: number;
     };
+
+    console.log('jsonError', json);
 
     const status = json?.httpStatus || error.response.status || 500;
     const code = json?.code ? String(json.code) : undefined;
