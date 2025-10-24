@@ -2,7 +2,6 @@ import nextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import ky from 'ky';
 import { LoginResponse } from '@/features/login/model/loginType';
-import { redirect } from 'next/navigation';
 
 export const { auth, handlers, signIn, signOut } = nextAuth({
   secret: '1004',
@@ -92,7 +91,7 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
         };
       }
       if (Date.now() > (token.accessTokenExpireAt as number)) {
-        redirect('/login');
+        return null;
       }
       return token;
     },

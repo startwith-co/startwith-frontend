@@ -43,7 +43,10 @@ function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onValid)} className="w-full border-0">
+    <form
+      onSubmit={handleSubmit(onValid)}
+      className="mb-10 h-[200px] w-full border-0"
+    >
       <div className="relative w-full">
         <Input
           id="email"
