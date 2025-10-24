@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation';
 import signupUser from './signupUser';
 
 async function signupUserPost(
-  _prevState: void,
   formData: FormData,
   industry: string | undefined,
 ): Promise<void> {
