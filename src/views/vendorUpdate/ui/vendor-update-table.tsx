@@ -4,7 +4,7 @@ import useCurrentSession from '@/shared/model/useCurrentSession';
 import { Button } from '@/shared/ui/button';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { categoryToKo } from '@/shared/model/categoryMap';
+import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
 import getVendorSolutions from '../api/getVendorSolutions';
 import { VendorSolutionType } from '../model/vendorSolutionType';
 import deleteSolution from '../api/deleteSolution';
@@ -50,7 +50,7 @@ export default function VendorUpdateTable() {
             vendorTable.map((item) => (
               <tr key={item.solutionSeq}>
                 <td>{item.solutionName}</td>
-                <td>{categoryToKo[item.category]}</td>
+                <td>{solutionCategoryToLabel[item.category]}</td>
                 <td>{item.amount}</td>
                 <td>
                   <Link

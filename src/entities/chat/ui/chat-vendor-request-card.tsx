@@ -1,5 +1,5 @@
 import Solu from '@/shared/ui/solu';
-import { categoryToKo } from '@/shared/model/categoryMap';
+import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
 import cn from '@/shared/lib/utils';
 
 interface ChatVendorRequestCardProps {
@@ -36,7 +36,7 @@ function ChatVendorRequestCard({
         </div>
         <div className="flex justify-between">
           <span className="font-semibold">솔루션 카테고리</span>
-          <span>{categoryToKo[solutionCategory]}</span>
+          <span>{solutionCategoryToLabel[solutionCategory]}</span>
         </div>
         <div className="flex justify-between">
           <span className="font-semibold">결제 요청 금액</span>

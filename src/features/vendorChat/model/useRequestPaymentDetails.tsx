@@ -2,10 +2,10 @@ import api from '@/shared/api/client-api';
 import { ApiResponse } from '@/shared/model/apiType';
 import { useEffect, useState } from 'react';
 import { getSession } from 'next-auth/react';
-import { categoryToKo } from '@/shared/model/categoryMap';
+import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
 import { CategoryType, SolutionRequest } from './vendorCategotyType';
 
-const valueToLabelMap = Object.entries(categoryToKo).reduce<
+const valueToLabelMap = Object.entries(solutionCategoryToLabel).reduce<
   Record<string, string>
 >((acc, [key, value]) => {
   acc[key] = value;

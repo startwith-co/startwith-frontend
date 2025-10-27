@@ -1,5 +1,5 @@
 import SearchPage from '@/views/search/ui/search-page';
-import { categoryToEn } from '@/shared/model/categoryMap';
+import { solutionCategoryToValue } from '@/shared/model/getCategoryList';
 import getSolutionList from './api/getSolutionList';
 
 export default async function Page({
@@ -10,7 +10,7 @@ export default async function Page({
   const { category, industry, budget, page, keyword } = await searchParams;
 
   const mappedCategory = category
-    ? categoryToEn[category] || category
+    ? solutionCategoryToValue[category] || category
     : undefined;
 
   const solutions = await getSolutionList({

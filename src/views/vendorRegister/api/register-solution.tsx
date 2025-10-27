@@ -3,7 +3,7 @@
 import { auth } from '@/auth';
 import serverApi from '@/shared/api/server-api';
 import { revalidateTag } from 'next/cache';
-import { categoryToEn } from '@/shared/model/categoryMap';
+import { solutionCategoryToValue } from '@/shared/model/getCategoryList';
 import { VendorRegisterSchema } from '../model/vendor-register-schema';
 
 export default async function registerSolution(data: VendorRegisterSchema) {
@@ -17,7 +17,7 @@ export default async function registerSolution(data: VendorRegisterSchema) {
     vendorSeq: session?.vendorSeq || 0,
     solutionName: data.solutionName,
     solutionDetail: data.solutionDetail,
-    category: categoryToEn[data.category],
+    category: solutionCategoryToValue[data.category],
     industry: data.industry,
     recommendedCompanySize: data.recommendedCompanySize.join(','),
     solutionImplementationType: data.solutionImplementationType.join(','),

@@ -3,13 +3,13 @@
 import FilterButton from '@/entities/search/ui/filter-button';
 import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
-import {
-  industryCategories,
-  scaleCategories,
-  solutionCategories,
-} from '@/entities/search/model/sidebar-filter';
+import scaleCategories from '@/entities/search/model/sidebar-filter';
 import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import {
+  industryCategoryLabels,
+  solutionCategoryLabels,
+} from '@/shared/model/getCategoryList';
 
 const industryMap: Record<string, string> = {
   IT: 'IT',
@@ -64,7 +64,7 @@ export default function Sidebar({
               <li>
                 <span>산업군 카테고리 선택</span>
                 <div className="grid grid-cols-2 gap-3.5">
-                  {industryCategories.map((industryCategory) => (
+                  {industryCategoryLabels.map((industryCategory) => (
                     <FilterButton
                       key={industryCategory}
                       value={industryCategory}
@@ -82,7 +82,7 @@ export default function Sidebar({
               <li>
                 <span>솔루션 카테고리 선택</span>
                 <div className="flex flex-wrap gap-3.5">
-                  {solutionCategories.map((solutionCategory) => (
+                  {solutionCategoryLabels.map((solutionCategory) => (
                     <FilterButton
                       className="w-full text-sm"
                       key={solutionCategory}

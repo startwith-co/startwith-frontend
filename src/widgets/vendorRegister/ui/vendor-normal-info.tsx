@@ -1,15 +1,15 @@
 'use client';
 
 import Input from '@/shared/ui/input';
-import {
-  industryCategory,
-  scaleCategory,
-  serviceCategory,
-} from '@/entities/vendorRegister/model/vendor-normal-info-category';
 import VendorSelect from '@/shared/ui/vendor-select';
 import { Controller, useFormContext } from 'react-hook-form';
 import cn from '@/shared/lib/utils';
 import ErrorMessage from '@/shared/ui/error-message';
+import {
+  industryCategoryLabels,
+  solutionCategoryLabels,
+} from '@/shared/model/getCategoryList';
+import { scaleCategory } from '@/entities/vendorRegister/model/vendor-normal-info-category';
 
 export default function VendorNormalInfo() {
   const {
@@ -74,7 +74,7 @@ export default function VendorNormalInfo() {
             render={({ field }) => (
               <>
                 <VendorSelect
-                  options={serviceCategory}
+                  options={solutionCategoryLabels}
                   placeholder="솔루션 카테고리 선택"
                   triggerClassName="w-[220px] h-[40px]"
                   itemsClassName="px-5"
@@ -114,7 +114,7 @@ export default function VendorNormalInfo() {
               return (
                 <div className="flex items-center">
                   <VendorSelect
-                    options={industryCategory}
+                    options={industryCategoryLabels}
                     placeholder="산업군 카테고리 선택"
                     triggerClassName="w-[220px] h-[40px]"
                     itemsClassName="px-5"
