@@ -23,7 +23,7 @@ function MainSectionButtons() {
   };
 
   return (
-    <div className="mt-6 mb-6 grid w-[500px] grid-cols-2 gap-8">
+    <div className="mt-6 mb-6 grid h-[260px] w-[500px] grid-cols-2 gap-8">
       {step === 0
         ? solutionCategoryLabels.map((button) => (
             <Button

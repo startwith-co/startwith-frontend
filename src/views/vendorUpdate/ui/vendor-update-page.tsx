@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import VendorNormalInfo from '@/widgets/vendorRegister/ui/vendor-normal-info';
 import { UpdateSolutionProps } from '@/app/(vendor)/vendor/update/[id]/model/updateSolutionType';
 import urlToFile from '@/views/vendorMy/api/urlToFile';
-import { categoryToLabel } from '@/shared/model/getCategoryList';
+import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
 import {
   VendorRegisterSchema,
   vendorRegisterSchema,
@@ -39,7 +39,7 @@ export default function VendorUpdatePage({
       vendorSeq: vendorId,
       solutionName: solution.solutionName,
       solutionDetail: solution.solutionDetail,
-      category: categoryToLabel[category],
+      category: solutionCategoryToLabel[category],
       industry: solution.industry.join(','),
       recommendedCompanySize: solution.recommendedCompanySize,
       solutionImplementationType: solution.solutionImplementationType,
