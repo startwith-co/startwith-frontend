@@ -41,10 +41,10 @@ export default function VendorUpdatePage({
       solutionDetail: solution.solutionDetail,
       category: (categoryToKo[category] || '') as
         | ''
-        | '불량 검출 · 예측(비전 검사)'
-        | '설비 이상 및 고장 예측(예지보전)'
-        | '실시간 공정 상태 모니터링(공정 이상 감지)'
-        | 'MES 재고관리(공정 재고관리)'
+        | '마케팅 자동화 · 분석'
+        | '상품 컨텐츠 자동화'
+        | '쇼핑몰 · 커머스 운영 관리'
+        | '인플루언서 · 크리에이터 협업'
         | undefined,
       industry: solution.industry.join(','),
       recommendedCompanySize: solution.recommendedCompanySize,

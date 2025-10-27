@@ -1,14 +1,14 @@
 export default function vendorCategoryMapping(category: string) {
   switch (category) {
-    case '불량 검출 · 예측(비전 검사)':
-      return 'DEFECT_INSPECTION';
-    case '설비 이상 및 고장 예측(예지보전)':
-      return 'PREDICTIVE_MAINTENANCE';
-    case '실시간 공정 상태 모니터링(공정 이상 감지)':
-      return 'PROCESS_MONITORING';
-    case 'MES 재고관리(공정 재고관리)':
-      return 'MES_INVENTORY_MANAGEMENT';
+    case '마케팅 자동화 · 분석':
+      return 'MARKETING_AUTOMATION_ANALYSIS';
+    case '상품 컨텐츠 자동화':
+      return 'PRODUCT_CONTENT_AUTOMATION';
+    case '쇼핑몰 · 커머스 운영 관리':
+      return 'ECOMMERCE_OPERATION_MANAGEMENT';
+    case '인플루언서 · 크리에이터 협업':
+      return 'INFLUENCER_CREATOR_COLLABORATION';
     default:
-      return 'DEFECT_INSPECTION';
+      return '';
   }
 }

@@ -98,17 +98,17 @@ export default function VendorNormalInfo() {
             control={control}
             name="industry"
             render={({ field }) => {
-              const selected = field.value?.split(',').filter(Boolean) || [];
+              const selected = field.value?.split('|').filter(Boolean) || [];
               const toggleItem = (item: string) => {
                 const newSelected = selected.includes(item)
                   ? selected.filter((i: string) => i !== item)
                   : [...selected, item];
-                field.onChange(newSelected.join(','));
+                field.onChange(newSelected.join('|'));
               };
 
               const removeItem = (item: string) => {
                 const filtered = selected.filter((i: string) => i !== item);
-                field.onChange(filtered.join(','));
+                field.onChange(filtered.join('|'));
               };
 
               return (
