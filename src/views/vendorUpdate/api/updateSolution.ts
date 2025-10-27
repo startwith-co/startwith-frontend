@@ -2,8 +2,8 @@
 
 import { auth } from '@/auth';
 import serverApi from '@/shared/api/server-api';
-import vendorCategoryMapping from '@/views/vendorRegister/utils/vendor-category-mapping';
 import { revalidateTag } from 'next/cache';
+import { categoryToValue } from '@/shared/model/getCategoryList';
 import { VendorRegisterSchema } from '../model/vendor-update-schema';
 
 export default async function updateSolution(
@@ -21,7 +21,7 @@ export default async function updateSolution(
     solutionName: data.solutionName,
     solutionDetail: data.solutionDetail,
     prevCategory,
-    nextCategory: vendorCategoryMapping(data.category),
+    nextCategory: categoryToValue[data.category],
     industry: data.industry,
     recommendedCompanySize: data.recommendedCompanySize.join(','),
     solutionImplementationType: data.solutionImplementationType.join(','),
@@ -41,6 +41,6 @@ export default async function updateSolution(
   });
   revalidateTag(`solutionList`);
   revalidateTag(
-    `solution-${session?.vendorSeq}-${vendorCategoryMapping(data.category)}`,
+    `solution-${session?.vendorSeq}-${categoryToValue[data.category]}`,
   );
 }
