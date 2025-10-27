@@ -22,14 +22,14 @@ export type IndustryCategoryValueType =
 
 const solutionCategoryLabels: SolutionCategoryLabelType[] = Object.keys(
   solutionCategoryToValue,
-) as SolutionCategoryLabelType[];
+);
 const solutionCategoryValues: SolutionCategoryValueType[] = Object.values(
   solutionCategoryToValue,
-) as SolutionCategoryValueType[];
+);
 
 const industryCategoryLabels: IndustryCategoryLabelType[] = Object.keys(
   industryCategoryToValue,
-) as IndustryCategoryLabelType[];
+);
 
 const solutionCategoryLabelEnum = z.enum(
   Object.keys(solutionCategoryToValue) as [
