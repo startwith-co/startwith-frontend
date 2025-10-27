@@ -6,7 +6,7 @@ import RequestPayModal from '@/features/vendorChat/ui/request-pay-modal';
 import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import ChatUserCard from '@/entities/chat/ui/chat-user-card';
 import { useSearchParams } from 'next/navigation';
-import { industryToKo } from '@/shared/model/industryMap';
+import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
 import useFetchConsumer from '../model/useFetchConsumer';
 
 function VendorControl() {
@@ -32,7 +32,7 @@ function VendorControl() {
           <ChatUserCard
             title="종사 산업군"
             content={
-              industryToKo[consumerInfo?.industry ?? ''] ??
+              solutionCategoryToLabel[consumerInfo?.industry ?? ''] ??
               consumerInfo?.industry ??
               ''
             }

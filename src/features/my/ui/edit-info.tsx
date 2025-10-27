@@ -10,8 +10,8 @@ import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
 import useFileUpload from '@/shared/model/useFileUpload';
 import Image from 'next/image';
-import { industryToKo } from '@/shared/model/industryMap';
 import { toast } from 'react-toastify';
+import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
 import editInfoPost from '../api/editInfoPost';
 import revalidateConsumerProfile from '../api/revalidateConsumerProfile';
 
@@ -50,7 +50,7 @@ function EditInfo({ company, email, phoneNumber, industry }: EditInfoProps) {
   const [selectedIndustry, setSelectedIndustry] = useState<{
     label: string;
     value: string;
-  } | null>({ label: industryToKo[industry], value: industry });
+  } | null>({ label: solutionCategoryToLabel[industry], value: industry });
   const {
     preview,
     file,

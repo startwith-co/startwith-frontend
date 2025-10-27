@@ -14,7 +14,7 @@ interface RequestServerPost {
 
 async function requestServerPost(data: RequestServerPost) {
   const body = new FormData();
-  console.log('formdata', data);
+
   if (!data.contractConfirmationUrl) {
     toast.error('계약 확인서를 업로드해주세요.');
     return;

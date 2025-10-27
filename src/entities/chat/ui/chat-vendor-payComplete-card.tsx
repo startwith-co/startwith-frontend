@@ -1,7 +1,7 @@
 import Solu from '@/shared/ui/solu';
 import { Button } from '@/shared/ui/button';
 import React, { useEffect, useMemo, useState } from 'react';
-import { categoryToKo } from '@/shared/model/categoryMap';
+import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
 import cn from '@/shared/lib/utils';
 import ChatVendorCancelModal from './chat-vendor-cancel-modal';
 
@@ -74,7 +74,7 @@ function ChatVendorPayCompleteCard({
         </div>
         <div className="flex justify-between">
           <span className="font-bold">솔루션 카테고리</span>
-          <span>{categoryToKo[solutionCategory]}</span>
+          <span>{solutionCategoryToLabel[solutionCategory]}</span>
         </div>
         <div className="flex justify-between">
           <span className="font-bold">결제 금액</span>
