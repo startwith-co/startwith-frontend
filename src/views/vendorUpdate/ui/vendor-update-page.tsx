@@ -10,8 +10,8 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import VendorNormalInfo from '@/widgets/vendorRegister/ui/vendor-normal-info';
 import { UpdateSolutionProps } from '@/app/(vendor)/vendor/update/[id]/model/updateSolutionType';
-import { categoryToKo } from '@/shared/model/categoryMap';
 import urlToFile from '@/views/vendorMy/api/urlToFile';
+import { categoryToLabel } from '@/shared/model/getCategoryList';
 import {
   VendorRegisterSchema,
   vendorRegisterSchema,
@@ -39,13 +39,7 @@ export default function VendorUpdatePage({
       vendorSeq: vendorId,
       solutionName: solution.solutionName,
       solutionDetail: solution.solutionDetail,
-      category: (categoryToKo[category] || '') as
-        | ''
-        | '마케팅 자동화 · 분석'
-        | '상품 컨텐츠 자동화'
-        | '쇼핑몰 · 커머스 운영 관리'
-        | '인플루언서 · 크리에이터 협업'
-        | undefined,
+      category: categoryToLabel[category],
       industry: solution.industry.join(','),
       recommendedCompanySize: solution.recommendedCompanySize,
       solutionImplementationType: solution.solutionImplementationType,

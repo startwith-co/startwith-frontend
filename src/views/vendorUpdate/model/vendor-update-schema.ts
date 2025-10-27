@@ -1,11 +1,5 @@
+import { solutionCategoryLabelEnum } from '@/shared/model/getCategoryList';
 import { z } from 'zod';
-
-const categoryEnum = z.enum([
-  '마케팅 자동화 · 분석',
-  '상품 컨텐츠 자동화',
-  '쇼핑몰 · 커머스 운영 관리',
-  '인플루언서 · 크리에이터 협업',
-]);
 
 export const vendorRegisterSchema = z.object({
   representImageUrl: z
@@ -24,7 +18,7 @@ export const vendorRegisterSchema = z.object({
     .min(1, '솔루션 설명 입력해주세요.')
     .max(300, '최대 300자까지 입력 가능합니다.'),
   category: z
-    .union([categoryEnum, z.literal('')])
+    .union([solutionCategoryLabelEnum, z.literal('')])
     .refine((value) => value !== '', {
       message: '카테고리를 선택해주세요.',
     }),
