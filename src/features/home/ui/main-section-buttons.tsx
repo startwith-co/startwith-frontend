@@ -42,7 +42,11 @@ function MainSectionButtons() {
               variant="textBlue"
               className="h-[110px] w-full rounded-xl shadow-md"
               asChild={false}
-              onClick={() => handleSecondSectionClick(button)}
+              onClick={() =>
+                handleSecondSectionClick(
+                  button.replace(/\s*\([^)]*\)/, '').trim(),
+                )
+              }
             >
               {button}
             </Button>

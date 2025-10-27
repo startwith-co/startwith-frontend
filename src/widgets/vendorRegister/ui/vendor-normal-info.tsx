@@ -117,6 +117,7 @@ export default function VendorNormalInfo() {
                     options={industryCategory}
                     placeholder="산업군 카테고리 선택"
                     triggerClassName="w-[220px] h-[40px]"
+                    itemsClassName="px-5"
                     onChange={(val: string) => toggleItem(val)}
                   />
                   {selected.length > 0 && (
