@@ -4,9 +4,9 @@ import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  firstSectionButtons,
-  secondSectionButtons,
-} from '../model/home-button-category';
+  industryCategoryLabels,
+  solutionCategoryLabels,
+} from '@/shared/model/getCategoryList';
 
 function MainSectionButtons() {
   const [step, setStep] = useState(0);
@@ -23,9 +23,9 @@ function MainSectionButtons() {
   };
 
   return (
-    <div className="mt-10 grid w-[500px] grid-cols-2 gap-8">
+    <div className="mt-6 mb-6 grid h-[260px] w-[500px] grid-cols-2 gap-8">
       {step === 0
-        ? firstSectionButtons.map((button) => (
+        ? solutionCategoryLabels.map((button) => (
             <Button
               key={button}
               variant="textBlue"
@@ -36,13 +36,17 @@ function MainSectionButtons() {
               {button}
             </Button>
           ))
-        : secondSectionButtons.map((button) => (
+        : industryCategoryLabels.map((button) => (
             <Button
               key={button}
               variant="textBlue"
               className="h-[110px] w-full rounded-xl shadow-md"
               asChild={false}
-              onClick={() => handleSecondSectionClick(button)}
+              onClick={() =>
+                handleSecondSectionClick(
+                  button.replace(/\s*\([^)]*\)/, '').trim(),
+                )
+              }
             >
               {button}
             </Button>

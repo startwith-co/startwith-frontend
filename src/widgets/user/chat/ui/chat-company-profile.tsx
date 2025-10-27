@@ -1,6 +1,7 @@
 'use client';
 
 import ChatUserCard from '@/entities/chat/ui/chat-user-card';
+import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import useFetchVendor from '@/widgets/user/chat/model/useFetchVendor';
 
@@ -10,16 +11,9 @@ function formatTimeRange(start: string | null, end: string | null) {
   const [eh, em] = end.split(':');
   return `${sh.padStart(2, '0')}:${sm.padStart(2, '0')}~${eh.padStart(2, '0')}:${em.padStart(2, '0')}`;
 }
-const categoryMapKo: Record<string, string> = {
-  DEFECT_INSPECTION: '불량 검출 · 예측\n(비전 검사)\n',
-  PREDICTIVE_MAINTENANCE: '설비 이상 및 고장 예측\n(예지보전)\n',
-  PROCESS_MONITORING: '실시간 공정 상태 모니터링\n(공정 이상 감지)\n',
-  MES_INVENTORY_MANAGEMENT: 'MES 재고관리\n(공정 재고관리)\n',
-};
 
 function ChatCompanyProfile() {
   const vendorInfo = useFetchVendor();
-  console.log('vendorInfo', vendorInfo);
 
   return (
     <div className="flex h-full w-full flex-col gap-2.5 rounded-3xl bg-white px-8 pt-[19px] shadow-md">
@@ -74,7 +68,8 @@ function ChatCompanyProfile() {
             {vendorInfo?.vendorCategory
               ?.map(
                 (category) =>
-                  categoryMapKo[category.category] ?? category.category,
+                  solutionCategoryToLabel[category.category] ??
+                  category.category,
               )
               .join(' ')}
           </p>

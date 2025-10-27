@@ -1,3 +1,5 @@
+'use client';
+
 import formatTime from '@/shared/lib/chat-format-time';
 import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
 import useChatScroll from '@/shared/model/useChatScroll';

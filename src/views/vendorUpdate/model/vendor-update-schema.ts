@@ -1,11 +1,5 @@
+import { solutionCategoryLabelEnum } from '@/shared/model/getCategoryList';
 import { z } from 'zod';
-
-const categoryEnum = z.enum([
-  '불량 검출 · 예측(비전 검사)',
-  '설비 이상 및 고장 예측(예지보전)',
-  '실시간 공정 상태 모니터링(공정 이상 감지)',
-  'MES 재고관리(공정 재고관리)',
-]);
 
 export const vendorRegisterSchema = z.object({
   representImageUrl: z
@@ -24,7 +18,7 @@ export const vendorRegisterSchema = z.object({
     .min(1, '솔루션 설명 입력해주세요.')
     .max(300, '최대 300자까지 입력 가능합니다.'),
   category: z
-    .union([categoryEnum, z.literal('')])
+    .union([solutionCategoryLabelEnum, z.literal('')])
     .refine((value) => value !== '', {
       message: '카테고리를 선택해주세요.',
     }),

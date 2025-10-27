@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import cn from '@/shared/lib/utils';
 import formatVATPrice from '@/shared/lib/formatVATPrice';
-import { categoryToKo } from '@/shared/model/categoryMap';
+import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
 import CircleCheckbox from './circle-check-box';
 import usePaymentRequest from '../model/usePaymentRequest';
 import getPaymentRequest from '../api/getPaymentRequest';
@@ -66,7 +66,7 @@ function ChatUserRequestCard({ uuid, isMine }: ChatRequestCardProps) {
           <span className="font-semibold">솔루션 카테고리</span>
           <span>
             {paymentRequestData?.category &&
-              categoryToKo[paymentRequestData.category]}
+              solutionCategoryToLabel[paymentRequestData.category]}
           </span>
         </div>
 

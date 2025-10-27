@@ -18,6 +18,7 @@ export default function PaymentMethodWidgets({
 }: PaymentInfoProps) {
   const [ready, setReady] = useState(false);
   const [widgets, setWidgets] = useState<WidgetsProps>();
+  // TODO: 토스 심사 승인 완료된 실제 clientKey로 변경
   const clientKey = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';
   // TODO: customerKey => 무작위
   const customerKey = uuidv4();
