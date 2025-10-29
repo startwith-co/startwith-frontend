@@ -18,7 +18,7 @@ function ValidatedInput({
   const error = isError || errorMessage;
   if (button) {
     return (
-      <div className="grid h-[60px] grid-cols-[3fr_1fr] items-center justify-center gap-x-2">
+      <div className="grid h-[65px] grid-cols-[3fr_1fr] gap-x-2">
         {input}
         {button}
         {message && !error && (
@@ -30,7 +30,7 @@ function ValidatedInput({
   }
 
   return (
-    <div className="h-[60px]">
+    <div className="h-[65px]">
       {input}
       {error && <StatusMessage message={errorMessage} status="error" />}
     </div>

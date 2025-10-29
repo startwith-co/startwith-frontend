@@ -8,9 +8,13 @@ const solutionCategoryToValue: Record<string, string> = {
 };
 
 const industryCategoryToValue: Record<string, string> = {
-  IT: 'IT',
-  '이커머스(쿠팡, 네이버)': 'ECOMMERCE',
+  IT: 'it',
+  '이커머스(쿠팡, 네이버)': 'ecommerce',
 };
+
+const industryCategoryToLabel: Record<string, string> = Object.fromEntries(
+  Object.entries(industryCategoryToValue).map(([ko, en]) => [en, ko]),
+) as Record<IndustryCategoryValueType, IndustryCategoryLabelType>;
 
 export type SolutionCategoryLabelType = keyof typeof solutionCategoryToValue;
 export type SolutionCategoryValueType =
@@ -22,14 +26,11 @@ export type IndustryCategoryValueType =
 
 const solutionCategoryLabels: SolutionCategoryLabelType[] = Object.keys(
   solutionCategoryToValue,
-) as SolutionCategoryLabelType[];
-const solutionCategoryValues: SolutionCategoryValueType[] = Object.values(
-  solutionCategoryToValue,
-) as SolutionCategoryValueType[];
+);
 
 const industryCategoryLabels: IndustryCategoryLabelType[] = Object.keys(
   industryCategoryToValue,
-) as IndustryCategoryLabelType[];
+);
 
 const solutionCategoryLabelEnum = z.enum(
   Object.keys(solutionCategoryToValue) as [
@@ -47,6 +48,7 @@ export {
   solutionCategoryToLabel,
   solutionCategoryLabelEnum,
   solutionCategoryLabels,
-  solutionCategoryValues,
   industryCategoryLabels,
+  industryCategoryToLabel,
+  industryCategoryToValue,
 };

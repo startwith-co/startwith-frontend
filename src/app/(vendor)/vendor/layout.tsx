@@ -6,6 +6,7 @@ import VendorProfileSide from '@/widgets/vendorMy/ui/vendor-profile-side';
 const routes = [
   { label: '솔루션 등록 관리', href: '/vendor/register' },
   { label: '솔루션 수정 관리', href: '/vendor/update' },
+  { label: '실시간 상담 관리', href: '/vendor/chat' },
   { label: '정산 관리', href: '/vendor/calculate' },
   { label: '밴더 정보 관리', href: '/vendor/my/profile' },
 ];

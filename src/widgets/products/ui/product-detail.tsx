@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { downloadFile } from '@/widgets/products/api/downloadFile';
 import categoryTrans from '@/widgets/products/utils/categoryTrans';
 import formatLocalPrice from '@/shared/lib/formatLocalPrice';
+import { industryCategoryToLabel } from '@/shared/model/getCategoryList';
 
 export default function ProductDetail({
   solutionName,
@@ -111,7 +112,9 @@ export default function ProductDetail({
               key={item}
               className="item-center text-primary flex h-[85px] w-[130px] items-center justify-center gap-3.5 rounded-md bg-white p-4 shadow-md"
             >
-              <span className="text-center text-sm font-semibold">{item}</span>
+              <span className="text-center text-sm font-semibold">
+                {industryCategoryToLabel[item]}
+              </span>
             </div>
           ))}
         </div>

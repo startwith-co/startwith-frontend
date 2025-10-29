@@ -7,5 +7,5 @@ export default async function deleteSolution(solutionSeq: string) {
   await serverApi.delete(
     `api/solution-service/solution?solutionSeq=${solutionSeq}`,
   );
-  revalidateTag(`solutionList`);
+  revalidateTag(`vendor/solution`);
 }
