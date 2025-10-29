@@ -10,7 +10,7 @@ async function getVendorSolutions(vendorSeq: number) {
     const response = await serverApi
       .get<
         ApiResponse<VendorSolutionType[]>
-      >(`api/b2b-service/vendor/solution?vendorSeq=${vendorSeq}`)
+      >(`api/b2b-service/vendor/solution?vendorSeq=${vendorSeq}`, { next: { tags: ['vendor/solution'] } })
       .json();
 
     return {
