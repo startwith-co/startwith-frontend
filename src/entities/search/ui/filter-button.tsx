@@ -16,7 +16,7 @@ export default function FilterButton({
     <Button
       asChild={false}
       className={cn(
-        'bg-vendor-gray font-normal text-black hover:text-white',
+        'bg-vendor-gray overflow-hidden font-normal text-black hover:text-white',
         className,
         isActive && 'bg-primary text-white',
       )}

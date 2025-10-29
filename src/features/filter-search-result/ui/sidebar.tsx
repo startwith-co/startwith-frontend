@@ -8,13 +8,10 @@ import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import {
   industryCategoryLabels,
+  industryCategoryToLabel,
+  industryCategoryToValue,
   solutionCategoryLabels,
 } from '@/shared/model/getCategoryList';
-
-const industryMap: Record<string, string> = {
-  IT: 'IT',
-  이커머스: '이커머스(쿠팡, 네이버 등)',
-};
 
 export default function Sidebar({
   category = '',
@@ -38,7 +35,7 @@ export default function Sidebar({
 
     if (filterList.category) params.set('category', filterList.category);
     if (filterList.industry)
-      params.set('industry', industryMap[filterList.industry]);
+      params.set('industry', industryCategoryToValue[filterList.industry]);
     if (filterList.budget) params.set('budget', filterList.budget);
 
     const query = params.toString();
@@ -137,7 +134,9 @@ export default function Sidebar({
               value &&
               value.length > 0 && (
                 <Button key={key} asChild={false} variant="category">
-                  {value}
+                  {key === 'industry'
+                    ? industryCategoryToLabel[value] || value
+                    : value}
                 </Button>
               ),
           )}

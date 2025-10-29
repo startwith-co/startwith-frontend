@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   industryCategoryLabels,
+  industryCategoryToValue,
   solutionCategoryLabels,
 } from '@/shared/model/getCategoryList';
 
@@ -19,7 +20,9 @@ function MainSectionButtons() {
   };
 
   const handleSecondSectionClick = (button: string) => {
-    router.push(`/search?category=${solutionCategory}&industry=${button}`);
+    router.push(
+      `/search?category=${solutionCategory}&industry=${industryCategoryToValue[button]}`,
+    );
   };
 
   return (
@@ -42,11 +45,7 @@ function MainSectionButtons() {
               variant="textBlue"
               className="h-[110px] w-full rounded-xl shadow-md"
               asChild={false}
-              onClick={() =>
-                handleSecondSectionClick(
-                  button.replace(/\s*\([^)]*\)/, '').trim(),
-                )
-              }
+              onClick={() => handleSecondSectionClick(button)}
             >
               {button}
             </Button>

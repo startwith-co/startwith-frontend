@@ -20,7 +20,6 @@ export default function VendorKeyword() {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    // IME 입력 중일 때 발생하는 keydown 이벤트 중복 방지
     if (e.nativeEvent.isComposing) return;
     if (e.key === 'Enter') {
       e.preventDefault();
