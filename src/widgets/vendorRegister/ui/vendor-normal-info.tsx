@@ -7,6 +7,8 @@ import cn from '@/shared/lib/utils';
 import ErrorMessage from '@/shared/ui/error-message';
 import {
   industryCategoryLabels,
+  industryCategoryToLabel,
+  industryCategoryToValue,
   solutionCategoryLabels,
 } from '@/shared/model/getCategoryList';
 import { scaleCategory } from '@/entities/vendorRegister/model/vendor-normal-info-category';
@@ -98,17 +100,27 @@ export default function VendorNormalInfo() {
             control={control}
             name="industry"
             render={({ field }) => {
-              const selected = field.value?.split('|').filter(Boolean) || [];
-              const toggleItem = (item: string) => {
-                const newSelected = selected.includes(item)
-                  ? selected.filter((i: string) => i !== item)
-                  : [...selected, item];
-                field.onChange(newSelected.join('|'));
+              const selectedValues =
+                field.value?.split(',').filter(Boolean) || [];
+
+              const selectedLabels = selectedValues.map(
+                (value: string) => industryCategoryToLabel[value],
+              );
+
+              const toggleItem = (label: string) => {
+                const value = industryCategoryToValue[label];
+                const newValues = selectedValues.includes(value)
+                  ? selectedValues.filter((v: string) => v !== value)
+                  : [...selectedValues, value];
+                field.onChange(newValues.join(','));
               };
 
-              const removeItem = (item: string) => {
-                const filtered = selected.filter((i: string) => i !== item);
-                field.onChange(filtered.join('|'));
+              const removeItem = (label: string) => {
+                const value = industryCategoryToValue[label];
+                const newValues = selectedValues.filter(
+                  (v: string) => v !== value,
+                );
+                field.onChange(newValues.join(','));
               };
 
               return (
@@ -118,18 +130,19 @@ export default function VendorNormalInfo() {
                     placeholder="산업군 카테고리 선택"
                     triggerClassName="w-[220px] h-[40px]"
                     itemsClassName="px-5"
-                    onChange={(val: string) => toggleItem(val)}
+                    onChange={toggleItem}
                   />
-                  {selected.length > 0 && (
+
+                  {selectedLabels.length > 0 && (
                     <div className="flex">
-                      {selected.map((item: string) => (
+                      {selectedLabels.map((label: string) => (
                         <button
-                          key={item}
+                          key={label}
                           type="button"
-                          onClick={() => removeItem(item)}
+                          onClick={() => removeItem(label)}
                           className="bg-vendor-gray hover:bg-primary ml-5 h-[40px] rounded-md px-2 py-1 text-xs hover:text-white"
                         >
-                          {item}
+                          {label}
                           <span className="text-vendor-secondary ml-2 text-xs font-extrabold">
                             ✕
                           </span>
@@ -137,9 +150,10 @@ export default function VendorNormalInfo() {
                       ))}
                     </div>
                   )}
+
                   {errors.industry && (
                     <ErrorMessage
-                      message={`${errors.industry.message}`}
+                      message={String(errors.industry.message)}
                       className="ml-5"
                     />
                   )}

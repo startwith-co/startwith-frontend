@@ -5,6 +5,9 @@ import { LoginResponse } from '@/features/login/model/loginType';
 
 export const { auth, handlers, signIn, signOut } = nextAuth({
   secret: '1004',
+  session: {
+    maxAge: 60 * 60 * 24,
+  },
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -81,7 +84,6 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
           ...token,
           accessToken: user.accessToken,
           refreshToken: user.refreshToken,
-          accessTokenExpireAt: Date.now() + 86400 * 1000,
           refreshTokenExpireAt: Date.now() + 2592000 * 1000,
           consumerSeq: user.consumerSeq,
           vendorSeq: user.vendorSeq,
@@ -90,9 +92,7 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
           role: user.role,
         };
       }
-      if (Date.now() > (token.accessTokenExpireAt as number)) {
-        return null;
-      }
+
       return token;
     },
     session: async ({ session, token }: any) => {
@@ -100,7 +100,6 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
         ...session,
         accessToken: token.accessToken,
         refreshToken: token.refreshToken,
-        accessTokenExpireAt: token.accessTokenExpireAt,
         refreshTokenExpireAt: token.refreshTokenExpireAt,
         consumerSeq: token.consumerSeq,
         vendorSeq: token.vendorSeq,

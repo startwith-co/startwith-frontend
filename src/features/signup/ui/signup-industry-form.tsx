@@ -2,7 +2,7 @@
 
 import cn from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
-import { industryToEn } from '@/shared/model/industryMap';
+import { industryCategoryToValue } from '@/shared/model/getCategoryList';
 
 function IndustrySelectGrid({
   selectedIndustry,
@@ -13,7 +13,7 @@ function IndustrySelectGrid({
 }) {
   return (
     <div className="flex w-full flex-col items-center gap-5">
-      {Object.entries(industryToEn).map(([label, value]) => (
+      {Object.entries(industryCategoryToValue).map(([label, value]) => (
         <Button
           key={value}
           type="button"
