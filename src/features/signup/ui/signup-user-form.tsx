@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
 import ValidatedInput from '@/shared/ui/validated-input';
 import CustomForm from '@/shared/ui/custom-form';
+import Spacing from '@/shared/ui/spacing';
 import SignupIndustryModal from './signup-industry-modal';
 import useSendEmail from '../model/useSendEmail';
 import useVerifyEmail from '../model/useVerifyEmail';
@@ -128,7 +129,7 @@ function SignupUserForm() {
               },
             })}
             placeholder="담당자 연락처"
-            className="mt-5 mb-0 h-[55px] w-full bg-white indent-2"
+            className="h-[55px] w-full bg-white indent-2"
             onChange={(e) => {
               const digits = e.target.value.replace(/\D/g, '');
               if (digits.length < 4) e.target.value = digits;
@@ -169,27 +170,26 @@ function SignupUserForm() {
         errorMessage={errors.email?.message}
         message={isCounting ? '인증코드 전송 완료' : ''}
       />
-      <div className="h-[60px]">
-        <div
-          className={`grid grid-cols-[3fr_1fr] items-center justify-center gap-4 transition-all duration-500 ${
-            isCounting ? 'opacity-100' : 'pointer-events-none opacity-50'
-          }`}
+
+      <div
+        className={`grid h-[65px] grid-cols-[3fr_1fr] items-center justify-center gap-x-2 transition-all duration-500 ${
+          isCounting ? 'opacity-100' : 'pointer-events-none opacity-50'
+        }`}
+      >
+        <Input
+          placeholder="인증코드 입력"
+          className="h-[55px] w-full bg-white indent-2"
+          {...register('code')}
+        />
+        <Button
+          type="button"
+          asChild={false}
+          variant="textBlue"
+          onClick={verifyEmail}
+          className="h-[55px] w-full bg-white text-sm text-[#7A7A7A] shadow-sm"
         >
-          <Input
-            placeholder="인증코드 입력"
-            className="h-[55px] w-full bg-white indent-2"
-            {...register('code')}
-          />
-          <Button
-            type="button"
-            asChild={false}
-            variant="textBlue"
-            onClick={verifyEmail}
-            className="h-[55px] w-full bg-white text-sm text-[#7A7A7A] shadow-sm"
-          >
-            인증코드 인증하기
-          </Button>
-        </div>
+          인증코드 인증하기
+        </Button>
       </div>
 
       <ValidatedInput
@@ -240,6 +240,7 @@ function SignupUserForm() {
       >
         {selectedIndustry?.label || '종사 산업군 선택'}
       </Button>
+
       <SignupIndustryModal
         open={open}
         setOpen={setOpen}
