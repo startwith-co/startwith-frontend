@@ -1,13 +1,25 @@
-import api from '@/shared/api/client-api';
+'use server';
+
 import { ApiResponse } from '@/shared/model/apiType';
+import ErrorHandler from '@/shared/lib/error-message';
+import serverApi from '@/shared/api/server-api';
 import { VendorSolutionType } from '../model/vendorSolutionType';
 
-export default async function getVendorSolutions(vendorSeq: string) {
-  const response = await api
-    .get<
-      ApiResponse<VendorSolutionType[]>
-    >(`api/b2b-service/vendor/solution?vendorSeq=${vendorSeq}`)
-    .json();
+async function getVendorSolutions(vendorSeq: number) {
+  try {
+    const response = await serverApi
+      .get<
+        ApiResponse<VendorSolutionType[]>
+      >(`api/b2b-service/vendor/solution?vendorSeq=${vendorSeq}`)
+      .json();
 
-  return response.data;
+    return {
+      ok: true,
+      data: response.data,
+      status: 200,
+    };
+  } catch (error) {
+    return ErrorHandler(error as Error);
+  }
 }
+export default getVendorSolutions;
