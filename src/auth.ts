@@ -84,6 +84,7 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
           ...token,
           accessToken: user.accessToken,
           refreshToken: user.refreshToken,
+          accessTokenExpireAt: Date.now() + 86400 * 1000,
           refreshTokenExpireAt: Date.now() + 2592000 * 1000,
           consumerSeq: user.consumerSeq,
           vendorSeq: user.vendorSeq,
@@ -91,6 +92,9 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
           name: user.name,
           role: user.role,
         };
+      }
+      if (Date.now() > token.accessTokenExpireAt) {
+        return null;
       }
 
       return token;
@@ -100,6 +104,7 @@ export const { auth, handlers, signIn, signOut } = nextAuth({
         ...session,
         accessToken: token.accessToken,
         refreshToken: token.refreshToken,
+        accessTokenExpireAt: token.accessTokenExpireAt,
         refreshTokenExpireAt: token.refreshTokenExpireAt,
         consumerSeq: token.consumerSeq,
         vendorSeq: token.vendorSeq,
