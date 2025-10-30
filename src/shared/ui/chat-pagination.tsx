@@ -45,6 +45,7 @@ function ChatPagination({ rooms }: { rooms: ChatRoom[] }) {
       <div className="flex flex-col gap-2.5">
         {paginatedRooms.map((room) => (
           <ChatRoomCard
+            roomId={room.roomId}
             consumerId={room.consumerId}
             vendorId={room.vendorId}
             consumerName={room.consumerName}
@@ -53,7 +54,6 @@ function ChatPagination({ rooms }: { rooms: ChatRoom[] }) {
             key={room.roomId}
             role={session?.role}
             updatedDate={formatMainDate(room.lastMessage.updatedAt)}
-            lastMessage={room.lastMessage.message}
             link={
               session?.role === 'vendor'
                 ? `/vendor/chat?vendorId=${room.vendorId}&consumerId=${room.consumerId}`

@@ -11,10 +11,10 @@ import {
   ConsumerInfoProps,
   VendorInfoProps,
 } from '@/views/vendorMy/model/type';
-import renderLastMessage from '../lib/renderLastMessage';
+import useLastMessage from '@/shared/model/useLastMessage';
 
 export interface ChatRoomCardProps {
-  lastMessage: string;
+  roomId: string;
   link: string;
   className?: string;
   avatarSize?: string;
@@ -28,7 +28,7 @@ export interface ChatRoomCardProps {
   role?: string;
 }
 export default function ChatRoomCard({
-  lastMessage,
+  roomId,
   link,
   className = '',
   avatarSize = 'size-15',
@@ -44,6 +44,7 @@ export default function ChatRoomCard({
   const router = useRouter();
   const [img, setImg] = useState('');
   const [name, setName] = useState('');
+  const lastMessage = useLastMessage(roomId);
 
   useEffect(() => {
     const getData = async () => {
@@ -108,9 +109,7 @@ export default function ChatRoomCard({
             {updatedDate}
           </span>
         </div>
-        <span className="truncate text-sm">
-          {renderLastMessage(lastMessage)}
-        </span>
+        <span className="truncate text-sm">{lastMessage}</span>
       </div>
     </div>
   );
