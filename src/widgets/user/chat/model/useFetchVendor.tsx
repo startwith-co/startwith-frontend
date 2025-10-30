@@ -1,6 +1,5 @@
 'use client';
 
-import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { useState, useEffect } from 'react';
 import { VendorInfoProps } from '@/views/vendorMy/model/type';
 import { ApiResponse } from '@/shared/model/apiType';

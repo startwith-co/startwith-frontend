@@ -14,13 +14,14 @@ function formatTimeRange(start: string | null, end: string | null) {
 
 function ChatCompanyProfile() {
   const vendorInfo = useFetchVendor();
+  console.log(vendorInfo);
 
   return (
     <div className="flex h-full w-full flex-col gap-2.5 rounded-3xl bg-white px-8 pt-[19px] shadow-md">
       <Avatar className="flex size-20 items-center justify-center self-center rounded-full">
         <AvatarImage
           src={
-            vendorInfo?.vendorInfo?.vendorBannerImageUrl ||
+            vendorInfo?.vendorInfo?.profileImage ||
             '/images/default-profile.svg'
           }
         />

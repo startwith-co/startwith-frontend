@@ -49,9 +49,7 @@ export default function ChatRoomCard({
             ApiResponse<VendorInfoProps>
           >(`api/b2b-service/vendor?vendorSeq=${vendorSeq}`)
           .json();
-        setImg(
-          data?.data?.vendorBannerImageUrl || '/images/default-profile.svg',
-        );
+        setImg(data?.data?.profileImage || '/images/default-profile.svg');
         setName(data?.data?.vendorName || 'user');
       } else {
         const data = await api
