@@ -90,7 +90,6 @@ function ChatsUser({ messages, consumerId }: ChatsUserProps) {
             consumerId={consumerId}
             time={formatTime(msg.createdAt)}
             file={msg.file}
-            id={msg.id}
           />
         );
       })}

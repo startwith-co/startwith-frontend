@@ -5,8 +5,7 @@ interface ChatBubbleProps {
   messageId: string;
   vendorId: string;
   time: string;
-  file: boolean;
-  id: string;
+  file: string;
 }
 
 export default function ChatVendorBubble({
@@ -15,10 +14,9 @@ export default function ChatVendorBubble({
   vendorId,
   time,
   file,
-  id,
 }: ChatBubbleProps) {
   const isMine = messageId === vendorId;
-  const { handleFileClick } = useFileClick(id);
+  const { handleFileClick } = useFileClick(file);
   return (
     <div
       className={`flex ${isMine ? 'mr-2 flex-row-reverse' : 'ml-2 flex-row'} mt-4 mb-2 gap-1.5`}

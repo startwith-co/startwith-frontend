@@ -24,7 +24,7 @@ export interface ChatType {
   messageId: string;
   messageName: string | ChatJsonType;
   message: string;
-  file: boolean;
+  file: string;
 }
 
 export interface FileRequestProps {

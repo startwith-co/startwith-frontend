@@ -5,8 +5,7 @@ interface ChatBubbleProps {
   messageId: string;
   consumerId: string;
   time: string;
-  file: boolean;
-  id: string;
+  file: string;
 }
 
 export default function ChatUserBubble({
@@ -15,10 +14,9 @@ export default function ChatUserBubble({
   consumerId,
   time,
   file,
-  id,
 }: ChatBubbleProps) {
   const isMine = messageId === consumerId;
-  const { handleFileClick } = useFileClick(id);
+  const { handleFileClick } = useFileClick(file);
 
   return (
     <div

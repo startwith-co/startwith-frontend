@@ -4,12 +4,10 @@ import { useEffect, useState } from 'react';
 import {
   addDoc,
   collection,
-  doc,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
-  updateDoc,
 } from 'firebase/firestore';
 import { useSearchParams } from 'next/navigation';
 import createRoom from '@/shared/api/create-room';
@@ -98,6 +96,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
 
     const roomId = await findChatExistingRoom(consumerId, vendorId);
     const newRoomId = uuidv4();
+    const fileUniqueId = uuidv4();
     const targetRoomId = roomId || newRoomId;
 
     if (!roomId) {
@@ -120,26 +119,16 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
       createdAt: serverTimestamp(),
       messageId,
       messageName,
-      file: !!attachedFile,
+      file: attachedFile ? fileUniqueId : null,
     };
 
-    const docRef = await addDoc(
-      collection(db, 'chats', targetRoomId, 'messages'),
-      newMessage,
-    );
-
-    await updateDoc(doc(db, 'chats', targetRoomId), {
-      lastMessage: {
-        ...newMessage,
-        updatedAt: newMessage.createdAt,
-      },
-    });
+    await addDoc(collection(db, 'chats', targetRoomId, 'messages'), newMessage);
 
     if (session?.role && attachedFile) {
       await ChatFilePost(
         Number(consumerSeq),
         Number(vendorSeq),
-        docRef.id,
+        fileUniqueId,
         session?.role,
         attachedFile,
       );

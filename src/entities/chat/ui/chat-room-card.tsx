@@ -1,5 +1,3 @@
-'use client';
-
 import { useRouter } from 'next/navigation';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { Avatar, AvatarImage, AvatarFallback } from '@/shared/ui/avatar';
@@ -25,6 +23,7 @@ export interface ChatRoomCardProps {
   consumerSeq: string;
   role?: string;
 }
+
 export default function ChatRoomCard({
   roomId,
   link,
@@ -40,6 +39,7 @@ export default function ChatRoomCard({
   const [img, setImg] = useState('');
   const [name, setName] = useState('');
   const lastMessage = useLastMessage(roomId);
+  const { setChatMeta } = useChatMeta();
 
   useEffect(() => {
     const getData = async () => {
@@ -64,8 +64,6 @@ export default function ChatRoomCard({
     getData();
   }, [vendorSeq, consumerSeq, role]);
 
-  const { setChatMeta } = useChatMeta();
-
   const handleClick = () => {
     setChatMeta({
       consumerName,
@@ -83,24 +81,32 @@ export default function ChatRoomCard({
       onClick={handleClick}
       onKeyPress={handleClick}
       className={clsx(
-        'flex cursor-pointer items-center justify-center rounded-lg bg-[#F5F5F5] px-1 py-2.5',
+        'flex cursor-pointer items-center rounded-lg bg-[#F5F5F5] px-3 py-3',
         className,
       )}
     >
+      {/* 프로필 */}
       <Avatar
-        className={clsx('mr-3 flex rounded-full bg-[#D9D9D9]', avatarSize)}
+        className={clsx(
+          'mr-3 flex-shrink-0 rounded-full bg-[#D9D9D9]',
+          avatarSize,
+        )}
       >
         <AvatarImage src={img || '/images/default-profile.svg'} />
         <AvatarFallback>{name[0]}</AvatarFallback>
       </Avatar>
-      <div className="flex min-w-0 flex-col gap-1">
-        <div className="flex w-full items-center gap-x-8">
-          <span className="truncate font-semibold">{name}</span>
-          <span className="truncate text-xs font-light text-[#A7A7A7]">
+
+      <div className="flex w-full flex-col justify-center overflow-hidden">
+        <div className="flex w-full items-center justify-between">
+          <span className="truncate font-semibold text-black">{name}</span>
+          <span className="ml-2 flex-shrink-0 text-xs font-light text-[#A7A7A7]">
             {formatMainDate(lastMessage?.createdAt)}
           </span>
         </div>
-        <span className="truncate text-sm">{lastMessage?.message}</span>
+
+        <span className="truncate text-sm text-[#4B4B4B]">
+          {lastMessage?.message}
+        </span>
       </div>
     </div>
   );

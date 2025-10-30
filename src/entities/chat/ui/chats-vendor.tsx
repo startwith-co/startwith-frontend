@@ -92,7 +92,6 @@ function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
             vendorId={vendorId}
             time={formatTime(msg.createdAt)}
             file={msg.file}
-            id={msg.id}
           />
         );
       })}
