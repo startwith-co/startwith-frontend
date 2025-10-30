@@ -20,7 +20,6 @@ export interface ChatRoom {
   vendorName: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
-  lastMessage: LastMessageType;
   consumerSeq: string;
   vendorSeq: string;
   solutionName: string;

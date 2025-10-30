@@ -1,10 +1,4 @@
-import {
-  serverTimestamp,
-  addDoc,
-  collection,
-  updateDoc,
-  doc,
-} from 'firebase/firestore';
+import { serverTimestamp, addDoc, collection } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import db from 'fire-config';
 import createRoom from './create-room';
@@ -42,15 +36,6 @@ async function sendMessageJson(
     createdAt: serverTimestamp(),
     messageId,
     messageName,
-  });
-
-  await updateDoc(doc(db, 'chats', roomId || newRoomId), {
-    lastMessage: {
-      messageId,
-      message,
-      messageName,
-      updatedAt: serverTimestamp(),
-    },
   });
 }
 

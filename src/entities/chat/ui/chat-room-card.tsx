@@ -12,13 +12,13 @@ import {
   VendorInfoProps,
 } from '@/views/vendorMy/model/type';
 import useLastMessage from '@/shared/model/useLastMessage';
+import formatMainDate from '@/shared/lib/chat-main-date-format';
 
 export interface ChatRoomCardProps {
   roomId: string;
   link: string;
   className?: string;
   avatarSize?: string;
-  updatedDate?: string;
   consumerName: string;
   vendorName: string;
   vendorSeq: string;
@@ -30,7 +30,6 @@ export default function ChatRoomCard({
   link,
   className = '',
   avatarSize = 'size-15',
-  updatedDate,
   consumerName,
   vendorName,
   vendorSeq,
@@ -100,10 +99,10 @@ export default function ChatRoomCard({
         <div className="flex w-full items-center gap-x-8">
           <span className="truncate font-semibold">{name}</span>
           <span className="truncate text-xs font-light text-[#A7A7A7]">
-            {updatedDate}
+            {formatMainDate(lastMessage?.createdAt)}
           </span>
         </div>
-        <span className="truncate text-sm">{lastMessage}</span>
+        <span className="truncate text-sm">{lastMessage?.message}</span>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import useGetChatRooms from '@/shared/model/useGetChatRooms';
 import ChatPagination from '@/shared/ui/chat-pagination';
 
 function ChatRooms() {
-  const rooms = useGetChatRooms({ targetId: 'consumerId' });
+  const rooms = useGetChatRooms({ targetId: 'consumerSeq' });
 
   return (
     <div className="w-full min-w-0 rounded-3xl bg-white p-4.5 pb-8 shadow-md">

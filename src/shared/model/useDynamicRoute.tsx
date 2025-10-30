@@ -7,13 +7,13 @@ function useDynamicRoute() {
   const { data: session } = useSession();
   const [dynamicRoute, setDynamicRoute] = useState({
     label: '실시간 상담 관리',
-    href: `/vendor/chat?vendorId=${session?.uniqueType}`,
+    href: `/vendor/chat?vendorId=${session?.vendorSeq}`,
   });
   useEffect(() => {
     if (rooms.length > 0) {
       setDynamicRoute({
         label: '실시간 상담 관리',
-        href: `/vendor/chat?vendorId=${rooms[0].vendorId}&consumerId=${rooms[0].consumerId}`,
+        href: `/vendor/chat?vendorId=${session?.vendorSeq}&consumerId=${rooms[0].consumerSeq}`,
       });
     }
   }, [rooms]);

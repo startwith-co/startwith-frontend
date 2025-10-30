@@ -6,7 +6,6 @@ import {
   orderBy,
   limit,
   query,
-  DocumentData,
   Timestamp,
 } from 'firebase/firestore';
 import db from 'fire-config';
@@ -20,7 +19,7 @@ export interface ChatMessage {
 }
 
 function useLastMessage(roomId: string) {
-  const [lastMessage, setLastMessage] = useState<string>('');
+  const [lastMessage, setLastMessage] = useState<ChatMessage | null>(null);
 
   useEffect(() => {
     if (!roomId) return;
@@ -33,15 +32,16 @@ function useLastMessage(roomId: string) {
         const doc = snapshot.docs[0];
         const data = doc.data() as ChatMessage;
 
-        if (data?.file) {
-          setLastMessage('[파일]');
-        } else if (data?.message) {
-          setLastMessage(data.message);
-        } else {
-          setLastMessage('[알 수 없는 메시지]');
-        }
+        const modifiedData: ChatMessage = {
+          ...data,
+          message: data.file
+            ? '[첨부파일]'
+            : data.message || '[알 수 없는 메시지]',
+        };
+
+        setLastMessage(modifiedData);
       } else {
-        setLastMessage('');
+        setLastMessage(null);
       }
     });
 
