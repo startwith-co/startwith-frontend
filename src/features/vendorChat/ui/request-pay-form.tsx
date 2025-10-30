@@ -56,14 +56,7 @@ function RequestPayForm() {
   const uuid = uuidv4();
 
   const { setOpen } = useVendorModal();
-  const {
-    vendorId,
-    vendorName,
-    consumerId,
-    consumerName,
-    vendorSeq,
-    consumerSeq,
-  } = useChatMeta();
+  const { vendorName, consumerName, vendorSeq, consumerSeq } = useChatMeta();
 
   const onSubmit = async () => {
     const formData = getValues();
@@ -82,22 +75,24 @@ function RequestPayForm() {
       });
 
       try {
-        // 2. 두 번째 요청
-        await requestPost(
-          formData.solutionName,
-          formData.solutionPrice,
-          formData.solutionCategory,
-          vendorId,
-          vendorName,
-          consumerId,
-          consumerName,
-          vendorId,
-          vendorName,
-          'request-card',
+        await requestPost({
+          type: 'request-card',
           uuid,
-        );
+          solutionInfo: {
+            name: formData.solutionName,
+            price: formData.solutionPrice,
+            category: formData.solutionCategory,
+          },
+          messageInfo: {
+            id: vendorSeq,
+            name: vendorName,
+            consumerName,
+            vendorName,
+            vendorSeq,
+            consumerSeq,
+          },
+        });
 
-        // 3. 모든 요청 성공 시
         setOpen(false);
       } catch (secondErr) {
         await deleteLastMessage(curRoomId!);

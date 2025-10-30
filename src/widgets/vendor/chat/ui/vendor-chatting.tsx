@@ -16,8 +16,8 @@ import ChatMainDate from '@/shared/ui/chat-main-date';
 function VendorChatting() {
   const { vendorName, setChatMeta } = useChatMeta();
   const searchParams = useSearchParams();
-  const consumerId = searchParams.get('consumerId') as string;
-  const vendorId = searchParams.get('vendorId') as string;
+  const consumerSeq = searchParams.get('consumerSeq') as string;
+  const vendorSeq = searchParams.get('vendorSeq') as string;
 
   const {
     handleSubmit,
@@ -28,16 +28,16 @@ function VendorChatting() {
     setMessage,
     messages,
   } = useMessageSend({
-    messageId: vendorId,
+    messageId: vendorSeq,
     messageName: vendorName,
   });
 
   const { session } = useCurrentSession();
 
   useEffect(() => {
-    if (!consumerId || !vendorId) return;
+    if (!consumerSeq || !vendorSeq) return;
     const fetchConsumer = async () => {
-      const roomInfo = await getRoomInformationById(consumerId, vendorId);
+      const roomInfo = await getRoomInformationById(consumerSeq, vendorSeq);
 
       if (!roomInfo || !session) return;
       const res = await api
@@ -46,20 +46,20 @@ function VendorChatting() {
       setChatMeta({
         vendorName: session.name,
         vendorId: session.uniqueType,
-        vendorSeq: session.vendorSeq,
+        vendorSeq: String(session.vendorSeq),
         consumerName: res.data.consumerName,
         consumerId: res.data.consumerUniqueType,
-        consumerSeq: res.data.consumerSeq,
+        consumerSeq: String(res.data.consumerSeq),
       });
     };
 
     fetchConsumer();
-  }, [session, setChatMeta, vendorId, vendorName, consumerId]);
+  }, [session, setChatMeta, vendorSeq, vendorName, consumerSeq]);
 
   return (
     <div className="flex h-[calc(100vh-200px)] w-full flex-col rounded-3xl bg-[#FFFFFF] shadow-lg">
       <ChatMainDate messages={messages} />
-      <ChatsVendor messages={messages} vendorId={vendorId} />
+      <ChatsVendor messages={messages} vendorId={vendorSeq} />
 
       <ChattingInput
         handleSubmit={handleSubmit}
@@ -67,8 +67,8 @@ function VendorChatting() {
         setMessage={setMessage}
         attachedFile={attachedFile}
         filePreviewUrl={filePreviewUrl}
-        consumerId={consumerId}
-        vendorId={vendorId}
+        consumerSeq={consumerSeq}
+        vendorSeq={vendorSeq}
         handleFileChange={handleFileChange}
         buttonProps="bg-black"
       />

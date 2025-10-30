@@ -14,29 +14,25 @@ async function sendMessageJson(
   message: string,
   messageId: string,
   messageName: string,
-  consumerId: string,
-  vendorId: string,
   consumerName: string,
   vendorName: string,
-  vendorSeq?: string,
-  consumerSeq?: string,
-  solutionName?: string,
+  vendorSeq: string,
+  consumerSeq: string,
+  solutionName: string,
 ) {
   const newRoomId = uuidv4();
-  const roomId = await findChatExistingRoom(consumerId, vendorId);
+  const roomId = await findChatExistingRoom(consumerSeq, vendorSeq);
 
   // 벤더가 채팅을 먼저 걸일이 없음
 
   if (!roomId) {
     await createRoom(
       newRoomId,
-      consumerId,
-      vendorId,
       consumerName,
       vendorName,
-      consumerSeq || '',
-      vendorSeq || '',
-      solutionName || '',
+      consumerSeq,
+      vendorSeq,
+      solutionName,
       '',
     );
   }

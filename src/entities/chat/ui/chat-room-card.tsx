@@ -52,7 +52,7 @@ export default function ChatRoomCard({
         const data = await api
           .get<
             ApiResponse<VendorInfoProps>
-          >(`api/b2b-service/vendor?vendorSeq=${String(vendorSeq)}`)
+          >(`api/b2b-service/vendor?vendorSeq=${vendorSeq}`)
           .json();
         setImg(
           data?.data?.vendorBannerImageUrl || '/images/default-profile.svg',
@@ -62,7 +62,7 @@ export default function ChatRoomCard({
         const data = await api
           .get<
             ApiResponse<ConsumerInfoProps>
-          >(`api/b2b-service/consumer?consumerSeq=${String(consumerSeq)}`)
+          >(`api/b2b-service/consumer?consumerSeq=${consumerSeq}`)
           .json();
         setImg(data?.data?.consumerImageUrl || '/images/default-profile.svg');
         setName(data?.data?.consumerName || 'user');
@@ -75,12 +75,10 @@ export default function ChatRoomCard({
 
   const handleClick = () => {
     setChatMeta({
-      consumerId,
-      vendorId,
       consumerName,
       vendorName,
-      vendorSeq: Number(vendorSeq),
-      consumerSeq: Number(consumerSeq),
+      vendorSeq,
+      consumerSeq,
     });
     router.push(link);
   };

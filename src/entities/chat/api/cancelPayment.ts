@@ -4,15 +4,15 @@ import { PaymentConflictProps } from '../model/type';
 
 async function cancelPayment(
   solutionCategory: string,
-  consumerSeq: number,
-  vendorSeq: number,
+  consumerSeq: string,
+  vendorSeq: string,
 ) {
   const res: ApiResponse<PaymentConflictProps> = await api
     .get('api/payment-service/payment-event/conflict', {
       searchParams: {
         category: solutionCategory,
-        consumerSeq: String(consumerSeq),
-        vendorSeq: String(vendorSeq),
+        consumerSeq,
+        vendorSeq,
       },
     })
     .json();

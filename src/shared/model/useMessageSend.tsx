@@ -105,8 +105,6 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
       if (!vendorSeq) return;
       await createRoom(
         newRoomId,
-        consumerId,
-        vendorId,
         consumerName,
         vendorName,
         session.consumerSeq.toString(),
@@ -139,8 +137,8 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
 
     if (session?.role && attachedFile) {
       await ChatFilePost(
-        consumerSeq,
-        vendorSeq,
+        Number(consumerSeq),
+        Number(vendorSeq),
         docRef.id,
         session?.role,
         attachedFile,

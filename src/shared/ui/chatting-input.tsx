@@ -12,8 +12,8 @@ interface ChattingInputProps {
   setMessage: (message: string) => void;
   attachedFile: File | null;
   filePreviewUrl: string | null;
-  consumerId: string;
-  vendorId: string;
+  consumerSeq: string;
+  vendorSeq: string;
   buttonProps?: string;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -24,8 +24,8 @@ function ChattingInput({
   setMessage,
   attachedFile,
   filePreviewUrl,
-  consumerId,
-  vendorId,
+  consumerSeq,
+  vendorSeq,
   handleFileChange,
   buttonProps,
 }: ChattingInputProps) {
@@ -72,7 +72,7 @@ function ChattingInput({
 
           {/* 전송 버튼 */}
           <button
-            disabled={!consumerId || !vendorId}
+            disabled={!consumerSeq || !vendorSeq}
             type="submit"
             className={cn(
               'absolute top-1/2 right-2 flex size-[30px] -translate-y-1/2 items-center justify-center rounded-full bg-blue-500 text-white',

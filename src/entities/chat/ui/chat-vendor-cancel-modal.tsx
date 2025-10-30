@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import requestPost from '@/shared/api/request-post';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { v4 as uuidv4 } from 'uuid';
-import cancelPayment from '../api/cancelPayment';
 import refundPayment from '../api/refundPayment';
 
 interface ChatVendorCancelModalProps {
@@ -31,39 +30,50 @@ export default function ChatVendorCancelModal({
   orderId,
   paymentEventSeq,
 }: ChatVendorCancelModalProps) {
-  const {
-    vendorId,
-    vendorName,
-    consumerId,
-    consumerName,
-    consumerSeq,
-    vendorSeq,
-  } = useChatMeta();
+  const { vendorName, consumerName, consumerSeq, vendorSeq } = useChatMeta();
 
   const onCancelAcceptPayment = useCallback(async () => {
-    await refundPayment({ orderId, paymentEventSeq });
-    await requestPost(
-      solutionName,
-      solutionPrice.toString(),
-      solutionCategory,
-      vendorId,
-      vendorName,
-      consumerId,
-      consumerName,
-      vendorId,
-      vendorName,
-      'cancel-complete-card',
-      uuidv4(),
-    );
-    setOpen(false);
+    try {
+      // 1️⃣ 환불 처리 API 호출
+      await refundPayment({ orderId, paymentEventSeq });
+
+      // 2️⃣ Firestore에 “취소 완료 카드” 메시지 전송
+      await requestPost({
+        type: 'cancel-complete-card',
+        uuid: uuidv4(),
+        solutionInfo: {
+          name: solutionName,
+          price: solutionPrice.toString(),
+          category: solutionCategory,
+        },
+        messageInfo: {
+          id: vendorSeq, // 벤더가 메시지 발신자
+          name: vendorName,
+          consumerName,
+          vendorName,
+          vendorSeq,
+          consumerSeq,
+        },
+        orderId,
+        paymentEventSeq,
+      });
+
+      toast.success('결제가 취소되었습니다.');
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error('결제 취소 중 오류가 발생했습니다.');
+    }
   }, [
     solutionName,
     solutionPrice,
     solutionCategory,
-    vendorId,
+    vendorSeq,
     vendorName,
-    consumerId,
     consumerName,
+    consumerSeq,
+    orderId,
+    paymentEventSeq,
     setOpen,
   ]);
 

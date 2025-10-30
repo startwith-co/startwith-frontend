@@ -31,7 +31,7 @@ export default function InquireCard({
   category,
   profileImage,
 }: InquireCardProps) {
-  const { setChatMeta, consumerId: curConsumerId } = useChatMeta();
+  const { setChatMeta } = useChatMeta();
   const router = useRouter();
   const { session, status } = useCurrentSession();
   const handlePaymentClick = async () => {
@@ -62,18 +62,16 @@ export default function InquireCard({
 
       setChatMeta({
         vendorName,
-        vendorId,
-        vendorSeq,
+        vendorSeq: String(vendorSeq),
         consumerName: res.data.consumerName,
-        consumerId: res.data.consumerUniqueType,
-        consumerSeq: res.data.consumerSeq,
+        consumerSeq: String(res.data.consumerSeq),
         solutionName,
         userImg: res.data.consumerImageUrl,
       });
     };
 
     fetchConsumer();
-  }, [session, setChatMeta, vendorId, vendorName, vendorSeq]);
+  }, [session, setChatMeta, vendorSeq, vendorName]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -90,7 +88,7 @@ export default function InquireCard({
               className="text-primary border-primary mt-5 w-full rounded-3xl border-2 bg-white hover:text-white"
               onClick={() => {
                 router.push(
-                  `/chat?vendorId=${vendorId}&consumerId=${curConsumerId}`,
+                  `/chat?vendorId=${vendorSeq}&consumerId=${session?.consumerSeq}`,
                 );
               }}
             >
