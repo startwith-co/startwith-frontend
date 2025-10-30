@@ -16,8 +16,8 @@ import ChatMainDate from '@/shared/ui/chat-main-date';
 function VendorChatting() {
   const { vendorName, setChatMeta } = useChatMeta();
   const searchParams = useSearchParams();
-  const consumerSeq = searchParams.get('consumerSeq') as string;
-  const vendorSeq = searchParams.get('vendorSeq') as string;
+  const consumerSeq = searchParams.get('consumerId') as string;
+  const vendorSeq = searchParams.get('vendorId') as string;
 
   const {
     handleSubmit,
@@ -45,10 +45,8 @@ function VendorChatting() {
         .json<ApiResponse<ConsumerDetailType>>();
       setChatMeta({
         vendorName: session.name,
-        vendorId: session.uniqueType,
         vendorSeq: String(session.vendorSeq),
         consumerName: res.data.consumerName,
-        consumerId: res.data.consumerUniqueType,
         consumerSeq: String(res.data.consumerSeq),
       });
     };

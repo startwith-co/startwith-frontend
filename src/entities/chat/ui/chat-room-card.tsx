@@ -19,8 +19,6 @@ export interface ChatRoomCardProps {
   className?: string;
   avatarSize?: string;
   updatedDate?: string;
-  consumerId: string;
-  vendorId: string;
   consumerName: string;
   vendorName: string;
   vendorSeq: string;
@@ -33,8 +31,6 @@ export default function ChatRoomCard({
   className = '',
   avatarSize = 'size-15',
   updatedDate,
-  consumerId,
-  vendorId,
   consumerName,
   vendorName,
   vendorSeq,

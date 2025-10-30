@@ -14,7 +14,6 @@ import createPaymentEvent from '../api/createPaymentEvent';
 
 interface InquireCardProps {
   vendorName: string;
-  vendorId: string;
   vendorSeq: number;
   solutionName: string;
   amount: number;
@@ -24,7 +23,6 @@ interface InquireCardProps {
 
 export default function InquireCard({
   vendorName,
-  vendorId,
   vendorSeq,
   solutionName,
   amount,
@@ -81,7 +79,7 @@ export default function InquireCard({
           <AvatarFallback>{vendorName[0]}</AvatarFallback>
         </Avatar>
         <span className="text-xl font-bold">{vendorName}</span>
-        {session?.uniqueType !== vendorId && status === 'authenticated' && (
+        {session?.vendorSeq !== vendorSeq && status === 'authenticated' && (
           <div>
             <Button
               asChild={false}

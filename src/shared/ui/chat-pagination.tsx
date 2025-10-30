@@ -46,8 +46,6 @@ function ChatPagination({ rooms }: { rooms: ChatRoom[] }) {
         {paginatedRooms.map((room) => (
           <ChatRoomCard
             roomId={room.roomId}
-            consumerId={room.consumerId}
-            vendorId={room.vendorId}
             consumerName={room.consumerName}
             vendorName={room.vendorName}
             vendorSeq={String(room.vendorSeq)}
@@ -56,8 +54,8 @@ function ChatPagination({ rooms }: { rooms: ChatRoom[] }) {
             updatedDate={formatMainDate(room.lastMessage.updatedAt)}
             link={
               session?.role === 'vendor'
-                ? `/vendor/chat?vendorId=${room.vendorId}&consumerId=${room.consumerId}`
-                : `/chat?consumerId=${room.consumerId}&vendorId=${room.vendorId}`
+                ? `/vendor/chat?vendorId=${room.vendorSeq}&consumerId=${room.consumerSeq}`
+                : `/chat?consumerId=${room.consumerSeq}&vendorId=${room.vendorSeq}`
             }
             consumerSeq={String(room.consumerSeq)}
           />
