@@ -31,6 +31,7 @@ function VendorChatting() {
   } = useMessageSend({
     messageId: vendorSeq,
     messageName: vendorName,
+    role: 'vendor',
   });
 
   const { session } = useCurrentSession();

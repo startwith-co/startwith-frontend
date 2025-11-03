@@ -89,6 +89,7 @@ function RequestPayForm() {
             consumerName,
             vendorName,
             vendorSeq,
+            role: 'vendor',
             consumerSeq,
           },
         });

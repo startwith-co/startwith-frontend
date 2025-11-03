@@ -53,6 +53,7 @@ export default function ChatVendorCancelModal({
           vendorName,
           vendorSeq,
           consumerSeq,
+          role: 'vendor',
         },
         orderId,
         paymentEventSeq,

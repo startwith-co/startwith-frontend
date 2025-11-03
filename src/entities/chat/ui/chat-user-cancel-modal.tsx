@@ -33,6 +33,7 @@ export default function ChatUserCancelModal({
       messageInfo: {
         id: consumerSeq,
         name: consumerName,
+        role: 'consumer',
         consumerName,
         vendorName,
         vendorSeq,

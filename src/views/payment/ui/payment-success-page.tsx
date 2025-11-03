@@ -57,23 +57,26 @@ export default function SuccessPage({
 
     const sendRequestPost = async () => {
       try {
-        await requestPost(
-          paymentData.orderName,
-          amount,
-          paymentData.category,
-          consumerId,
-          consumerName,
-          consumerId,
-          consumerName,
-          vendorId,
-          vendorName,
-          'pay-complete-card',
-          uuidv4(),
+        await requestPost({
+          type: 'pay-complete-card',
+          uuid: uuidv4(),
+          solutionInfo: {
+            name: paymentData.orderName,
+            price: amount,
+            category: paymentData.category,
+          },
+          messageInfo: {
+            id: session.consumerSeq?.toString() || '',
+            name: session.consumerSeq ? consumerName : vendorName,
+            consumerName,
+            vendorName,
+            vendorSeq,
+            consumerSeq: session.consumerSeq?.toString() || '',
+            role: 'consumer',
+          },
           orderId,
           paymentEventSeq,
-          session?.consumerSeq?.toString() || '',
-          vendorSeq,
-        );
+        });
 
         router.push(`/chat?vendorId=${vendorId}&consumerId=${consumerId}`);
       } catch (error) {

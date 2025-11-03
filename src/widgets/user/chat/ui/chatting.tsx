@@ -25,6 +25,7 @@ function Chatting() {
   } = useMessageSend({
     messageId: consumerSeq,
     messageName: consumerName,
+    role: 'consumer',
   });
 
   const chatMainDate =

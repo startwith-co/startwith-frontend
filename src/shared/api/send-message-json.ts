@@ -13,6 +13,7 @@ async function sendMessageJson(
   vendorSeq: string,
   consumerSeq: string,
   solutionName: string,
+  role: 'consumer' | 'vendor',
 ) {
   const newRoomId = uuidv4();
   const roomId = await findChatExistingRoom(consumerSeq, vendorSeq);
@@ -36,6 +37,7 @@ async function sendMessageJson(
     createdAt: serverTimestamp(),
     messageId,
     messageName,
+    role,
   });
 }
 

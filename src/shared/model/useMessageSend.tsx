@@ -22,11 +22,12 @@ import ChatFilePost from '../api/chat-file-post';
 
 interface UseMessageSendProps {
   messageId: string;
+  role: 'consumer' | 'vendor';
   messageName: string;
   attachedFile?: File;
 }
 
-function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
+function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<ChatType[]>([]);
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
@@ -110,6 +111,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
       createdAt: serverTimestamp(),
       messageId,
       messageName,
+      role,
       file: attachedFile ? fileUniqueId : null,
     };
 

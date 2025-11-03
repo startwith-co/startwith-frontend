@@ -26,7 +26,7 @@ function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
           parsed = null;
         }
 
-        const isMine = msg.messageId === vendorId;
+        const isMine = msg.role === 'vendor';
 
         if (parsed?.type === 'request-card') {
           return (
@@ -88,9 +88,8 @@ function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
           <ChatVendorBubble
             key={msg.id}
             message={msg.message}
-            messageId={msg.messageId}
-            vendorId={vendorId}
             time={formatTime(msg.createdAt)}
+            role={msg.role}
             file={msg.file}
           />
         );

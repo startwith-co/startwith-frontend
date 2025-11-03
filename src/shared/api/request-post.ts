@@ -9,6 +9,7 @@ type SolutionInfo = {
 type MessageInfo = {
   id: string;
   name: string;
+  role: 'consumer' | 'vendor';
   consumerName: string;
   vendorName: string;
   vendorSeq: string;
@@ -57,6 +58,7 @@ async function requestPost({
     messageInfo.vendorSeq,
     messageInfo.consumerSeq,
     solutionInfo.name,
+    messageInfo.role,
   );
 }
 

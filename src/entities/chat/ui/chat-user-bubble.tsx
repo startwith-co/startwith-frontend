@@ -2,20 +2,18 @@ import useFileClick from '../model/useFileClick';
 
 interface ChatBubbleProps {
   message: string;
-  messageId: string;
-  consumerId: string;
   time: string;
+  role: 'consumer' | 'vendor';
   file: string;
 }
 
 export default function ChatUserBubble({
   message,
-  messageId,
-  consumerId,
   time,
+  role,
   file,
 }: ChatBubbleProps) {
-  const isMine = messageId === consumerId;
+  const isMine = role === 'consumer';
   const { handleFileClick } = useFileClick(file);
 
   return (
