@@ -14,7 +14,6 @@ function formatTimeRange(start: string | null, end: string | null) {
 
 function ChatCompanyProfile() {
   const vendorInfo = useFetchVendor();
-  console.log(vendorInfo);
 
   return (
     <div className="flex h-full w-full flex-col gap-2.5 rounded-3xl bg-white px-8 pt-[19px] shadow-md">

@@ -12,6 +12,7 @@ import getRoomInformationById from '@/shared/api/get-room-information-by-id';
 import { useSearchParams } from 'next/navigation';
 import ChattingInput from '@/shared/ui/chatting-input';
 import ChatMainDate from '@/shared/ui/chat-main-date';
+import formatMainDate from '@/shared/lib/chat-main-date-format';
 
 function VendorChatting() {
   const { vendorName, setChatMeta } = useChatMeta();
@@ -54,9 +55,12 @@ function VendorChatting() {
     fetchConsumer();
   }, [session, setChatMeta, vendorSeq, vendorName, consumerSeq]);
 
+  const chatMainDate =
+    formatMainDate(messages[messages.length - 1]?.createdAt) || '';
+
   return (
     <div className="flex min-h-[calc(100vh-200px)] w-full flex-col rounded-3xl bg-[#FFFFFF] shadow-lg">
-      <ChatMainDate messages={messages} />
+      <ChatMainDate mainData={chatMainDate} />
       <ChatsVendor messages={messages} vendorId={vendorSeq} />
 
       <ChattingInput

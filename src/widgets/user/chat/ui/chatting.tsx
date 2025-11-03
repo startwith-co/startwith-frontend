@@ -6,6 +6,7 @@ import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { useSearchParams } from 'next/navigation';
 import ChattingInput from '@/shared/ui/chatting-input';
 import ChatMainDate from '@/shared/ui/chat-main-date';
+import formatMainDate from '@/shared/lib/chat-main-date-format';
 
 function Chatting() {
   const { consumerName } = useChatMeta();
@@ -26,9 +27,12 @@ function Chatting() {
     messageName: consumerName,
   });
 
+  const chatMainDate =
+    formatMainDate(messages[messages.length - 1]?.createdAt) || '';
+
   return (
     <div className="flex h-[calc(100vh-200px)] w-full flex-col overflow-hidden rounded-3xl bg-white shadow-md">
-      <ChatMainDate messages={messages} />
+      <ChatMainDate mainData={chatMainDate} />
       <ChatsUser messages={messages} consumerId={consumerSeq} />
       <ChattingInput
         handleSubmit={handleSubmit}
