@@ -18,7 +18,6 @@ import db from 'fire-config';
 import { ChatType } from '@/entities/chat/model/type';
 import { useRoomId } from './RoomIdProvider';
 import { useChatMeta } from './ChatMetaProvider';
-import useCurrentSession from './useCurrentSession';
 import ChatFilePost from '../api/chat-file-post';
 
 interface UseMessageSendProps {
@@ -32,16 +31,8 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
   const [messages, setMessages] = useState<ChatType[]>([]);
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
-  const { session } = useCurrentSession();
   const { curRoomId, setCurRoomId } = useRoomId();
-  const {
-    consumerName,
-    vendorName,
-    vendorSeq,
-    consumerSeq,
-    solutionName,
-    userImg,
-  } = useChatMeta();
+  const { consumerName, vendorName, solutionName, userImg } = useChatMeta();
 
   const searchParams = useSearchParams();
   const consumerId = searchParams.get('consumerId') as string;
@@ -65,7 +56,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     let unsubscribe: () => void;
 
     async function realTimeMessages() {
-      if (!consumerId || !vendorId || consumerId === vendorId) return;
+      if (!consumerId || !vendorId) return;
 
       const roomId = await findChatExistingRoom(consumerId, vendorId);
       if (roomId) {
@@ -100,14 +91,14 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     const targetRoomId = roomId || newRoomId;
 
     if (!roomId) {
-      if (!session?.consumerSeq) return;
-      if (!vendorSeq) return;
+      if (!consumerId) return;
+      if (!vendorId) return;
       await createRoom(
         newRoomId,
         consumerName,
         vendorName,
-        session.consumerSeq.toString(),
-        vendorSeq.toString(),
+        consumerId,
+        vendorId,
         solutionName,
         userImg,
       );
@@ -124,12 +115,12 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
 
     await addDoc(collection(db, 'chats', targetRoomId, 'messages'), newMessage);
 
-    if (session?.role && attachedFile) {
+    if (attachedFile) {
       await ChatFilePost(
-        Number(consumerSeq),
-        Number(vendorSeq),
+        Number(consumerId),
+        Number(vendorId),
         fileUniqueId,
-        session?.role,
+        'vendor',
         attachedFile,
       );
     }
