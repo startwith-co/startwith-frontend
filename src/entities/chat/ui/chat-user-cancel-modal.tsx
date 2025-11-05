@@ -5,10 +5,6 @@ import requestPost from '@/shared/api/request-post';
 import { useSolution } from '@/shared/model/SolutionProvider';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { v4 as uuidv4 } from 'uuid';
-import api from '@/shared/api/client-api';
-import { ApiResponse } from '@/shared/model/apiType';
-import { toast } from 'react-toastify';
-import { PaymentConflictProps } from '../model/type';
 import cancelPayment from '../api/cancelPayment';
 
 interface ChatUserCancelModalProps {
@@ -22,30 +18,28 @@ export default function ChatUserCancelModal({
 }: ChatUserCancelModalProps) {
   const { solutionName, solutionPrice, solutionCategory } = useSolution();
 
-  const {
-    vendorId,
-    vendorName,
-    consumerId,
-    consumerName,
-    consumerSeq,
-    vendorSeq,
-  } = useChatMeta();
+  const { vendorName, consumerName, consumerSeq, vendorSeq } = useChatMeta();
 
   const onCancelPayment = useCallback(async () => {
     cancelPayment(solutionCategory, consumerSeq, vendorSeq);
-    await requestPost(
-      solutionName,
-      solutionPrice.toString(),
-      solutionCategory,
-      consumerId,
-      consumerName,
-      consumerId,
-      consumerName,
-      vendorId,
-      vendorName,
-      'cancel-request-card',
-      uuidv4(),
-    );
+    await requestPost({
+      type: 'cancel-request-card',
+      uuid: uuidv4(),
+      solutionInfo: {
+        name: solutionName,
+        price: solutionPrice.toString(),
+        category: solutionCategory,
+      },
+      messageInfo: {
+        id: consumerSeq,
+        name: consumerName,
+        role: 'consumer',
+        consumerName,
+        vendorName,
+        vendorSeq,
+        consumerSeq,
+      },
+    });
     setOpen(false);
   }, [solutionName, solutionPrice, solutionCategory, setOpen]);
 

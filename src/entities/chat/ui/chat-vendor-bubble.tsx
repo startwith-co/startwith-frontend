@@ -2,23 +2,19 @@ import useFileClick from '../model/useFileClick';
 
 interface ChatBubbleProps {
   message: string;
-  messageId: string;
-  vendorId: string;
   time: string;
-  file: boolean;
-  id: string;
+  role: 'consumer' | 'vendor';
+  file: string;
 }
 
 export default function ChatVendorBubble({
   message,
-  messageId,
-  vendorId,
   time,
+  role,
   file,
-  id,
 }: ChatBubbleProps) {
-  const isMine = messageId === vendorId;
-  const { handleFileClick } = useFileClick(id);
+  const isMine = role === 'vendor';
+  const { handleFileClick } = useFileClick(file);
   return (
     <div
       className={`flex ${isMine ? 'mr-2 flex-row-reverse' : 'ml-2 flex-row'} mt-4 mb-2 gap-1.5`}

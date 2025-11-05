@@ -50,7 +50,10 @@ export default middleware(async (req) => {
     const consumerId = nextUrl.searchParams.get('consumerId');
     const vendorId = nextUrl.searchParams.get('vendorId');
 
-    if (auth?.uniqueType === consumerId || auth?.uniqueType === vendorId) {
+    if (
+      String(auth?.consumerSeq) === consumerId ||
+      String(auth?.vendorSeq) === vendorId
+    ) {
       return NextResponse.next();
     }
     return NextResponse.redirect(new URL('/', nextUrl));

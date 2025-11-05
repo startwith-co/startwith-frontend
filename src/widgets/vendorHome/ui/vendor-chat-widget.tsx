@@ -7,7 +7,7 @@ import Link from 'next/link';
 import defaultImage from 'public/images/dummy.png';
 
 export default function VendorChatWidget() {
-  const rooms = useGetChatRooms({ targetId: 'vendorId' });
+  const rooms = useGetChatRooms({ targetId: 'vendorSeq' });
   return (
     <div className="rounded-2xl bg-white p-7 shadow-md">
       <h2 className="font-semibold 2xl:text-xl">실시간 상담 현황</h2>
@@ -16,7 +16,7 @@ export default function VendorChatWidget() {
           rooms.map((room) => (
             <li key={room.roomId}>
               <Link
-                href={`vendor/chat?vendorId=${room.vendorId}&consumerId=${room.consumerId}`}
+                href={`vendor/chat?vendorId=${room.vendorSeq}&consumerId=${room.consumerSeq}`}
               >
                 <DarkBox className="flex h-17.5 w-full items-center px-2 text-center text-xs font-semibold">
                   <Image

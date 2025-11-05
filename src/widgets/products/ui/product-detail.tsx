@@ -20,13 +20,13 @@ export default function ProductDetail({
   amount,
   solutionImplementationType,
   duration,
-  industry,
-  recommendedCompanySize,
-  solutionEffect,
+  industry = [],
+  recommendedCompanySize = [],
+  solutionEffect = [],
   representImageUrl,
   descriptionPdfUrl,
   category,
-  vendorCategory,
+  vendorCategory = [],
   vendorSeq,
 }: SolutionDetailProps & {
   category: string;

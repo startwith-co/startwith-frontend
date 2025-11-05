@@ -12,12 +12,13 @@ import getRoomInformationById from '@/shared/api/get-room-information-by-id';
 import { useSearchParams } from 'next/navigation';
 import ChattingInput from '@/shared/ui/chatting-input';
 import ChatMainDate from '@/shared/ui/chat-main-date';
+import formatMainDate from '@/shared/lib/chat-main-date-format';
 
 function VendorChatting() {
   const { vendorName, setChatMeta } = useChatMeta();
   const searchParams = useSearchParams();
-  const consumerId = searchParams.get('consumerId') as string;
-  const vendorId = searchParams.get('vendorId') as string;
+  const consumerSeq = searchParams.get('consumerId') as string;
+  const vendorSeq = searchParams.get('vendorId') as string;
 
   const {
     handleSubmit,
@@ -28,16 +29,17 @@ function VendorChatting() {
     setMessage,
     messages,
   } = useMessageSend({
-    messageId: vendorId,
+    messageId: vendorSeq,
     messageName: vendorName,
+    role: 'vendor',
   });
 
   const { session } = useCurrentSession();
 
   useEffect(() => {
-    if (!consumerId || !vendorId) return;
+    if (!consumerSeq || !vendorSeq) return;
     const fetchConsumer = async () => {
-      const roomInfo = await getRoomInformationById(consumerId, vendorId);
+      const roomInfo = await getRoomInformationById(consumerSeq, vendorSeq);
 
       if (!roomInfo || !session) return;
       const res = await api
@@ -45,21 +47,22 @@ function VendorChatting() {
         .json<ApiResponse<ConsumerDetailType>>();
       setChatMeta({
         vendorName: session.name,
-        vendorId: session.uniqueType,
-        vendorSeq: session.vendorSeq,
+        vendorSeq: String(session.vendorSeq),
         consumerName: res.data.consumerName,
-        consumerId: res.data.consumerUniqueType,
-        consumerSeq: res.data.consumerSeq,
+        consumerSeq: String(res.data.consumerSeq),
       });
     };
 
     fetchConsumer();
-  }, [session, setChatMeta, vendorId, vendorName, consumerId]);
+  }, [session, setChatMeta, vendorSeq, vendorName, consumerSeq]);
+
+  const chatMainDate =
+    formatMainDate(messages[messages.length - 1]?.createdAt) || '';
 
   return (
-    <div className="flex h-[calc(100vh-200px)] w-full flex-col rounded-3xl bg-[#FFFFFF] shadow-lg">
-      <ChatMainDate messages={messages} />
-      <ChatsVendor messages={messages} vendorId={vendorId} />
+    <div className="flex min-h-[calc(100vh-200px)] w-full flex-col rounded-3xl bg-[#FFFFFF] shadow-lg">
+      <ChatMainDate mainData={chatMainDate} />
+      <ChatsVendor messages={messages} vendorId={vendorSeq} />
 
       <ChattingInput
         handleSubmit={handleSubmit}
@@ -67,8 +70,8 @@ function VendorChatting() {
         setMessage={setMessage}
         attachedFile={attachedFile}
         filePreviewUrl={filePreviewUrl}
-        consumerId={consumerId}
-        vendorId={vendorId}
+        consumerSeq={consumerSeq}
+        vendorSeq={vendorSeq}
         handleFileChange={handleFileChange}
         buttonProps="bg-black"
       />

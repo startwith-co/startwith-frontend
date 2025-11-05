@@ -11,12 +11,10 @@ import {
 } from 'react';
 
 interface ChatMetaContextType {
-  consumerId: string;
   consumerName: string;
-  vendorId: string;
   vendorName: string;
-  vendorSeq: number;
-  consumerSeq: number;
+  vendorSeq: string;
+  consumerSeq: string;
   paymentEventSeq: number;
   solutionName: string;
   userImg: string;
@@ -31,12 +29,10 @@ const ChatMetaContext = createContext<ChatMetaContextType | undefined>(
   undefined,
 );
 const initialValues = {
-  consumerId: '',
   consumerName: '',
-  vendorId: '',
   vendorName: '',
-  consumerSeq: 0,
-  vendorSeq: 0,
+  consumerSeq: '0',
+  vendorSeq: '0',
   paymentEventSeq: 0,
   solutionName: '',
   userImg: '',

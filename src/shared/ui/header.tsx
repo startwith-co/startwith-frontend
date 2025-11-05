@@ -116,8 +116,8 @@ export default function Header({ className }: HeaderProps) {
         <Link
           href={
             session?.role === 'vendor'
-              ? `/vendor/chat?vendorId=${session?.uniqueType}`
-              : `/chat?consumerId=${session?.uniqueType}`
+              ? `/vendor/chat?vendorId=${session.vendorSeq}`
+              : `/chat?consumerId=${session?.consumerSeq}`
           }
         >
           <FiMail size={24} />

@@ -2,8 +2,8 @@ import api from '@/shared/api/client-api';
 import { toast } from 'react-toastify';
 
 interface RequestServerPost {
-  consumerSeq: number;
-  vendorSeq: number;
+  consumerSeq: string;
+  vendorSeq: string;
   category: string;
   paymentEventName: string;
   amount: number;
@@ -25,8 +25,8 @@ async function requestServerPost(data: RequestServerPost) {
   }
 
   const requestPayload = {
-    consumerSeq: data.consumerSeq,
-    vendorSeq: data.vendorSeq,
+    consumerSeq: Number(data.consumerSeq),
+    vendorSeq: Number(data.vendorSeq),
     category: data.category,
     paymentEventName: data.paymentEventName,
     amount: data.amount,
