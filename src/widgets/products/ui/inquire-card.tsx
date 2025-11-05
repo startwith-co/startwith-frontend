@@ -14,7 +14,6 @@ import createPaymentEvent from '../api/createPaymentEvent';
 
 interface InquireCardProps {
   vendorName: string;
-  vendorId: string;
   vendorSeq: number;
   solutionName: string;
   amount: number;
@@ -24,14 +23,13 @@ interface InquireCardProps {
 
 export default function InquireCard({
   vendorName,
-  vendorId,
   vendorSeq,
   solutionName,
   amount,
   category,
   profileImage,
 }: InquireCardProps) {
-  const { setChatMeta, consumerId: curConsumerId } = useChatMeta();
+  const { setChatMeta } = useChatMeta();
   const router = useRouter();
   const { session, status } = useCurrentSession();
   const handlePaymentClick = async () => {
@@ -62,18 +60,16 @@ export default function InquireCard({
 
       setChatMeta({
         vendorName,
-        vendorId,
-        vendorSeq,
+        vendorSeq: String(vendorSeq),
         consumerName: res.data.consumerName,
-        consumerId: res.data.consumerUniqueType,
-        consumerSeq: res.data.consumerSeq,
+        consumerSeq: String(res.data.consumerSeq),
         solutionName,
         userImg: res.data.consumerImageUrl,
       });
     };
 
     fetchConsumer();
-  }, [session, setChatMeta, vendorId, vendorName, vendorSeq]);
+  }, [session, setChatMeta, vendorSeq, vendorName]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -83,28 +79,32 @@ export default function InquireCard({
           <AvatarFallback>{vendorName[0]}</AvatarFallback>
         </Avatar>
         <span className="text-xl font-bold">{vendorName}</span>
-        {session?.uniqueType !== vendorId && status === 'authenticated' && (
-          <div>
-            <Button
-              asChild={false}
-              className="text-primary border-primary mt-5 w-full rounded-3xl border-2 bg-white hover:text-white"
-              onClick={() => {
+
+        <div>
+          <Button
+            asChild={false}
+            className="text-primary border-primary mt-5 w-full rounded-3xl border-2 bg-white hover:text-white"
+            onClick={() => {
+              if (
+                session?.vendorSeq !== vendorSeq &&
+                status === 'authenticated'
+              ) {
                 router.push(
-                  `/chat?vendorId=${vendorId}&consumerId=${curConsumerId}`,
+                  `/chat?vendorId=${vendorSeq}&consumerId=${session?.consumerSeq}`,
                 );
-              }}
-            >
-              실시간 상담하기
-            </Button>
-            <Button
-              asChild={false}
-              className="mt-5 w-full rounded-3xl"
-              onClick={() => handlePaymentClick()}
-            >
-              구매하기
-            </Button>
-          </div>
-        )}
+              }
+            }}
+          >
+            실시간 상담하기
+          </Button>
+          <Button
+            asChild={false}
+            className="mt-5 w-full rounded-3xl"
+            onClick={() => handlePaymentClick()}
+          >
+            구매하기
+          </Button>
+        </div>
       </WhiteBox>
     </div>
   );

@@ -15,17 +15,14 @@ import {
 
 export default function Sidebar({
   category = '',
-  industry = '',
   budget = '',
 }: {
   category?: string;
-  industry?: string;
   budget?: string;
 }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterList, setFilterList] = useState({
     category,
-    industry,
     budget,
   });
   const router = useRouter();
@@ -34,8 +31,6 @@ export default function Sidebar({
     const params = new URLSearchParams();
 
     if (filterList.category) params.set('category', filterList.category);
-    if (filterList.industry)
-      params.set('industry', industryCategoryToValue[filterList.industry]);
     if (filterList.budget) params.set('budget', filterList.budget);
 
     const query = params.toString();
@@ -58,8 +53,8 @@ export default function Sidebar({
         {isFilterOpen && (
           <div>
             <ul className="mt-5 flex flex-col gap-7.5 [&>li>div]:mt-2.5">
-              <li>
-                <span>산업군 카테고리 선택</span>
+              {/* <li>
+                <span className="font-semibold">산업군 카테고리 선택</span>
                 <div className="grid grid-cols-2 gap-3.5">
                   {industryCategoryLabels.map((industryCategory) => (
                     <FilterButton
@@ -75,9 +70,9 @@ export default function Sidebar({
                     />
                   ))}
                 </div>
-              </li>
+              </li> */}
               <li>
-                <span>솔루션 카테고리 선택</span>
+                <span className="font-semibold">솔루션 카테고리 선택</span>
                 <div className="flex flex-wrap gap-3.5">
                   {solutionCategoryLabels.map((solutionCategory) => (
                     <FilterButton
@@ -96,7 +91,7 @@ export default function Sidebar({
                 </div>
               </li>
               <li>
-                <span>예산 설정</span>
+                <span className="font-semibold">예산 설정</span>
                 <div className="flex flex-col gap-3.5">
                   {scaleCategories.map((scaleCategory) => (
                     <FilterButton

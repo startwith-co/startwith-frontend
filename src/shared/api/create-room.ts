@@ -3,36 +3,21 @@ import db from 'fire-config';
 
 async function createRoom(
   roomId: string,
-  consumerId: string,
-  vendorId: string,
   consumerName: string,
   vendorName: string,
-  messageId: string,
-  message: string,
-  messageName: string,
   consumerSeq: string,
   vendorSeq: string,
   solutionName: string,
   userImg: string,
 ) {
-  // chats 컬렉션 안에 roomId 문서 생성
   const roomRef = doc(db, 'chats', roomId);
 
-  // 문서에 데이터 설정
   await setDoc(roomRef, {
     roomId,
-    consumerId,
     consumerName,
     vendorName,
-    vendorId,
     consumerSeq,
     vendorSeq,
-    lastMessage: {
-      messageId,
-      message,
-      createdAt: serverTimestamp(),
-      messageName,
-    },
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
     solutionName,

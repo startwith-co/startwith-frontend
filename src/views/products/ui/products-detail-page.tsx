@@ -34,7 +34,6 @@ export default async function ProductsDetailPage({
       <div className="mt-6.5 grid grid-cols-[1fr_3.5fr] gap-10 px-20 2xl:px-72">
         <InquireCard
           vendorName={vendorInfo.vendorName || ''}
-          vendorId={vendorInfo.vendorUniqueType || ''}
           vendorSeq={Number(vendorSeq)}
           profileImage={vendorInfo.profileImage || ''}
           solutionName={solution.solutionName || ''}

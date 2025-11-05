@@ -1,6 +1,5 @@
 'use client';
 
-import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { useState, useEffect } from 'react';
 import { VendorInfoProps } from '@/views/vendorMy/model/type';
 import { ApiResponse } from '@/shared/model/apiType';
@@ -14,22 +13,21 @@ interface VendorInfos {
 }
 
 function useFetchVendor() {
-  const { vendorSeq } = useChatMeta();
   const [vendorInfo, setVendorInfo] = useState<VendorInfos | null>(null);
   const searchParams = useSearchParams();
   const vendorId = searchParams.get('vendorId') as string;
 
   useEffect(() => {
-    if (!vendorSeq || !vendorId) return;
+    if (!vendorId) return;
 
     const fetchAllVendorData = async () => {
       try {
         const [vendorInfoRes, vendorCategoryRes] = await Promise.all([
           api
-            .get(`api/b2b-service/vendor?vendorSeq=${vendorSeq}`)
+            .get(`api/b2b-service/vendor?vendorSeq=${vendorId}`)
             .json<ApiResponse<VendorInfoProps>>(),
           api
-            .get(`api/b2b-service/vendor/category?vendorSeq=${vendorSeq}`)
+            .get(`api/b2b-service/vendor/category?vendorSeq=${vendorId}`)
             .json<ApiResponse<VendorCategoryProps[]>>(),
         ]);
 
@@ -43,7 +41,7 @@ function useFetchVendor() {
     };
 
     fetchAllVendorData();
-  }, [vendorSeq, vendorId]);
+  }, [vendorId]);
 
   return vendorInfo;
 }

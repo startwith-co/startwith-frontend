@@ -40,7 +40,6 @@ export default function VendorUpdatePage({
       solutionName: solution.solutionName,
       solutionDetail: solution.solutionDetail,
       category: solutionCategoryToLabel[category],
-      industry: solution.industry.join(','),
       recommendedCompanySize: solution.recommendedCompanySize,
       solutionImplementationType: solution.solutionImplementationType,
       amount: solution.amount.toString(),

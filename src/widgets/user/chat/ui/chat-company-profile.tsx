@@ -20,7 +20,7 @@ function ChatCompanyProfile() {
       <Avatar className="flex size-20 items-center justify-center self-center rounded-full">
         <AvatarImage
           src={
-            vendorInfo?.vendorInfo?.vendorBannerImageUrl ||
+            vendorInfo?.vendorInfo?.profileImage ||
             '/images/default-profile.svg'
           }
         />

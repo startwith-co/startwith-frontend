@@ -1,10 +1,4 @@
-import {
-  serverTimestamp,
-  addDoc,
-  collection,
-  updateDoc,
-  doc,
-} from 'firebase/firestore';
+import { serverTimestamp, addDoc, collection } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import db from 'fire-config';
 import createRoom from './create-room';
@@ -14,32 +8,26 @@ async function sendMessageJson(
   message: string,
   messageId: string,
   messageName: string,
-  consumerId: string,
-  vendorId: string,
   consumerName: string,
   vendorName: string,
-  vendorSeq?: string,
-  consumerSeq?: string,
-  solutionName?: string,
+  vendorSeq: string,
+  consumerSeq: string,
+  solutionName: string,
+  role: 'consumer' | 'vendor',
 ) {
   const newRoomId = uuidv4();
-  const roomId = await findChatExistingRoom(consumerId, vendorId);
+  const roomId = await findChatExistingRoom(consumerSeq, vendorSeq);
 
   // 벤더가 채팅을 먼저 걸일이 없음
 
   if (!roomId) {
     await createRoom(
       newRoomId,
-      consumerId,
-      vendorId,
       consumerName,
       vendorName,
-      messageId,
-      message,
-      messageName,
-      consumerSeq || '',
-      vendorSeq || '',
-      solutionName || '',
+      consumerSeq,
+      vendorSeq,
+      solutionName,
       '',
     );
   }
@@ -49,15 +37,7 @@ async function sendMessageJson(
     createdAt: serverTimestamp(),
     messageId,
     messageName,
-  });
-
-  await updateDoc(doc(db, 'chats', roomId || newRoomId), {
-    lastMessage: {
-      messageId,
-      message,
-      messageName,
-      updatedAt: serverTimestamp(),
-    },
+    role,
   });
 }
 

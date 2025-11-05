@@ -4,12 +4,10 @@ import { useEffect, useState } from 'react';
 import {
   addDoc,
   collection,
-  doc,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
-  updateDoc,
 } from 'firebase/firestore';
 import { useSearchParams } from 'next/navigation';
 import createRoom from '@/shared/api/create-room';
@@ -20,30 +18,22 @@ import db from 'fire-config';
 import { ChatType } from '@/entities/chat/model/type';
 import { useRoomId } from './RoomIdProvider';
 import { useChatMeta } from './ChatMetaProvider';
-import useCurrentSession from './useCurrentSession';
 import ChatFilePost from '../api/chat-file-post';
 
 interface UseMessageSendProps {
   messageId: string;
+  role: 'consumer' | 'vendor';
   messageName: string;
   attachedFile?: File;
 }
 
-function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
+function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<ChatType[]>([]);
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
-  const { session } = useCurrentSession();
   const { curRoomId, setCurRoomId } = useRoomId();
-  const {
-    consumerName,
-    vendorName,
-    vendorSeq,
-    consumerSeq,
-    solutionName,
-    userImg,
-  } = useChatMeta();
+  const { consumerName, vendorName, solutionName, userImg } = useChatMeta();
 
   const searchParams = useSearchParams();
   const consumerId = searchParams.get('consumerId') as string;
@@ -67,7 +57,7 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
     let unsubscribe: () => void;
 
     async function realTimeMessages() {
-      if (!consumerId || !vendorId || consumerId === vendorId) return;
+      if (!consumerId || !vendorId) return;
 
       const roomId = await findChatExistingRoom(consumerId, vendorId);
       if (roomId) {
@@ -98,22 +88,18 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
 
     const roomId = await findChatExistingRoom(consumerId, vendorId);
     const newRoomId = uuidv4();
+    const fileUniqueId = uuidv4();
     const targetRoomId = roomId || newRoomId;
 
     if (!roomId) {
-      if (!session?.consumerSeq) return;
-      if (!vendorSeq) return;
+      if (!consumerId) return;
+      if (!vendorId) return;
       await createRoom(
         newRoomId,
-        consumerId,
-        vendorId,
         consumerName,
         vendorName,
-        messageId,
-        message,
-        messageName,
-        session.consumerSeq.toString(),
-        vendorSeq.toString(),
+        consumerId,
+        vendorId,
         solutionName,
         userImg,
       );
@@ -125,27 +111,18 @@ function useMessageSend({ messageId, messageName }: UseMessageSendProps) {
       createdAt: serverTimestamp(),
       messageId,
       messageName,
-      file: !!attachedFile,
+      role,
+      file: attachedFile ? fileUniqueId : null,
     };
 
-    const docRef = await addDoc(
-      collection(db, 'chats', targetRoomId, 'messages'),
-      newMessage,
-    );
+    await addDoc(collection(db, 'chats', targetRoomId, 'messages'), newMessage);
 
-    await updateDoc(doc(db, 'chats', targetRoomId), {
-      lastMessage: {
-        ...newMessage,
-        updatedAt: newMessage.createdAt,
-      },
-    });
-
-    if (session?.role && attachedFile) {
+    if (attachedFile) {
       await ChatFilePost(
-        consumerSeq,
-        vendorSeq,
-        docRef.id,
-        session?.role,
+        Number(consumerId),
+        Number(vendorId),
+        fileUniqueId,
+        'vendor',
         attachedFile,
       );
     }

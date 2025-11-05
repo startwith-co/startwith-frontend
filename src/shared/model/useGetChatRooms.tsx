@@ -3,21 +3,22 @@
 import { useState, useEffect } from 'react';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import db from 'fire-config';
+import { useSearchParams } from 'next/navigation';
 import { ChatRoom } from './roomType';
-import useCurrentSession from './useCurrentSession';
 
 function useGetChatRooms({ targetId }: { targetId: string }) {
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
-  const { session } = useCurrentSession();
+  const searchParams = useSearchParams();
+  const id = searchParams.get(
+    targetId === 'vendorSeq' ? 'vendorId' : 'consumerId',
+  );
+
   useEffect(() => {
     let unsubscribe: () => void;
 
     const fetchRooms = async () => {
-      if (!session) return;
-      const q = query(
-        collection(db, 'chats'),
-        where(targetId, '==', session.uniqueType),
-      );
+      if (!id) return;
+      const q = query(collection(db, 'chats'), where(targetId, '==', id));
 
       unsubscribe = onSnapshot(q, (snapshot) => {
         const realTimeRooms = snapshot.docs.map((doc) => ({
@@ -33,7 +34,7 @@ function useGetChatRooms({ targetId }: { targetId: string }) {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [targetId, session]);
+  }, [targetId, id]);
 
   return rooms;
 }

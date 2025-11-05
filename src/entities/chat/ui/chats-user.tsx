@@ -28,7 +28,7 @@ function ChatsUser({ messages, consumerId }: ChatsUserProps) {
           parsed = null;
         }
 
-        const isMine = msg.messageId === consumerId;
+        const isMine = msg.role === 'consumer';
 
         if (parsed?.type === 'request-card') {
           return (
@@ -86,11 +86,9 @@ function ChatsUser({ messages, consumerId }: ChatsUserProps) {
           <ChatUserBubble
             key={msg.id + msg.createdAt}
             message={msg.message}
-            messageId={msg.messageId}
-            consumerId={consumerId}
             time={formatTime(msg.createdAt)}
+            role={msg.role}
             file={msg.file}
-            id={msg.id}
           />
         );
       })}

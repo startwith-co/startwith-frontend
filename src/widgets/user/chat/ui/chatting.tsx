@@ -6,12 +6,13 @@ import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { useSearchParams } from 'next/navigation';
 import ChattingInput from '@/shared/ui/chatting-input';
 import ChatMainDate from '@/shared/ui/chat-main-date';
+import formatMainDate from '@/shared/lib/chat-main-date-format';
 
 function Chatting() {
   const { consumerName } = useChatMeta();
   const searchParams = useSearchParams();
-  const consumerId = searchParams.get('consumerId') as string;
-  const vendorId = searchParams.get('vendorId') as string;
+  const consumerSeq = searchParams.get('consumerId') as string;
+  const vendorSeq = searchParams.get('vendorId') as string;
 
   const {
     handleSubmit,
@@ -22,22 +23,26 @@ function Chatting() {
     filePreviewUrl,
     handleFileChange,
   } = useMessageSend({
-    messageId: consumerId,
+    messageId: consumerSeq,
     messageName: consumerName,
+    role: 'consumer',
   });
+
+  const chatMainDate =
+    formatMainDate(messages[messages.length - 1]?.createdAt) || '';
 
   return (
     <div className="flex h-[calc(100vh-200px)] w-full flex-col overflow-hidden rounded-3xl bg-white shadow-md">
-      <ChatMainDate messages={messages} />
-      <ChatsUser messages={messages} consumerId={consumerId} />
+      <ChatMainDate mainData={chatMainDate} />
+      <ChatsUser messages={messages} consumerId={consumerSeq} />
       <ChattingInput
         handleSubmit={handleSubmit}
         message={message}
         setMessage={setMessage}
         attachedFile={attachedFile}
         filePreviewUrl={filePreviewUrl}
-        consumerId={consumerId}
-        vendorId={vendorId}
+        consumerSeq={consumerSeq}
+        vendorSeq={vendorSeq}
         handleFileChange={handleFileChange}
         buttonProps="bg-[#5B76FF]"
       />

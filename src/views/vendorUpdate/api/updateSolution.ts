@@ -22,7 +22,6 @@ export default async function updateSolution(
     solutionDetail: data.solutionDetail,
     prevCategory,
     nextCategory: solutionCategoryToValue[data.category],
-    industry: data.industry,
     recommendedCompanySize: data.recommendedCompanySize.join(','),
     solutionImplementationType: data.solutionImplementationType.join(','),
     amount: Number(data.amount),
