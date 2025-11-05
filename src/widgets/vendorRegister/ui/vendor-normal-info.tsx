@@ -92,7 +92,7 @@ export default function VendorNormalInfo() {
             )}
           />
         </li>
-        <li>
+        {/* <li>
           <span>
             도입 가능 산업군<span className="text-red-500">*</span>
           </span>
@@ -161,7 +161,7 @@ export default function VendorNormalInfo() {
               );
             }}
           />
-        </li>
+        </li> */}
         <li>
           <span>
             도입 가능 기업 규모<span className="text-red-500">*</span>

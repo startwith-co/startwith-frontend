@@ -4,7 +4,6 @@ import SolutionProps from '../../../../views/search/model/type';
 
 export default async function getSolutionList({
   category,
-  industry,
   budget = '전체',
   keyword,
   page = '1',
@@ -22,7 +21,6 @@ export default async function getSolutionList({
     // eslint-disable-next-line
     `api/solution-service/solution/list?` +
     (category ? `category=${category}&` : '') +
-    (industry ? `industry=${industry}&` : '') +
     (budget ? `budget=${budget}&` : '') +
     (keyword ? `keyword=${keyword}&` : '') +
     `start=${start}&end=${end}`;

@@ -7,7 +7,7 @@ export default async function Page({
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-  const { category, industry, budget, page, keyword } = await searchParams;
+  const { category, budget, page, keyword } = await searchParams;
 
   const mappedCategory = category
     ? solutionCategoryToValue[category] || category
@@ -15,7 +15,6 @@ export default async function Page({
 
   const solutions = await getSolutionList({
     category: mappedCategory,
-    industry,
     budget,
     page,
     keyword,
@@ -25,7 +24,6 @@ export default async function Page({
     <SearchPage
       solutions={solutions}
       category={category || ''}
-      industry={industry || ''}
       budget={budget || ''}
     />
   );
