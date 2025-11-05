@@ -20,7 +20,6 @@ export default function ProductDetail({
   amount,
   solutionImplementationType,
   duration,
-  industry = [],
   recommendedCompanySize = [],
   solutionEffect = [],
   representImageUrl,
@@ -104,7 +103,7 @@ export default function ProductDetail({
           <span className="text-sm">{duration}일</span>
         </div>
       </div>
-      <div className="mt-12.5 flex flex-col gap-5">
+      {/* <div className="mt-12.5 flex flex-col gap-5">
         <span className="text-xl font-semibold">솔루션 도입 가능 산업군</span>
         <div className="flex gap-5">
           {industry.map((item) => (
@@ -118,7 +117,7 @@ export default function ProductDetail({
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
       <div className="mt-12.5 flex flex-col gap-5">
         <span className="text-xl font-semibold">
           솔루션 도입 가능 기업 규모

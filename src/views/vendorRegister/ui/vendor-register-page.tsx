@@ -32,7 +32,6 @@ export default function VendorRegisterPage() {
       solutionName: '',
       solutionDetail: '',
       category: '',
-      industry: '',
       recommendedCompanySize: [],
       solutionImplementationType: [],
       amount: '',

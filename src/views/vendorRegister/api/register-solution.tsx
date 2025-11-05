@@ -18,7 +18,6 @@ export default async function registerSolution(data: VendorRegisterSchema) {
     solutionName: data.solutionName,
     solutionDetail: data.solutionDetail,
     category: solutionCategoryToValue[data.category],
-    industry: data.industry,
     recommendedCompanySize: data.recommendedCompanySize.join(','),
     solutionImplementationType: data.solutionImplementationType.join(','),
     amount: Number(data.amount),

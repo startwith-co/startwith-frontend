@@ -18,7 +18,6 @@ export interface SolutionDetailProps {
   amount: number;
   solutionImplementationType: string[];
   duration: number;
-  industry: string[];
   recommendedCompanySize: string[];
   solutionEffect: SolutionEffectProps[];
 }

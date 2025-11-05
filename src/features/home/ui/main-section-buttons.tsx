@@ -15,8 +15,9 @@ function MainSectionButtons() {
   const router = useRouter();
 
   const handleFirstSectionClick = (button: string) => {
-    setSolutionCategory(button);
-    setStep((prev) => prev + 1);
+    // setSolutionCategory(button);
+    // setStep((prev) => prev + 1);
+    router.push(`/search?category=${button}`);
   };
 
   const handleSecondSectionClick = (button: string) => {
@@ -27,7 +28,7 @@ function MainSectionButtons() {
 
   return (
     <div className="mt-6 mb-6 grid h-[260px] w-[500px] grid-cols-2 gap-8">
-      {step === 0
+      {/* {step === 0
         ? solutionCategoryLabels.map((button) => (
             <Button
               key={button}
@@ -49,7 +50,18 @@ function MainSectionButtons() {
             >
               {button}
             </Button>
-          ))}
+          ))} */}
+      {solutionCategoryLabels.map((button) => (
+        <Button
+          key={button}
+          variant="textBlue"
+          className="h-[110px] w-full rounded-xl whitespace-pre-line shadow-md"
+          asChild={false}
+          onClick={() => handleFirstSectionClick(button)}
+        >
+          {button}
+        </Button>
+      ))}
     </div>
   );
 }
