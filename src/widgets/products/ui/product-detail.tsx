@@ -139,23 +139,25 @@ export default function ProductDetail({
           })}
         </div>
       </div>
-      <div className="mt-12.5 flex flex-col gap-5">
-        <span className="text-xl font-semibold">솔루션 도입 성과</span>
-        <div className="grid grid-cols-6 gap-5">
-          {solutionEffect.map((item) => (
-            <div
-              key={item.effectName}
-              className="bg-vendor-gray flex h-[85px] flex-col items-center justify-center rounded-md"
-            >
-              <span>{item.effectName}</span>
-              <span className="text-primary text-lg font-bold">
-                {item.percent}%{' '}
-                {item.direction === 'INCREASE' ? '상승' : '하락'}
-              </span>
-            </div>
-          ))}
+      {solutionEffect.length > 0 && (
+        <div className="mt-12.5 flex flex-col gap-5">
+          <span className="text-xl font-semibold">솔루션 도입 성과</span>
+          <div className="grid grid-cols-6 gap-5">
+            {solutionEffect.map((item) => (
+              <div
+                key={item.effectName}
+                className="bg-vendor-gray flex h-[85px] flex-col items-center justify-center rounded-md"
+              >
+                <span>{item.effectName}</span>
+                <span className="text-primary text-lg font-bold">
+                  {item.percent}%{' '}
+                  {item.direction === 'INCREASE' ? '상승' : '하락'}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </WhiteBox>
   );
 }

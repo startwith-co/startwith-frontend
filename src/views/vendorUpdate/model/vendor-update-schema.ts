@@ -22,7 +22,6 @@ export const vendorRegisterSchema = z.object({
     .refine((value) => value !== '', {
       message: '카테고리를 선택해주세요.',
     }),
-  industry: z.string().min(1, '산업 선택해주세요.'),
   recommendedCompanySize: z.array(z.string()).min(1, '기업 규모 선택해주세요.'),
   solutionImplementationType: z
     .array(z.string())
