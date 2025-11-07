@@ -50,7 +50,6 @@ function ChattingInput({
           </div>
         )}
 
-        {/* ✅ 입력창 + 첨부 + 버튼 */}
         <div className="relative flex items-center">
           <Input
             type="text"
@@ -70,7 +69,6 @@ function ChattingInput({
             onChange={handleFileChange}
           />
 
-          {/* 전송 버튼 */}
           <button
             disabled={!consumerSeq || !vendorSeq}
             type="submit"

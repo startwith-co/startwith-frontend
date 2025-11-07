@@ -18,9 +18,10 @@ import {
 } from '@/shared/ui/select';
 import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
-import { useRoomId } from '@/shared/model/RoomIdProvider';
 import deleteLastMessage from '@/shared/api/delete-last-message';
 import { v4 as uuidv4 } from 'uuid';
+import useChatParams from '@/shared/model/useChatParams';
+import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import requestServerPost from '../api/requestServerPost';
 import useRequestPaymentDetails from '../model/useRequestPaymentDetails';
 
@@ -52,11 +53,11 @@ function RequestPayForm() {
   const [refundFile, setRefundFile] = useState<File | null>(null);
   const contractRef = useRef<HTMLInputElement>(null);
   const refundRef = useRef<HTMLInputElement>(null);
-  const { curRoomId } = useRoomId();
   const uuid = uuidv4();
+  const { consumerSeq, vendorSeq } = useChatParams();
 
   const { setOpen } = useVendorModal();
-  const { vendorName, consumerName, vendorSeq, consumerSeq } = useChatMeta();
+  const { vendorName, consumerName } = useChatMeta();
 
   const onSubmit = async () => {
     const formData = getValues();
@@ -96,16 +97,15 @@ function RequestPayForm() {
 
         setOpen(false);
       } catch (secondErr) {
-        await deleteLastMessage(curRoomId!);
+        const curRoomId = await findChatExistingRoom(consumerSeq, vendorSeq);
+        if (!curRoomId) return;
+        await deleteLastMessage(curRoomId);
         throw secondErr;
       }
     } catch (err) {
       console.error('요청 실패:', err);
-      // 첫 요청 실패 or 롤백 실패 → 아무것도 하지 않음
     }
   };
-
-  console.log(getValues());
 
   return (
     <SignupForm

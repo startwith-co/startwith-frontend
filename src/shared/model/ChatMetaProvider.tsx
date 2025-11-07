@@ -13,8 +13,6 @@ import {
 interface ChatMetaContextType {
   consumerName: string;
   vendorName: string;
-  vendorSeq: string;
-  consumerSeq: string;
   paymentEventSeq: number;
   solutionName: string;
   userImg: string;
@@ -31,8 +29,6 @@ const ChatMetaContext = createContext<ChatMetaContextType | undefined>(
 const initialValues = {
   consumerName: '',
   vendorName: '',
-  consumerSeq: '0',
-  vendorSeq: '0',
   paymentEventSeq: 0,
   solutionName: '',
   userImg: '',

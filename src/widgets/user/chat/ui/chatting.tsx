@@ -3,16 +3,14 @@
 import useMessageSend from '@/shared/model/useMessageSend';
 import ChatsUser from '@/entities/chat/ui/chats-user';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
-import { useSearchParams } from 'next/navigation';
 import ChattingInput from '@/shared/ui/chatting-input';
 import ChatMainDate from '@/shared/ui/chat-main-date';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
+import useChatParams from '@/shared/model/useChatParams';
 
 function Chatting() {
   const { consumerName } = useChatMeta();
-  const searchParams = useSearchParams();
-  const consumerSeq = searchParams.get('consumerId') as string;
-  const vendorSeq = searchParams.get('vendorId') as string;
+  const { consumerSeq, vendorSeq } = useChatParams();
 
   const {
     handleSubmit,
