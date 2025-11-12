@@ -33,9 +33,9 @@ function LoginForm() {
   const router = useRouter();
 
   const onValid = async (data: FormSchema) => {
-    const { success, message } = await loginAction({ ...data, target });
+    const { ok, message } = await loginAction({ ...data, target });
 
-    if (success) {
+    if (ok) {
       router.push('/');
     } else {
       toast.error(message);

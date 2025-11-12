@@ -7,6 +7,7 @@ import cn from '@/shared/lib/utils';
 import ErrorMessage from '@/shared/ui/error-message';
 import { solutionCategoryLabels } from '@/shared/model/getCategoryList';
 import { scaleCategory } from '@/entities/vendorRegister/model/vendor-normal-info-category';
+import Textarea from '@/shared/ui/textarea';
 
 export default function VendorNormalInfo() {
   const {
@@ -47,9 +48,9 @@ export default function VendorNormalInfo() {
             솔루션 기본 설명<span className="text-red-500">*</span>
           </span>
           <div className="relative w-full">
-            <Input
+            <Textarea
               className={cn(
-                'bg-vendor-gray pr-20 placeholder:text-[13px]',
+                'bg-vendor-gray h-[130px] pr-20 placeholder:text-[13px]',
                 errors.solutionDetail && 'border-red-500 focus:border-red-500',
               )}
               maxLength={300}
