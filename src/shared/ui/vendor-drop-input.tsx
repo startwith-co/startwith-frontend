@@ -74,7 +74,12 @@ export default function VendorDropInput({
     >
       <span className="text-5xl">+</span>
       <span>{title}</span>
-      <span className="text-xs text-[#BDBDBD]">(최대 1개)</span>
+      <span className="mt-1 text-xs text-[#BDBDBD]">
+        최대 스펙 : 1920(가로)*380(세로)
+      </span>
+      <span className="text-xs text-[#BDBDBD]">
+        5대1 비율의 이미지 등록 시 최적화됩니다.
+      </span>
       <input
         type="file"
         className="hidden"
