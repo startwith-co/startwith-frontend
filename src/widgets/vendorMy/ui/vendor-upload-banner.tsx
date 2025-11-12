@@ -66,6 +66,11 @@ export default function VendorUploadBanner({
         )}
       </div>
 
+      <div className="text-center text-sm text-gray-600">
+        <p>최대 스펙 : 1920(가로)*380(세로)</p>
+        <p>5대1 비율의 이미지 등록 시 최적화됩니다.</p>
+      </div>
+
       <div className="flex justify-center">
         <EditButton
           onClick={() => {}}
