@@ -10,7 +10,12 @@ function EditVendorTextArea({
   onSave: () => void;
   isLoading: boolean;
 }) {
-  const { register, setValue, handleSubmit } = useFormContext();
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { isDirty },
+  } = useFormContext();
 
   return (
     <form
@@ -37,7 +42,7 @@ function EditVendorTextArea({
           className="h-[40px] w-[185px]"
           variant="graySubmit"
           type="submit"
-          disabled={isLoading}
+          disabled={!isDirty || isLoading}
         >
           {isLoading ? '수정 중...' : '수정 완료'}
         </Button>

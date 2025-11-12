@@ -144,6 +144,8 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
         });
       });
 
+      toast.error('입력 정보를 확인해주세요.');
+      setIsLoading(false);
       return;
     }
 
@@ -155,8 +157,9 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
       toast.success('수정이 완료되었습니다.');
     } catch (error: any) {
       toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
@@ -164,8 +167,8 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
       <div className="flex flex-col gap-7.5 pr-10">
         <div className="grid grid-cols-2 gap-7.5">
           <EditVendorInfo
-            onSave={() => {
-              onSubmit([
+            onSave={async () => {
+              await onSubmit([
                 'profileImage',
                 'vendorName',
                 'managerName',
@@ -174,7 +177,7 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
                 'accountNumber',
                 'bank',
               ]);
-              revalidateVendorProfile();
+              await revalidateVendorProfile();
             }}
             isLoading={isLoading}
           />

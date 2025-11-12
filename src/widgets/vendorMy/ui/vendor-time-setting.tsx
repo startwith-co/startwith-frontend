@@ -19,7 +19,7 @@ export default function VendorTimeSetting({
     control,
     watch,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useFormContext();
 
   const weekdayAvailable = watch('weekdayAvailable');
