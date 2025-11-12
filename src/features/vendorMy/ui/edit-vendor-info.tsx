@@ -142,7 +142,7 @@ function EditVendorInfo({
 
       <div>
         <label htmlFor="accountNumber" className="text-sm">
-          사업자 계좌번호<span className="text-red-500">*</span>
+          사업자 계좌번호 1<span className="text-red-500">*</span>
           <Input
             id="accountNumber"
             type="string"
