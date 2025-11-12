@@ -46,7 +46,7 @@ function SignupUserForm() {
     formState: { errors, isValid },
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
-    mode: 'onChange',
+    mode: 'onSubmit',
   });
 
   const [matchSuccess, setMatchSuccess] = useState(false);

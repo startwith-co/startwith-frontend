@@ -14,6 +14,7 @@ export default function VendorKeyword() {
   } = useFormContext();
 
   const keywords = watch('keyword') || [];
+  const [keywordError, setKeywordError] = useState('');
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -21,13 +22,23 @@ export default function VendorKeyword() {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) return;
+
     if (e.key === 'Enter') {
       e.preventDefault();
       const value = inputValue;
+      if (value.length > 20) {
+        setKeywordError('키워드 태그 텍스트는 최대 20자까지 입력 가능합니다.');
+        return;
+      }
+      if (keywords.length >= 10) {
+        setKeywordError('키워드 태그 입력은 최대 10개까지 등록이 가능합니다.');
+        return;
+      }
       if (value && !keywords.includes(value)) {
         setValue('keyword', [...keywords, value]);
       }
       setInputValue('');
+      setKeywordError('');
     }
   };
 
@@ -36,6 +47,7 @@ export default function VendorKeyword() {
       'keyword',
       keywords.filter((k: string) => k !== keyword),
     );
+    setKeywordError('');
   };
 
   return (
@@ -66,7 +78,8 @@ export default function VendorKeyword() {
                 </button>
               ))}
             </div>
-            {errors.keyword && keywords.length === 0 && (
+            {keywordError && <ErrorMessage message={keywordError} />}
+            {errors.keyword && (
               <ErrorMessage message={`${errors.keyword.message}`} />
             )}
           </div>
