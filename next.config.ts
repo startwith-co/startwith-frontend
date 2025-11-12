@@ -12,11 +12,6 @@ let nextConfig: NextConfig = {
       new URL('https://example.com/**'),
     ],
   },
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '30mb',
-    },
-  },
   logging: {
     incomingRequests: {
       ignore: [

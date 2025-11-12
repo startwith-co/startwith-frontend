@@ -5,12 +5,7 @@ import VendorSelect from '@/shared/ui/vendor-select';
 import { Controller, useFormContext } from 'react-hook-form';
 import cn from '@/shared/lib/utils';
 import ErrorMessage from '@/shared/ui/error-message';
-import {
-  industryCategoryLabels,
-  industryCategoryToLabel,
-  industryCategoryToValue,
-  solutionCategoryLabels,
-} from '@/shared/model/getCategoryList';
+import { solutionCategoryLabels } from '@/shared/model/getCategoryList';
 import { scaleCategory } from '@/entities/vendorRegister/model/vendor-normal-info-category';
 
 export default function VendorNormalInfo() {

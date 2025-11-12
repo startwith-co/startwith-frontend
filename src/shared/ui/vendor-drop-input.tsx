@@ -74,7 +74,7 @@ export default function VendorDropInput({
     >
       <span className="text-5xl">+</span>
       <span>{title}</span>
-      <span className="text-xs text-[#BDBDBD]">(최대 1개)</span>
+      <span className="text-xs text-[#9E9E9E]">(최대 1개, 4mb 이하)</span>
       <input
         type="file"
         className="hidden"

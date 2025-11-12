@@ -1,7 +1,6 @@
 import Input from '@/shared/ui/input';
 import { Controller, useFormContext } from 'react-hook-form';
 import ErrorMessage from '@/shared/ui/error-message';
-import formatLocalPrice from '@/shared/lib/formatLocalPrice';
 
 export default function VendorSaleInfo() {
   const {
@@ -24,14 +23,15 @@ export default function VendorSaleInfo() {
             render={({ field }) => (
               <Input
                 type="text"
+                inputMode="numeric"
                 className="bg-vendor-gray w-[220px] border-none text-center"
                 placeholder="~ 0원(VAT별도)"
                 value={
                   field.value ? Number(field.value).toLocaleString('ko-KR') : ''
                 }
                 onChange={(e) => {
-                  const raw = e.target.value.replace(/,/g, '');
-                  field.onChange(raw === '' ? '' : raw);
+                  const raw = e.target.value.replace(/[^0-9]/g, '');
+                  field.onChange(raw || '');
                 }}
               />
             )}
