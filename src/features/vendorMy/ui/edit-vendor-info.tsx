@@ -142,13 +142,32 @@ function EditVendorInfo({
 
       <div>
         <label htmlFor="accountNumber" className="text-sm">
-          사업자 계좌번호 1<span className="text-red-500">*</span>
+          사업자 계좌번호 <span className="text-red-500">*</span>
           <Input
             id="accountNumber"
-            type="string"
-            {...register('accountNumber')}
+            type="text"
+            inputMode="numeric"
+            maxLength={14} // 최대 14자리 제한
+            {...register('accountNumber', {
+              required: '계좌번호를 입력해주세요.',
+              pattern: {
+                value: /^[0-9]+$/,
+                message: '계좌번호는 숫자만 입력 가능합니다.',
+              },
+              maxLength: {
+                value: 14,
+                message: '계좌번호는 최대 14자리까지만 입력 가능합니다.',
+              },
+            })}
             name="accountNumber"
             className="bg-vendor-gray mt-2 mb-2 h-[40px] indent-2"
+            onChange={(e) => {
+              // 숫자만 허용, 14자리 초과 입력은 자동으로 잘라냄
+              const onlyNumbers = e.target.value
+                .replace(/[^0-9]/g, '')
+                .slice(0, 14);
+              setValue('accountNumber', onlyNumbers, { shouldDirty: true });
+            }}
           />
         </label>
         {errors.accountNumber && (
