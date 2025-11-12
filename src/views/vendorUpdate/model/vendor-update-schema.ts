@@ -34,7 +34,7 @@ export const vendorRegisterSchema = z.object({
         invalid_type_error: '숫자를 입력해주세요.',
       })
       .min(1, '최소 1원 이상의 가격을 입력해주세요.')
-      .max(10_000_000, '최대 1000만원까지 입력 가능합니다.'),
+      .max(10000000, '최대 1000만원까지 입력 가능합니다.'),
   ),
   duration: z
     .string()
