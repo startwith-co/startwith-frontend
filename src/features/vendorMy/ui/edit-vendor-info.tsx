@@ -98,10 +98,22 @@ function EditVendorInfo({
           기업명(사업자명)<span className="text-red-500">*</span>
           <Input
             id="vendorName"
-            type="string"
-            {...register('vendorName')}
+            type="text"
+            maxLength={15} // 최대 15자 제한
+            {...register('vendorName', {
+              required: '기업명을 입력해주세요.',
+              maxLength: {
+                value: 15,
+                message: '기업명은 최대 15자까지만 입력 가능합니다.',
+              },
+            })}
             name="vendorName"
             className="bg-vendor-gray mt-2 mb-2 h-[40px] indent-2"
+            onChange={(e) => {
+              // 15자 초과 방지
+              const trimmed = e.target.value.slice(0, 15);
+              setValue('vendorName', trimmed, { shouldDirty: true });
+            }}
           />
         </label>
         {errors.vendorName && (
