@@ -1,7 +1,7 @@
 'use client';
 
 import EditButton from '@/features/vendorMy/ui/edit-button';
-import VendorDropInput from '@/shared/ui/vendor-logo-drop-input';
+import VendorDropInput from '@/shared/ui/vendor-drop-input';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
