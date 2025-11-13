@@ -35,14 +35,14 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
       bank: vendorInfo?.bank || '',
       vendorExplanation: vendorInfo?.vendorExplanation || '',
       weekdayAvailable: vendorInfo?.weekdayAvailable,
-      weekdayStartTime: vendorInfo?.weekdayStartTime || '00:00:00',
-      weekdayEndTime: vendorInfo?.weekdayEndTime || '23:59:59',
+      weekdayStartTime: vendorInfo?.weekdayStartTime || '00:00',
+      weekdayEndTime: vendorInfo?.weekdayEndTime || '23:59',
       weekendAvailable: vendorInfo?.weekendAvailable,
-      weekendStartTime: vendorInfo?.weekendStartTime || '00:00:00',
-      weekendEndTime: vendorInfo?.weekendEndTime || '23:59:59',
+      weekendStartTime: vendorInfo?.weekendStartTime || '00:00',
+      weekendEndTime: vendorInfo?.weekendEndTime || '23:59',
       holidayAvailable: vendorInfo?.holidayAvailable,
-      holidayStartTime: vendorInfo?.holidayStartTime || '00:00:00',
-      holidayEndTime: vendorInfo?.holidayEndTime || '23:59:59',
+      holidayStartTime: vendorInfo?.holidayStartTime || '00:00',
+      holidayEndTime: vendorInfo?.holidayEndTime || '23:59',
       orderCount: vendorInfo?.orderCount || 0,
       clientCount: vendorInfo?.clientCount || 0,
       stats:
@@ -144,6 +144,8 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
         });
       });
 
+      toast.error('입력 정보를 확인해주세요.');
+      setIsLoading(false);
       return;
     }
 
@@ -155,8 +157,9 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
       toast.success('수정이 완료되었습니다.');
     } catch (error: any) {
       toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
@@ -164,8 +167,8 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
       <div className="flex flex-col gap-7.5 pr-10">
         <div className="grid grid-cols-2 gap-7.5">
           <EditVendorInfo
-            onSave={() => {
-              onSubmit([
+            onSave={async () => {
+              await onSubmit([
                 'profileImage',
                 'vendorName',
                 'managerName',
@@ -174,7 +177,7 @@ function VendorMyProfile({ vendorInfo }: { vendorInfo: VendorInfoProps }) {
                 'accountNumber',
                 'bank',
               ]);
-              revalidateVendorProfile();
+              await revalidateVendorProfile();
             }}
             isLoading={isLoading}
           />
