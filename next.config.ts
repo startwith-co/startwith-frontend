@@ -14,7 +14,7 @@ let nextConfig: NextConfig = {
   },
   experimental: {
     serverActions: {
-      bodySizeLimit: '10mb',
+      bodySizeLimit: '30mb',
     },
   },
   logging: {

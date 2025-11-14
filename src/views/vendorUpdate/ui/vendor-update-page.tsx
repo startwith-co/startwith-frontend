@@ -98,7 +98,10 @@ export default function VendorUpdatePage({
       >
         <VendorNormalInfo />
         <VendorSaleInfo />
-        <VendorDetailInfo />
+        <VendorDetailInfo
+          representImageUrl={solution.representImageUrl}
+          descriptionPdfUrl={solution.descriptionPdfUrl}
+        />
         <VendorKeyword />
         <div className="mt-7.5 flex items-center justify-center gap-3.5 font-semibold text-white">
           <Button
