@@ -8,19 +8,12 @@ import { Button } from '@/shared/ui/button';
 import ErrorMessage from '@/shared/ui/error-message';
 import { CircleX } from 'lucide-react';
 
-interface VendorDetailInfoProps {
-  representImageUrl?: string;
-  descriptionPdfUrl?: string;
-}
-
-export default function VendorDetailInfo({
-  representImageUrl,
-  descriptionPdfUrl,
-}: VendorDetailInfoProps) {
+export default function VendorDetailInfo() {
   const {
     register,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useFormContext();
 
@@ -28,6 +21,9 @@ export default function VendorDetailInfo({
     control,
     name: 'solutionEffect',
   });
+
+  const representImageUrl = watch('representImageUrl');
+  const descriptionPdfUrl = watch('descriptionPdfUrl');
 
   /** 대표 이미지 / PDF 파일 업데이트 */
   const handleRepresentImageChange = (fieldName: string, file: File | null) => {
@@ -47,6 +43,7 @@ export default function VendorDetailInfo({
           <VendorDropInput
             title="대표 이미지"
             accept={['image/*']}
+            value={representImageUrl}
             onChange={(file) =>
               handleRepresentImageChange('representImageUrl', file)
             }
@@ -67,6 +64,7 @@ export default function VendorDetailInfo({
           <VendorDropInput
             title="PDF 파일 등록"
             accept={['application/pdf']}
+            value={descriptionPdfUrl}
             onChange={(file) =>
               handleRepresentImageChange('descriptionPdfUrl', file)
             }

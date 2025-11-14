@@ -12,6 +12,7 @@ import VendorNormalInfo from '@/widgets/vendorRegister/ui/vendor-normal-info';
 import { UpdateSolutionProps } from '@/app/(vendor)/vendor/update/[id]/model/updateSolutionType';
 import urlToFile from '@/views/vendorMy/api/urlToFile';
 import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
+import { useRouter } from 'next/navigation';
 import {
   VendorRegisterSchema,
   vendorRegisterSchema,
@@ -28,6 +29,7 @@ export default function VendorUpdatePage({
   vendorId: number;
   category: string;
 }) {
+  const router = useRouter();
   const [openDialog, setOpenDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,6 +62,7 @@ export default function VendorUpdatePage({
             ? urlToFile(solution.descriptionPdfUrl, 'description.pdf')
             : new File([], ''),
         ]);
+        console.log(representFile, pdfFile);
 
         methods.reset({
           ...methods.getValues(),
@@ -98,14 +101,13 @@ export default function VendorUpdatePage({
       >
         <VendorNormalInfo />
         <VendorSaleInfo />
-        <VendorDetailInfo
-          representImageUrl={solution.representImageUrl}
-          descriptionPdfUrl={solution.descriptionPdfUrl}
-        />
+        <VendorDetailInfo />
         <VendorKeyword />
         <div className="mt-7.5 flex items-center justify-center gap-3.5 font-semibold text-white">
           <Button
             asChild={false}
+            type="button"
+            onClick={() => router.push('/vendor')}
             className="bg-vendor-gray text-black hover:text-white"
           >
             취소
