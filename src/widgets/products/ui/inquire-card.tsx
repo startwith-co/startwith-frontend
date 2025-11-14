@@ -60,9 +60,7 @@ export default function InquireCard({
 
       setChatMeta({
         vendorName,
-        vendorSeq: String(vendorSeq),
         consumerName: res.data.consumerName,
-        consumerSeq: String(res.data.consumerSeq),
         solutionName,
         userImg: res.data.consumerImageUrl,
       });
