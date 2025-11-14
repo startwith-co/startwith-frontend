@@ -3,19 +3,19 @@
 import { ChangeEvent, useState } from 'react';
 import cn from '@/shared/lib/utils';
 
-interface VendorDropInputProps {
+interface VendorLogoDropInputProps {
   title: string;
-  accept?: string[]; // 배열로 받음
+  accept?: string[];
   onChange: (file: File | null) => void;
   className?: string;
 }
 
-export default function VendorDropInput({
+export default function VendorLogoDropInput({
   title,
   accept,
   onChange,
   className,
-}: VendorDropInputProps) {
+}: VendorLogoDropInputProps) {
   const [dragOver, setDragOver] = useState(false);
   const [file, setFile] = useState<File | null>(null);
 
@@ -73,20 +73,15 @@ export default function VendorDropInput({
       onDrop={handleDrop}
     >
       <span className="text-5xl">+</span>
-      <span>{title}</span>
-      <span className="mt-1 text-xs text-[#BDBDBD]">
-        최대 스펙 : 1920(가로)*380(세로)
-      </span>
-      <span className="text-xs text-[#BDBDBD]">
-        5대1 비율의 이미지 등록 시 최적화됩니다.
-      </span>
+      <span className="text-center">{title}</span>
+      <span className="mt-1 text-xs text-[#BDBDBD]">(최대 1개)</span>
       <input
         type="file"
         className="hidden"
         accept={accept?.join(',')}
         onChange={handleChange}
       />
-      <span>{file?.name}</span>
+      {file?.name && <span className="mt-1 text-xs">{file.name}</span>}
     </label>
   );
 }
