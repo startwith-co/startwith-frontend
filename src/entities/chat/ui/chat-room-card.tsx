@@ -68,8 +68,6 @@ export default function ChatRoomCard({
     setChatMeta({
       consumerName,
       vendorName,
-      vendorSeq,
-      consumerSeq,
     });
     router.push(link);
   };

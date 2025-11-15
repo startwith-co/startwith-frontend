@@ -9,16 +9,15 @@ import {
   query,
   serverTimestamp,
 } from 'firebase/firestore';
-import { useSearchParams } from 'next/navigation';
 import createRoom from '@/shared/api/create-room';
 import { v4 as uuidv4 } from 'uuid';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
 import db from 'fire-config';
 import { ChatType } from '@/entities/chat/model/type';
-import { useRoomId } from './RoomIdProvider';
 import { useChatMeta } from './ChatMetaProvider';
 import ChatFilePost from '../api/chat-file-post';
+import useChatParams from './useChatParams';
 
 interface UseMessageSendProps {
   messageId: string;
@@ -32,12 +31,8 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
   const [messages, setMessages] = useState<ChatType[]>([]);
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
-  const { curRoomId, setCurRoomId } = useRoomId();
   const { consumerName, vendorName, solutionName, userImg } = useChatMeta();
-
-  const searchParams = useSearchParams();
-  const consumerId = searchParams.get('consumerId') as string;
-  const vendorId = searchParams.get('vendorId') as string;
+  const { consumerSeq: consumerId, vendorSeq: vendorId } = useChatParams();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -61,8 +56,6 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
 
       const roomId = await findChatExistingRoom(consumerId, vendorId);
       if (roomId) {
-        setCurRoomId(roomId);
-
         const messagesRef = collection(db, 'chats', roomId, 'messages');
         const q = query(messagesRef, orderBy('createdAt', 'asc'));
         unsubscribe = onSnapshot(q, async (snapshot) => {
@@ -80,7 +73,7 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [curRoomId, setCurRoomId, consumerId, vendorId, attachedFile]);
+  }, [consumerId, vendorId, attachedFile]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -103,7 +96,6 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
         solutionName,
         userImg,
       );
-      setCurRoomId(newRoomId);
     }
 
     const newMessage = {

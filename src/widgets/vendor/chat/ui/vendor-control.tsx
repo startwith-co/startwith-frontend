@@ -5,15 +5,13 @@ import { Button } from '@/shared/ui/button';
 import RequestPayModal from '@/features/vendorChat/ui/request-pay-modal';
 import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import ChatUserCard from '@/entities/chat/ui/chat-user-card';
-import { useSearchParams } from 'next/navigation';
 import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
+import useChatParams from '@/shared/model/useChatParams';
 import useFetchConsumer from '../model/useFetchConsumer';
 
 function VendorControl() {
   const { setOpen } = useVendorModal();
-  const searchParams = useSearchParams();
-  const consumerId = searchParams.get('consumerId') as string;
-  const vendorId = searchParams.get('vendorId') as string;
+  const { consumerSeq: consumerId, vendorSeq: vendorId } = useChatParams();
   const { consumerInfo } = useFetchConsumer();
 
   return (

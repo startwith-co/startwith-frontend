@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import requestPost from '@/shared/api/request-post';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { v4 as uuidv4 } from 'uuid';
+import useChatParams from '@/shared/model/useChatParams';
 import refundPayment from '../api/refundPayment';
 
 interface ChatVendorCancelModalProps {
@@ -30,7 +31,8 @@ export default function ChatVendorCancelModal({
   orderId,
   paymentEventSeq,
 }: ChatVendorCancelModalProps) {
-  const { vendorName, consumerName, consumerSeq, vendorSeq } = useChatMeta();
+  const { vendorName, consumerName } = useChatMeta();
+  const { vendorSeq, consumerSeq } = useChatParams();
 
   const onCancelAcceptPayment = useCallback(async () => {
     try {

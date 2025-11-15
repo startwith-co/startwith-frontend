@@ -18,8 +18,12 @@ export default async function loginAction({
       password,
       target,
     });
-    return { success: true };
+    return { ok: true, status: 200 };
   } catch (e) {
-    return { success: false, message: '아이디 비밀번호를 확인해주세요.' };
+    return {
+      ok: false,
+      status: 400,
+      message: '아이디 비밀번호를 확인해주세요.',
+    };
   }
 }
