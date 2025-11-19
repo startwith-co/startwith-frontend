@@ -18,7 +18,7 @@ export default async function loginAction({
       password,
       target,
     });
-    return { ok: true, status: 200 };
+    return { ok: true, status: 200, message: '로그인 성공' };
   } catch (e) {
     return {
       ok: false,
