@@ -1,12 +1,12 @@
 import formatTime from '@/shared/lib/chat-format-time';
 import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
 import useChatScroll from '@/shared/model/useChatScroll';
+import { ChatType } from '@/shared/model/chat-type';
 import ChatVendorBubble from './chat-vendor-bubble';
 import ChatVendorRequestCard from './chat-vendor-request-card';
 import ChatVendorCancelCompleteCard from './chat-vendor-cancelComplete-card';
 import ChatVendorPayCompleteCard from './chat-vendor-payComplete-card';
 import ChatVendorCancelRequestCard from './chat-vendor-cancel-request-card';
-import { ChatType } from '../model/type';
 
 interface ChatsVendorProps {
   messages: ChatType[];

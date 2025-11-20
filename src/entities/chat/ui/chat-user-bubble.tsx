@@ -1,10 +1,11 @@
+import { ChatFile } from '@/shared/model/chat-type';
 import useFileClick from '../model/useFileClick';
 
 interface ChatBubbleProps {
   message: string;
   time: string;
   role: 'consumer' | 'vendor';
-  file: string;
+  file: ChatFile | null;
 }
 
 export default function ChatUserBubble({
@@ -14,7 +15,7 @@ export default function ChatUserBubble({
   file,
 }: ChatBubbleProps) {
   const isMine = role === 'consumer';
-  const { handleFileClick } = useFileClick(file);
+  const { handleFileClick } = useFileClick(file?.fileUniqueId || '');
 
   return (
     <div
@@ -27,9 +28,9 @@ export default function ChatUserBubble({
           isMine ? 'bg-blue-100 text-black' : 'bg-gray-100 text-black'
         }`}
       >
-        {file ? (
+        {file?.fileName ? (
           <button onClick={handleFileClick} className="text-blue-500 underline">
-            파일 첨부
+            {file.fileName}
           </button>
         ) : (
           message

@@ -5,12 +5,13 @@ import { MdOutlineAttachFile } from 'react-icons/md';
 import Image from 'next/image';
 import { FormEvent } from 'react';
 import cn from '../lib/utils';
+import { FileItem } from '../model/chat-type';
 
 interface ChattingInputProps {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
   message: string;
   setMessage: (message: string) => void;
-  attachedFile: File | null;
+  attachedFile: FileItem | null;
   filePreviewUrl: string | null;
   consumerSeq: string;
   vendorSeq: string;
@@ -44,7 +45,7 @@ function ChattingInput({
               />
             ) : (
               <div className="max-w-[70%] truncate text-sm text-gray-500">
-                {attachedFile.name}
+                {attachedFile.fileName}
               </div>
             )}
           </div>

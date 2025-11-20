@@ -208,7 +208,9 @@ function RequestPayForm() {
             onClick={() => contractRef.current?.click()}
             className="h-[45px] w-full bg-[#F5F5F5] text-xs text-[#7A7A7A]"
           >
-            {contractFile ? contractFile.name : '+ 업로드하기(pdf만 가능)'}
+            {contractFile
+              ? contractFile.name
+              : '+ 업로드하기(pdf만 가능, 20MB 이하)'}
           </Button>
           {contractFile && contractFile.type.startsWith('image') && (
             <Image
@@ -227,7 +229,7 @@ function RequestPayForm() {
           <input
             ref={refundRef}
             type="file"
-            accept="image/*,.pdf"
+            accept=".pdf"
             className="hidden"
             onChange={(e) => e.target.files && setRefundFile(e.target.files[0])}
           />
@@ -237,7 +239,9 @@ function RequestPayForm() {
             onClick={() => refundRef.current?.click()}
             className="h-[45px] w-full bg-[#F5F5F5] text-xs text-[#7A7A7A]"
           >
-            {refundFile ? refundFile.name : '+ 업로드하기(pdf만 가능)'}
+            {refundFile
+              ? refundFile.name
+              : '+ 업로드하기(pdf만 가능, 20MB 이하)'}
           </Button>
           {refundFile && refundFile.type.startsWith('image') && (
             <Image

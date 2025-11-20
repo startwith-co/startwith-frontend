@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
 import db from 'fire-config';
-import { ChatType } from '@/entities/chat/model/type';
+import { ChatType } from '@/shared/model/chat-type';
 import { useChatMeta } from './ChatMetaProvider';
 import ChatFilePost from '../api/chat-file-post';
 import useChatParams from './useChatParams';
@@ -23,13 +23,18 @@ interface UseMessageSendProps {
   messageId: string;
   role: 'consumer' | 'vendor';
   messageName: string;
-  attachedFile?: File;
+}
+
+interface FileItem {
+  fileUniqueId: string;
+  file: File;
+  fileName: string;
 }
 
 function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<ChatType[]>([]);
-  const [attachedFile, setAttachedFile] = useState<File | null>(null);
+  const [attachedFile, setAttachedFile] = useState<FileItem | null>(null);
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
   const { consumerName, vendorName, solutionName, userImg } = useChatMeta();
   const { consumerSeq: consumerId, vendorSeq: vendorId } = useChatParams();
@@ -37,7 +42,11 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setAttachedFile(file);
+    setAttachedFile({
+      fileUniqueId: uuidv4(),
+      file,
+      fileName: file.name,
+    });
 
     if (file.type.startsWith('image/')) {
       const reader = new FileReader();
@@ -81,7 +90,6 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
 
     const roomId = await findChatExistingRoom(consumerId, vendorId);
     const newRoomId = uuidv4();
-    const fileUniqueId = uuidv4();
     const targetRoomId = roomId || newRoomId;
 
     if (!roomId) {
@@ -104,7 +112,10 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
       messageId,
       messageName,
       role,
-      file: attachedFile ? fileUniqueId : null,
+      file: {
+        fileUniqueId: attachedFile?.fileUniqueId,
+        fileName: attachedFile?.fileName,
+      },
     };
 
     await addDoc(collection(db, 'chats', targetRoomId, 'messages'), newMessage);
@@ -113,9 +124,9 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
       await ChatFilePost(
         Number(consumerId),
         Number(vendorId),
-        fileUniqueId,
+        attachedFile.fileUniqueId,
         'vendor',
-        attachedFile,
+        attachedFile.file,
       );
     }
 

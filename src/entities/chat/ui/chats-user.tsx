@@ -3,12 +3,12 @@
 import formatTime from '@/shared/lib/chat-format-time';
 import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
 import useChatScroll from '@/shared/model/useChatScroll';
+import { ChatType } from '@/shared/model/chat-type';
 import ChatUserBubble from './chat-user-bubble';
 import ChatUserCancelRequestCard from './chat-user-cancel-request-card';
 import ChatUserPayCompleteCard from './chat-user-payComplete-card';
 import ChatUserCancelCompleteCard from './chat-user-cancelComplete-card';
 import ChatUserRequestCard from './chat-user-request-card';
-import { ChatType } from '../model/type';
 
 interface ChatsUserProps {
   messages: ChatType[];
