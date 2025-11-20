@@ -18,7 +18,7 @@ export interface ChatJsonType {
 export interface ChatType {
   id: string;
   createdAt: Timestamp;
-  role: 'consumer' | 'vendor';
+  role: 'consumer' | 'vendor' | 'system';
   messageId: string;
   messageName: string | ChatJsonType;
   message: string;

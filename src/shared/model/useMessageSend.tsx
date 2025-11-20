@@ -21,7 +21,7 @@ import useChatParams from './useChatParams';
 
 interface UseMessageSendProps {
   messageId: string;
-  role: 'consumer' | 'vendor';
+  role: 'consumer' | 'vendor' | 'system';
   messageName: string;
 }
 
@@ -125,8 +125,13 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
 
     const hasTodaySystemDate = fetchedMessages.some((msg) => {
       if (msg.role !== 'system') return false;
-      if (typeof msg.message !== 'object') return false;
-      return msg.message.date === todayString;
+      let parsed;
+      try {
+        parsed = JSON.parse(msg.message);
+      } catch {
+        return false;
+      }
+      return parsed.type === 'system-date' && parsed.date === todayString;
     });
 
     if (!hasTodaySystemDate) {
