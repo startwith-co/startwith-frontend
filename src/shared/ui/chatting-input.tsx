@@ -73,7 +73,6 @@ function ChattingInput({
             className="w-full border-none bg-transparent py-2 pr-20 pl-2 shadow-none placeholder:font-light focus:ring-0"
           />
 
-          {/* 첨부 파일 버튼 */}
           <label htmlFor="file-input">
             <MdOutlineAttachFile className="absolute top-1/2 right-10 size-5.5 -translate-y-1/2 cursor-pointer text-gray-500" />
           </label>
@@ -82,10 +81,9 @@ function ChattingInput({
             ref={imageFileRef}
             type="file"
             className="hidden"
+            accept="image/*, .pdf"
             onChange={handleFileChange}
           />
-
-          {/* 전송 버튼 */}
           <button
             disabled={!consumerSeq || !vendorSeq}
             type="submit"
