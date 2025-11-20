@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { ChatType } from '@/entities/chat/model/type';
+import { ChatType } from '@/shared/model/chat-type';
 
 interface UseChatScrollProps {
   messages: ChatType[];

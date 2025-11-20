@@ -1,19 +1,19 @@
 import formatTime from '@/shared/lib/chat-format-time';
 import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
 import useChatScroll from '@/shared/model/useChatScroll';
+import { ChatType } from '@/shared/model/chat-type';
+import ChatUpdateDate from '@/shared/ui/chat-main-date';
 import ChatVendorBubble from './chat-vendor-bubble';
 import ChatVendorRequestCard from './chat-vendor-request-card';
 import ChatVendorCancelCompleteCard from './chat-vendor-cancelComplete-card';
 import ChatVendorPayCompleteCard from './chat-vendor-payComplete-card';
 import ChatVendorCancelRequestCard from './chat-vendor-cancel-request-card';
-import { ChatType } from '../model/type';
 
 interface ChatsVendorProps {
   messages: ChatType[];
-  vendorId: string;
 }
 
-function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
+function ChatsVendor({ messages }: ChatsVendorProps) {
   const scrollRef = useChatScroll({ messages });
 
   return (
@@ -24,6 +24,14 @@ function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
           parsed = JSON.parse(msg.message);
         } catch {
           parsed = null;
+        }
+        if (parsed?.type === 'system-date') {
+          return (
+            <ChatUpdateDate
+              key={msg.id + msg.createdAt}
+              updateData={parsed.date}
+            />
+          );
         }
 
         const isMine = msg.role === 'vendor';

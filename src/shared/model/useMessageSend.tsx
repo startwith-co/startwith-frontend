@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   addDoc,
   collection,
@@ -14,30 +14,40 @@ import { v4 as uuidv4 } from 'uuid';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
 import getMessagesById from '@/shared/api/get-messages-by-id';
 import db from 'fire-config';
-import { ChatType } from '@/entities/chat/model/type';
+import { ChatType } from '@/shared/model/chat-type';
 import { useChatMeta } from './ChatMetaProvider';
 import ChatFilePost from '../api/chat-file-post';
 import useChatParams from './useChatParams';
 
 interface UseMessageSendProps {
   messageId: string;
-  role: 'consumer' | 'vendor';
+  role: 'consumer' | 'vendor' | 'system';
   messageName: string;
-  attachedFile?: File;
+}
+
+interface FileItem {
+  fileUniqueId: string;
+  file: File;
+  fileName: string;
 }
 
 function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<ChatType[]>([]);
-  const [attachedFile, setAttachedFile] = useState<File | null>(null);
+  const [attachedFile, setAttachedFile] = useState<FileItem | null>(null);
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
   const { consumerName, vendorName, solutionName, userImg } = useChatMeta();
   const { consumerSeq: consumerId, vendorSeq: vendorId } = useChatParams();
+  const imageFileRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setAttachedFile(file);
+    setAttachedFile({
+      fileUniqueId: uuidv4(),
+      file,
+      fileName: file.name,
+    });
 
     if (file.type.startsWith('image/')) {
       const reader = new FileReader();
@@ -45,6 +55,14 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
       reader.readAsDataURL(file);
     } else {
       setFilePreviewUrl(null);
+    }
+  };
+
+  const handleFileRemove = () => {
+    setAttachedFile(null);
+    setFilePreviewUrl(null);
+    if (imageFileRef.current) {
+      imageFileRef.current.value = '';
     }
   };
 
@@ -73,7 +91,7 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [consumerId, vendorId, attachedFile]);
+  }, [consumerId, vendorId]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -81,7 +99,6 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
 
     const roomId = await findChatExistingRoom(consumerId, vendorId);
     const newRoomId = uuidv4();
-    const fileUniqueId = uuidv4();
     const targetRoomId = roomId || newRoomId;
 
     if (!roomId) {
@@ -98,13 +115,53 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
       );
     }
 
+    const fetchedMessages = await getMessagesById(targetRoomId);
+
+    const now = new Date();
+    const yy = String(now.getFullYear()).slice(2);
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const todayString = `${yy}.${mm}.${dd}`;
+
+    const hasTodaySystemDate = fetchedMessages.some((msg) => {
+      if (msg.role !== 'system') return false;
+      let parsed;
+      try {
+        parsed = JSON.parse(msg.message);
+      } catch {
+        return false;
+      }
+      return parsed.type === 'system-date' && parsed.date === todayString;
+    });
+
+    if (!hasTodaySystemDate) {
+      const systemMsg = {
+        role: 'system',
+        message: JSON.stringify({
+          type: 'system-date',
+          date: todayString,
+        }),
+        createdAt: serverTimestamp(),
+      };
+
+      await addDoc(
+        collection(db, 'chats', targetRoomId, 'messages'),
+        systemMsg,
+      );
+    }
+
     const newMessage = {
       message,
       createdAt: serverTimestamp(),
       messageId,
       messageName,
       role,
-      file: attachedFile ? fileUniqueId : null,
+      file: attachedFile
+        ? {
+            fileUniqueId: attachedFile.fileUniqueId,
+            fileName: attachedFile.fileName,
+          }
+        : null,
     };
 
     await addDoc(collection(db, 'chats', targetRoomId, 'messages'), newMessage);
@@ -113,20 +170,18 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
       await ChatFilePost(
         Number(consumerId),
         Number(vendorId),
-        fileUniqueId,
+        attachedFile.fileUniqueId,
         'vendor',
-        attachedFile,
+        attachedFile.file,
       );
     }
 
-    if (!attachedFile) {
-      setMessage('');
-    }
+    setMessage('');
     setAttachedFile(null);
     setFilePreviewUrl(null);
 
-    const fetchedMessages = await getMessagesById(targetRoomId);
-    setMessages(fetchedMessages);
+    const refreshed = await getMessagesById(targetRoomId);
+    setMessages(refreshed);
   }
 
   return {
@@ -137,6 +192,8 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
     handleFileChange,
     attachedFile,
     filePreviewUrl,
+    handleFileRemove,
+    imageFileRef,
   };
 }
 

@@ -1,6 +1,6 @@
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import db from 'fire-config';
-import { ChatType } from '@/entities/chat/model/type';
+import { ChatType } from '@/shared/model/chat-type';
 
 async function getMessagesById(roomId: string): Promise<ChatType[]> {
   const messagesCollection = collection(db, 'chats', roomId, 'messages');

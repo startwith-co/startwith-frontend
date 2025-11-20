@@ -10,7 +10,6 @@ import { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
 import ValidatedInput from '@/shared/ui/validated-input';
 import CustomForm from '@/shared/ui/custom-form';
-import Spacing from '@/shared/ui/spacing';
 import SignupIndustryModal from './signup-industry-modal';
 import useSendEmail from '../model/useSendEmail';
 import useVerifyEmail from '../model/useVerifyEmail';
@@ -46,7 +45,7 @@ function SignupUserForm() {
     formState: { errors, isValid },
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
-    mode: 'onSubmit',
+    mode: 'onChange',
   });
 
   const [matchSuccess, setMatchSuccess] = useState(false);

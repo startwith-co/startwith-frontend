@@ -23,9 +23,11 @@ function VendorChatting() {
     attachedFile,
     filePreviewUrl,
     handleFileChange,
+    handleFileRemove,
     message,
     setMessage,
     messages,
+    imageFileRef,
   } = useMessageSend({
     messageId: vendorSeq,
     messageName: vendorName,
@@ -52,15 +54,12 @@ function VendorChatting() {
     fetchConsumer();
   }, [session, setChatMeta, vendorSeq, vendorName, consumerSeq]);
 
-  const chatMainDate =
-    formatMainDate(messages[messages.length - 1]?.createdAt) || '';
-
   return (
-    <div className="flex min-h-[calc(100vh-200px)] w-full flex-col rounded-3xl bg-[#FFFFFF] shadow-lg">
-      <ChatMainDate mainData={chatMainDate} />
-      <ChatsVendor messages={messages} vendorId={vendorSeq} />
-
+    <div className="flex h-[calc(100vh-200px)] w-full flex-col overflow-hidden rounded-3xl bg-[#FFFFFF] shadow-lg">
+      <ChatsVendor messages={messages} />
       <ChattingInput
+        imageFileRef={imageFileRef}
+        handleFileRemove={handleFileRemove}
         handleSubmit={handleSubmit}
         message={message}
         setMessage={setMessage}

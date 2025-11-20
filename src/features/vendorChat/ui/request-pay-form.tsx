@@ -22,11 +22,15 @@ import deleteLastMessage from '@/shared/api/delete-last-message';
 import { v4 as uuidv4 } from 'uuid';
 import useChatParams from '@/shared/model/useChatParams';
 import findChatExistingRoom from '@/shared/api/find-chat-existing-room';
+import ValidatedInput from '@/shared/ui/validated-input';
 import requestServerPost from '../api/requestServerPost';
 import useRequestPaymentDetails from '../model/useRequestPaymentDetails';
 
 const schema = z.object({
-  solutionName: z.string().min(1, '계약명을 입력해주세요.'),
+  solutionName: z
+    .string()
+    .min(1, '계약명을 입력해주세요.')
+    .max(30, '계약명은 30자 이하로 입력해주세요.'),
   solutionCategory: z.string().min(1, '카테고리를 입력해주세요.'),
   solutionPrice: z.string().min(1, '금액을 입력해주세요.'),
 });
@@ -115,24 +119,30 @@ function RequestPayForm() {
       buttonWrapperClassName="mt-4"
       formProps="w-full px-4 py-4 space-y-6"
       variant="bgBlueGradient"
-      disabled={!isValid || !contractFile || !refundFile}
+      disabled={!contractFile || !refundFile || !isValid}
     >
       <h1 className="text-xl font-bold text-black">계약 정보</h1>
       <div className="grid grid-cols-[3fr_6fr] items-center">
-        <p className="text-sm font-semibold text-black">계약명 *</p>
-        <Input
-          {...register('solutionName')}
-          placeholder="계약명(솔루션명)을 입력해주세요."
-          className="mt-1 h-[45px] w-full rounded-md bg-[#F1F1F1] indent-2 text-black"
+        <p className="text-sm font-semibold text-black">
+          계약명 <span className="text-red-500">*</span>
+        </p>
+        <ValidatedInput
+          input={
+            <Input
+              {...register('solutionName')}
+              placeholder="계약명(솔루션명)을 입력해주세요."
+              className="mt-1 h-[45px] w-full rounded-md bg-[#F1F1F1] indent-2 text-black"
+            />
+          }
+          errorMessage={errors.solutionName?.message}
         />
       </div>
-      {errors.solutionName && (
-        <p className="text-xs text-red-500">{errors.solutionName.message}</p>
-      )}
 
       <h1 className="text-xl font-bold text-black">계약 및 결제</h1>
       <div className="grid grid-cols-[3fr_6fr] items-center">
-        <p className="text-sm font-semibold text-black">솔루션 카테고리 *</p>
+        <p className="text-sm font-semibold text-black">
+          솔루션 카테고리 <span className="text-red-500">*</span>
+        </p>
         <div className="w-full">
           <Controller
             name="solutionCategory"
@@ -183,7 +193,9 @@ function RequestPayForm() {
       </div>
 
       <div className="grid grid-cols-[3fr_6fr] items-center">
-        <p className="text-sm font-semibold text-black">결제 요청 금액 *</p>
+        <p className="text-sm font-semibold text-black">
+          결제 요청 금액 <span className="text-red-500">*</span>
+        </p>
         {Number(getValues('solutionPrice')).toLocaleString('ko-KR')}원
         {errors.solutionPrice && (
           <p className="text-xs text-red-500">{errors.solutionPrice.message}</p>
@@ -191,7 +203,9 @@ function RequestPayForm() {
       </div>
 
       <div className="grid grid-cols-[3fr_6fr] items-start gap-y-2">
-        <p className="text-sm font-semibold text-black">계약 확인서 *</p>
+        <p className="text-sm font-semibold text-black">
+          계약 확인서 <span className="text-red-500">*</span>
+        </p>
         <div>
           <input
             ref={contractRef}
@@ -208,7 +222,9 @@ function RequestPayForm() {
             onClick={() => contractRef.current?.click()}
             className="h-[45px] w-full bg-[#F5F5F5] text-xs text-[#7A7A7A]"
           >
-            {contractFile ? contractFile.name : '+ 업로드하기(pdf만 가능)'}
+            {contractFile
+              ? contractFile.name
+              : '+ 업로드하기(pdf만 가능, 20MB 이하)'}
           </Button>
           {contractFile && contractFile.type.startsWith('image') && (
             <Image
@@ -222,12 +238,14 @@ function RequestPayForm() {
 
       <h1 className="text-xl font-bold text-black">확인 및 고지</h1>
       <div className="grid grid-cols-[3fr_6fr] items-start gap-y-2">
-        <p className="text-sm font-semibold text-black">자사 환불 정책 *</p>
+        <p className="text-sm font-semibold text-black">
+          자사 환불 정책 <span className="text-red-500">*</span>
+        </p>
         <div>
           <input
             ref={refundRef}
             type="file"
-            accept="image/*,.pdf"
+            accept=".pdf"
             className="hidden"
             onChange={(e) => e.target.files && setRefundFile(e.target.files[0])}
           />
@@ -237,7 +255,9 @@ function RequestPayForm() {
             onClick={() => refundRef.current?.click()}
             className="h-[45px] w-full bg-[#F5F5F5] text-xs text-[#7A7A7A]"
           >
-            {refundFile ? refundFile.name : '+ 업로드하기(pdf만 가능)'}
+            {refundFile
+              ? refundFile.name
+              : '+ 업로드하기(pdf만 가능, 20MB 이하)'}
           </Button>
           {refundFile && refundFile.type.startsWith('image') && (
             <Image
