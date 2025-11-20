@@ -46,7 +46,7 @@ function SignupVendorForm() {
     formState: { errors, isValid },
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
-    mode: 'onSubmit',
+    mode: 'onChange',
   });
 
   const { file, fileInputRef, handleFileChange, handleClickFileInput } =
