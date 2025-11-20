@@ -5,7 +5,10 @@ import { Button } from '@/shared/ui/button';
 import RequestPayModal from '@/features/vendorChat/ui/request-pay-modal';
 import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import ChatUserCard from '@/entities/chat/ui/chat-user-card';
-import { solutionCategoryToLabel } from '@/shared/model/getCategoryList';
+import {
+  industryCategoryToLabel,
+  solutionCategoryToLabel,
+} from '@/shared/model/getCategoryList';
 import useChatParams from '@/shared/model/useChatParams';
 import useFetchConsumer from '../model/useFetchConsumer';
 
@@ -30,7 +33,7 @@ function VendorControl() {
           <ChatUserCard
             title="종사 산업군"
             content={
-              solutionCategoryToLabel[consumerInfo?.industry ?? ''] ??
+              industryCategoryToLabel[consumerInfo?.industry ?? ''] ??
               consumerInfo?.industry ??
               ''
             }

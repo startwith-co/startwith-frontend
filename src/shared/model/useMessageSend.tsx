@@ -139,9 +139,7 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
       );
     }
 
-    if (!attachedFile) {
-      setMessage('');
-    }
+    setMessage('');
     setAttachedFile(null);
     setFilePreviewUrl(null);
 
