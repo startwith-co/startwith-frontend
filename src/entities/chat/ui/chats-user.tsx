@@ -12,14 +12,16 @@ import { ChatType } from '../model/type';
 
 interface ChatsUserProps {
   messages: ChatType[];
-  consumerId: string;
 }
 
-function ChatsUser({ messages, consumerId }: ChatsUserProps) {
+function ChatsUser({ messages }: ChatsUserProps) {
   const scrollRef = useChatScroll({ messages });
 
   return (
-    <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
+    <div
+      ref={scrollRef}
+      className="flex-1 space-y-4 overflow-x-hidden overflow-y-auto px-4 py-4"
+    >
       {messages.map((msg) => {
         let parsed;
         try {

@@ -32,7 +32,7 @@ function Chatting() {
   return (
     <div className="flex h-[calc(100vh-200px)] w-full flex-col overflow-hidden rounded-3xl bg-white shadow-md">
       <ChatMainDate mainData={chatMainDate} />
-      <ChatsUser messages={messages} consumerId={consumerSeq} />
+      <ChatsUser messages={messages} />
       <ChattingInput
         handleSubmit={handleSubmit}
         message={message}

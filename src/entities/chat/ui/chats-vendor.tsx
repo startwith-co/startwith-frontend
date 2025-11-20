@@ -10,10 +10,9 @@ import { ChatType } from '../model/type';
 
 interface ChatsVendorProps {
   messages: ChatType[];
-  vendorId: string;
 }
 
-function ChatsVendor({ messages, vendorId }: ChatsVendorProps) {
+function ChatsVendor({ messages }: ChatsVendorProps) {
   const scrollRef = useChatScroll({ messages });
 
   return (
