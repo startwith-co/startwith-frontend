@@ -5,9 +5,14 @@ import DarkBox from '@/shared/ui/dark-box';
 import Image from 'next/image';
 import Link from 'next/link';
 import defaultImage from 'public/images/dummy.png';
+import { useSession } from 'next-auth/react';
 
 export default function VendorChatWidget() {
-  const rooms = useGetChatRooms({ targetId: 'vendorSeq' });
+  const { data: session } = useSession();
+  const rooms = useGetChatRooms({
+    targetId: 'vendorSeq',
+    defaultId: session?.vendorSeq?.toString(),
+  });
   return (
     <div className="rounded-2xl bg-white p-7 shadow-md">
       <h2 className="font-semibold 2xl:text-xl">실시간 상담 현황</h2>

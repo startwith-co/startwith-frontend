@@ -4,7 +4,7 @@ import useFileClick from '../model/useFileClick';
 interface ChatBubbleProps {
   message: string;
   time: string;
-  role: 'consumer' | 'vendor';
+  role: 'consumer' | 'vendor' | 'system';
   file: ChatFile | null;
 }
 
