@@ -4,6 +4,7 @@ import formatTime from '@/shared/lib/chat-format-time';
 import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
 import useChatScroll from '@/shared/model/useChatScroll';
 import { ChatType } from '@/shared/model/chat-type';
+import ChatUpdateDate from '@/shared/ui/chat-main-date';
 import ChatUserBubble from './chat-user-bubble';
 import ChatUserCancelRequestCard from './chat-user-cancel-request-card';
 import ChatUserPayCompleteCard from './chat-user-payComplete-card';
@@ -28,6 +29,14 @@ function ChatsUser({ messages }: ChatsUserProps) {
           parsed = JSON.parse(msg.message);
         } catch {
           parsed = null;
+        }
+        if (parsed?.type === 'system-date') {
+          return (
+            <ChatUpdateDate
+              key={msg.id + msg.createdAt}
+              updateData={parsed.date}
+            />
+          );
         }
 
         const isMine = msg.role === 'consumer';

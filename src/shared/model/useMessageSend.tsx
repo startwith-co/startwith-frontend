@@ -115,16 +115,48 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
       );
     }
 
+    const fetchedMessages = await getMessagesById(targetRoomId);
+
+    const now = new Date();
+    const yy = String(now.getFullYear()).slice(2);
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const todayString = `${yy}.${mm}.${dd}`;
+
+    const hasTodaySystemDate = fetchedMessages.some((msg) => {
+      if (msg.role !== 'system') return false;
+      if (typeof msg.message !== 'object') return false;
+      return msg.message.date === todayString;
+    });
+
+    if (!hasTodaySystemDate) {
+      const systemMsg = {
+        role: 'system',
+        message: JSON.stringify({
+          type: 'system-date',
+          date: todayString,
+        }),
+        createdAt: serverTimestamp(),
+      };
+
+      await addDoc(
+        collection(db, 'chats', targetRoomId, 'messages'),
+        systemMsg,
+      );
+    }
+
     const newMessage = {
       message,
       createdAt: serverTimestamp(),
       messageId,
       messageName,
       role,
-      file: {
-        fileUniqueId: attachedFile?.fileUniqueId,
-        fileName: attachedFile?.fileName,
-      },
+      file: attachedFile
+        ? {
+            fileUniqueId: attachedFile.fileUniqueId,
+            fileName: attachedFile.fileName,
+          }
+        : null,
     };
 
     await addDoc(collection(db, 'chats', targetRoomId, 'messages'), newMessage);
@@ -143,8 +175,8 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
     setAttachedFile(null);
     setFilePreviewUrl(null);
 
-    const fetchedMessages = await getMessagesById(targetRoomId);
-    setMessages(fetchedMessages);
+    const refreshed = await getMessagesById(targetRoomId);
+    setMessages(refreshed);
   }
 
   return {

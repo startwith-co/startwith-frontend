@@ -2,6 +2,7 @@ import formatTime from '@/shared/lib/chat-format-time';
 import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
 import useChatScroll from '@/shared/model/useChatScroll';
 import { ChatType } from '@/shared/model/chat-type';
+import ChatUpdateDate from '@/shared/ui/chat-main-date';
 import ChatVendorBubble from './chat-vendor-bubble';
 import ChatVendorRequestCard from './chat-vendor-request-card';
 import ChatVendorCancelCompleteCard from './chat-vendor-cancelComplete-card';
@@ -23,6 +24,14 @@ function ChatsVendor({ messages }: ChatsVendorProps) {
           parsed = JSON.parse(msg.message);
         } catch {
           parsed = null;
+        }
+        if (parsed?.type === 'system-date') {
+          return (
+            <ChatUpdateDate
+              key={msg.id + msg.createdAt}
+              updateData={parsed.date}
+            />
+          );
         }
 
         const isMine = msg.role === 'vendor';

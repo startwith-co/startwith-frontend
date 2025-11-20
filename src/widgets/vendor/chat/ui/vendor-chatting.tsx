@@ -54,12 +54,8 @@ function VendorChatting() {
     fetchConsumer();
   }, [session, setChatMeta, vendorSeq, vendorName, consumerSeq]);
 
-  const chatMainDate =
-    formatMainDate(messages[messages.length - 1]?.createdAt) || '';
-
   return (
     <div className="flex h-[calc(100vh-200px)] w-full flex-col overflow-hidden rounded-3xl bg-[#FFFFFF] shadow-lg">
-      <ChatMainDate mainData={chatMainDate} />
       <ChatsVendor messages={messages} />
       <ChattingInput
         imageFileRef={imageFileRef}
