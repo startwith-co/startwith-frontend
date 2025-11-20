@@ -23,9 +23,11 @@ function VendorChatting() {
     attachedFile,
     filePreviewUrl,
     handleFileChange,
+    handleFileRemove,
     message,
     setMessage,
     messages,
+    imageFileRef,
   } = useMessageSend({
     messageId: vendorSeq,
     messageName: vendorName,
@@ -60,6 +62,8 @@ function VendorChatting() {
       <ChatMainDate mainData={chatMainDate} />
       <ChatsVendor messages={messages} />
       <ChattingInput
+        imageFileRef={imageFileRef}
+        handleFileRemove={handleFileRemove}
         handleSubmit={handleSubmit}
         message={message}
         setMessage={setMessage}

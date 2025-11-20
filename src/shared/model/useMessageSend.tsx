@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   addDoc,
   collection,
@@ -38,6 +38,7 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
   const { consumerName, vendorName, solutionName, userImg } = useChatMeta();
   const { consumerSeq: consumerId, vendorSeq: vendorId } = useChatParams();
+  const imageFileRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -54,6 +55,14 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
       reader.readAsDataURL(file);
     } else {
       setFilePreviewUrl(null);
+    }
+  };
+
+  const handleFileRemove = () => {
+    setAttachedFile(null);
+    setFilePreviewUrl(null);
+    if (imageFileRef.current) {
+      imageFileRef.current.value = '';
     }
   };
 
@@ -82,7 +91,7 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [consumerId, vendorId, attachedFile]);
+  }, [consumerId, vendorId]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -148,6 +157,8 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
     handleFileChange,
     attachedFile,
     filePreviewUrl,
+    handleFileRemove,
+    imageFileRef,
   };
 }
 

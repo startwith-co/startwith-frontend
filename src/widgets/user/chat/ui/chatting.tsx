@@ -20,6 +20,8 @@ function Chatting() {
     attachedFile,
     filePreviewUrl,
     handleFileChange,
+    handleFileRemove,
+    imageFileRef,
   } = useMessageSend({
     messageId: consumerSeq,
     messageName: consumerName,
@@ -37,6 +39,8 @@ function Chatting() {
         handleSubmit={handleSubmit}
         message={message}
         setMessage={setMessage}
+        handleFileRemove={handleFileRemove}
+        imageFileRef={imageFileRef}
         attachedFile={attachedFile}
         filePreviewUrl={filePreviewUrl}
         consumerSeq={consumerSeq}
