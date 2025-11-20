@@ -5,10 +5,7 @@ import { Button } from '@/shared/ui/button';
 import RequestPayModal from '@/features/vendorChat/ui/request-pay-modal';
 import { useVendorModal } from '@/views/vendor/chat/model/VendorModalProvider';
 import ChatUserCard from '@/entities/chat/ui/chat-user-card';
-import {
-  industryCategoryToLabel,
-  solutionCategoryToLabel,
-} from '@/shared/model/getCategoryList';
+import { industryCategoryToLabel } from '@/shared/model/getCategoryList';
 import useChatParams from '@/shared/model/useChatParams';
 import useFetchConsumer from '../model/useFetchConsumer';
 
