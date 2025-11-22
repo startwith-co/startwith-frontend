@@ -90,7 +90,7 @@ function EditVendorInfo({
           alt="Add image icon"
           width={20}
           height={20}
-          className="absolute right-1 bottom-1 z-10 cursor-pointer rounded-full bg-white p-2 shadow-md"
+          className="absolute top-27 left-25 z-10 cursor-pointer"
           onClick={onPlusImageClick}
         />
       </div>
