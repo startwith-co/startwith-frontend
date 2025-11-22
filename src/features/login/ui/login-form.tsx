@@ -33,7 +33,7 @@ function LoginForm() {
   const router = useRouter();
 
   const onValid = async (data: FormSchema) => {
-    const { ok, message } = await loginAction({ ...data, target });
+    const { ok, status, message } = await loginAction({ ...data, target });
 
     if (ok) {
       router.push('/');

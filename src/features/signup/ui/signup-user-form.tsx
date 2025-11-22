@@ -162,7 +162,7 @@ function SignupUserForm() {
             className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
           >
             {isCounting
-              ? `전송 완료 (${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, '0')})`
+              ? `인증 코드 재전송 (${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, '0')})`
               : '이메일 인증코드 전송'}
           </Button>
         }

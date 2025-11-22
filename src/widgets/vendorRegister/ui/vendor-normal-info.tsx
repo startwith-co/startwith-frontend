@@ -34,12 +34,12 @@ export default function VendorNormalInfo() {
                 'bg-vendor-gray border placeholder:text-[13px]',
                 errors.solutionName && 'border-red-500 focus:border-red-500',
               )}
-              maxLength={100}
+              maxLength={30}
               placeholder="솔루션명을 입력해주세요."
               {...register('solutionName')}
             />
             <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-[13px]">
-              {solutionName?.length || 0}/100
+              {solutionName?.length || 0}/30
             </span>
           </div>
         </li>
