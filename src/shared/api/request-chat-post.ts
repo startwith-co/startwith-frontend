@@ -100,7 +100,6 @@ async function sendMessageJson(
       consumerSeq,
       vendorSeq,
       solutionName,
-      '',
     );
     roomId = newRoomId;
   }

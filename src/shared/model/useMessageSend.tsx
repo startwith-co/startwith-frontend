@@ -111,7 +111,6 @@ function useMessageSend({ messageId, role, messageName }: UseMessageSendProps) {
         consumerId,
         vendorId,
         solutionName,
-        userImg,
       );
     }
 

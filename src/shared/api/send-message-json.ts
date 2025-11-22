@@ -28,7 +28,6 @@ async function sendMessageJson(
       consumerSeq,
       vendorSeq,
       solutionName,
-      '',
     );
   }
 
