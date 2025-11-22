@@ -12,7 +12,7 @@ export const vendorRegisterSchema = z.object({
   solutionName: z
     .string()
     .min(1, '솔루션명 입력해주세요.')
-    .max(100, '최대 100자까지 입력 가능합니다.'),
+    .max(30, '최대 30자까지 입력 가능합니다.'),
   solutionDetail: z
     .string()
     .min(1, '솔루션 설명 입력해주세요.')
