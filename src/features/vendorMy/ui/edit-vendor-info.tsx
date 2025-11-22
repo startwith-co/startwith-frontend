@@ -66,33 +66,34 @@ function EditVendorInfo({
         onChange={handleVendorUploadImageClick}
         className="hidden"
       />
-
-      {previewUrl ? (
+      <div className="relative inline-block">
+        {previewUrl ? (
+          <Image
+            src={previewUrl}
+            alt="Profile image placeholder"
+            width={100}
+            height={100}
+            className="mb-7 size-24 rounded-full bg-gray-100 object-contain"
+            onError={() => setPreviewUrl(null)}
+          />
+        ) : (
+          <Image
+            src="/images/profileAdd.png"
+            alt="Profile image placeholder"
+            width={100}
+            height={100}
+            className="mb-7 size-24 rounded-full bg-gray-100"
+          />
+        )}
         <Image
-          src={previewUrl}
-          alt="Profile image placeholder"
-          width={100}
-          height={100}
-          className="mb-7 size-24 rounded-full object-cover object-center"
-          onError={() => setPreviewUrl(null)}
+          src="/images/add.png"
+          alt="Add image icon"
+          width={20}
+          height={20}
+          className="absolute right-1 bottom-1 z-10 cursor-pointer rounded-full bg-white p-2 shadow-md"
+          onClick={onPlusImageClick}
         />
-      ) : (
-        <Image
-          src="/images/profileAdd.png"
-          alt="Profile image placeholder"
-          width={100}
-          height={100}
-          className="mb-7"
-        />
-      )}
-      <Image
-        src="/images/add.png"
-        alt="Add image icon"
-        width={20}
-        height={20}
-        className="absolute top-27 left-25 z-10 cursor-pointer"
-        onClick={onPlusImageClick}
-      />
+      </div>
       <div>
         <label htmlFor="vendorName" className="text-sm">
           기업명(사업자명)<span className="text-red-500">*</span>
