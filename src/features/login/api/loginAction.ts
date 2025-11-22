@@ -17,7 +17,6 @@ export default async function loginAction({
       email,
       password,
       target,
-      redirectTo: '/',
     });
     return { ok: true, status: 200, message: '로그인 성공' };
   } catch (e) {
