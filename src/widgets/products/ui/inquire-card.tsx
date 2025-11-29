@@ -10,6 +10,7 @@ import { ApiResponse } from '@/shared/model/apiType';
 import { ConsumerDetailType } from '@/shared/model/consumerDetailType';
 import { useRouter } from 'next/navigation';
 import useCurrentSession from '@/shared/model/useCurrentSession';
+import { toast } from 'react-toastify';
 import createPaymentEvent from '../api/createPaymentEvent';
 
 interface InquireCardProps {
@@ -33,6 +34,10 @@ export default function InquireCard({
   const router = useRouter();
   const { session, status } = useCurrentSession();
   const handlePaymentClick = async () => {
+    if (!session?.consumerSeq) {
+      toast.warning('고객으로 로그인 해주세요.');
+      return;
+    }
     try {
       const paymentEvent = await createPaymentEvent({
         consumerSeq: session?.consumerSeq || 0,
@@ -90,6 +95,8 @@ export default function InquireCard({
                 router.push(
                   `/chat?vendorId=${vendorSeq}&consumerId=${session?.consumerSeq}`,
                 );
+              } else {
+                toast.warning('고객으로 로그인 해주세요.');
               }
             }}
           >
