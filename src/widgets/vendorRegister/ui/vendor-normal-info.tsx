@@ -5,13 +5,9 @@ import VendorSelect from '@/shared/ui/vendor-select';
 import { Controller, useFormContext } from 'react-hook-form';
 import cn from '@/shared/lib/utils';
 import ErrorMessage from '@/shared/ui/error-message';
-import {
-  industryCategoryLabels,
-  industryCategoryToLabel,
-  industryCategoryToValue,
-  solutionCategoryLabels,
-} from '@/shared/model/getCategoryList';
+import { solutionCategoryLabels } from '@/shared/model/getCategoryList';
 import { scaleCategory } from '@/entities/vendorRegister/model/vendor-normal-info-category';
+import Textarea from '@/shared/ui/textarea';
 
 export default function VendorNormalInfo() {
   const {
@@ -38,12 +34,12 @@ export default function VendorNormalInfo() {
                 'bg-vendor-gray border placeholder:text-[13px]',
                 errors.solutionName && 'border-red-500 focus:border-red-500',
               )}
-              maxLength={100}
+              maxLength={30}
               placeholder="솔루션명을 입력해주세요."
               {...register('solutionName')}
             />
             <span className="absolute top-1/2 right-3 -translate-y-1/2 transform text-[13px]">
-              {solutionName?.length || 0}/100
+              {solutionName?.length || 0}/30
             </span>
           </div>
         </li>
@@ -52,9 +48,9 @@ export default function VendorNormalInfo() {
             솔루션 기본 설명<span className="text-red-500">*</span>
           </span>
           <div className="relative w-full">
-            <Input
+            <Textarea
               className={cn(
-                'bg-vendor-gray pr-20 placeholder:text-[13px]',
+                'bg-vendor-gray h-[130px] pr-20 placeholder:text-[13px]',
                 errors.solutionDetail && 'border-red-500 focus:border-red-500',
               )}
               maxLength={300}

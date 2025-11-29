@@ -9,25 +9,25 @@ import api from '@/shared/api/client-api';
 import { ConsumerDetailType } from '@/shared/model/consumerDetailType';
 import { ApiResponse } from '@/shared/model/apiType';
 import getRoomInformationById from '@/shared/api/get-room-information-by-id';
-import { useSearchParams } from 'next/navigation';
 import ChattingInput from '@/shared/ui/chatting-input';
 import ChatMainDate from '@/shared/ui/chat-main-date';
 import formatMainDate from '@/shared/lib/chat-main-date-format';
+import useChatParams from '@/shared/model/useChatParams';
 
 function VendorChatting() {
   const { vendorName, setChatMeta } = useChatMeta();
-  const searchParams = useSearchParams();
-  const consumerSeq = searchParams.get('consumerId') as string;
-  const vendorSeq = searchParams.get('vendorId') as string;
+  const { vendorSeq, consumerSeq } = useChatParams();
 
   const {
     handleSubmit,
     attachedFile,
     filePreviewUrl,
     handleFileChange,
+    handleFileRemove,
     message,
     setMessage,
     messages,
+    imageFileRef,
   } = useMessageSend({
     messageId: vendorSeq,
     messageName: vendorName,
@@ -47,24 +47,19 @@ function VendorChatting() {
         .json<ApiResponse<ConsumerDetailType>>();
       setChatMeta({
         vendorName: session.name,
-        vendorSeq: String(session.vendorSeq),
         consumerName: res.data.consumerName,
-        consumerSeq: String(res.data.consumerSeq),
       });
     };
 
     fetchConsumer();
   }, [session, setChatMeta, vendorSeq, vendorName, consumerSeq]);
 
-  const chatMainDate =
-    formatMainDate(messages[messages.length - 1]?.createdAt) || '';
-
   return (
-    <div className="flex min-h-[calc(100vh-200px)] w-full flex-col rounded-3xl bg-[#FFFFFF] shadow-lg">
-      <ChatMainDate mainData={chatMainDate} />
-      <ChatsVendor messages={messages} vendorId={vendorSeq} />
-
+    <div className="flex h-[calc(100vh-200px)] w-full flex-col overflow-hidden rounded-3xl bg-[#FFFFFF] shadow-lg">
+      <ChatsVendor messages={messages} />
       <ChattingInput
+        imageFileRef={imageFileRef}
+        handleFileRemove={handleFileRemove}
         handleSubmit={handleSubmit}
         message={message}
         setMessage={setMessage}

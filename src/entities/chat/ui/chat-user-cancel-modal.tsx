@@ -5,6 +5,7 @@ import requestPost from '@/shared/api/request-post';
 import { useSolution } from '@/shared/model/SolutionProvider';
 import { useChatMeta } from '@/shared/model/ChatMetaProvider';
 import { v4 as uuidv4 } from 'uuid';
+import useChatParams from '@/shared/model/useChatParams';
 import cancelPayment from '../api/cancelPayment';
 
 interface ChatUserCancelModalProps {
@@ -17,8 +18,8 @@ export default function ChatUserCancelModal({
   setOpen,
 }: ChatUserCancelModalProps) {
   const { solutionName, solutionPrice, solutionCategory } = useSolution();
-
-  const { vendorName, consumerName, consumerSeq, vendorSeq } = useChatMeta();
+  const { consumerSeq, vendorSeq } = useChatParams();
+  const { vendorName, consumerName } = useChatMeta();
 
   const onCancelPayment = useCallback(async () => {
     cancelPayment(solutionCategory, consumerSeq, vendorSeq);

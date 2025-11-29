@@ -72,6 +72,7 @@ export default function Dropdown({
                 className="w-full px-2 py-2 text-center text-sm text-red-500 hover:bg-gray-100"
                 onClick={async () => {
                   await logoutAction();
+                  router.refresh();
                   setIsOpen(false);
                 }}
               >

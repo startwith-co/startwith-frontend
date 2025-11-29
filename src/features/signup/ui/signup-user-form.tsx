@@ -10,7 +10,6 @@ import { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
 import ValidatedInput from '@/shared/ui/validated-input';
 import CustomForm from '@/shared/ui/custom-form';
-import Spacing from '@/shared/ui/spacing';
 import SignupIndustryModal from './signup-industry-modal';
 import useSendEmail from '../model/useSendEmail';
 import useVerifyEmail from '../model/useVerifyEmail';
@@ -163,7 +162,7 @@ function SignupUserForm() {
             className="h-[55px] w-full text-sm text-[#7A7A7A] shadow-sm"
           >
             {isCounting
-              ? `전송 완료 (${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, '0')})`
+              ? `인증 코드 재전송 (${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, '0')})`
               : '이메일 인증코드 전송'}
           </Button>
         }

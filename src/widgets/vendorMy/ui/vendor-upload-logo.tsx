@@ -1,7 +1,7 @@
 'use client';
 
 import EditButton from '@/features/vendorMy/ui/edit-button';
-import VendorDropInput from '@/shared/ui/vendor-drop-input';
+import VendorLogoDropInput from '@/shared/ui/vendor-logo-drop-input';
 import { useFormContext } from 'react-hook-form';
 import { useEffect, useMemo } from 'react';
 import Image from 'next/image';
@@ -86,7 +86,7 @@ export default function VendorUploadLogo({
                 </button>
               </>
             ) : (
-              <VendorDropInput
+              <VendorLogoDropInput
                 title="대표 이미지 등록"
                 accept={['image/jpg', 'image/png']}
                 onChange={(file) => onFileChange(i, file)}

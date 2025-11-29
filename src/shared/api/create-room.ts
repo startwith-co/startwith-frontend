@@ -8,7 +8,6 @@ async function createRoom(
   consumerSeq: string,
   vendorSeq: string,
   solutionName: string,
-  userImg: string,
 ) {
   const roomRef = doc(db, 'chats', roomId);
 
@@ -21,7 +20,6 @@ async function createRoom(
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
     solutionName,
-    userImg,
   });
 
   console.log('방 생성 완료:', roomRef.path);

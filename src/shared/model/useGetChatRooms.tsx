@@ -6,13 +6,21 @@ import db from 'fire-config';
 import { useSearchParams } from 'next/navigation';
 import { ChatRoom } from './roomType';
 
-function useGetChatRooms({ targetId }: { targetId: string }) {
+function useGetChatRooms({
+  targetId,
+  defaultId,
+}: {
+  targetId: string;
+  defaultId?: string;
+}) {
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
   const searchParams = useSearchParams();
-  const id = searchParams.get(
+  let id = searchParams.get(
     targetId === 'vendorSeq' ? 'vendorId' : 'consumerId',
   );
-
+  if (!id && defaultId) {
+    id = defaultId;
+  }
   useEffect(() => {
     let unsubscribe: () => void;
 

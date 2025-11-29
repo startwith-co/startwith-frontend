@@ -4,46 +4,39 @@ import {
   PaginationItem,
   PaginationLink,
 } from '@/shared/ui/pagination';
-import useChatPaginationCaculator from '@/shared/model/useChatPaginationCaculator';
+import useChatPaginationCalculator from '@/shared/model/useChatPaginationCalculator';
 import { ChatRoom } from '@/shared/model/roomType';
 import ChatRoomCard from '@/entities/chat/ui/chat-room-card';
-import formatMainDate from '../lib/chat-main-date-format';
 import useCurrentSession from '../model/useCurrentSession';
 
-function ChatPagination({ rooms }: { rooms: ChatRoom[] }) {
-  const { totalPages, handlePageChange, currentPage, paginatedRooms } =
-    useChatPaginationCaculator({
-      rooms,
-    });
+function ChatPagination({
+  rooms,
+  search,
+}: {
+  rooms: ChatRoom[];
+  search: string;
+}) {
+  const {
+    totalPages,
+    handlePageChange,
+    currentPage,
+    paginatedRooms,
+    visiblePages,
+  } = useChatPaginationCalculator({
+    rooms,
+  });
   const { session } = useCurrentSession();
-
-  const getVisiblePages = (current: number, total: number) => {
-    const pages: (number | string)[] = [];
-
-    if (total <= 5) {
-      return Array.from({ length: total }, (_, i) => i + 1);
+  const filteredRooms = paginatedRooms.filter((room) => {
+    if (session?.role === 'vendor') {
+      return room.consumerName.toLowerCase().includes(search.toLowerCase());
     }
+    return room.vendorName.toLowerCase().includes(search.toLowerCase());
+  });
 
-    if (current > 2) pages.push(1);
-    if (current > 3) pages.push('...');
-
-    const start = Math.max(2, current - 1);
-    const end = Math.min(total - 1, current + 1);
-    for (let i = start; i <= end; i += 1) {
-      pages.push(i);
-    }
-
-    if (current < total - 2) pages.push('...');
-    if (current < total - 1) pages.push(total);
-
-    return pages;
-  };
-
-  const visiblePages = getVisiblePages(currentPage, totalPages);
   return (
     <div>
       <div className="flex flex-col gap-2.5">
-        {paginatedRooms.map((room) => (
+        {filteredRooms.map((room) => (
           <ChatRoomCard
             roomId={room.roomId}
             consumerName={room.consumerName}

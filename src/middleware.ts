@@ -12,7 +12,13 @@ export default middleware(async (req) => {
   const { nextUrl, auth } = req;
   const isLoggedIn = !!auth?.user;
   const isApiRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isPublicRoute = publicRoutes.some((route) => {
+    if (route.endsWith('/*')) {
+      const base = route.replace('/*', '');
+      return nextUrl.pathname.startsWith(base);
+    }
+    return nextUrl.pathname === route;
+  });
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
   const isVendorRoute = nextUrl.pathname.startsWith(vendorRoutes);
 
@@ -34,7 +40,7 @@ export default middleware(async (req) => {
    * 로그인하지 않았을 때 가면 되는 페이지
    */
   if (!isLoggedIn && !isPublicRoute) {
-    return NextResponse.redirect(new URL('/login', nextUrl));
+    return NextResponse.redirect(new URL('/', nextUrl));
   }
 
   /**

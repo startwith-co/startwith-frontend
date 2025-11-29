@@ -12,7 +12,7 @@ export const vendorRegisterSchema = z.object({
   solutionName: z
     .string()
     .min(1, '솔루션명 입력해주세요.')
-    .max(100, '최대 100자까지 입력 가능합니다.'),
+    .max(30, '최대 30자까지 입력 가능합니다.'),
   solutionDetail: z
     .string()
     .min(1, '솔루션 설명 입력해주세요.')
@@ -26,17 +26,16 @@ export const vendorRegisterSchema = z.object({
   solutionImplementationType: z
     .array(z.string())
     .min(1, '솔루션 구축 형태 선택해주세요.'),
-  amount: z
-    .string()
-    .min(1, '최소 1원 이상의 가격을 입력해주세요.')
-    .refine(
-      (value) => Number(value) > 0,
-      '최소 1원 이상의 가격을 입력해주세요.',
-    )
-    .refine(
-      (value) => Number(value) <= 10000000,
-      '최대 1000만원까지 입력 가능합니다.',
-    ),
+  amount: z.preprocess(
+    (value) => (value === '' ? 0 : Number(value)),
+    z
+      .number({
+        required_error: '가격을 입력해주세요.',
+        invalid_type_error: '숫자를 입력해주세요.',
+      })
+      .min(1, '최소 1원 이상의 가격을 입력해주세요.')
+      .max(10000000, '최대 1000만원까지 입력 가능합니다.'),
+  ),
   duration: z
     .string()
     .min(1, '최소 1일 이상의 기간을 입력해주세요.')

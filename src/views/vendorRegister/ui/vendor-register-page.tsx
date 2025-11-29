@@ -10,6 +10,7 @@ import useCurrentSession from '@/shared/model/useCurrentSession';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import VendorNormalInfo from '@/widgets/vendorRegister/ui/vendor-normal-info';
+import Link from 'next/link';
 import {
   VendorRegisterSchema,
   vendorRegisterSchema,
@@ -64,10 +65,10 @@ export default function VendorRegisterPage() {
         <VendorKeyword />
         <div className="mt-7.5 flex items-center justify-center gap-3.5 font-semibold text-white">
           <Button
-            asChild={false}
+            asChild
             className="bg-vendor-gray text-black hover:text-white"
           >
-            취소
+            <Link href="/vendor">취소</Link>
           </Button>
           <Button asChild={false} type="submit" disabled={isLoading}>
             {isLoading ? '등록 중...' : '등록하기'}

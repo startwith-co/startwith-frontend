@@ -151,7 +151,7 @@ export default function ProductDetail({
                 <span>{item.effectName}</span>
                 <span className="text-primary text-lg font-bold">
                   {item.percent}%{' '}
-                  {item.direction === 'INCREASE' ? '상승' : '하락'}
+                  {item.direction === 'INCREASE' ? '증가' : '감소'}
                 </span>
               </div>
             ))}

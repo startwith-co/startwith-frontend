@@ -3,29 +3,40 @@
 import formatTime from '@/shared/lib/chat-format-time';
 import ChatCardWrapper from '@/shared/ui/chat-card-wrapper';
 import useChatScroll from '@/shared/model/useChatScroll';
+import { ChatType } from '@/shared/model/chat-type';
+import ChatUpdateDate from '@/shared/ui/chat-main-date';
 import ChatUserBubble from './chat-user-bubble';
 import ChatUserCancelRequestCard from './chat-user-cancel-request-card';
 import ChatUserPayCompleteCard from './chat-user-payComplete-card';
 import ChatUserCancelCompleteCard from './chat-user-cancelComplete-card';
 import ChatUserRequestCard from './chat-user-request-card';
-import { ChatType } from '../model/type';
 
 interface ChatsUserProps {
   messages: ChatType[];
-  consumerId: string;
 }
 
-function ChatsUser({ messages, consumerId }: ChatsUserProps) {
+function ChatsUser({ messages }: ChatsUserProps) {
   const scrollRef = useChatScroll({ messages });
 
   return (
-    <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
+    <div
+      ref={scrollRef}
+      className="flex-1 space-y-4 overflow-x-hidden overflow-y-auto px-4 py-4"
+    >
       {messages.map((msg) => {
         let parsed;
         try {
           parsed = JSON.parse(msg.message);
         } catch {
           parsed = null;
+        }
+        if (parsed?.type === 'system-date') {
+          return (
+            <ChatUpdateDate
+              key={msg.id + msg.createdAt}
+              updateData={parsed.date}
+            />
+          );
         }
 
         const isMine = msg.role === 'consumer';

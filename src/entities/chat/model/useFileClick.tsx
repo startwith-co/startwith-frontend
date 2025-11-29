@@ -11,7 +11,7 @@ function useFileClick(uuid: string) {
         setFileUrl(data?.fileUrl);
         window.open(data?.fileUrl, '_blank');
       } catch (err) {
-        alert('파일을 불러오지 못했습니다.');
+        alert('파일을 불러오지 못했습니다.\n(20mb 이하 파일만 가능합니다.)');
       }
     } else {
       window.open(fileUrl, '_blank');
