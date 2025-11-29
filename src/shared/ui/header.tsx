@@ -4,16 +4,15 @@ import Link from 'next/link';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiMail } from 'react-icons/fi';
-import { IoSearchOutline } from 'react-icons/io5';
 import useCurrentSession from '@/shared/model/useCurrentSession';
 import { ApiResponse } from '@/shared/model/apiType';
+import Image from 'next/image';
 import {
   ConsumerInfoProps,
   VendorInfoProps,
 } from '@/views/vendorMy/model/type';
 import cn from '@/shared/lib/utils';
 import { signOut } from 'next-auth/react';
-import Input from './input';
 import { Button } from './button';
 import Dropdown from './dropdown';
 import api from '../api/client-api';
@@ -56,14 +55,6 @@ export default function Header({ className }: HeaderProps) {
     fetchData();
   }, [session, status]);
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const keyword = inputRef.current?.value.trim();
-    if (keyword) {
-      router.push(`/search?keyword=${keyword}`);
-    }
-  };
-
   return (
     <header
       className={cn(
@@ -72,11 +63,17 @@ export default function Header({ className }: HeaderProps) {
       )}
     >
       <div className="flex items-center gap-8">
-        <Link href="/">
-          <h1 className="text-primary text-3xl font-bold">SOLU</h1>
+        <Link href="/" className="flex flex-row items-center gap-2">
+          <Image
+            src="/images/instrument.svg"
+            alt="instrument"
+            width={30}
+            height={30}
+          />
+          <span className="font-bold">Instrumer</span>
         </Link>
 
-        <form onSubmit={handleSearch} className="relative">
+        {/* <form onSubmit={handleSearch} className="relative">
           <IoSearchOutline
             size={20}
             className="absolute top-1/2 left-3 -translate-y-1/2 transform"
@@ -93,7 +90,7 @@ export default function Header({ className }: HeaderProps) {
           >
             →
           </button>
-        </form>
+        </form> */}
       </div>
 
       <div className="flex items-center gap-3.5 text-[12px]">
@@ -113,28 +110,37 @@ export default function Header({ className }: HeaderProps) {
           <span className="font-normal">Language</span>
         </Button> */}
         {/* <FiBell size={24} href="/notification"/> */}
-        <Link
-          href={
-            session?.role === 'vendor'
-              ? `/vendor/chat?vendorId=${session.vendorSeq}`
-              : `/chat?consumerId=${session?.consumerSeq}`
-          }
-        >
-          <FiMail size={24} />
-        </Link>
-        <Dropdown
-          buttonText={name || session?.name || 'user'}
-          items={[
-            {
-              label: '내 정보',
-              href:
+
+        {session?.name ? (
+          <>
+            <Link
+              href={
                 session?.role === 'vendor'
-                  ? '/vendor/my/profile'
-                  : '/my/profile',
-            },
-          ]}
-          isLoginHeaderOption
-        />
+                  ? `/vendor/chat?vendorId=${session.vendorSeq}`
+                  : `/chat?consumerId=${session?.consumerSeq}`
+              }
+            >
+              <FiMail size={24} />
+            </Link>
+            <Dropdown
+              buttonText={name || session?.name || 'user'}
+              items={[
+                {
+                  label: '내 정보',
+                  href:
+                    session?.role === 'vendor'
+                      ? '/vendor/my/profile'
+                      : '/my/profile',
+                },
+              ]}
+              isLoginHeaderOption
+            />
+          </>
+        ) : (
+          <Link href="/login" className="font-bold">
+            로그인
+          </Link>
+        )}
       </div>
     </header>
   );
