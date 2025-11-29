@@ -39,7 +39,7 @@ export default middleware(async (req) => {
   /**
    * 로그인하지 않았을 때 가면 되는 페이지
    */
-  if (!isPublicRoute) {
+  if (!isLoggedIn && !isPublicRoute) {
     return NextResponse.redirect(new URL('/', nextUrl));
   }
 
